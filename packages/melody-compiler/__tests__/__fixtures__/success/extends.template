@@ -1,0 +1,13 @@
+{% extends "parent.twig" %}
+
+{% block hello %}
+    <div ref="hello" key="1" class="test" onclick="{{ foo }}">
+        {{ message }}&amp;
+        {% include "test.twig" with { foo: "bar" } only %}
+        {{ include("test.twig", { foo: "bar" }) }}
+
+        {% mount Item with item %}
+        {% mount './Item' with item %}
+        {% mount Item from './ItemList' with {item: item} %}
+    </div>
+{% endblock %}

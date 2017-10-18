@@ -1,0 +1,21 @@
+{
+  "name": "melody-types",
+  "version": "0.11.1-rc.1",
+  "description": "",
+  "main": "./lib/index.js",
+  "jsnext:main": "./src/index.js",
+  "scripts": {
+    "build": "mkdir lib; rollup -c ../../rollup.config.js -i src/index.js -o lib/index.js"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "babel-types": "^6.8.1"
+  },
+  "bundledDependencies": [
+    "babel-types"
+  ],
+  "devDependencies": {
+    "rollup-plugin-babel": "^2.6.1"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "melody-jest-transform",
+  "version": "0.11.1-rc.1",
+  "description": "",
+  "main": "./lib/index.js",
+  "scripts": {
+    "build": "mkdir lib; rollup -c ../../rollup.config.js -i src/index.js -o lib/index.js"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "babel-core": "^6.18.0",
+    "find-babel-config": "^1.0.1",
+    "melody-compiler": "^0.11.1-rc.1",
+    "melody-extension-core": "^0.11.1-rc.1"
+  },
+  "devDependencies": {
+    "melody-plugin-idom": "^0.11.1-rc.1",
+    "rollup-plugin-babel": "^2.6.1"
+  },
+  "peerDependencies": {
+    "melody-idom": "^0.10.1",
+    "melody-parser": "^0.10.1",
+    "melody-runtime": "^0.10.1",
+    "melody-traverse": "^0.10.1",
+    "melody-types": "^0.10.1"
+  }
+}

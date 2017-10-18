@@ -1,0 +1,4 @@
+import { createComponent } from 'melody-component';
+import template from './test.twig';
+
+export default createComponent(template);

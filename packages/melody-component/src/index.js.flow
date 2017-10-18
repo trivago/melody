@@ -1,0 +1,30 @@
+/**
+ * An Action is a simple object which describes the requested state change.
+ * It must have a `type` property and should follow the "Standard Flux Action" pattern.
+ */
+export type Action = { type: String };
+/**
+ * A Reducer is a function which returns a new state based on a previous state
+ * and an action.
+ */
+export type Reducer = (state: ?Object, action: Action) => Object;
+/**
+ * Basic interface for idom templates.
+ */
+export type Template = {render: () => void};
+/**
+ * A mixin is a capability that can be added to a component.
+ */
+export type Mixin = void | Object | (proto: Object) => Object;
+
+export type ReduxStore = {
+    subscribe: () => void,
+    dispatch: (action: Action) => void,
+    getState: () => Object
+};
+
+export type ReceivePropsAction = {
+    type: 'MELODY/RECEIVE_PROPS',
+    payload: Object,
+    meta: Component
+};

@@ -1,0 +1,4 @@
+{% from _self import i1 %}
+{% from 'foo' import i2 %}
+{% from 'foo' import i3 as _i3 %}
+{% import 'foo' as i4 %}

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Generate Documentation book for trv-melody
+
+if [[ -d "${WORKSPACE}/build/docs" ]]; then
+  rm -rf "${WORKSPACE}/build/docs"
+fi
+
+npm run build:book

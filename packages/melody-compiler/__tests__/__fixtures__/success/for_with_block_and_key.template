@@ -1,0 +1,9 @@
+<ul>
+    {% for i, item in items %}
+        <li class="{{ loop.last ? 'last' : '' }}">
+            {% block itemContent %}
+                {{i}} {{ loop.index0 }} {{ item.name }} {{ loop.index }}
+            {% endblock %}
+        </li>
+    {% endfor %}
+</ul>

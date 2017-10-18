@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`children should rerender 1`] = `"<div><span>Some element without key</span><span>0 and 1</span><span>1 and 1</span><span>2 and 1</span><span>3 and 1</span><span>4 and 1</span></div>"`;
+
+exports[`children should rerender after parent rerender 1`] = `"<div><span>Some element without key</span><span>1 and 1</span><span>2 and 1</span><span>3 and 1</span><span>4 and 1</span><span>5 and 1</span></div>"`;
+
+exports[`parent should rerender 1`] = `"<div><span>Some element without key</span><span>1 and 0</span><span>2 and 0</span><span>3 and 0</span><span>4 and 0</span><span>5 and 0</span></div>"`;
+
+exports[`parent should rerender after children rerender 1`] = `"<div><span>Some element without key</span><span>1 and 1</span><span>2 and 1</span><span>3 and 1</span><span>4 and 1</span><span>5 and 1</span></div>"`;
+
+exports[`should mount on top of existing keyed components 1`] = `"<div><span>Some element without key</span><span>0 and 0</span><span>1 and 0</span><span>2 and 0</span><span>3 and 0</span><span>4 and 0</span></div>"`;

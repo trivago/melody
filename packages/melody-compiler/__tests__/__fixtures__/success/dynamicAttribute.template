@@ -1,0 +1,3 @@
+<select title="bug">
+    <option value="42" {{ 'selected' }}>Answer</option>
+</select>

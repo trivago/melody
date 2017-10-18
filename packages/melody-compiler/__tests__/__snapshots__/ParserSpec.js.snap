@@ -1,0 +1,1249 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Parser when parsing HTML should fail when parsing an incomplete element 1`] = `
+"ERROR: Invalid token
+  1 | <div class=\\"foo {{bar}}\\" id=\\"{{id}}\\"
+
+A tag must consist of attributes or expressions. Twig Tags are not allowed."
+`;
+
+exports[`Parser when parsing HTML should fail when parsing an opening expression attribute 1`] = `
+"ERROR: Unexpected token \\"EOF\\" of value \\"\\"
+  1 | <div {{"
+`;
+
+exports[`Parser when parsing HTML should match a simple element 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [],
+      "children": Array [
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "test",
+          },
+        },
+      ],
+      "name": "div",
+      "selfClosing": false,
+      "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing HTML should match an element with an expression attribute 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "name": Object {
+            "name": "id",
+            "type": "Identifier",
+          },
+          "type": "Attribute",
+          "value": Object {
+            "name": "id",
+            "type": "Identifier",
+          },
+        },
+      ],
+      "children": Array [
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "test",
+          },
+        },
+      ],
+      "name": "div",
+      "selfClosing": false,
+      "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing HTML should match an element with attributes 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "name": Object {
+            "name": "class",
+            "type": "Identifier",
+          },
+          "type": "Attribute",
+          "value": Object {
+            "left": Object {
+              "type": "StringLiteral",
+              "value": "foo ",
+            },
+            "operator": "~",
+            "right": Object {
+              "name": "bar",
+              "type": "Identifier",
+            },
+            "type": "BinaryConcatExpression",
+          },
+        },
+        Object {
+          "name": Object {
+            "name": "id",
+            "type": "Identifier",
+          },
+          "type": "Attribute",
+          "value": Object {
+            "name": "id",
+            "type": "Identifier",
+          },
+        },
+      ],
+      "children": Array [
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "test",
+          },
+        },
+      ],
+      "name": "div",
+      "selfClosing": false,
+      "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing HTML should match expression arguments 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "name": "attributes",
+          "type": "Identifier",
+        },
+      ],
+      "children": Array [],
+      "name": "img",
+      "selfClosing": true,
+      "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing HTML should match nested elements with attributes 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "name": Object {
+            "name": "class",
+            "type": "Identifier",
+          },
+          "type": "Attribute",
+          "value": Object {
+            "left": Object {
+              "type": "StringLiteral",
+              "value": "foo ",
+            },
+            "operator": "~",
+            "right": Object {
+              "name": "bar",
+              "type": "Identifier",
+            },
+            "type": "BinaryConcatExpression",
+          },
+        },
+        Object {
+          "name": Object {
+            "name": "id",
+            "type": "Identifier",
+          },
+          "type": "Attribute",
+          "value": Object {
+            "name": "id",
+            "type": "Identifier",
+          },
+        },
+      ],
+      "children": Array [
+        Object {
+          "attributes": Array [],
+          "children": Array [
+            Object {
+              "type": "PrintTextStatement",
+              "value": Object {
+                "type": "StringLiteral",
+                "value": "hello",
+              },
+            },
+          ],
+          "name": "div",
+          "selfClosing": false,
+          "type": "Element",
+        },
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": " world",
+          },
+        },
+      ],
+      "name": "div",
+      "selfClosing": false,
+      "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing HTML should match self-closing tags 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [],
+      "children": Array [],
+      "name": "img",
+      "selfClosing": true,
+      "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing HTML should match self-closing tags with / 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [],
+      "children": Array [],
+      "name": "img",
+      "selfClosing": true,
+      "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing HTML should match standalone attributes 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "name": Object {
+            "name": "type",
+            "type": "Identifier",
+          },
+          "type": "Attribute",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "checkbox",
+          },
+        },
+        Object {
+          "name": Object {
+            "name": "checked",
+            "type": "Identifier",
+          },
+          "type": "Attribute",
+          "value": null,
+        },
+      ],
+      "children": Array [],
+      "name": "input",
+      "selfClosing": true,
+      "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing array expressions should allow trailing commas 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "elements": Array [
+          Object {
+            "name": "a",
+            "type": "Identifier",
+          },
+          Object {
+            "name": "b",
+            "type": "Identifier",
+          },
+        ],
+        "type": "ArrayExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing array expressions should match a complex array access 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "computed": true,
+        "object": Object {
+          "name": "hello",
+          "type": "Identifier",
+        },
+        "property": Object {
+          "arguments": Array [
+            Object {
+              "type": "NumericLiteral",
+              "value": 2,
+            },
+          ],
+          "callee": Object {
+            "computed": false,
+            "object": Object {
+              "name": "foo",
+              "type": "Identifier",
+            },
+            "property": Object {
+              "name": "bar",
+              "type": "Identifier",
+            },
+            "type": "MemberExpression",
+          },
+          "type": "CallExpression",
+        },
+        "type": "MemberExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing array expressions should match a string array access 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "computed": true,
+        "object": Object {
+          "name": "hello",
+          "type": "Identifier",
+        },
+        "property": Object {
+          "type": "StringLiteral",
+          "value": "hello",
+        },
+        "type": "MemberExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing array expressions should match an array access 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "computed": true,
+        "object": Object {
+          "name": "hello",
+          "type": "Identifier",
+        },
+        "property": Object {
+          "name": "test",
+          "type": "Identifier",
+        },
+        "type": "MemberExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing array expressions should match an indexed array access 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "computed": true,
+        "object": Object {
+          "name": "hello",
+          "type": "Identifier",
+        },
+        "property": Object {
+          "type": "NumericLiteral",
+          "value": 0,
+        },
+        "type": "MemberExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing conditional expressions should match a simple conditional 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "alternate": Object {
+          "name": "bar",
+          "type": "Identifier",
+        },
+        "consequent": Object {
+          "name": "foo",
+          "type": "Identifier",
+        },
+        "test": Object {
+          "name": "test",
+          "type": "Identifier",
+        },
+        "type": "ConditionalExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing conditional expressions should match a simple conditional with empty alternate 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "alternate": Object {
+          "type": "StringLiteral",
+          "value": "",
+        },
+        "consequent": Object {
+          "name": "foo",
+          "type": "Identifier",
+        },
+        "test": Object {
+          "name": "test",
+          "type": "Identifier",
+        },
+        "type": "ConditionalExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing conditional expressions should match an if-otherwise expression 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "alternate": Object {
+          "name": "bar",
+          "type": "Identifier",
+        },
+        "consequent": null,
+        "test": Object {
+          "name": "test",
+          "type": "Identifier",
+        },
+        "type": "ConditionalExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing conditional expressions should match an if-then expression 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "alternate": null,
+        "consequent": Object {
+          "name": "foo",
+          "type": "Identifier",
+        },
+        "test": Object {
+          "name": "test",
+          "type": "Identifier",
+        },
+        "type": "ConditionalExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing expressions should match an identifier 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "name": "hello",
+        "type": "Identifier",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing expressions should match null, true and false literals 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "alternate": Object {
+          "type": "BooleanLiteral",
+          "value": true,
+        },
+        "consequent": Object {
+          "type": "BooleanLiteral",
+          "value": false,
+        },
+        "test": Object {
+          "arguments": Array [
+            Object {
+              "type": "NullLiteral",
+              "value": null,
+            },
+          ],
+          "name": Object {
+            "name": "default",
+            "type": "Identifier",
+          },
+          "target": Object {
+            "name": "a",
+            "type": "Identifier",
+          },
+          "type": "FilterExpression",
+        },
+        "type": "ConditionalExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing expressions should match numeric subscript expressions 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "computed": true,
+        "object": Object {
+          "name": "foo",
+          "type": "Identifier",
+        },
+        "property": Object {
+          "type": "NumericLiteral",
+          "value": 2,
+        },
+        "type": "MemberExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing filter expressions should match a filter with arguments 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "arguments": Array [
+          Object {
+            "type": "NumericLiteral",
+            "value": 1,
+          },
+          Object {
+            "type": "NumericLiteral",
+            "value": 3,
+          },
+        ],
+        "name": Object {
+          "name": "slice",
+          "type": "Identifier",
+        },
+        "target": Object {
+          "name": "foo",
+          "type": "Identifier",
+        },
+        "type": "FilterExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing filter expressions should match a simple filter 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "arguments": Array [],
+        "name": Object {
+          "name": "foo",
+          "type": "Identifier",
+        },
+        "target": Object {
+          "name": "test",
+          "type": "Identifier",
+        },
+        "type": "FilterExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing filter expressions should match multiple filters 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "arguments": Array [],
+        "name": Object {
+          "name": "raw",
+          "type": "Identifier",
+        },
+        "target": Object {
+          "arguments": Array [
+            Object {
+              "type": "NumericLiteral",
+              "value": 1,
+            },
+            Object {
+              "type": "NumericLiteral",
+              "value": 3,
+            },
+          ],
+          "name": Object {
+            "name": "slice",
+            "type": "Identifier",
+          },
+          "target": Object {
+            "name": "foo",
+            "type": "Identifier",
+          },
+          "type": "FilterExpression",
+        },
+        "type": "FilterExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing function call expressions should match a function call 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "arguments": Array [],
+        "callee": Object {
+          "name": "hello",
+          "type": "Identifier",
+        },
+        "type": "CallExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing function call expressions should match a function call with a map expression argument 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "arguments": Array [
+          Object {
+            "properties": Array [
+              Object {
+                "computed": false,
+                "key": Object {
+                  "name": "test",
+                  "type": "Identifier",
+                },
+                "type": "ObjectProperty",
+                "value": Object {
+                  "type": "StringLiteral",
+                  "value": "bar",
+                },
+              },
+              Object {
+                "computed": false,
+                "key": Object {
+                  "name": "foo",
+                  "type": "Identifier",
+                },
+                "type": "ObjectProperty",
+                "value": Object {
+                  "name": "test",
+                  "type": "Identifier",
+                },
+              },
+            ],
+            "type": "ObjectExpression",
+          },
+          Object {
+            "elements": Array [
+              Object {
+                "type": "NumericLiteral",
+                "value": 1,
+              },
+              Object {
+                "type": "NumericLiteral",
+                "value": 2,
+              },
+              Object {
+                "type": "NumericLiteral",
+                "value": 3,
+              },
+              Object {
+                "name": "test",
+                "type": "Identifier",
+              },
+            ],
+            "type": "ArrayExpression",
+          },
+        ],
+        "callee": Object {
+          "name": "hello",
+          "type": "Identifier",
+        },
+        "type": "CallExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing function call expressions should match a function call with named arguments 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "arguments": Array [
+          Object {
+            "name": Object {
+              "name": "first",
+              "type": "Identifier",
+            },
+            "type": "NamedArgumentExpression",
+            "value": Object {
+              "name": "foo",
+              "type": "Identifier",
+            },
+          },
+        ],
+        "callee": Object {
+          "name": "hello",
+          "type": "Identifier",
+        },
+        "type": "CallExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing map expressions should parse map expressions 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "properties": Array [
+          Object {
+            "computed": false,
+            "key": Object {
+              "name": "a",
+              "type": "Identifier",
+            },
+            "type": "ObjectProperty",
+            "value": Object {
+              "type": "StringLiteral",
+              "value": "foo",
+            },
+          },
+          Object {
+            "computed": true,
+            "key": Object {
+              "left": Object {
+                "type": "StringLiteral",
+                "value": "b",
+              },
+              "operator": "~",
+              "right": Object {
+                "name": "ar",
+                "type": "Identifier",
+              },
+              "type": "BinaryConcatExpression",
+            },
+            "type": "ObjectProperty",
+            "value": Object {
+              "type": "StringLiteral",
+              "value": "bar",
+            },
+          },
+          Object {
+            "computed": false,
+            "key": Object {
+              "type": "NumericLiteral",
+              "value": 2,
+            },
+            "type": "ObjectProperty",
+            "value": Object {
+              "type": "NumericLiteral",
+              "value": 4,
+            },
+          },
+          Object {
+            "computed": true,
+            "key": Object {
+              "name": "a",
+              "type": "Identifier",
+            },
+            "type": "ObjectProperty",
+            "value": Object {
+              "name": "foo",
+              "type": "Identifier",
+            },
+          },
+        ],
+        "type": "ObjectExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing operators should match binary operators 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "left": Object {
+          "name": "foo",
+          "type": "Identifier",
+        },
+        "operator": "in",
+        "right": Object {
+          "name": "bar",
+          "type": "Identifier",
+        },
+        "type": "BinaryExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing operators should match mixed operators 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "argument": Object {
+          "left": Object {
+            "name": "foo",
+            "type": "Identifier",
+          },
+          "operator": "in",
+          "right": Object {
+            "name": "bar",
+            "type": "Identifier",
+          },
+          "type": "BinaryExpression",
+        },
+        "operator": "not",
+        "type": "UnaryExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing operators should match self-parsing binary operators 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "argument": Object {
+          "left": Object {
+            "name": "foo",
+            "type": "Identifier",
+          },
+          "operator": "is",
+          "right": Object {
+            "name": "defined",
+            "type": "Identifier",
+          },
+          "type": "BinaryExpression",
+        },
+        "operator": "not",
+        "type": "UnaryExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing operators should match unary operators 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "argument": Object {
+          "name": "foo",
+          "type": "Identifier",
+        },
+        "operator": "not",
+        "type": "UnaryExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing slice expressions should match a full-slice expression 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "end": Object {
+          "type": "NumericLiteral",
+          "value": 5,
+        },
+        "start": Object {
+          "type": "NumericLiteral",
+          "value": 3,
+        },
+        "target": Object {
+          "name": "foo",
+          "type": "Identifier",
+        },
+        "type": "SliceExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing slice expressions should match a post-slice expression 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "end": null,
+        "start": Object {
+          "type": "NumericLiteral",
+          "value": 2,
+        },
+        "target": Object {
+          "name": "foo",
+          "type": "Identifier",
+        },
+        "type": "SliceExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing slice expressions should match a pre-slice expression 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "end": Object {
+          "type": "NumericLiteral",
+          "value": 2,
+        },
+        "start": null,
+        "target": Object {
+          "name": "foo",
+          "type": "Identifier",
+        },
+        "type": "SliceExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing slice expressions should match a slice expression on a member 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "end": Object {
+          "type": "NumericLiteral",
+          "value": 5,
+        },
+        "start": Object {
+          "type": "NumericLiteral",
+          "value": 3,
+        },
+        "target": Object {
+          "computed": false,
+          "object": Object {
+            "name": "foo",
+            "type": "Identifier",
+          },
+          "property": Object {
+            "name": "bar",
+            "type": "Identifier",
+          },
+          "type": "MemberExpression",
+        },
+        "type": "SliceExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing slice expressions should match a slice expression with an expression range 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "end": Object {
+          "computed": true,
+          "object": Object {
+            "name": "range",
+            "type": "Identifier",
+          },
+          "property": Object {
+            "name": "end",
+            "type": "Identifier",
+          },
+          "type": "MemberExpression",
+        },
+        "start": Object {
+          "computed": false,
+          "object": Object {
+            "name": "range",
+            "type": "Identifier",
+          },
+          "property": Object {
+            "name": "start",
+            "type": "Identifier",
+          },
+          "type": "MemberExpression",
+        },
+        "target": Object {
+          "name": "hello",
+          "type": "Identifier",
+        },
+        "type": "SliceExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing strings should match a complex string concat 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "left": Object {
+          "left": Object {
+            "type": "StringLiteral",
+            "value": " foo ",
+          },
+          "operator": "~",
+          "right": Object {
+            "name": "bar",
+            "type": "Identifier",
+          },
+          "type": "BinaryConcatExpression",
+        },
+        "operator": "~",
+        "right": Object {
+          "type": "StringLiteral",
+          "value": " ",
+        },
+        "type": "BinaryConcatExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing strings should match a string 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "type": "StringLiteral",
+        "value": "foo",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing strings should match an interpolated string 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "left": Object {
+          "type": "StringLiteral",
+          "value": "foo ",
+        },
+        "operator": "~",
+        "right": Object {
+          "name": "bar",
+          "type": "Identifier",
+        },
+        "type": "BinaryConcatExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing tags should fail on unknown tags 1`] = `
+"ERROR: Unknown tag \\"unknown_tag\\"
+> 1 | {% unknown_tag %}
+    |    ^^^^^^^^^^^
+
+Expected a known tag such as
+- "
+`;
+
+exports[`Parser when parsing tags should match tags 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "alternate": Object {
+        "expressions": Array [
+          Object {
+            "type": "PrintTextStatement",
+            "value": Object {
+              "type": "StringLiteral",
+              "value": "hello universe",
+            },
+          },
+        ],
+        "type": "SequenceExpression",
+      },
+      "consequent": Object {
+        "expressions": Array [
+          Object {
+            "type": "PrintTextStatement",
+            "value": Object {
+              "type": "StringLiteral",
+              "value": "hello ",
+            },
+          },
+          Object {
+            "type": "PrintExpressionStatement",
+            "value": Object {
+              "name": "adjective",
+              "type": "Identifier",
+            },
+          },
+          Object {
+            "type": "PrintTextStatement",
+            "value": Object {
+              "type": "StringLiteral",
+              "value": " world",
+            },
+          },
+        ],
+        "type": "SequenceExpression",
+      },
+      "test": Object {
+        "name": "foo",
+        "type": "Identifier",
+      },
+      "type": "ConditionalExpression",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;

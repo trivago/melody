@@ -1,0 +1,19 @@
+<div>
+    {% if isCTestActive('WEB-27121') %}
+        {% mount './DealsSlideoutRoomTypes' as 'deals' with {
+            itemId: itemId,
+            isInItemPage: isInItemPage,
+            containerElementSelector: containerElementSelector,
+            onClose: onClose,
+            onChange: onChange
+        } %}
+    {% else %}
+        {% mount './sameName' as 'deals' with {
+            itemId: itemId,
+            isInItemPage: isInItemPage,
+            containerElementSelector: containerElementSelector,
+            onClose: onClose,
+            onChange: onChange
+        } %}
+    {% endif %}
+</div>

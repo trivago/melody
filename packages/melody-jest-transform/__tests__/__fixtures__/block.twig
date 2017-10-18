@@ -1,0 +1,14 @@
+{% use "./foo.twig" %}
+<section key="0">
+{% block hello %}
+    <div key="1" class="test">
+        {{ message | lower | upper }}{% flush %}
+        <span class="">{{ _context.name[1:] }}</span>
+        {{ block('test') }}
+        {{ include('./test.twig') }}
+        {% include './test.twig' %}
+    </div>
+{% endblock %}
+{% block bar foo %}
+{{ block('hello') }}
+</section>

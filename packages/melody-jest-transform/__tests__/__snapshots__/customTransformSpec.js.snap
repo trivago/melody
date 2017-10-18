@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Custom transformer should return compiled melody code when noBabel set 1`] = `
+"import { text, elementOpen, elementClose } from \\"melody-idom\\";
+export const _template = {};
+
+_template.render = function (_context) {
+  elementOpen(\\"div\\", null, null);
+  text(\\"test\\");
+  elementClose(\\"div\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;
+
+exports[`Custom transformer should throw error if it cannot find a config in regular locations 1`] = `"Couldn't find .babelrc or babel entry on package.json! You can specify custom config with \\"transformer\\". Please consult documentation."`;
+
+exports[`Custom transformer should transpile with jest's process function 1`] = `undefined`;
+
+exports[`Custom transformer should work with default babelconfig and melody-plugins 1`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports._template = undefined;
+exports.default = Test;
+
+var _melodyIdom = require(\\"melody-idom\\");
+
+const _template = exports._template = {};
+
+_template.render = function (_context) {
+  (0, _melodyIdom.elementOpen)(\\"div\\", null, null);
+  (0, _melodyIdom.text)(\\"test\\");
+  (0, _melodyIdom.elementClose)(\\"div\\");
+};
+
+if (\\"test\\" !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+function Test(props) {
+  return _template.render(props);
+}"
+`;

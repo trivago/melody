@@ -1,0 +1,125 @@
+{% set tEB_SAME_WINDOW_CLICKOUT = false  %} {# ExpressBooking #}
+{% set ironItem1p1 = true %} {#  #}
+{% set bClickoutClientside = false %}
+{% set sBtnModifiers = '' %}
+{% spaceless %}
+    <section class="item__deal-best" itemprop="makesOffer" itemscope itemtype="http://schema.org/Offer">
+
+        <div {{ bestPriceDeal ? {
+            onclick: '',
+            'data-link': bestPriceDeal.clickoutLinkUrl,
+            'data-co_li_lo': bClickoutClientside ? '1',
+            'data-partner': bestPriceDeal.groupId,
+            'data-item': id,
+            'data-teb': bestPriceDeal.expressBookingAvailable and tEB_SAME_WINDOW_CLICKOUT ? '1',
+            'data-alternative': isAlternativeHotel ? '1' : '0',
+            'data-dbid': bestPriceDeal.debuggingId | default
+        } | attrs : [] }}
+                class="item__deal-best-link ov-hidden font-dark js_item_bestprice
+                {{ not isItemAvailable ? 'no_availability' : (not bestPriceDeal ? 'incomplete' : '') }}
+                {{  bestPriceDeal ? 'js_cClickoutLink' }}
+                {{ saving >= 20 ? 'reduced' : '' }}"
+                itemprop="priceSpecification" itemscope itemtype="http://schema.org/PriceSpecification"
+        >
+
+            {# if 'WEB-28840' is not active #}
+            {% if not ironItem1p1 %}
+                {% if rateCount is defined %}
+                    <h4 class="item__deal-best-headline m-0 fw-normal ta-center">{{ 'ie_bestdeal' }}</h4>
+                {% endif %}
+            {% endif %}
+
+            {% if bestPriceDeal %}
+                {% set flagModifiers = "trv-maincolor-03 font-bright cur-pointer--hover" %}
+                {% if ironItem1p1 %}
+                    {% set flagModifiers = "font-bright cur-pointer--hover" %}
+                {% endif %}
+                {% if isTopDeal %}
+                    {% set dataVariables = {
+                    "data-topdeal-percentage": topDealPercentage,
+                    "data-topdeal-price": bestPriceDeal.price,
+                    "data-topdeal-compare-price": topDealComparePrice,
+                    "data-topdeal-criterion": topDealCriterion,
+                    "data-topdeal-criterion-id": topDealCriterionId,
+                    "data-topdeal-category": category,
+                    "data-topdeal-path-name": pathName,
+                    "data-topdeal-overall-liking": overallLiking
+                    } %}
+                    {% set flagModifiers = flagModifiers ~ " top_deals js_top_deals " ~ topDealCriterion %}
+                    {% set dataVariables = dataVariables | merge({'data-topdeal-log': '1'}) %}
+                    {% include "./Flag.twig" with {
+                    "styleModifier": flagModifiers,
+                    "dataVariables": dataVariables,
+                    "text": "ie_topdeal"
+                    } only %}
+                {% else %}
+                    {% if iSaving >= 20 %}
+                        {% include "./Flag.twig" with {
+                        "styleModifier": flagModifiers,
+                        "dataVariables": dataVariables,
+                        "text": "-" ~ saving ~ "%"
+                        } only %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+
+            <div class="item__best-details">
+                <div>
+
+                    {# New position of advertiser string depending on WEB-29007 #}
+                    {% if false %}
+                        <em class="item__deal-best-ota block fs-normal cur-pointer--hover">
+                            {% if bestPriceDeal.groupId == 80 and bestPriceDeal.useLocalizedHotelWebsiteLogo %}
+                                {{ 'book_hotel_website_test' }}
+                            {% else %}
+                                {{ bestPriceDeal.sName }}
+                            {% endif %}
+                        </em>
+                    {% endif %}
+
+                    {% if bestPriceDeal %}
+                        {% if maxPriceDeal %}
+                            <meta itemprop="maxPrice" content="{{ maxPriceDeal.displayPrice }}">
+                            <meta itemprop="minPrice" content="{{ bestPriceDeal.displayPrice }}">
+                            <s class="item__price-striked block cur-pointer--hover{{ not isBigFontSiteInBestPrice ? ' long_digit' : '' }}">{{ maxPriceDeal.price }}</s>
+                        {% else %}
+                            <meta itemprop="price" content="{{ bestPriceDeal.displayPrice }}">
+                        {% endif %}
+                        <strong class="item__best-price block cur-pointer--hover price{{ maxPriceDeal ? '_min' : ' single' }}{{ not isBigFontSiteInBestPrice ? ' long_digit' : '' }}">{{ bestPriceDeal.price }}</strong>
+
+                        {# Old/regular position of advertiser string without WEB-29007 #}
+                        {% if false %}
+                            <em class="item__deal-best-ota block fs-normal cur-pointer--hover">
+                                {% if oBestPriceDeal.iGroupId == 80 and oBestPriceDeal.bUseLocalizedHotelWebsiteLogo %}
+                                    {{ 'book_hotel_website_test' }}
+                                {% else %}
+                                    {{ oBestPriceDeal.sName }}
+                                {% endif %}
+                            </em>
+                        {% endif %}
+
+                        {% if true %}
+                            {% set sBtnModifiers = "btn--deal fl-trailing" %}
+                        {% endif %}
+                        {% if false %}
+                            {% set sBtnModifiers = sBtnModifiers ~ " alt" %}
+                        {% endif %}
+                    {% elseif state == 1 %}
+                        <p class="font-trv-maincolor-04-lighter cur-disabled--hover">{{ 'unavailable_deal' }}</p>
+
+                        {% if true %}
+                            {% set sBtnModifiers = "btn--icon btn--deal btn--disabled fl-trailing trv-maincolor-04-very-light" %}
+                        {% endif %}
+                    {% else %}
+
+                        {% if true %}
+                            {% set sBtnModifiers = "btn--icon btn--deal btn--disabled fl-trailing trv-maincolor-04-very-light" %}
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+
+            {% include "./Button.html.twig" with { "styleModifier": sBtnModifiers, "text": "deals_forward_new" } only %}
+        </div>
+    </section>
+{% endspaceless %}

@@ -1,0 +1,2304 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Compiler displayName should capitalize file name 1`] = `
+"import { elementVoid } from \\"melody-idom\\";
+export const _template = {};
+
+_template.render = function (_context) {
+  elementVoid(\\"div\\", null, null);
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;
+
+exports[`Compiler displayName should take dir name if file name is base 1`] = `
+"import { elementVoid } from \\"melody-idom\\";
+export const _template = {};
+
+_template.render = function (_context) {
+  elementVoid(\\"div\\", null, null);
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Bar\\";
+}
+
+export default function Bar(props) {
+  return _template.render(props);
+}"
+`;
+
+exports[`Compiler displayName should take dir name if file name is index 1`] = `
+"import { elementVoid } from \\"melody-idom\\";
+export const _template = {};
+
+_template.render = function (_context) {
+  elementVoid(\\"div\\", null, null);
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Bar\\";
+}
+
+export default function Bar(props) {
+  return _template.render(props);
+}"
+`;
+
+exports[`Compiler should correctly transform block.template 1`] = `
+"
+import _include from \\"test.twig\\";
+import { text, elementOpen, elementClose } from \\"melody-idom\\";
+import { renderBase_sidebar as renderSidebar, renderBase_title as renderTitle } from \\"blocks.html\\";
+import { inheritBlocks } from \\"melody-runtime\\";
+import _use from \\"foo.twig\\";
+export const _template = {};
+inheritBlocks(_template, _use);
+Object.assign(_template, {
+    renderBase_sidebar,
+    renderBase_title
+});
+const _statics = [\\"class\\", \\"\\"],
+      _statics$1 = [\\"class\\", \\"test\\"];
+
+_template.renderHello = function (_context) {
+    elementOpen(\\"div\\", \\"1\\", _statics$1);
+    text(_context.message.toLowerCase().toUpperCase());
+    elementOpen(\\"span\\", \\"P|>Iz^J\\", _statics);
+    text(_context.name.slice(1, _context.name.length));
+    elementClose(\\"span\\");
+    this.renderTest(_context);
+
+    _include.render();
+
+    _include(_context);
+
+    elementClose(\\"div\\");
+};
+
+_template.renderBar = function (_context) {
+    text(_context.foo);
+};
+
+_template.render = function (_context) {
+    elementOpen(\\"section\\", \\"0\\", null);
+    this.renderHello(_context);
+    this.renderBar(_context);
+    this.renderHello(_context);
+    elementClose(\\"section\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"Block\\";
+}
+
+export default function Block(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform dynamicAttribute.template 1`] = `
+"
+import { text, elementOpenStart, elementOpenEnd, attr, elementClose, elementOpen } from \\"melody-idom\\";
+export const _template = {};
+const _statics = [\\"value\\", \\"42\\"],
+      _statics$1 = [\\"title\\", \\"bug\\"];
+
+_template.render = function (_context) {
+    elementOpen(\\"select\\", \\"lJaJFDu\\", _statics$1);
+    elementOpenStart(\\"option\\", \\"8,FK,[F\\", _statics);
+
+    for (let _i = 0, _a = process.env.NODE_ENV === \\"production\\" || Array.isArray(\\"selected\\") ? \\"selected\\" : (() => {
+        throw new Error(\\"Dynamic attributes have to be an array, found \\" + typeof \\"selected\\" + \\" instead\\");
+    })(), _len = _a.length; _i < _len; _i += 2) {
+        attr(_a[_i], _a[_i + 1]);
+    }
+
+    elementOpenEnd();
+    text(\\"Answer\\");
+    elementClose(\\"option\\");
+    elementClose(\\"select\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"DynamicAttribute\\";
+}
+
+export default function DynamicAttribute(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform embed nested.template 1`] = `
+"
+import { _template as _parent } from \\"parent.twig\\";
+import { createSubContext } from \\"melody-runtime\\";
+import { _template as _embed$2 } from \\"foo.twig\\";
+import { _template as _embed } from \\"bar.twig\\";
+import { text, elementOpen, elementClose } from \\"melody-idom\\";
+export const _template = Object.create(_parent);
+
+const _embed$1 = Object.create(_embed),
+      _embed$3 = Object.create(_embed$2);
+
+_embed$3.renderHello = function (_context) {
+    text(_context.fun);
+
+    _embed$1.render(_context);
+};
+
+_embed$1.renderHello = function (_context) {
+    text(_context.message);
+};
+
+_embed$1.renderTest = function (_context) {};
+
+_template.renderHello = function (_context) {
+    elementOpen(\\"div\\", null, null, \\"class\\", \\"test-\\" + _context.foo + \\" bar\\");
+
+    _embed$3.render(createSubContext(_context, {
+        foo: \\"bar\\"
+    }));
+
+    elementClose(\\"div\\");
+};
+
+_template.render = function (_context) {
+    _parent.render.call(_template, _context);
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"EmbedNested\\";
+}
+
+export default function EmbedNested(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform expressions.template 1`] = `
+"
+import { isEmpty } from \\"melody-runtime\\";
+import { includes, startsWith, endsWith, range } from \\"lodash\\";
+import { text, raw } from \\"melody-idom\\";
+export const _template = {};
+
+_template.render = function (_context) {
+  text(_context.a & _context.b);
+  text(_context.a | _context.b);
+  text(_context.a ^ _context.b);
+  text(_context.a || _context.b);
+  text(_context.a && _context.b);
+  text(_context.a == _context.b);
+  text(_context.a != _context.b);
+  text(_context.a < _context.b);
+  text(_context.a > _context.b);
+  text(_context.a >= _context.b);
+  text(_context.a <= _context.b);
+  text(includes(_context.b, _context.a));
+  text(!includes(_context.b, _context.a));
+  text(!!_context.a.match(_context.b));
+  text(!!_context.a.match(/^foo/));
+  text(startsWith(_context.a, _context.b));
+  text(endsWith(_context.a, _context.b));
+  text(range(_context.a, _context.b));
+  text(_context.a + _context.b);
+  text(_context.a - _context.b);
+  text(_context.a + _context.b);
+  text(_context.a * _context.b);
+  text(_context.a / _context.b);
+  text(_context.a % _context.b);
+  text(Math.pow(_context.a, _context.b));
+  text(_context.a ? _context.b : \\"\\");
+  text(_context.a || _context.b);
+  text(_context.a != null ? _context.a : _context.b);
+  text(!(_context.a % _context.b));
+  text(!!(_context.a % _context.b));
+  text(typeof _context.a !== \\"undefined\\");
+  text(!(typeof _context.a !== \\"undefined\\"));
+  text(isEmpty(_context.isEmpty));
+  text(!isEmpty(_context.a));
+  text(!(_context.a % 2));
+  text(!!(_context.a % 2));
+  text(Array.isArray(_context.a));
+  text(!Array.isArray(_context.a));
+  text(_context.a === null);
+  text(!(_context.a === null));
+  text(!!(_context.a % 2));
+  text(!!!(_context.a % 2));
+  text(_context.a === _context.b);
+  text(!(_context.a === _context.b));
+  console.log(_context.test);
+  text(range(2, 3 + 1).sort().join(\\",\\"));
+  text(range(3 + 1).sort().join(\\",\\"));
+  text(range(2, 3 + 1, 2).sort().join(\\",\\"));
+  raw(_context.test);
+  text(Math.abs(2.4));
+  text(JSON.stringify({
+    a: \\"b\\"
+  }).trim());
+  text([2, 3].length);
+  text(\\"test.foo\\".split(\\".\\"));
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Expressions\\";
+}
+
+export default function Expressions(props) {
+  return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform extends with context.template 1`] = `
+"
+import { _template as _parent } from \\"parent.twig\\";
+import { createSubContext } from \\"melody-runtime\\";
+import { text, elementOpen, elementClose } from \\"melody-idom\\";
+export const _template = Object.create(_parent);
+const _statics = [\\"class\\", \\"test\\"];
+
+_template.renderHello = function (_context) {
+    elementOpen(\\"div\\", \\"1\\", _statics);
+    text(_context.message);
+    elementClose(\\"div\\");
+};
+
+_template.render = function (_context) {
+    const _context$1 = createSubContext(_context);
+
+    _context$1.foo = \\"bar\\";
+
+    _parent.render.call(_template, _context$1);
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"ExtendsWithContext\\";
+}
+
+export default function ExtendsWithContext(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform extends.template 1`] = `
+"
+import { _template as _parent } from \\"parent.twig\\";
+import { Item as Item$2 } from \\"./ItemList\\";
+import Item$1 from \\"./Item\\";
+import _include$1 from \\"test.twig\\";
+import _include from \\"test.twig\\";
+import { text, component, ref, elementOpen, elementClose } from \\"melody-idom\\";
+export const _template = Object.create(_parent);
+const _statics = [\\"ref\\", ref(\\"hello\\"), \\"class\\", \\"test\\"];
+
+_template.renderHello = function (_context) {
+    elementOpen(\\"div\\", \\"1\\", _statics, \\"onclick\\", _context.foo);
+    text(_context.message);
+    text(\\"&\\");
+
+    _include({
+        foo: \\"bar\\"
+    });
+
+    _include$1.render({
+        foo: \\"bar\\"
+    });
+
+    component(_context.Item, \\"mm3lv9U\\", _context.item);
+    component(Item$1, \\">VPRiNW\\", _context.item);
+    component(Item$2, \\"iQ;mqqq\\", {
+        item: _context.item
+    });
+    elementClose(\\"div\\");
+};
+
+_template.render = function (_context) {
+    _parent.render.call(_template, _context);
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"Extends\\";
+}
+
+export default function Extends(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform for if else.template 1`] = `
+"
+import { isEmpty } from \\"melody-runtime\\";
+import { text, elementOpen, elementClose, elementVoid } from \\"melody-idom\\";
+export const _template = {};
+
+_template.render = function (_context) {
+    elementOpen(\\"ul\\", null, null);
+    let _uniterated = true;
+    {
+        let _sequence = _context.c.slice(3, _context.c.length),
+            a = 0,
+            _length = _sequence.length,
+            b = _sequence[0];
+
+        for (; a < _length; a++, b = _sequence[_index]) {
+            if (!(b % 2)) {
+                elementOpen(\\"li\\", null, null);
+                text(a);
+                text(\\" - \\");
+                text(b);
+                elementClose(\\"li\\");
+                _uniterated = false;
+            }
+        }
+    }
+
+    if (_uniterated) {
+        elementOpen(\\"li\\", null, null);
+        text(\\"No results found\\");
+        elementClose(\\"li\\");
+    }
+
+    elementClose(\\"ul\\");
+    elementOpen(\\"ul\\", null, null);
+    let _uniterated$1 = true;
+    {
+        let _sequence = _context.c.slice(0, _context.c.length - 1),
+            a = 0,
+            _length = _sequence.length,
+            b = _sequence[0];
+
+        for (; a < _length; a++, b = _sequence[_index]) {
+            if (typeof b !== \\"undefined\\" && !!(b % 2)) {
+                elementOpen(\\"li\\", null, null);
+                text(a);
+                text(\\" - \\");
+                text(b);
+                elementClose(\\"li\\");
+                _uniterated$1 = false;
+            }
+        }
+    }
+
+    if (_uniterated$1) {
+        if (isEmpty(_context.regionName)) {
+            elementOpen(\\"li\\", null, null);
+            elementVoid(\\"span\\", null, null);
+            text(\\"No results found\\");
+            elementClose(\\"li\\");
+        }
+    }
+
+    elementClose(\\"ul\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"ForIfElse\\";
+}
+
+export default function ForIfElse(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform for local.template 1`] = `
+"
+import { text, elementOpen, elementClose } from \\"melody-idom\\";
+import { round } from \\"melody-runtime\\";
+export const _template = {};
+
+_template.render = function (_context) {
+    elementOpen(\\"ul\\", null, null);
+    {
+        let _sequence = _context.items,
+            _index = 0,
+            _length = _sequence.length,
+            item = _sequence[0],
+            _index$1 = 1,
+            _revindex = _length,
+            _revindex$1 = _length - 1,
+            _first = true,
+            _last = 1 === _length;
+
+        for (; _index < _length; _index++, item = _sequence[_index]) {
+            elementOpen(\\"li\\", null, null, \\"class\\", _last ? \\"last\\" : \\"\\");
+            text(round((_index$1 - 1) / 2, 0, \\"floor\\"));
+            text(item.name);
+            text(_index$1);
+            elementClose(\\"li\\");
+            _index$1++;
+            _revindex--;
+            _revindex$1--;
+            _first = false;
+            _last = _revindex$1 === 0;
+        }
+    }
+    elementClose(\\"ul\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"ForLocal\\";
+}
+
+export default function ForLocal(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform for with block and key.template 1`] = `
+"
+import { createSubContext } from \\"melody-runtime\\";
+import { text, elementOpen, elementClose } from \\"melody-idom\\";
+export const _template = {};
+
+_template.renderItemContent = function (_context) {
+    text(_context.i);
+    text(_context.loop.index0);
+    text(_context.item.name);
+    text(_context.loop.index);
+};
+
+_template.render = function (_context) {
+    elementOpen(\\"ul\\", null, null);
+    {
+        let _sequence = _context.items,
+            i = 0,
+            _length = _sequence.length,
+            _context$1 = createSubContext(_context, {
+            item: _sequence[0],
+            loop: {
+                index: 1,
+                index0: 0,
+                length: _length,
+                revindex: _length,
+                revindex0: _length - 1,
+                first: true,
+                last: 1 === _length
+            },
+            i: i
+        });
+
+        for (; i < _length; i++) {
+            elementOpen(\\"li\\", null, null, \\"class\\", _context$1.loop.last ? \\"last\\" : \\"\\");
+            this.renderItemContent(_context$1);
+            elementClose(\\"li\\");
+            _context$1.loop.index0++;
+            _context$1.loop.index++;
+            _context$1.loop.revindex--;
+            _context$1.loop.revindex0--;
+            _context$1.loop.first = false;
+            _context$1.loop.last = _context$1.loop.revindex === 0;
+            _context$1.item = _sequence[i + 1];
+            _context$1.i = i;
+        }
+    }
+    elementClose(\\"ul\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"ForWithBlockAndKey\\";
+}
+
+export default function ForWithBlockAndKey(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform for with block.template 1`] = `
+"
+import { text, elementOpen, elementClose } from \\"melody-idom\\";
+import { title, createSubContext } from \\"melody-runtime\\";
+export const _template = {};
+
+_template.renderTitle = function (_context) {
+    text(_context.loop.index0);
+    text(title(_context.item.name));
+    text(_context.loop.index);
+};
+
+_template.render = function (_context) {
+    elementOpen(\\"h1\\", null, null);
+    text(title(_context.title));
+    elementClose(\\"h1\\");
+    elementOpen(\\"ul\\", null, null);
+    {
+        let _sequence = _context.items,
+            _index = 0,
+            _length = _sequence.length,
+            _context$1 = createSubContext(_context, {
+            item: _sequence[0],
+            loop: {
+                index: 1,
+                index0: 0,
+                length: _length,
+                revindex: _length,
+                revindex0: _length - 1,
+                first: true,
+                last: 1 === _length
+            }
+        });
+
+        for (; _index < _length; _index++) {
+            elementOpen(\\"li\\", null, null, \\"class\\", _context$1.loop.last ? \\"last\\" : \\"\\");
+            this.renderTitle(_context$1);
+            elementClose(\\"li\\");
+            _context$1.loop.index0++;
+            _context$1.loop.index++;
+            _context$1.loop.revindex--;
+            _context$1.loop.revindex0--;
+            _context$1.loop.first = false;
+            _context$1.loop.last = _context$1.loop.revindex === 0;
+            _context$1.item = _sequence[_index + 1];
+        }
+    }
+    elementClose(\\"ul\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"ForWithBlock\\";
+}
+
+export default function ForWithBlock(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform for with include only.template 1`] = `
+"
+import { elementOpen, elementClose } from \\"melody-idom\\";
+import _include from \\"./Star.twig\\";
+import { range as range$1 } from \\"lodash\\";
+export const _template = {};
+
+_template.render = function (_context) {
+  {
+    let _sequence = range$1(1, _context.category + 1),
+        _index = 0,
+        _length = _sequence.length,
+        foo = _sequence[0];
+
+    for (; _index < _length; _index++, foo = _sequence[_index]) {
+      elementOpen(\\"span\\", \\"\\" + foo, null, \\"class\\", \\"qtp-item__star icon-ic icon-icn_star--white \\" + foo);
+
+      _include();
+
+      elementClose(\\"span\\");
+    }
+  }
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"ForWithIncludeOnly\\";
+}
+
+export default function ForWithIncludeOnly(props) {
+  return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform for with include.template 1`] = `
+"
+import { createSubContext } from \\"melody-runtime\\";
+import { elementOpen, elementClose } from \\"melody-idom\\";
+import _include from \\"./Star.twig\\";
+import { range as range$1 } from \\"lodash\\";
+export const _template = {};
+
+_template.render = function (_context) {
+  {
+    let _sequence = range$1(1, _context.category + 1),
+        _index = 0,
+        _length = _sequence.length,
+        _context$1 = createSubContext(_context, {
+      foo: _sequence[0],
+      loop: {
+        index: 1,
+        index0: 0,
+        length: _length,
+        revindex: _length,
+        revindex0: _length - 1,
+        first: true,
+        last: 1 === _length
+      }
+    });
+
+    for (; _index < _length; _index++) {
+      elementOpen(\\"span\\", \\"\\" + _context$1.foo, null, \\"class\\", \\"qtp-item__star icon-ic icon-icn_star--white \\" + _context$1.foo);
+
+      _include(_context$1);
+
+      elementClose(\\"span\\");
+      _context$1.loop.index0++;
+      _context$1.loop.index++;
+      _context$1.loop.revindex--;
+      _context$1.loop.revindex0--;
+      _context$1.loop.first = false;
+      _context$1.loop.last = _context$1.loop.revindex === 0;
+      _context$1.foo = _sequence[_index + 1];
+    }
+  }
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"ForWithInclude\\";
+}
+
+export default function ForWithInclude(props) {
+  return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform include.template 1`] = `
+"
+import * as i4 from \\"foo\\";
+import { i2, i3 as _i3 } from \\"foo\\";
+export const _template = {};
+
+_template.render = function (_context) {};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Include\\";
+}
+
+export default function Include(props) {
+  return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform itemElement.template 1`] = `
+"
+import { text, elementOpen, elementClose, elementVoid } from \\"melody-idom\\";
+export const _template = {};
+const _statics = [\\"class\\", \\"visually-hidden\\"],
+      _statics$1 = [\\"class\\", \\"item__image-placeholder hide-text trv-maincolor-04-very-light icon-icn_pictures_fill_light\\"],
+      _statics$2 = [\\"class\\", \\"icon-icn_heart_dark_outlined icon-ic item__favourite-btn\\"],
+      _statics$3 = [\\"class\\", \\"item__image-wrapper pos-relative\\"],
+      _statics$4 = [\\"class\\", \\"item__image-area\\"],
+      _statics$5 = [\\"class\\", \\"item__name__copytext td-underline--hover\\"],
+      _statics$6 = [\\"class\\", \\"item__name item__name--5-star mt-0 item__slideout-toggle\\", \\"itemprop\\", \\"name\\"],
+      _statics$7 = [\\"class\\", \\"item__mini-icon fl-leading hide-text border-radius trv-maincolor-01\\"],
+      _statics$8 = [\\"class\\", \\"fs-normal fw-bold\\"],
+      _statics$9 = [\\"class\\", \\"item__distance\\"],
+      _statics$10 = [\\"class\\", \\"details__paragraph td-underline--hover\\"],
+      _statics$11 = [\\"class\\", \\"item__location ov-hidden item__slideout-toggle\\"],
+      _statics$12 = [\\"class\\", \\"item__mini-icon fl-leading hide-text border-radius  icon-icn_smilie2_light \\"],
+      _statics$13 = [\\"class\\", \\"item__rating-number fs-normal fw-bold\\", \\"itemprop\\", \\"ratingValue\\"],
+      _statics$14 = [\\"class\\", \\"review__extended-text\\"],
+      _statics$15 = [\\"class\\", \\"whs-nowrap\\"],
+      _statics$16 = [\\"class\\", \\"review__count\\", \\"itemprop\\", \\"reviewCount\\"],
+      _statics$17 = [\\"class\\", \\"details__paragraph td-underline--hover\\", \\"itemtype\\", \\"http://schema.org/AggregateRating\\"],
+      _statics$18 = [\\"class\\", \\"item__review item__slideout-toggle\\"],
+      _statics$19 = [\\"class\\", \\"item__details\\"],
+      _statics$20 = [\\"class\\", \\"visually-hidden\\"],
+      _statics$21 = [\\"class\\", \\"deals__price\\"],
+      _statics$22 = [\\"class\\", \\"btn--reset  font-trv-maincolor-04-light td-underline--hover\\"],
+      _statics$23 = [\\"class\\", \\"deal-other__offer\\"],
+      _statics$24 = [\\"class\\", \\"deal-other__more btn--reset font-trv-maincolor-01 item__slideout-toggle td-underline--hover\\"],
+      _statics$25 = [\\"class\\", \\"item__deal-other\\"],
+      _statics$26 = [\\"class\\", \\"item__deal-best-headline m-0 fw-normal ta-center\\"],
+      _statics$27 = [\\"class\\", \\"pt-0 font-small font-trv-maincolor-04-lighter cur-disabled--hover\\"],
+      _statics$28 = [\\"class\\", \\"item__best-details\\", \\"itemprop\\", \\"priceRange\\"],
+      _statics$29 = [\\"class\\", \\"btn btn--icon \\"],
+      _statics$30 = [\\"class\\", \\"item__deal-best-link block ov-hidden font-dark\\"],
+      _statics$31 = [\\"class\\", \\"item__deal-best\\"],
+      _statics$32 = [\\"class\\", \\"item__flex-column\\"],
+      _statics$33 = [\\"class\\", \\"h4 visuallyhidden\\"],
+      _statics$34 = [\\"class\\", \\"h5 visuallyhidden\\"],
+      _statics$35 = [\\"class\\", \\"item__slideout-close p-0 fl-trailing hide-text icon-icn__ip-close\\"],
+      _statics$36 = [\\"class\\", \\"item__slideout-nav clearfix\\"],
+      _statics$37 = [\\"class\\", \\"h5 ta-center\\"],
+      _statics$38 = [\\"class\\", \\"gutter-box\\"],
+      _statics$39 = [\\"class\\", \\"item__slideout slideout--inactive ov-hidden\\"],
+      _statics$40 = [\\"class\\", \\"item bg-white clearfix\\", \\"itemtype\\", \\"http://schema.org/Hotel\\"],
+      _statics$41 = [\\"class\\", \\"item-order__list-item\\"],
+      _statics$42 = [\\"class\\", \\"item__image-placeholder hide-text trv-maincolor-04-very-light icon-icn_pictures_fill_light\\"],
+      _statics$43 = [\\"class\\", \\"icon-icn_heart_dark_outlined icon-ic item__favourite-btn\\"],
+      _statics$44 = [\\"class\\", \\"item__image-wrapper pos-relative\\"],
+      _statics$45 = [\\"class\\", \\"item__image-area\\"],
+      _statics$46 = [\\"class\\", \\"item__name__copytext td-underline--hover\\"],
+      _statics$47 = [\\"class\\", \\"item__name item__name--3-star mt-0 item__slideout-toggle\\", \\"itemprop\\", \\"name\\"],
+      _statics$48 = [\\"class\\", \\"item__mini-icon fl-leading hide-text border-radius trv-maincolor-01\\"],
+      _statics$49 = [\\"class\\", \\"fs-normal fw-bold\\"],
+      _statics$50 = [\\"class\\", \\"item__distance\\"],
+      _statics$51 = [\\"class\\", \\"details__paragraph td-underline--hover\\"],
+      _statics$52 = [\\"class\\", \\"item__location ov-hidden item__slideout-toggle\\"],
+      _statics$53 = [\\"class\\", \\"item__mini-icon fl-leading hide-text border-radius  icon-icn_smilie2_light \\"],
+      _statics$54 = [\\"class\\", \\"item__rating-number fs-normal fw-bold\\", \\"itemprop\\", \\"ratingValue\\"],
+      _statics$55 = [\\"class\\", \\"review__extended-text\\"],
+      _statics$56 = [\\"class\\", \\"whs-nowrap\\"],
+      _statics$57 = [\\"class\\", \\"review__count\\", \\"itemprop\\", \\"reviewCount\\"],
+      _statics$58 = [\\"class\\", \\"details__paragraph td-underline--hover\\", \\"itemtype\\", \\"http://schema.org/AggregateRating\\"],
+      _statics$59 = [\\"class\\", \\"item__review item__slideout-toggle\\"],
+      _statics$60 = [\\"class\\", \\"item__details\\"],
+      _statics$61 = [\\"class\\", \\"visually-hidden\\"],
+      _statics$62 = [\\"class\\", \\"deals__price\\"],
+      _statics$63 = [\\"class\\", \\"btn--reset  font-trv-maincolor-04-light td-underline--hover\\"],
+      _statics$64 = [\\"class\\", \\"deal-other__offer\\"],
+      _statics$65 = [\\"class\\", \\"deal-other__more btn--reset font-trv-maincolor-01 item__slideout-toggle td-underline--hover\\"],
+      _statics$66 = [\\"class\\", \\"item__deal-other\\"],
+      _statics$67 = [\\"class\\", \\"item__deal-best-headline m-0 fw-normal ta-center\\"],
+      _statics$68 = [\\"class\\", \\"pt-0 font-small font-trv-maincolor-04-lighter cur-disabled--hover\\"],
+      _statics$69 = [\\"class\\", \\"item__best-details\\", \\"itemprop\\", \\"priceRange\\"],
+      _statics$70 = [\\"class\\", \\"btn btn--icon \\"],
+      _statics$71 = [\\"class\\", \\"item__deal-best-link block ov-hidden font-dark\\"],
+      _statics$72 = [\\"class\\", \\"item__deal-best\\"],
+      _statics$73 = [\\"class\\", \\"item__flex-column\\"],
+      _statics$74 = [\\"class\\", \\"h4 visuallyhidden\\"],
+      _statics$75 = [\\"class\\", \\"h5 visuallyhidden\\"],
+      _statics$76 = [\\"class\\", \\"item__slideout-close p-0 fl-trailing hide-text icon-icn__ip-close\\"],
+      _statics$77 = [\\"class\\", \\"item__slideout-nav clearfix\\"],
+      _statics$78 = [\\"class\\", \\"h5 ta-center\\"],
+      _statics$79 = [\\"class\\", \\"gutter-box\\"],
+      _statics$80 = [\\"class\\", \\"item__slideout slideout--inactive ov-hidden\\"],
+      _statics$81 = [\\"class\\", \\"item bg-white clearfix\\", \\"itemtype\\", \\"http://schema.org/Hotel\\"],
+      _statics$82 = [\\"class\\", \\"item-order__list-item\\"],
+      _statics$83 = [\\"class\\", \\"item__image-placeholder hide-text trv-maincolor-04-very-light icon-icn_pictures_fill_light\\"],
+      _statics$84 = [\\"class\\", \\"icon-icn_heart_dark_outlined icon-ic item__favourite-btn\\"],
+      _statics$85 = [\\"class\\", \\"item__image-wrapper pos-relative\\"],
+      _statics$86 = [\\"class\\", \\"item__image-area\\"],
+      _statics$87 = [\\"class\\", \\"item__name__copytext td-underline--hover\\"],
+      _statics$88 = [\\"class\\", \\"item__name item__name--4-star mt-0 item__slideout-toggle\\", \\"itemprop\\", \\"name\\"],
+      _statics$89 = [\\"class\\", \\"item__mini-icon fl-leading hide-text border-radius trv-maincolor-01\\"],
+      _statics$90 = [\\"class\\", \\"fs-normal fw-bold\\"],
+      _statics$91 = [\\"class\\", \\"item__distance\\"],
+      _statics$92 = [\\"class\\", \\"details__paragraph td-underline--hover\\"],
+      _statics$93 = [\\"class\\", \\"item__location ov-hidden item__slideout-toggle\\"],
+      _statics$94 = [\\"class\\", \\"item__mini-icon fl-leading hide-text border-radius  icon-icn_smilie2_light \\"],
+      _statics$95 = [\\"class\\", \\"item__rating-number fs-normal fw-bold\\", \\"itemprop\\", \\"ratingValue\\"],
+      _statics$96 = [\\"class\\", \\"review__extended-text\\"],
+      _statics$97 = [\\"class\\", \\"whs-nowrap\\"],
+      _statics$98 = [\\"class\\", \\"review__count\\", \\"itemprop\\", \\"reviewCount\\"],
+      _statics$99 = [\\"class\\", \\"details__paragraph td-underline--hover\\", \\"itemtype\\", \\"http://schema.org/AggregateRating\\"],
+      _statics$100 = [\\"class\\", \\"item__review item__slideout-toggle\\"],
+      _statics$101 = [\\"class\\", \\"item__details\\"],
+      _statics$102 = [\\"class\\", \\"visually-hidden\\"],
+      _statics$103 = [\\"class\\", \\"deals__price\\"],
+      _statics$104 = [\\"class\\", \\"btn--reset  font-trv-maincolor-04-light td-underline--hover\\"],
+      _statics$105 = [\\"class\\", \\"deal-other__offer\\"],
+      _statics$106 = [\\"class\\", \\"deal-other__more btn--reset font-trv-maincolor-01 item__slideout-toggle td-underline--hover\\"],
+      _statics$107 = [\\"class\\", \\"item__deal-other\\"],
+      _statics$108 = [\\"class\\", \\"item__deal-best-headline m-0 fw-normal ta-center\\"],
+      _statics$109 = [\\"class\\", \\"item__deal-hint p-gutter-quarter ta-center font-tiny fs-normal trv-maincolor-04-lightest\\"],
+      _statics$110 = [\\"class\\", \\"pt-0 font-small font-trv-maincolor-04-lighter cur-disabled--hover\\"],
+      _statics$111 = [\\"class\\", \\"item__best-details\\", \\"itemprop\\", \\"priceRange\\"],
+      _statics$112 = [\\"class\\", \\"btn btn--icon \\"],
+      _statics$113 = [\\"class\\", \\"item__deal-best-link block ov-hidden font-dark\\"],
+      _statics$114 = [\\"class\\", \\"item__deal-best\\"],
+      _statics$115 = [\\"class\\", \\"item__flex-column\\"],
+      _statics$116 = [\\"class\\", \\"h4 visuallyhidden\\"],
+      _statics$117 = [\\"class\\", \\"h5 visuallyhidden\\"],
+      _statics$118 = [\\"class\\", \\"item__slideout-close p-0 fl-trailing hide-text icon-icn__ip-close\\"],
+      _statics$119 = [\\"class\\", \\"item__slideout-nav clearfix\\"],
+      _statics$120 = [\\"class\\", \\"h5 ta-center\\"],
+      _statics$121 = [\\"class\\", \\"gutter-box\\"],
+      _statics$122 = [\\"class\\", \\"item__slideout slideout--inactive ov-hidden\\"],
+      _statics$123 = [\\"class\\", \\"item bg-white clearfix\\", \\"itemtype\\", \\"http://schema.org/Hotel\\"],
+      _statics$124 = [\\"class\\", \\"item-order__list-item\\"],
+      _statics$125 = [\\"class\\", \\"item__image-placeholder hide-text trv-maincolor-04-very-light icon-icn_pictures_fill_light\\"],
+      _statics$126 = [\\"class\\", \\"icon-icn_heart_dark_outlined icon-ic item__favourite-btn\\"],
+      _statics$127 = [\\"class\\", \\"item__image-wrapper pos-relative\\"],
+      _statics$128 = [\\"class\\", \\"item__image-area\\"],
+      _statics$129 = [\\"class\\", \\"item__name__copytext td-underline--hover\\"],
+      _statics$130 = [\\"class\\", \\"item__name item__name--2-star mt-0 item__slideout-toggle\\", \\"itemprop\\", \\"name\\"],
+      _statics$131 = [\\"class\\", \\"item__mini-icon fl-leading hide-text border-radius trv-maincolor-01\\"],
+      _statics$132 = [\\"class\\", \\"fs-normal fw-bold\\"],
+      _statics$133 = [\\"class\\", \\"item__distance\\"],
+      _statics$134 = [\\"class\\", \\"details__paragraph td-underline--hover\\"],
+      _statics$135 = [\\"class\\", \\"item__location ov-hidden item__slideout-toggle\\"],
+      _statics$136 = [\\"class\\", \\"item__mini-icon fl-leading hide-text border-radius  icon-icn_smilie2_light \\"],
+      _statics$137 = [\\"class\\", \\"item__rating-number fs-normal fw-bold\\", \\"itemprop\\", \\"ratingValue\\"],
+      _statics$138 = [\\"class\\", \\"review__extended-text\\"],
+      _statics$139 = [\\"class\\", \\"whs-nowrap\\"],
+      _statics$140 = [\\"class\\", \\"review__count\\", \\"itemprop\\", \\"reviewCount\\"],
+      _statics$141 = [\\"class\\", \\"details__paragraph td-underline--hover\\", \\"itemtype\\", \\"http://schema.org/AggregateRating\\"],
+      _statics$142 = [\\"class\\", \\"item__review item__slideout-toggle\\"],
+      _statics$143 = [\\"class\\", \\"item__details\\"],
+      _statics$144 = [\\"class\\", \\"visually-hidden\\"],
+      _statics$145 = [\\"class\\", \\"deals__price\\"],
+      _statics$146 = [\\"class\\", \\"btn--reset  font-trv-maincolor-04-light td-underline--hover\\"],
+      _statics$147 = [\\"class\\", \\"deal-other__offer\\"],
+      _statics$148 = [\\"class\\", \\"deal-other__more btn--reset font-trv-maincolor-01 item__slideout-toggle td-underline--hover\\"],
+      _statics$149 = [\\"class\\", \\"item__deal-other\\"],
+      _statics$150 = [\\"class\\", \\"item__deal-best-headline m-0 fw-normal ta-center\\"],
+      _statics$151 = [\\"class\\", \\"pt-0 font-small font-trv-maincolor-04-lighter cur-disabled--hover\\"],
+      _statics$152 = [\\"class\\", \\"item__best-details\\", \\"itemprop\\", \\"priceRange\\"],
+      _statics$153 = [\\"class\\", \\"btn btn--icon \\"],
+      _statics$154 = [\\"class\\", \\"item__deal-best-link block ov-hidden font-dark\\"],
+      _statics$155 = [\\"class\\", \\"item__deal-best\\"],
+      _statics$156 = [\\"class\\", \\"item__flex-column\\"],
+      _statics$157 = [\\"class\\", \\"h4 visuallyhidden\\"],
+      _statics$158 = [\\"class\\", \\"h5 visuallyhidden\\"],
+      _statics$159 = [\\"class\\", \\"item__slideout-close p-0 fl-trailing hide-text icon-icn__ip-close\\"],
+      _statics$160 = [\\"class\\", \\"item__slideout-nav clearfix\\"],
+      _statics$161 = [\\"class\\", \\"h5 ta-center\\"],
+      _statics$162 = [\\"class\\", \\"gutter-box\\"],
+      _statics$163 = [\\"class\\", \\"item__slideout slideout--inactive ov-hidden\\"],
+      _statics$164 = [\\"class\\", \\"item bg-white clearfix\\", \\"itemtype\\", \\"http://schema.org/Hotel\\"],
+      _statics$165 = [\\"class\\", \\"item-order__list-item\\"],
+      _statics$166 = [\\"class\\", \\"item__image-placeholder hide-text trv-maincolor-04-very-light icon-icn_pictures_fill_light\\"],
+      _statics$167 = [\\"class\\", \\"icon-icn_heart_dark_outlined icon-ic item__favourite-btn\\"],
+      _statics$168 = [\\"class\\", \\"item__image-wrapper pos-relative\\"],
+      _statics$169 = [\\"class\\", \\"item__image-area\\"],
+      _statics$170 = [\\"class\\", \\"item__name__copytext td-underline--hover\\"],
+      _statics$171 = [\\"class\\", \\"item__name item__name--5-star mt-0 item__slideout-toggle\\", \\"itemprop\\", \\"name\\"],
+      _statics$172 = [\\"class\\", \\"item__mini-icon fl-leading hide-text border-radius trv-maincolor-01\\"],
+      _statics$173 = [\\"class\\", \\"fs-normal fw-bold\\"],
+      _statics$174 = [\\"class\\", \\"item__distance\\"],
+      _statics$175 = [\\"class\\", \\"details__paragraph td-underline--hover\\"],
+      _statics$176 = [\\"class\\", \\"item__location ov-hidden item__slideout-toggle\\"],
+      _statics$177 = [\\"class\\", \\"item__mini-icon fl-leading hide-text border-radius  icon-icn_smilie2_light \\"],
+      _statics$178 = [\\"class\\", \\"item__rating-number fs-normal fw-bold\\", \\"itemprop\\", \\"ratingValue\\"],
+      _statics$179 = [\\"class\\", \\"review__extended-text\\"],
+      _statics$180 = [\\"class\\", \\"whs-nowrap\\"],
+      _statics$181 = [\\"class\\", \\"review__count\\", \\"itemprop\\", \\"reviewCount\\"],
+      _statics$182 = [\\"class\\", \\"details__paragraph td-underline--hover\\", \\"itemtype\\", \\"http://schema.org/AggregateRating\\"],
+      _statics$183 = [\\"class\\", \\"item__review item__slideout-toggle\\"],
+      _statics$184 = [\\"class\\", \\"item__details\\"],
+      _statics$185 = [\\"class\\", \\"visually-hidden\\"],
+      _statics$186 = [\\"class\\", \\"deals__price\\"],
+      _statics$187 = [\\"class\\", \\"btn--reset  font-trv-maincolor-04-light td-underline--hover\\"],
+      _statics$188 = [\\"class\\", \\"deal-other__offer\\"],
+      _statics$189 = [\\"class\\", \\"deal-other__more btn--reset font-trv-maincolor-01 item__slideout-toggle td-underline--hover\\"],
+      _statics$190 = [\\"class\\", \\"item__deal-other\\"],
+      _statics$191 = [\\"class\\", \\"item__deal-best-headline m-0 fw-normal ta-center\\"],
+      _statics$192 = [\\"class\\", \\"pt-0 font-small font-trv-maincolor-04-lighter cur-disabled--hover\\"],
+      _statics$193 = [\\"class\\", \\"item__best-details\\", \\"itemprop\\", \\"priceRange\\"],
+      _statics$194 = [\\"class\\", \\"btn btn--icon \\"],
+      _statics$195 = [\\"class\\", \\"item__deal-best-link block ov-hidden font-dark\\"],
+      _statics$196 = [\\"class\\", \\"item__deal-best\\"],
+      _statics$197 = [\\"class\\", \\"item__flex-column\\"],
+      _statics$198 = [\\"class\\", \\"h4 visuallyhidden\\"],
+      _statics$199 = [\\"class\\", \\"h5 visuallyhidden\\"],
+      _statics$200 = [\\"class\\", \\"item__slideout-close p-0 fl-trailing hide-text icon-icn__ip-close\\"],
+      _statics$201 = [\\"class\\", \\"item__slideout-nav clearfix\\"],
+      _statics$202 = [\\"class\\", \\"h5 ta-center\\"],
+      _statics$203 = [\\"class\\", \\"gutter-box\\"],
+      _statics$204 = [\\"class\\", \\"item__slideout slideout--inactive ov-hidden\\"],
+      _statics$205 = [\\"class\\", \\"item bg-white clearfix\\", \\"itemtype\\", \\"http://schema.org/Hotel\\"],
+      _statics$206 = [\\"class\\", \\"item-order__list-item\\"],
+      _statics$207 = [\\"class\\", \\"item-order\\"],
+      _statics$208 = [\\"class\\", \\"item-list p-gutter-0 bg-trv-maincolor-04-lightest\\"];
+
+_template.render = function (_context) {
+    elementOpen(\\"section\\", \\"Lkc7~c-\\", _statics$208);
+    elementOpen(\\"h1\\", \\".d#fp_F\\", _statics);
+    text(\\"Deals\\");
+    elementClose(\\"h1\\");
+    elementOpen(\\"ol\\", \\"HuuLrL*\\", _statics$207);
+    elementOpen(\\"li\\", \\"qTap[BD\\", _statics$41);
+    elementOpen(\\"article\\", \\"8ev$[z7\\", _statics$40, \\"itemscope\\", true);
+    elementOpen(\\"div\\", \\"?W4tU/-\\", _statics$4);
+    elementOpen(\\"div\\", \\"?{FuBXm\\", _statics$3);
+    elementOpen(\\"span\\", \\"5d^YN,P\\", _statics$1);
+    text(\\"No image for this deal.\\");
+    elementClose(\\"span\\");
+    elementOpen(\\"button\\", \\"@-<c\`6^\\", _statics$2);
+    text(\\"Add the \\");
+    elementOpen(\\"em\\", null, null);
+    text(\\"Lorem Ipsum dolor sit amet\\");
+    elementClose(\\"em\\");
+    text(\\" to my favorites list\\");
+    elementClose(\\"button\\");
+    elementClose(\\"div\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", \\"7k,7K\`;\\", _statics$32);
+    elementOpen(\\"div\\", \\"Q0$y#=X\\", _statics$19);
+    elementOpen(\\"h2\\", \\"rmB}Ah<\\", _statics$6);
+    elementOpen(\\"span\\", \\"_CcTJwD\\", _statics$5);
+    text(\\"Lorem Ipsum dolor sit amet\\");
+    elementClose(\\"span\\");
+    elementClose(\\"h2\\");
+    elementOpen(\\"div\\", \\"s.f9<,U\\", _statics$11);
+    elementOpen(\\"em\\", \\"6xTrlYY\\", _statics$7);
+    text(\\"Next to location:\\");
+    elementClose(\\"em\\");
+    elementOpen(\\"p\\", \\"xR|+7*+\\", _statics$10);
+    elementOpen(\\"span\\", \\"KS!.p4:\\", _statics$9);
+    elementOpen(\\"span\\", null, null);
+    text(\\"Amsterdam,\\");
+    elementClose(\\"span\\");
+    elementOpen(\\"em\\", \\"k_mi:WC\\", _statics$8);
+    text(\\"1.2km\\");
+    elementClose(\\"em\\");
+    text(\\" to City centre \\");
+    elementClose(\\"span\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", \\"'<!.i.o\\", _statics$18);
+    elementOpen(\\"em\\", \\"(#iD,H0\\", _statics$12);
+    text(\\"“Good”\\");
+    elementClose(\\"em\\");
+    elementOpen(\\"p\\", \\"8WU6'A(\\", _statics$17, \\"itemscope\\", true);
+    elementOpen(\\"em\\", \\"BiKgAs0\\", _statics$13);
+    text(\\"76 / 100\\");
+    elementClose(\\"em\\");
+    text(\\" - \\");
+    elementOpen(\\"span\\", \\"?nto+kB\\", _statics$14);
+    text(\\"hotel rating\\");
+    elementClose(\\"span\\");
+    elementOpen(\\"span\\", \\"QNU7%+i\\", _statics$16);
+    elementOpen(\\"span\\", \\"iBKK;x'\\", _statics$15);
+    text(\\"(754 reviews)\\");
+    elementClose(\\"span\\");
+    elementClose(\\"span\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"section\\", \\"molByC~\\", _statics$25);
+    elementOpen(\\"h4\\", \\"pJ9@PIk\\", _statics$20);
+    text(\\"Other deals\\");
+    elementClose(\\"h4\\");
+    elementOpen(\\"ul\\", null, null);
+    elementOpen(\\"li\\", \\"vo,k-<D\\", _statics$23);
+    elementOpen(\\"button\\", \\"!i4{kJt\\", _statics$22);
+    elementOpen(\\"strong\\", \\"N=^qNXT\\", _statics$21);
+    text(\\"156€\\");
+    elementClose(\\"strong\\");
+    text(\\" booking.com\\");
+    elementClose(\\"button\\");
+    elementClose(\\"li\\");
+    elementClose(\\"ul\\");
+    elementOpen(\\"button\\", \\"69PRY!W\\", _statics$24);
+    text(\\"View more deals: 17\\");
+    elementClose(\\"button\\");
+    elementClose(\\"section\\");
+    elementOpen(\\"section\\", \\"g3a.pe|\\", _statics$31);
+    elementOpen(\\"div\\", \\"Ks)Ak9m\\", _statics$30);
+    elementOpen(\\"h4\\", \\"$$VVf07\\", _statics$26);
+    text(\\"Best of 17 websites\\");
+    elementClose(\\"h4\\");
+    elementOpen(\\"div\\", \\":|\`ABh}\\", _statics$28);
+    elementOpen(\\"div\\", null, null);
+    elementOpen(\\"p\\", \\"U(9#^50\\", _statics$27);
+    text(\\"Change date to see available deals.\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementClose(\\"div\\");
+    elementVoid(\\"button\\", \\"/8rVod-\\", _statics$29);
+    elementClose(\\"div\\");
+    elementClose(\\"section\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", \\"Kt?E*@r\\", _statics$39);
+    elementOpen(\\"section\\", null, null);
+    elementOpen(\\"h4\\", \\"rN3?^_R\\", _statics$33);
+    text(\\"Detailed information for this deal\\");
+    elementClose(\\"h4\\");
+    elementOpen(\\"nav\\", \\";N66AkK\\", _statics$36);
+    elementOpen(\\"h5\\", \\"gCjF!6I\\", _statics$34);
+    text(\\"Navigation for detailed information\\");
+    elementClose(\\"h5\\");
+    elementOpen(\\"p\\", \\"L_5vE[I\\", _statics$35);
+    text(\\"Close\\");
+    elementClose(\\"p\\");
+    elementClose(\\"nav\\");
+    elementOpen(\\"div\\", \\"oSZ2PC_\\", _statics$38);
+    elementOpen(\\"h5\\", \\"KnJ14OL\\", _statics$37);
+    text(\\"Slideout contents here\\");
+    elementClose(\\"h5\\");
+    elementOpen(\\"p\\", null, null);
+    text(\\"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error et eveniet hic numquam quisquam vel vitae!\\\\n                                Atque consectetur consequatur, dignissimos dolor eius harum officiis pariatur qui quia reprehenderit sit\\\\n                                ullam veritatis! Amet error exercitationem ipsam quibusdam ullam! Aperiam aspernatur aut harum hic impedit\\\\n                                sequi sint tenetur ullam velit, vitae voluptatibus.\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementClose(\\"section\\");
+    elementClose(\\"div\\");
+    elementClose(\\"article\\");
+    elementClose(\\"li\\");
+    elementOpen(\\"li\\", \\"k5}1\`$Z\\", _statics$82);
+    elementOpen(\\"article\\", \\"ou/9g^!\\", _statics$81, \\"itemscope\\", true);
+    elementOpen(\\"div\\", \\"%hgwb4X\\", _statics$45);
+    elementOpen(\\"div\\", \\"s{BP'{X\\", _statics$44);
+    elementOpen(\\"span\\", \\"wE>yhJ/\\", _statics$42);
+    text(\\"No image for this deal.\\");
+    elementClose(\\"span\\");
+    elementOpen(\\"button\\", \\"};S+~g!\\", _statics$43);
+    text(\\"Add the \\");
+    elementOpen(\\"em\\", null, null);
+    text(\\"Lorem Ipsum dolor sit amet\\");
+    elementClose(\\"em\\");
+    text(\\" to my favorites list\\");
+    elementClose(\\"button\\");
+    elementClose(\\"div\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", \\"vkms,}h\\", _statics$73);
+    elementOpen(\\"div\\", \\"3s.h]6D\\", _statics$60);
+    elementOpen(\\"h2\\", \\"OmNc]Y2\\", _statics$47);
+    elementOpen(\\"span\\", \\"bP}xC)K\\", _statics$46);
+    text(\\"Lorem Ipsum dolor sit amet\\");
+    elementClose(\\"span\\");
+    elementClose(\\"h2\\");
+    elementOpen(\\"div\\", \\"i6mu-!r\\", _statics$52);
+    elementOpen(\\"em\\", \\"}#F(-FU\\", _statics$48);
+    text(\\"Next to location:\\");
+    elementClose(\\"em\\");
+    elementOpen(\\"p\\", \\"vU>@ukv\\", _statics$51);
+    elementOpen(\\"span\\", \\"BMrlix?\\", _statics$50);
+    elementOpen(\\"span\\", null, null);
+    text(\\"Amsterdam,\\");
+    elementClose(\\"span\\");
+    elementOpen(\\"em\\", \\"dvFm\`?s\\", _statics$49);
+    text(\\"0.9km\\");
+    elementClose(\\"em\\");
+    text(\\" to London Heathrow Airport \\");
+    elementClose(\\"span\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", \\"UfQPepa\\", _statics$59);
+    elementOpen(\\"em\\", \\"[?y]Y!=\\", _statics$53);
+    text(\\"“Good”\\");
+    elementClose(\\"em\\");
+    elementOpen(\\"p\\", \\"={J8Mnz\\", _statics$58, \\"itemscope\\", true);
+    elementOpen(\\"em\\", \\"F~^yk87\\", _statics$54);
+    text(\\"76 / 100\\");
+    elementClose(\\"em\\");
+    text(\\" - \\");
+    elementOpen(\\"span\\", \\"L6?f$(P\\", _statics$55);
+    text(\\"hotel rating\\");
+    elementClose(\\"span\\");
+    elementOpen(\\"span\\", \\"y!+[4W?\\", _statics$57);
+    elementOpen(\\"span\\", \\"@]Iz;]M\\", _statics$56);
+    text(\\"(754 reviews)\\");
+    elementClose(\\"span\\");
+    elementClose(\\"span\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"section\\", \\"bqFWj1[\\", _statics$66);
+    elementOpen(\\"h4\\", \\"B2*yWMw\\", _statics$61);
+    text(\\"Other deals\\");
+    elementClose(\\"h4\\");
+    elementOpen(\\"ul\\", null, null);
+    elementOpen(\\"li\\", \\"(?d$eBV\\", _statics$64);
+    elementOpen(\\"button\\", \\">V5YGc>\\", _statics$63);
+    elementOpen(\\"strong\\", \\">W'~yVV\\", _statics$62);
+    text(\\"156€\\");
+    elementClose(\\"strong\\");
+    text(\\" booking.com\\");
+    elementClose(\\"button\\");
+    elementClose(\\"li\\");
+    elementClose(\\"ul\\");
+    elementOpen(\\"button\\", \\"n8|Ur1t\\", _statics$65);
+    text(\\"View more deals: 17\\");
+    elementClose(\\"button\\");
+    elementClose(\\"section\\");
+    elementOpen(\\"section\\", \\"4<=18}L\\", _statics$72);
+    elementOpen(\\"div\\", \\"MZ6;Kpd\\", _statics$71);
+    elementOpen(\\"h4\\", \\"'?,zN$i\\", _statics$67);
+    text(\\"Best of 17 websites\\");
+    elementClose(\\"h4\\");
+    elementOpen(\\"div\\", \\"n#Z+x1k\\", _statics$69);
+    elementOpen(\\"div\\", null, null);
+    elementOpen(\\"p\\", \\"6yy1j)1\\", _statics$68);
+    text(\\"Change date to see available deals.\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementClose(\\"div\\");
+    elementVoid(\\"button\\", \\"V,~xVYb\\", _statics$70);
+    elementClose(\\"div\\");
+    elementClose(\\"section\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", \\"bsI/YOa\\", _statics$80);
+    elementOpen(\\"section\\", null, null);
+    elementOpen(\\"h4\\", \\"K+IfVQV\\", _statics$74);
+    text(\\"Detailed information for this deal\\");
+    elementClose(\\"h4\\");
+    elementOpen(\\"nav\\", \\"GbL?AHZ\\", _statics$77);
+    elementOpen(\\"h5\\", \\"3C)9q|)\\", _statics$75);
+    text(\\"Navigation for detailed information\\");
+    elementClose(\\"h5\\");
+    elementOpen(\\"p\\", \\"J>^uTgy\\", _statics$76);
+    text(\\"Close\\");
+    elementClose(\\"p\\");
+    elementClose(\\"nav\\");
+    elementOpen(\\"div\\", \\"~SsYw^}\\", _statics$79);
+    elementOpen(\\"h5\\", \\"SW][)rg\\", _statics$78);
+    text(\\"Slideout contents here\\");
+    elementClose(\\"h5\\");
+    elementOpen(\\"p\\", null, null);
+    text(\\"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error et eveniet hic numquam quisquam vel vitae!\\\\n                                Atque consectetur consequatur, dignissimos dolor eius harum officiis pariatur qui quia reprehenderit sit\\\\n                                ullam veritatis! Amet error exercitationem ipsam quibusdam ullam! Aperiam aspernatur aut harum hic impedit\\\\n                                sequi sint tenetur ullam velit, vitae voluptatibus.\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementClose(\\"section\\");
+    elementClose(\\"div\\");
+    elementClose(\\"article\\");
+    elementClose(\\"li\\");
+    elementOpen(\\"li\\", \\"SfM8e0;\\", _statics$124);
+    elementOpen(\\"article\\", \\"BH$A9J?\\", _statics$123, \\"itemscope\\", true);
+    elementOpen(\\"div\\", \\";n4_Jht\\", _statics$86);
+    elementOpen(\\"div\\", \\"tML?IZ>\\", _statics$85);
+    elementOpen(\\"span\\", \\"LFgr$p)\\", _statics$83);
+    text(\\"No image for this deal.\\");
+    elementClose(\\"span\\");
+    elementOpen(\\"button\\", \\"DW$6pZS\\", _statics$84);
+    text(\\"Add the \\");
+    elementOpen(\\"em\\", null, null);
+    text(\\"Lorem Ipsum dolor sit amet\\");
+    elementClose(\\"em\\");
+    text(\\" to my favorites list\\");
+    elementClose(\\"button\\");
+    elementClose(\\"div\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", \\"7ungctC\\", _statics$115);
+    elementOpen(\\"div\\", \\"Ic3dW>>\\", _statics$101);
+    elementOpen(\\"h2\\", \\"pz2'OH{\\", _statics$88);
+    elementOpen(\\"span\\", \\"lH!b@^c\\", _statics$87);
+    text(\\"Lorem Ipsum dolor sit amet\\");
+    elementClose(\\"span\\");
+    elementClose(\\"h2\\");
+    elementOpen(\\"div\\", \\"uFdGaNR\\", _statics$93);
+    elementOpen(\\"em\\", \\"^<k99\`<\\", _statics$89);
+    text(\\"Next to location:\\");
+    elementClose(\\"em\\");
+    elementOpen(\\"p\\", \\"|j)1?<B\\", _statics$92);
+    elementOpen(\\"span\\", \\"GX7/Gey\\", _statics$91);
+    elementOpen(\\"span\\", null, null);
+    text(\\"Amsterdam,\\");
+    elementClose(\\"span\\");
+    elementOpen(\\"em\\", \\"QF<z@-k\\", _statics$90);
+    text(\\"1.5km\\");
+    elementClose(\\"em\\");
+    text(\\" to International Airport Amsterdam \\");
+    elementClose(\\"span\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", \\"f:A+'QI\\", _statics$100);
+    elementOpen(\\"em\\", \\"i\`E%VIX\\", _statics$94);
+    text(\\"“Good”\\");
+    elementClose(\\"em\\");
+    elementOpen(\\"p\\", \\"/L,SP'Q\\", _statics$99, \\"itemscope\\", true);
+    elementOpen(\\"em\\", \\"d4VqNQ6\\", _statics$95);
+    text(\\"76 / 100\\");
+    elementClose(\\"em\\");
+    text(\\" - \\");
+    elementOpen(\\"span\\", \\"[gTnT4c\\", _statics$96);
+    text(\\"hotel rating\\");
+    elementClose(\\"span\\");
+    elementOpen(\\"span\\", \\"HB^IE.>\\", _statics$98);
+    elementOpen(\\"span\\", \\"fSmhkVg\\", _statics$97);
+    text(\\"(754 reviews)\\");
+    elementClose(\\"span\\");
+    elementClose(\\"span\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"section\\", \\"1B9Xs,}\\", _statics$107);
+    elementOpen(\\"h4\\", \\"R?=Ic#3\\", _statics$102);
+    text(\\"Other deals\\");
+    elementClose(\\"h4\\");
+    elementOpen(\\"ul\\", null, null);
+    elementOpen(\\"li\\", \\"b(ZvoE$\\", _statics$105);
+    elementOpen(\\"button\\", \\"DQ1(R#-\\", _statics$104);
+    elementOpen(\\"strong\\", \\"|=yzf{D\\", _statics$103);
+    text(\\"116€\\");
+    elementClose(\\"strong\\");
+    text(\\" expedia\\");
+    elementClose(\\"button\\");
+    elementClose(\\"li\\");
+    elementClose(\\"ul\\");
+    elementOpen(\\"button\\", \\"=_<SN}9\\", _statics$106);
+    text(\\"View more deals: 17\\");
+    elementClose(\\"button\\");
+    elementClose(\\"section\\");
+    elementOpen(\\"section\\", \\"$o?<D,9\\", _statics$114);
+    elementOpen(\\"div\\", \\"5LfS\`ex\\", _statics$113);
+    elementOpen(\\"h4\\", \\"E6GE|#F\\", _statics$108);
+    text(\\"Best of 17 websites\\");
+    elementClose(\\"h4\\");
+    elementOpen(\\"em\\", \\"5H_**[7\\", _statics$109);
+    text(\\"Breakfast included\\");
+    elementClose(\\"em\\");
+    elementOpen(\\"div\\", \\"Ce@g\`$1\\", _statics$111);
+    elementOpen(\\"div\\", null, null);
+    elementOpen(\\"p\\", \\"rxTM_\`~\\", _statics$110);
+    text(\\"Change date to see available deals.\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementClose(\\"div\\");
+    elementVoid(\\"button\\", \\"f;)51A;\\", _statics$112);
+    elementClose(\\"div\\");
+    elementClose(\\"section\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", \\"[I})e{Y\\", _statics$122);
+    elementOpen(\\"section\\", null, null);
+    elementOpen(\\"h4\\", \\"ix=%gI=\\", _statics$116);
+    text(\\"Detailed information for this deal\\");
+    elementClose(\\"h4\\");
+    elementOpen(\\"nav\\", \\"A.dtpS0\\", _statics$119);
+    elementOpen(\\"h5\\", \\"|n6#WqT\\", _statics$117);
+    text(\\"Navigation for detailed information\\");
+    elementClose(\\"h5\\");
+    elementOpen(\\"p\\", \\"kbN_)9j\\", _statics$118);
+    text(\\"Close\\");
+    elementClose(\\"p\\");
+    elementClose(\\"nav\\");
+    elementOpen(\\"div\\", \\"I.xAC[s\\", _statics$121);
+    elementOpen(\\"h5\\", \\"jxcQeMm\\", _statics$120);
+    text(\\"Slideout contents here\\");
+    elementClose(\\"h5\\");
+    elementOpen(\\"p\\", null, null);
+    text(\\"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error et eveniet hic numquam quisquam vel vitae!\\\\n                                Atque consectetur consequatur, dignissimos dolor eius harum officiis pariatur qui quia reprehenderit sit\\\\n                                ullam veritatis! Amet error exercitationem ipsam quibusdam ullam! Aperiam aspernatur aut harum hic impedit\\\\n                                sequi sint tenetur ullam velit, vitae voluptatibus.\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementClose(\\"section\\");
+    elementClose(\\"div\\");
+    elementClose(\\"article\\");
+    elementClose(\\"li\\");
+    elementOpen(\\"li\\", \\"_io53ty\\", _statics$165);
+    elementOpen(\\"article\\", \\"%O*^I-9\\", _statics$164, \\"itemscope\\", true);
+    elementOpen(\\"div\\", \\"$6bY.'k\\", _statics$128);
+    elementOpen(\\"div\\", \\"tui2!n,\\", _statics$127);
+    elementOpen(\\"span\\", \\"[$oov]o\\", _statics$125);
+    text(\\"No image for this deal.\\");
+    elementClose(\\"span\\");
+    elementOpen(\\"button\\", \\"tP5t+K:\\", _statics$126);
+    text(\\"Add the \\");
+    elementOpen(\\"em\\", null, null);
+    text(\\"Lorem Ipsum dolor sit amet\\");
+    elementClose(\\"em\\");
+    text(\\" to my favorites list\\");
+    elementClose(\\"button\\");
+    elementClose(\\"div\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", \\"=9<uQpy\\", _statics$156);
+    elementOpen(\\"div\\", \\"m)rGKDS\\", _statics$143);
+    elementOpen(\\"h2\\", \\"z+;.7*p\\", _statics$130);
+    elementOpen(\\"span\\", \\"hpg/PoX\\", _statics$129);
+    text(\\"Lorem Ipsum dolor sit amet\\");
+    elementClose(\\"span\\");
+    elementClose(\\"h2\\");
+    elementOpen(\\"div\\", \\"/7Y{0De\\", _statics$135);
+    elementOpen(\\"em\\", \\"\`'Fnr{!\\", _statics$131);
+    text(\\"Next to location:\\");
+    elementClose(\\"em\\");
+    elementOpen(\\"p\\", \\")h)M\`8!\\", _statics$134);
+    elementOpen(\\"span\\", \\"yly3FX[\\", _statics$133);
+    elementOpen(\\"span\\", null, null);
+    text(\\"Amsterdam,\\");
+    elementClose(\\"span\\");
+    elementOpen(\\"em\\", \\"#@~Pb6/\\", _statics$132);
+    text(\\"0.5km\\");
+    elementClose(\\"em\\");
+    text(\\" to Oxford Street \\");
+    elementClose(\\"span\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", \\"'?D)Zo:\\", _statics$142);
+    elementOpen(\\"em\\", \\"tfqoTuO\\", _statics$136);
+    text(\\"“Good”\\");
+    elementClose(\\"em\\");
+    elementOpen(\\"p\\", \\"YK3]l5:\\", _statics$141, \\"itemscope\\", true);
+    elementOpen(\\"em\\", \\"MO(L_bp\\", _statics$137);
+    text(\\"76 / 100\\");
+    elementClose(\\"em\\");
+    text(\\" - \\");
+    elementOpen(\\"span\\", \\"S(PbdKY\\", _statics$138);
+    text(\\"hotel rating\\");
+    elementClose(\\"span\\");
+    elementOpen(\\"span\\", \\"l<R2vw;\\", _statics$140);
+    elementOpen(\\"span\\", \\"c-3}+-5\\", _statics$139);
+    text(\\"(754 reviews)\\");
+    elementClose(\\"span\\");
+    elementClose(\\"span\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"section\\", \\">:JtrU+\\", _statics$149);
+    elementOpen(\\"h4\\", \\"^f}AHDl\\", _statics$144);
+    text(\\"Other deals\\");
+    elementClose(\\"h4\\");
+    elementOpen(\\"ul\\", null, null);
+    elementOpen(\\"li\\", \\"EHdG,gz\\", _statics$147);
+    elementOpen(\\"button\\", \\"o4^V%cV\\", _statics$146);
+    elementOpen(\\"strong\\", \\"tCVxGzv\\", _statics$145);
+    text(\\"156€\\");
+    elementClose(\\"strong\\");
+    text(\\" booking.com\\");
+    elementClose(\\"button\\");
+    elementClose(\\"li\\");
+    elementClose(\\"ul\\");
+    elementOpen(\\"button\\", \\")JWy>\`<\\", _statics$148);
+    text(\\"View more deals: 17\\");
+    elementClose(\\"button\\");
+    elementClose(\\"section\\");
+    elementOpen(\\"section\\", \\"P,6,~^O\\", _statics$155);
+    elementOpen(\\"div\\", \\"Nmiu,qX\\", _statics$154);
+    elementOpen(\\"h4\\", \\"UC},QOQ\\", _statics$150);
+    text(\\"Best of 17 websites\\");
+    elementClose(\\"h4\\");
+    elementOpen(\\"div\\", \\"cb~Yu-z\\", _statics$152);
+    elementOpen(\\"div\\", null, null);
+    elementOpen(\\"p\\", \\"=z<!=n0\\", _statics$151);
+    text(\\"Change date to see available deals.\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementClose(\\"div\\");
+    elementVoid(\\"button\\", \\"4t0l2Ec\\", _statics$153);
+    elementClose(\\"div\\");
+    elementClose(\\"section\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", \\"wOT5,n0\\", _statics$163);
+    elementOpen(\\"section\\", null, null);
+    elementOpen(\\"h4\\", \\"B2GSlUs\\", _statics$157);
+    text(\\"Detailed information for this deal\\");
+    elementClose(\\"h4\\");
+    elementOpen(\\"nav\\", \\"l-NB/>%\\", _statics$160);
+    elementOpen(\\"h5\\", \\"7m]6u9~\\", _statics$158);
+    text(\\"Navigation for detailed information\\");
+    elementClose(\\"h5\\");
+    elementOpen(\\"p\\", \\"tqwX-qJ\\", _statics$159);
+    text(\\"Close\\");
+    elementClose(\\"p\\");
+    elementClose(\\"nav\\");
+    elementOpen(\\"div\\", \\"FbHhRZB\\", _statics$162);
+    elementOpen(\\"h5\\", \\"#l|%-N7\\", _statics$161);
+    text(\\"Slideout contents here\\");
+    elementClose(\\"h5\\");
+    elementOpen(\\"p\\", null, null);
+    text(\\"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error et eveniet hic numquam quisquam vel vitae!\\\\n                                Atque consectetur consequatur, dignissimos dolor eius harum officiis pariatur qui quia reprehenderit sit\\\\n                                ullam veritatis! Amet error exercitationem ipsam quibusdam ullam! Aperiam aspernatur aut harum hic impedit\\\\n                                sequi sint tenetur ullam velit, vitae voluptatibus.\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementClose(\\"section\\");
+    elementClose(\\"div\\");
+    elementClose(\\"article\\");
+    elementClose(\\"li\\");
+    elementOpen(\\"li\\", \\"Y}lvVV_\\", _statics$206);
+    elementOpen(\\"article\\", \\"|Up]tqh\\", _statics$205, \\"itemscope\\", true);
+    elementOpen(\\"div\\", \\"?~#}_Cj\\", _statics$169);
+    elementOpen(\\"div\\", \\"w#JBKg!\\", _statics$168);
+    elementOpen(\\"span\\", \\"xP9xs1E\\", _statics$166);
+    text(\\"No image for this deal.\\");
+    elementClose(\\"span\\");
+    elementOpen(\\"button\\", \\"b;:f]fd\\", _statics$167);
+    text(\\"Add the \\");
+    elementOpen(\\"em\\", null, null);
+    text(\\"Lorem Ipsum dolor sit amet\\");
+    elementClose(\\"em\\");
+    text(\\" to my favorites list\\");
+    elementClose(\\"button\\");
+    elementClose(\\"div\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", \\"1i}|t$U\\", _statics$197);
+    elementOpen(\\"div\\", \\"R,YJeAz\\", _statics$184);
+    elementOpen(\\"h2\\", \\"XD6LjR3\\", _statics$171);
+    elementOpen(\\"span\\", \\"?szC$^1\\", _statics$170);
+    text(\\"Lorem Ipsum dolor sit amet\\");
+    elementClose(\\"span\\");
+    elementClose(\\"h2\\");
+    elementOpen(\\"div\\", \\"l{*)@c,\\", _statics$176);
+    elementOpen(\\"em\\", \\".KM{<D2\\", _statics$172);
+    text(\\"Next to location:\\");
+    elementClose(\\"em\\");
+    elementOpen(\\"p\\", \\"d:N,,e*\\", _statics$175);
+    elementOpen(\\"span\\", \\"suu$~O@\\", _statics$174);
+    elementOpen(\\"span\\", null, null);
+    text(\\"Amsterdam,\\");
+    elementClose(\\"span\\");
+    elementOpen(\\"em\\", \\"3ycPR?m\\", _statics$173);
+    text(\\"0.8km\\");
+    elementClose(\\"em\\");
+    text(\\" to Alexanderplatz \\");
+    elementClose(\\"span\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", \\"JLtvEUh\\", _statics$183);
+    elementOpen(\\"em\\", \\"#wMsmFC\\", _statics$177);
+    text(\\"“Good”\\");
+    elementClose(\\"em\\");
+    elementOpen(\\"p\\", \\"-_EC.J5\\", _statics$182, \\"itemscope\\", true);
+    elementOpen(\\"em\\", \\"$BoG|n3\\", _statics$178);
+    text(\\"76 / 100\\");
+    elementClose(\\"em\\");
+    text(\\" - \\");
+    elementOpen(\\"span\\", \\"uc~C#\`v\\", _statics$179);
+    text(\\"hotel rating\\");
+    elementClose(\\"span\\");
+    elementOpen(\\"span\\", \\"VELLLn(\\", _statics$181);
+    elementOpen(\\"span\\", \\"N4xYmZ<\\", _statics$180);
+    text(\\"(754 reviews)\\");
+    elementClose(\\"span\\");
+    elementClose(\\"span\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"section\\", \\"apIr]H<\\", _statics$190);
+    elementOpen(\\"h4\\", \\"MRz?{aV\\", _statics$185);
+    text(\\"Other deals\\");
+    elementClose(\\"h4\\");
+    elementOpen(\\"ul\\", null, null);
+    elementOpen(\\"li\\", \\"u*7VFW6\\", _statics$188);
+    elementOpen(\\"button\\", \\">R?z#T)\\", _statics$187);
+    elementOpen(\\"strong\\", \\"J4I^{%.\\", _statics$186);
+    text(\\"156\\");
+    elementClose(\\"strong\\");
+    text(\\" booking.com\\");
+    elementClose(\\"button\\");
+    elementClose(\\"li\\");
+    elementClose(\\"ul\\");
+    elementOpen(\\"button\\", \\",X)sE;t\\", _statics$189);
+    text(\\"View more deals: 17\\");
+    elementClose(\\"button\\");
+    elementClose(\\"section\\");
+    elementOpen(\\"section\\", \\"#Zej^jt\\", _statics$196);
+    elementOpen(\\"div\\", \\"DF7zvyd\\", _statics$195);
+    elementOpen(\\"h4\\", \\"r!HmGjT\\", _statics$191);
+    text(\\"Best of 17 websites\\");
+    elementClose(\\"h4\\");
+    elementOpen(\\"div\\", \\"#\`0SP$!\\", _statics$193);
+    elementOpen(\\"div\\", null, null);
+    elementOpen(\\"p\\", \\"-zvtGm2\\", _statics$192);
+    text(\\"Change date to see available deals.\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementClose(\\"div\\");
+    elementVoid(\\"button\\", \\"[~:dhnW\\", _statics$194);
+    elementClose(\\"div\\");
+    elementClose(\\"section\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", \\"'IRA~3F\\", _statics$204);
+    elementOpen(\\"section\\", null, null);
+    elementOpen(\\"h4\\", \\"K@]R8[O\\", _statics$198);
+    text(\\"Detailed information for this deal\\");
+    elementClose(\\"h4\\");
+    elementOpen(\\"nav\\", \\"1<W!Uch\\", _statics$201);
+    elementOpen(\\"h5\\", \\"R!i,Yn:\\", _statics$199);
+    text(\\"Navigation for detailed information\\");
+    elementClose(\\"h5\\");
+    elementOpen(\\"p\\", \\"zj}h^6>\\", _statics$200);
+    text(\\"Close\\");
+    elementClose(\\"p\\");
+    elementClose(\\"nav\\");
+    elementOpen(\\"div\\", \\"Wj<Us@y\\", _statics$203);
+    elementOpen(\\"h5\\", \\"puZsJJ$\\", _statics$202);
+    text(\\"Slideout contents here\\");
+    elementClose(\\"h5\\");
+    elementOpen(\\"p\\", null, null);
+    text(\\"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error et eveniet hic numquam quisquam vel vitae!\\\\n                                Atque consectetur consequatur, dignissimos dolor eius harum officiis pariatur qui quia reprehenderit sit\\\\n                                ullam veritatis! Amet error exercitationem ipsam quibusdam ullam! Aperiam aspernatur aut harum hic impedit\\\\n                                sequi sint tenetur ullam velit, vitae voluptatibus.\\");
+    elementClose(\\"p\\");
+    elementClose(\\"div\\");
+    elementClose(\\"section\\");
+    elementClose(\\"div\\");
+    elementClose(\\"article\\");
+    elementClose(\\"li\\");
+    elementClose(\\"ol\\");
+    elementClose(\\"section\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"ItemElement\\";
+}
+
+export default function ItemElement(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform macros.template 1`] = `
+"
+import { input as input_field } from \\"forms.html\\";
+import * as foo from \\"forms.html\\";
+import { elementOpenStart, elementOpenEnd, attr, elementClose } from \\"melody-idom\\";
+export const _template = {};
+export function input(name, value, type, size, ...varargs) {
+    elementOpenStart(\\"input\\", null, null, \\"type\\", type != null && type !== '' ? type : \\"text\\", \\"name\\", name, \\"value\\", value, \\"size\\", size != null && size !== '' ? size : 20);
+
+    for (let _i = 0, _a = process.env.NODE_ENV === \\"production\\" || Array.isArray(varargs) ? varargs : (() => {
+        throw new Error(\\"Dynamic attributes have to be an array, found \\" + typeof varargs + \\" instead\\");
+    })(), _len = _a.length; _i < _len; _i += 2) {
+        attr(_a[_i], _a[_i + 1]);
+    }
+
+    elementOpenEnd();
+    elementClose(\\"input\\");
+}
+
+_template.renderTest = function (_context) {
+    const forms = {
+        input
+    };
+    foo.bar(\\"test\\");
+    forms.input(\\"foo\\", \\"bar\\", \\"baz\\", 42);
+    input_field(\\"foo\\");
+};
+
+_template.render = function (_context) {
+    const forms = {
+        input
+    };
+    foo.bar(\\"test\\");
+    forms.input(\\"foo\\", \\"bar\\", \\"baz\\", 42);
+    input_field(\\"foo\\");
+    this.renderTest(_context);
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"Macros\\";
+}
+
+export default function Macros(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform mount.template 1`] = `
+"
+import Footwig from \\"foo.twig\\";
+import { component } from \\"melody-idom\\";
+import Component from \\"./component\\";
+export const _template = {};
+
+_template.render = function (_context) {
+  component(Component, \\"wP#ads,\\");
+  component(Footwig, \\"bar\\");
+  component(Footwig, \\"bar\\", {
+    foo: \\"bar\\"
+  });
+  component(Footwig, \\"=[3}~G^\\", {
+    foo: \\"bar\\"
+  });
+  component(_context.Foo, \\"];!3u7b\\");
+  component(_context.Foo, \\"bar\\");
+  component(_context.Foo, \\"bar\\", {
+    foo: \\"bar\\"
+  });
+  component(_context.Foo, \\">iBO<;!\\", {
+    foo: \\"bar\\"
+  });
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Mount\\";
+}
+
+export default function Mount(props) {
+  return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform multi include.template 1`] = `
+"
+import _include$1 from \\"./Button.html.twig\\";
+import _include from \\"./Flag.twig\\";
+import { text, elementOpen, elementClose, elementVoid, elementOpenStart, elementOpenEnd, attr } from \\"melody-idom\\";
+import { attrs, merge } from \\"melody-runtime\\";
+export const _template = {};
+const _statics = [\\"class\\", \\"item__deal-best-headline m-0 fw-normal ta-center\\"],
+      _statics$1 = [\\"class\\", \\"item__deal-best-ota block fs-normal cur-pointer--hover\\"],
+      _statics$2 = [\\"itemprop\\", \\"maxPrice\\"],
+      _statics$3 = [\\"itemprop\\", \\"minPrice\\"],
+      _statics$4 = [\\"itemprop\\", \\"price\\"],
+      _statics$5 = [\\"class\\", \\"item__deal-best-ota block fs-normal cur-pointer--hover\\"],
+      _statics$6 = [\\"class\\", \\"font-trv-maincolor-04-lighter cur-disabled--hover\\"],
+      _statics$7 = [\\"class\\", \\"item__best-details\\"],
+      _statics$8 = [\\"itemprop\\", \\"priceSpecification\\", \\"itemtype\\", \\"http://schema.org/PriceSpecification\\"],
+      _statics$9 = [\\"class\\", \\"item__deal-best\\", \\"itemprop\\", \\"makesOffer\\", \\"itemtype\\", \\"http://schema.org/Offer\\"];
+
+_template.render = function (_context) {
+    let tEB_SAME_WINDOW_CLICKOUT, ironItem1p1, bClickoutClientside, sBtnModifiers, flagModifiers, dataVariables;
+    tEB_SAME_WINDOW_CLICKOUT = false;
+    ironItem1p1 = true;
+    bClickoutClientside = false;
+    sBtnModifiers = \\"\\";
+    elementOpen(\\"section\\", \\"f-%v2ak\\", _statics$9, \\"itemscope\\", true);
+    elementOpenStart(\\"div\\", \\"K$/#=(h\\", _statics$8, \\"class\\", \\"item__deal-best-link ov-hidden font-dark js_item_bestprice\\\\n                \\" + (!_context.isItemAvailable ? \\"no_availability\\" : !_context.bestPriceDeal ? \\"incomplete\\" : \\"\\") + \\"\\\\n                \\" + (_context.bestPriceDeal ? \\"js_cClickoutLink\\" : \\"\\") + \\"\\\\n                \\" + (_context.saving >= 20 ? \\"reduced\\" : \\"\\"), \\"itemscope\\", true);
+
+    for (let _i = 0, _a = process.env.NODE_ENV === \\"production\\" || Array.isArray((_context.bestPriceDeal ? attrs({
+        onclick: \\"\\",
+        \\"data-link\\": _context.bestPriceDeal.clickoutLinkUrl,
+        \\"data-co_li_lo\\": bClickoutClientside ? \\"1\\" : \\"\\",
+        \\"data-partner\\": _context.bestPriceDeal.groupId,
+        \\"data-item\\": _context.id,
+        \\"data-teb\\": _context.bestPriceDeal.expressBookingAvailable && tEB_SAME_WINDOW_CLICKOUT ? \\"1\\" : \\"\\",
+        \\"data-alternative\\": _context.isAlternativeHotel ? \\"1\\" : \\"0\\",
+        \\"data-dbid\\": _context.bestPriceDeal.debuggingId != null && _context.bestPriceDeal.debuggingId !== '' ? _context.bestPriceDeal.debuggingId : \\"\\"
+    }) : [])) ? (_context.bestPriceDeal ? attrs({
+        onclick: \\"\\",
+        \\"data-link\\": _context.bestPriceDeal.clickoutLinkUrl,
+        \\"data-co_li_lo\\": bClickoutClientside ? \\"1\\" : \\"\\",
+        \\"data-partner\\": _context.bestPriceDeal.groupId,
+        \\"data-item\\": _context.id,
+        \\"data-teb\\": _context.bestPriceDeal.expressBookingAvailable && tEB_SAME_WINDOW_CLICKOUT ? \\"1\\" : \\"\\",
+        \\"data-alternative\\": _context.isAlternativeHotel ? \\"1\\" : \\"0\\",
+        \\"data-dbid\\": _context.bestPriceDeal.debuggingId != null && _context.bestPriceDeal.debuggingId !== '' ? _context.bestPriceDeal.debuggingId : \\"\\"
+    }) : []) : (() => {
+        throw new Error(\\"Dynamic attributes have to be an array, found \\" + typeof (_context.bestPriceDeal ? attrs({
+            onclick: \\"\\",
+            \\"data-link\\": _context.bestPriceDeal.clickoutLinkUrl,
+            \\"data-co_li_lo\\": bClickoutClientside ? \\"1\\" : \\"\\",
+            \\"data-partner\\": _context.bestPriceDeal.groupId,
+            \\"data-item\\": _context.id,
+            \\"data-teb\\": _context.bestPriceDeal.expressBookingAvailable && tEB_SAME_WINDOW_CLICKOUT ? \\"1\\" : \\"\\",
+            \\"data-alternative\\": _context.isAlternativeHotel ? \\"1\\" : \\"0\\",
+            \\"data-dbid\\": _context.bestPriceDeal.debuggingId != null && _context.bestPriceDeal.debuggingId !== '' ? _context.bestPriceDeal.debuggingId : \\"\\"
+        }) : []) + \\" instead\\");
+    })(), _len = _a.length; _i < _len; _i += 2) {
+        attr(_a[_i], _a[_i + 1]);
+    }
+
+    elementOpenEnd();
+
+    if (!ironItem1p1) {
+        if (typeof _context.rateCount !== \\"undefined\\") {
+            elementOpen(\\"h4\\", \\"^HYXTW@\\", _statics);
+            text(\\"ie_bestdeal\\");
+            elementClose(\\"h4\\");
+        }
+    }
+
+    if (_context.bestPriceDeal) {
+        flagModifiers = \\"trv-maincolor-03 font-bright cur-pointer--hover\\";
+
+        if (ironItem1p1) {
+            flagModifiers = \\"font-bright cur-pointer--hover\\";
+        }
+
+        if (_context.isTopDeal) {
+            dataVariables = {
+                \\"data-topdeal-percentage\\": _context.topDealPercentage,
+                \\"data-topdeal-price\\": _context.bestPriceDeal.price,
+                \\"data-topdeal-compare-price\\": _context.topDealComparePrice,
+                \\"data-topdeal-criterion\\": _context.topDealCriterion,
+                \\"data-topdeal-criterion-id\\": _context.topDealCriterionId,
+                \\"data-topdeal-category\\": _context.category,
+                \\"data-topdeal-path-name\\": _context.pathName,
+                \\"data-topdeal-overall-liking\\": _context.overallLiking
+            };
+            flagModifiers = flagModifiers + \\" top_deals js_top_deals \\" + _context.topDealCriterion;
+            dataVariables = merge(dataVariables, {
+                \\"data-topdeal-log\\": \\"1\\"
+            });
+
+            _include({
+                \\"styleModifier\\": flagModifiers,
+                \\"dataVariables\\": dataVariables,
+                \\"text\\": \\"ie_topdeal\\"
+            });
+        } else {
+            if (_context.iSaving >= 20) {
+                _include({
+                    \\"styleModifier\\": flagModifiers,
+                    \\"dataVariables\\": dataVariables,
+                    \\"text\\": \\"-\\" + _context.saving + \\"%\\"
+                });
+            }
+        }
+    }
+
+    elementOpen(\\"div\\", \\"%Q6V*;i\\", _statics$7);
+    elementOpen(\\"div\\", null, null);
+
+    if (false) {
+        elementOpen(\\"em\\", \\")nUQO01\\", _statics$1);
+
+        if (_context.bestPriceDeal.groupId == 80 && _context.bestPriceDeal.useLocalizedHotelWebsiteLogo) {
+            text(\\"book_hotel_website_test\\");
+        } else {
+            text(_context.bestPriceDeal.sName);
+        }
+
+        elementClose(\\"em\\");
+    }
+
+    if (_context.bestPriceDeal) {
+        if (_context.maxPriceDeal) {
+            elementVoid(\\"meta\\", \\"ECmr>3o\\", _statics$2, \\"content\\", _context.maxPriceDeal.displayPrice);
+            elementVoid(\\"meta\\", \\"e_NpGiT\\", _statics$3, \\"content\\", _context.bestPriceDeal.displayPrice);
+            elementOpen(\\"s\\", null, null, \\"class\\", \\"item__price-striked block cur-pointer--hover\\" + (!_context.isBigFontSiteInBestPrice ? \\" long_digit\\" : \\"\\"));
+            text(_context.maxPriceDeal.price);
+            elementClose(\\"s\\");
+        } else {
+            elementVoid(\\"meta\\", \\"1ntl?'O\\", _statics$4, \\"content\\", _context.bestPriceDeal.displayPrice);
+        }
+
+        elementOpen(\\"strong\\", null, null, \\"class\\", \\"item__best-price block cur-pointer--hover price\\" + (_context.maxPriceDeal ? \\"_min\\" : \\" single\\") + (!_context.isBigFontSiteInBestPrice ? \\" long_digit\\" : \\"\\"));
+        text(_context.bestPriceDeal.price);
+        elementClose(\\"strong\\");
+
+        if (false) {
+            elementOpen(\\"em\\", \\"~NF}Xt3\\", _statics$5);
+
+            if (_context.oBestPriceDeal.iGroupId == 80 && _context.oBestPriceDeal.bUseLocalizedHotelWebsiteLogo) {
+                text(\\"book_hotel_website_test\\");
+            } else {
+                text(_context.oBestPriceDeal.sName);
+            }
+
+            elementClose(\\"em\\");
+        }
+
+        if (true) {
+            sBtnModifiers = \\"btn--deal fl-trailing\\";
+        }
+
+        if (false) {
+            sBtnModifiers = sBtnModifiers + \\" alt\\";
+        }
+    } else if (_context.state == 1) {
+        elementOpen(\\"p\\", \\"$J_dRYB\\", _statics$6);
+        text(\\"unavailable_deal\\");
+        elementClose(\\"p\\");
+
+        if (true) {
+            sBtnModifiers = \\"btn--icon btn--deal btn--disabled fl-trailing trv-maincolor-04-very-light\\";
+        }
+    } else {
+        if (true) {
+            sBtnModifiers = \\"btn--icon btn--deal btn--disabled fl-trailing trv-maincolor-04-very-light\\";
+        }
+    }
+
+    elementClose(\\"div\\");
+    elementClose(\\"div\\");
+
+    _include$1({
+        \\"styleModifier\\": sBtnModifiers,
+        \\"text\\": \\"deals_forward_new\\"
+    });
+
+    elementClose(\\"div\\");
+    elementClose(\\"section\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"MultiInclude\\";
+}
+
+export default function MultiInclude(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform raw.template 1`] = `
+"
+import { rawString, raw, text } from \\"melody-idom\\";
+export const _template = {};
+
+_template.render = function (_context) {
+    let vars;
+    vars = {
+        \\"foo\\": \\"<span>foo</span>\\",
+        \\"bar\\": rawString(\\"<span>bar</span>\\")
+    };
+    raw(vars.foo);
+    text(vars.bar);
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"Raw\\";
+}
+
+export default function Raw(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform ref.template 1`] = `
+"
+import { text, ref, elementOpen, elementClose, elementVoid, elementOpenStart, elementOpenEnd, attr } from \\"melody-idom\\";
+export const _template = {};
+const _statics = [\\"class\\", \\"bar\\", \\"ref\\", ref(\\"span\\")],
+      _statics$1 = [\\"class\\", \\"icon-heart\\", \\"ref\\", ref(\\"heart-icon\\")],
+      _statics$2 = [\\"type\\", \\"text\\", \\"ref\\", ref(\\"text\\")],
+      _statics$3 = [\\"ref\\", ref(\\"test\\")],
+      _statics$4 = [\\"ref\\", ref(\\"test2\\")],
+      _statics$5 = [\\"ref\\", ref(\\"foo\\")];
+
+_template.render = function (_context) {
+    elementOpen(\\"div\\", \\"n|{.DWc\\", _statics$5);
+    elementOpen(\\"span\\", \\",:=obP-\\", _statics);
+    text(\\"udisuabcd\\");
+    elementClose(\\"span\\");
+    elementVoid(\\"i\\", \\"xh9s_sU\\", _statics$1);
+    elementVoid(\\"input\\", \\"%ThB3a|\\", _statics$2);
+    elementOpenStart(\\"span\\", \\"Y:f3sk=\\", _statics$3);
+
+    for (let _i = 0, _a = process.env.NODE_ENV === \\"production\\" || Array.isArray(_context.foo) ? _context.foo : (() => {
+        throw new Error(\\"Dynamic attributes have to be an array, found \\" + typeof _context.foo + \\" instead\\");
+    })(), _len = _a.length; _i < _len; _i += 2) {
+        attr(_a[_i], _a[_i + 1]);
+    }
+
+    elementOpenEnd();
+    elementClose(\\"span\\");
+    elementOpenStart(\\"span\\", \\"Jq{7=IP\\", _statics$4);
+
+    for (let _i$1 = 0, _a$1 = process.env.NODE_ENV === \\"production\\" || Array.isArray(_context.foo) ? _context.foo : (() => {
+        throw new Error(\\"Dynamic attributes have to be an array, found \\" + typeof _context.foo + \\" instead\\");
+    })(), _len$1 = _a$1.length; _i$1 < _len$1; _i$1 += 2) {
+        attr(_a$1[_i$1], _a$1[_i$1 + 1]);
+    }
+
+    elementOpenEnd();
+    text(\\"test\\");
+    elementClose(\\"span\\");
+    elementVoid(\\"div\\", null, null, \\"ref\\", _context.baz);
+    elementClose(\\"div\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"Ref\\";
+}
+
+export default function Ref(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform sameName.template 1`] = `
+"
+import SameName$1 from \\"./sameName\\";
+import { component, elementOpen, elementClose } from \\"melody-idom\\";
+import DealsSlideoutRoomTypes from \\"./DealsSlideoutRoomTypes\\";
+export const _template = {};
+
+_template.render = function (_context) {
+    elementOpen(\\"div\\", null, null);
+
+    if (isCTestActive(\\"WEB-27121\\")) {
+        component(DealsSlideoutRoomTypes, \\"deals\\", {
+            itemId: _context.itemId,
+            isInItemPage: _context.isInItemPage,
+            containerElementSelector: _context.containerElementSelector,
+            onClose: _context.onClose,
+            onChange: _context.onChange
+        });
+    } else {
+        component(SameName$1, \\"deals\\", {
+            itemId: _context.itemId,
+            isInItemPage: _context.isInItemPage,
+            containerElementSelector: _context.containerElementSelector,
+            onClose: _context.onClose,
+            onChange: _context.onChange
+        });
+    }
+
+    elementClose(\\"div\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"SameName\\";
+}
+
+export default function SameName(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform set.template 1`] = `
+"
+import { text } from \\"melody-idom\\";
+export const _template = {};
+
+_template.render = function (_context) {
+    let list, foo, bar;
+    list = [1, 2];
+    foo = 0;
+    {
+        let _sequence = list,
+            _index = 0,
+            _length = _sequence.length,
+            item = _sequence[0];
+
+        for (; _index < _length; _index++, item = _sequence[_index]) {
+            let bar;
+            foo = item;
+            bar = item;
+        }
+    }
+    bar = 0;
+    text(foo);
+    text(bar);
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"Set\\";
+}
+
+export default function Set(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform spaceless.template 1`] = `
+"
+import { text, elementOpen, elementClose } from \\"melody-idom\\";
+export const _template = {};
+const _statics = [\\"class\\", \\"qtp-item__text\\"];
+
+_template.render = function (_context) {
+    elementOpen(\\"div\\", \\"S9hzS{)\\", _statics, \\"data-test\\", \\"Speceless testing:\\" + _context.formattedIncentive + \\"foo\\");
+    text(\\"Receive \\");
+    text(_context.formattedIncentive);
+    text(\\" cash back for testing this hotel.\\\\n    Or just \\");
+    elementOpen(\\"span\\", null, null);
+    text(\\"be\\");
+    elementClose(\\"span\\");
+    text(\\" happy!\\");
+    elementClose(\\"div\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"Spaceless\\";
+}
+
+export default function Spaceless(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform styles.template 1`] = `
+"
+import { text, elementOpen, elementClose, elementOpenStart, elementOpenEnd, attr } from \\"melody-idom\\";
+import { styles, classes, attrs } from \\"melody-runtime\\";
+export const _template = {};
+
+_template.render = function (_context) {
+    elementOpen(\\"div\\", null, null, \\"style\\", styles({
+        foo: _context.bar
+    }));
+    text(\\"Lorem Ipsum\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", null, null, \\"style\\", styles({
+        foo: _context.bar
+    } != null && {
+        foo: _context.bar
+    } !== '' ? {
+        foo: _context.bar
+    } : \\"\\"));
+    text(\\"Lorem Ipsum\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", null, null, \\"style\\", styles({
+        foo: _context.bar
+    } != null && {
+        foo: _context.bar
+    } !== '' ? {
+        foo: _context.bar
+    } : {}));
+    text(\\"Lorem Ipsum\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", null, null, \\"style\\", styles({
+        border: _context.borderVal,
+        top: _context.topVal,
+        left: _context.leftVal
+    }));
+    text(\\"Lorem Ipsum\\");
+    elementClose(\\"div\\");
+    elementOpenStart(\\"div\\", null, null);
+
+    for (let _i = 0, _a = process.env.NODE_ENV === \\"production\\" || Array.isArray(attrs({
+        \\"class\\": classes({
+            base: \\"foo\\",
+            \\"foo--active\\": _context.active,
+            \\"foo--disabled\\": _context.disabled
+        }),
+        \\"style\\": styles({
+            \\"border\\": _context.border,
+            \\"top\\": _context.top,
+            \\"left\\": _context.left
+        })
+    })) ? attrs({
+        \\"class\\": classes({
+            base: \\"foo\\",
+            \\"foo--active\\": _context.active,
+            \\"foo--disabled\\": _context.disabled
+        }),
+        \\"style\\": styles({
+            \\"border\\": _context.border,
+            \\"top\\": _context.top,
+            \\"left\\": _context.left
+        })
+    }) : (() => {
+        throw new Error(\\"Dynamic attributes have to be an array, found \\" + typeof attrs({
+            \\"class\\": classes({
+                base: \\"foo\\",
+                \\"foo--active\\": _context.active,
+                \\"foo--disabled\\": _context.disabled
+            }),
+            \\"style\\": styles({
+                \\"border\\": _context.border,
+                \\"top\\": _context.top,
+                \\"left\\": _context.left
+            })
+        }) + \\" instead\\");
+    })(), _len = _a.length; _i < _len; _i += 2) {
+        attr(_a[_i], _a[_i + 1]);
+    }
+
+    elementOpenEnd();
+    text(\\"Lorem Ipsum\\");
+    elementClose(\\"div\\");
+    elementOpen(\\"div\\", null, null, \\"style\\", styles({
+        \\"color\\": _context.color,
+        [\\"border-\\" + _context.borderSide]: _context.border,
+        [_context.position]: _context.positionValue
+    }));
+    text(\\"Lorem Ipsum\\");
+    elementClose(\\"div\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"Styles\\";
+}
+
+export default function Styles(props) {
+    return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should correctly transform svg.template 1`] = `
+"
+import { elementVoid, elementOpen, elementClose } from \\"melody-idom\\";
+export const _template = {};
+const _statics = [\\"id\\", \\"a\\", \\"d\\", \\"M3.5 10.5h17v3h-17z\\"],
+      _statics$1 = [\\"xlink:href\\", \\"#a\\", \\"overflow\\", \\"visible\\"],
+      _statics$2 = [\\"id\\", \\"b\\"],
+      _statics$3 = [\\"id\\", \\"c\\", \\"d\\", \\"M20.5 12c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5.7 1.5 1.5 1.5 1.5-.7 1.5-1.5zm-7 0c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5.7 1.5 1.5 1.5 1.5-.7 1.5-1.5zm-7 0c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5.7 1.5 1.5 1.5 1.5-.7 1.5-1.5z\\"],
+      _statics$4 = [\\"xlink:href\\", \\"#c\\", \\"overflow\\", \\"visible\\"],
+      _statics$5 = [\\"id\\", \\"d\\"],
+      _statics$6 = [\\"id\\", \\"e\\", \\"d\\", \\"M3.5 10.5h17v3h-17z\\"],
+      _statics$7 = [\\"xlink:href\\", \\"#e\\", \\"overflow\\", \\"visible\\"],
+      _statics$8 = [\\"id\\", \\"f\\"],
+      _statics$9 = [\\"d\\", \\"M-1.5 5.5h27v13h-27v-13z\\", \\"clip-path\\", \\"url(#f)\\", \\"fill\\", \\"#37454D\\"],
+      _statics$10 = [\\"clip-path\\", \\"url(#d)\\"],
+      _statics$11 = [\\"clip-path\\", \\"url(#b)\\"],
+      _statics$12 = [\\"xmlns\\", \\"http://www.w3.org/2000/svg\\", \\"xmlns:xlink\\", \\"http://www.w3.org/1999/xlink\\", \\"viewBox\\", \\"0 0 24 24\\"];
+
+_template.render = function (_context) {
+  elementOpen(\\"svg\\", \\"DB-hVPR\\", _statics$12);
+  elementOpen(\\"defs\\", null, null);
+  elementVoid(\\"path\\", \\"zPRIBu(\\", _statics);
+  elementClose(\\"defs\\");
+  elementOpen(\\"clipPath\\", \\"4FwJGeo\\", _statics$2);
+  elementVoid(\\"use\\", \\"^g:b^vR\\", _statics$1);
+  elementClose(\\"clipPath\\");
+  elementOpen(\\"g\\", \\"x4Dj;I2\\", _statics$11);
+  elementOpen(\\"defs\\", null, null);
+  elementVoid(\\"path\\", \\"az9hm\`=\\", _statics$3);
+  elementClose(\\"defs\\");
+  elementOpen(\\"clipPath\\", \\"p2<1kM#\\", _statics$5);
+  elementVoid(\\"use\\", \\"*E[w89n\\", _statics$4);
+  elementClose(\\"clipPath\\");
+  elementOpen(\\"g\\", \\"+?B\`~}*\\", _statics$10);
+  elementOpen(\\"defs\\", null, null);
+  elementVoid(\\"path\\", \\"vtZzpUx\\", _statics$6);
+  elementClose(\\"defs\\");
+  elementOpen(\\"clipPath\\", \\"6(gQ#!b\\", _statics$8);
+  elementVoid(\\"use\\", \\"Hm1j#,P\\", _statics$7);
+  elementClose(\\"clipPath\\");
+  elementVoid(\\"path\\", \\";Is0b<)\\", _statics$9);
+  elementClose(\\"g\\");
+  elementClose(\\"g\\");
+  elementClose(\\"svg\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Svg\\";
+}
+
+export default function Svg(props) {
+  return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should fail transforming unknown filter.template 1`] = `
+"Unknown filter \\"unknown\\"
+> 1 | {{ test | unknown }}
+    |           ^^^^^^^
+
+You've tried to invoke an unknown filter called \\"unknown\\".
+Some of the known filters include:
+
+    - abs
+    - attrs
+    - batch
+    - capitalize
+    - classes
+    - convert_encoding
+    - date
+    - date_modify
+    - default
+    - escape
+    - first
+    - format
+    - join
+    - json_encode
+    - keys
+    - last
+    - length
+    - lower
+    - merge
+    - nl2br
+    - number_format
+    - raw
+    - replace
+    - reverse
+    - round
+    - slice
+    - sort
+    - split
+    - striptags
+    - styles
+    - title
+    - trim
+    - upper
+    - url_encode
+
+Please report this as a bug if the filter you've tried to use is listed here:
+http://twig.sensiolabs.org/doc/filters/index.html"
+`;
+
+exports[`Compiler should fail transforming wrong import.template 1`] = `"Import must be used in macro, block or template"`;
+
+exports[`Compiler when a target plugin is missing should throw an error 1`] = `
+"Missing melody plugin
+
+
+Cannot convert templates, since there seems to be no melody plugin to convert the template to a certain output format. You can choose for example between \`melody-plugin-idom\` and \`melody-plugin-jsx\`."
+`;
+
+exports[`Compiler when a target plugin is missing should throw an error 2`] = `
+"Missing melody plugin
+
+
+Cannot convert templates, since there seems to be no melody plugin to convert the template to a certain output format. You can choose for example between \`melody-plugin-idom\` and \`melody-plugin-jsx\`."
+`;
+
+exports[`Compiler when a target plugin is missing should throw an error 3`] = `
+"Missing melody plugin
+
+
+Cannot convert templates, since there seems to be no melody plugin to convert the template to a certain output format. You can choose for example between \`melody-plugin-idom\` and \`melody-plugin-jsx\`."
+`;
+
+exports[`Compiler when converting converts map expressions 1`] = `
+"import { text } from \\"melody-idom\\";
+export const _template = {};
+
+_template.render = function (_context) {
+    text({
+        a: \\"foo\\",
+        [\\"b\\" + _context.a]: \\"bar\\",
+        2: 4,
+        [_context.a]: _context.foo
+    });
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+    return _template.render(props);
+}"
+`;
+
+exports[`Compiler when converting expressions to JS 1`] = `
+Object {
+  "code": "import { text } from \\"melody-idom\\";
+export const _template = {};
+export function item(name) {
+  text(name != null && name !== '' ? name : \\"test\\");
+}
+
+_template.renderTest = function (_context) {
+  const f = {
+    item
+  };
+  {
+    let _sequence = _context.items,
+        _index = 0,
+        _length = _sequence.length,
+        item = _sequence[0];
+
+    for (; _index < _length; _index++, item = _sequence[_index]) {
+      f.item(item);
+    }
+  }
+};
+
+_template.render = function (_context) {
+  this.renderTest(_context);
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}",
+  "map": null,
+}
+`;
+
+exports[`Compiler when converting should support dynamic attributes 1`] = `
+"import { elementOpenStart, elementOpenEnd, attr, elementClose } from \\"melody-idom\\";
+export const _template = {};
+const _statics = [\\"class\\", \\"foo\\"];
+
+_template.render = function (_context) {
+  elementOpenStart(\\"div\\", \\"\\" + (_context._i + _context._len), _statics);
+
+  for (let _i$1 = 0, _a = process.env.NODE_ENV === \\"production\\" || Array.isArray(_context.dataAttributes) ? _context.dataAttributes : (() => {
+    throw new Error(\\"Dynamic attributes have to be an array, found \\" + typeof _context.dataAttributes + \\" instead\\");
+  })(), _len$1 = _a.length; _i$1 < _len$1; _i$1 += 2) {
+    attr(_a[_i$1], _a[_i$1 + 1]);
+  }
+
+  elementOpenEnd();
+  elementClose(\\"div\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;
+
+exports[`Compiler when translating operators should convert the >= operator 1`] = `
+"import { text } from \\"melody-idom\\";
+export const _template = {};
+
+_template.render = function (_context) {
+  text(_context.saving >= 20 ? \\"reduced\\" : \\"\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;

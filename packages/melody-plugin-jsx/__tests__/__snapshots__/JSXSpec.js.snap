@@ -1,0 +1,251 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JSX should hoist attributes that will get mutated 1`] = `
+"export const _template = {};
+
+_template.render = function (_context) {
+    let foo;
+    foo = \\"bar\\";
+
+    let _prop = foo,
+        _child;
+
+    foo = \\"qux\\";
+    _child = <p className={foo} title={foo}>Hello World</p>;
+    return <div className={_prop}>{_child}</div>;
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+    return _template.render(props);
+}"
+`;
+
+exports[`JSX should hoist optimized attributes that will get mutated 1`] = `
+"export const _template = {};
+
+_template.render = function (_context) {
+  let foo;
+  foo = \\"bar\\";
+
+  let _prop = foo,
+      _child;
+
+  foo = \\"qux\\";
+  _child = <p className={foo} title={foo}>Hello World</p>;
+  return <div className={_prop}>{_child}</div>;
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;
+
+exports[`JSX should remove attributes filters 1`] = `
+"export const _template = {};
+
+_template.render = function (_context) {
+  return <div className=\\"my-class\\" id=\\"my-id\\" />;
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;
+
+exports[`JSX should spread identifiers 1`] = `
+"export const _template = {};
+
+_template.render = function (_context) {
+  return <div {..._context.attributes} />;
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;
+
+exports[`JSX should support object expression 1`] = `
+"export const _template = {};
+
+_template.render = function (_context) {
+  return <div className=\\"my-class\\" id=\\"my-id\\" />;
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;
+
+exports[`JSX should transform attributes to jsx naming conventions 1`] = `
+"export const _template = {};
+
+_template.render = function (_context) {
+  return <div className=\\"foo\\" data-foo=\\"foo\\" tabIndex=\\"1\\" htmlFor=\\"foo\\" onClick={_context.handler} />;
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;
+
+exports[`JSX should transform string literals 1`] = `
+"export const _template = {};
+
+_template.render = function (_context) {
+  return <div checked disabled />;
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;
+
+exports[`JSX should work with complex conditions 1`] = `
+"export const _template = {};
+
+_template.render = function (_context) {
+  let foo;
+  foo = \\"bar\\";
+
+  let _prop = foo,
+      _child,
+      _child$2,
+      _child$4,
+      _child$6,
+      _child$8;
+
+  foo = \\"qux\\";
+  _child = <p className={foo} title={foo}>Hello World</p>;
+
+  if (_context.bar == \\"foo\\") {
+    foo = \\"nom\\";
+    _child$2 = <div className={foo}>Hello</div>;
+  } else if (_context.bar == \\"nom\\") {
+    _child$4 = <section className={_context.bar}>Hello</section>;
+
+    if (_context.qux == \\"nom\\") {
+      _child$6 = <span>Qux</span>;
+    }
+  } else {
+    _child$8 = <p>Look at this {_context.bar}</p>;
+  }
+
+  return <div className={_prop}>{_child}{_child$2}{_child$4}{_child$6}{_child$8}</div>;
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;
+
+exports[`JSX should work with loops 1`] = `
+"export const _template = {};
+
+_template.render = function (_context) {
+  let _child = new Array();
+
+  {
+    let _sequence = _context.items,
+        _index = 0,
+        _length = _sequence.length,
+        item = _sequence[0];
+
+    for (; _index < _length; _index++, item = _sequence[_index]) {
+      let className;
+      className = \\"li-\\" + _context.id;
+
+      let _prop = className,
+          _child$1;
+
+      className = \\"span-\\" + _context.id;
+      _child$1 = <span className={className}>{item.label}</span>;
+      _child[_child.length] = <li key={item.id} className={_prop}>{_child$1}</li>;
+    }
+  }
+  return <ul>{_child}</ul>;
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;
+
+exports[`JSX should work with loops and multiple roots 1`] = `
+"export const _template = {};
+
+_template.render = function (_context) {
+  let _child = new Array();
+
+  {
+    let _sequence = _context.items,
+        _index = 0,
+        _length = _sequence.length,
+        item = _sequence[0],
+        _index$1 = 1,
+        _revindex = _length,
+        _revindex$1 = _length - 1,
+        _first = true,
+        _last = 1 === _length;
+
+    for (; _index < _length; _index++, item = _sequence[_index]) {
+      _child[_child.length] = <li className={_last ? \\"last\\" : \\"\\"}><p>Hello World</p></li>;
+      _child[_child.length] = <li>Hotel? Trivago!</li>;
+
+      if (_context.foo) {
+        _child[_child.length] = <li className=\\"foo\\">Foo you!</li>;
+      }
+
+      _index$1++;
+      _revindex--;
+      _revindex$1--;
+      _first = false;
+      _last = _revindex$1 === 0;
+    }
+  }
+  return <ul>{_child}</ul>;
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;

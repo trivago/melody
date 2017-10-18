@@ -1,0 +1,9 @@
+{% set list = [1, 2] %}
+{% set foo = 0 %}
+{% for item in list %}
+    {% set foo = item %}
+    {% set bar = item %}
+{% endfor %}
+{% set bar = 0 %}
+{{ foo }}
+{{ bar }}

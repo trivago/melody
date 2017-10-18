@@ -1,0 +1,8 @@
+<div ref="foo">
+    <span class="bar" ref="span">udisuabcd</span>
+    <i class="icon-heart" ref="heart-icon"></i>
+    <input type="text" ref="text">
+    <span ref="test" {{ foo }}></span>
+    <span ref="test2" {{ foo }}>test</span>
+    <div ref="{{ baz }}"></div>
+</div>

@@ -1,0 +1,7 @@
+{% set vars = {
+    "foo": '<span>foo</span>',
+    "bar": '<span>bar</span>' | raw
+} %}
+
+{{ vars.foo | raw }}
+{{ vars.bar }}

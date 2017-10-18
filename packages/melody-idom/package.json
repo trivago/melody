@@ -1,0 +1,20 @@
+{
+  "name": "melody-idom",
+  "version": "0.11.1-rc.1",
+  "description": "",
+  "main": "./lib/index.js",
+  "jsnext:main": "./built/index.js",
+  "types": "./built/index.d.ts",
+  "scripts": {
+    "prebuild": "tsc",
+    "build": "mkdir lib; rollup -c ../../rollup.config.js -i built/index.js -o lib/index.js"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "lodash": "^4.12.0"
+  },
+  "devDependencies": {
+    "rollup-plugin-babel": "^2.6.1"
+  }
+}

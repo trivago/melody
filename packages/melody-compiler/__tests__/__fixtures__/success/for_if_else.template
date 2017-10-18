@@ -1,0 +1,17 @@
+<ul>
+{% for a,b in c | slice(3, c.length) if b is even %}
+    <li>{{ a }} - {{ b }}</li>
+{% else %}
+    <li>No results found</li>
+{% endfor %}
+</ul>
+
+<ul>
+    {% for a,b in c[:c.length - 1] if b is defined and not b is even %}
+        <li>{{ a }} - {{ b }}</li>
+    {% else %}
+        {% if regionName is empty %}
+        <li><span><!--//--></span>No results found</li>
+        {% endif %}
+    {% endfor %}
+</ul>

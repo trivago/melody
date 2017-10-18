@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`melody-loader intergration tests transforms melody template to js 1`] = `
+"webpackJsonp([0],{
+
+/***/ 4:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+\\"use strict\\";
+Object.defineProperty(__webpack_exports__, \\"__esModule\\", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__template_melody_twig__ = __webpack_require__(5);
+
+Object(__WEBPACK_IMPORTED_MODULE_0__template_melody_twig__[\\"a\\" /* default */])();
+
+
+/***/ }),
+
+/***/ 5:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+\\"use strict\\";
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony export (immutable) */ __webpack_exports__[\\"a\\"] = Template;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_melody_idom__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_melody_idom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_melody_idom__);
+
+const _template = {};
+/* unused harmony export _template */
+
+
+_template.render = function (_context) {
+  Object(__WEBPACK_IMPORTED_MODULE_0_melody_idom__[\\"elementOpen\\"])(\\"div\\", null, null);
+  Object(__WEBPACK_IMPORTED_MODULE_0_melody_idom__[\\"text\\"])(\\"Hello world\\");
+  Object(__WEBPACK_IMPORTED_MODULE_0_melody_idom__[\\"elementClose\\"])(\\"div\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Template\\";
+}
+
+function Template(props) {
+  return _template.render(props);
+}
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ })
+
+},[4]);"
+`;

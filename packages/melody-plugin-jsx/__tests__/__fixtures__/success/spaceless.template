@@ -1,0 +1,6 @@
+{% spaceless %}
+<div class="qtp-item__text" data-test="Speceless testing: {{- formattedIncentive -}} foo">
+    Receive {{ formattedIncentive }} cash back for testing this hotel.
+    Or just <span> be </span> happy!
+</div>
+{% endspaceless %}

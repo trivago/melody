@@ -1,0 +1,30 @@
+<div style="{{ { foo: bar } | styles }}">Lorem Ipsum</div>
+
+<div style="{{ { foo: bar } | default | styles }}">Lorem Ipsum</div>
+
+<div style="{{ { foo: bar } | default({}) | styles }}">Lorem Ipsum</div>
+
+<div style="{{ {
+    border: borderVal,
+    top: topVal,
+    left: leftVal
+} | styles }}">Lorem Ipsum</div>
+
+<div {{ {
+    'class': {
+        base: 'foo',
+        'foo--active': active,
+        'foo--disabled': disabled,
+    } | classes,
+    'style': {
+        'border': border,
+        'top': top,
+        'left': left
+    } | styles
+} | attrs }}>Lorem Ipsum</div>
+
+<div style="{{ {
+   'color': color,
+   ('border-' ~ borderSide): border,
+   (position): positionValue
+} | styles }}">Lorem Ipsum</div>

@@ -1,0 +1,20 @@
+{% macro input(name, value, type, size) %}
+    <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value }}" size="{{ size|default(20) }}" {{ varargs }} />
+{% endmacro %}
+
+{% import "forms.html" as foo %}
+{% import _self as forms %}
+{% from 'forms.html' import input as input_field %}
+
+{{ foo.bar('test') }}
+{{ forms.input('foo', 'bar', 'baz', 42) }}
+{{ input_field('foo') }}
+
+{% block test %}
+    {% import "forms.html" as foo %}
+    {% import _self as forms %}
+    {% from 'forms.html' import input as input_field %}
+    {{ foo.bar('test') }}
+    {{ forms.input('foo', 'bar', 'baz', 42) }}
+    {{ input_field('foo') }}
+{% endblock %}

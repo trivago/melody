@@ -1,0 +1,33 @@
+{
+  "name": "melody-extension-core",
+  "version": "0.11.1-rc.1",
+  "description": "",
+  "main": "./lib/index.js",
+  "jsnext:main": "./src/index.js",
+  "scripts": {
+    "build": "mkdir lib; SUPPORT_CJS=true rollup -c ../../rollup.config.js -i src/index.js -o lib/index.js"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "babel-template": "^6.8.0",
+    "babel-types": "^6.8.1",
+    "lodash": "^4.12.0",
+    "shortid": "^2.2.6"
+  },
+  "bundledDependencies": [
+    "babel-types",
+    "babel-template",
+    "shortid"
+  ],
+  "peerDependencies": {
+    "melody-idom": "^0.10.0",
+    "melody-parser": "^0.10.0",
+    "melody-runtime": "^0.10.0",
+    "melody-traverse": "^0.10.0",
+    "melody-types": "^0.10.0"
+  },
+  "devDependencies": {
+    "rollup-plugin-babel": "^2.6.1"
+  }
+}

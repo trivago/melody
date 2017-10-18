@@ -1,0 +1,18 @@
+{
+  "name": "melody-code-frame",
+  "version": "0.11.1-rc.1",
+  "description": "",
+  "main": "./lib/index.js",
+  "jsnext:main": "./src/index.js",
+  "scripts": {
+    "build": "mkdir lib; rollup -c ../../rollup.config.js -i src/index.js -o lib/index.js"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "lodash": "^4.15.0"
+  },
+  "devDependencies": {
+    "rollup-plugin-babel": "^2.6.1"
+  }
+}

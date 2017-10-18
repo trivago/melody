@@ -1,0 +1,8 @@
+{% set foo = "bar" %}
+{% extends "parent.twig" %}
+
+{% block hello %}
+    <div key="1" class="test">
+        {{ message }}
+    </div>
+{% endblock %}

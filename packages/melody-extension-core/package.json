@@ -1,6 +1,6 @@
 {
   "name": "melody-extension-core",
-  "version": "0.11.1-rc.1",
+  "version": "1.0.0",
   "description": "",
   "main": "./lib/index.js",
   "jsnext:main": "./src/index.js",

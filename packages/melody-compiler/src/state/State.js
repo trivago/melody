@@ -44,7 +44,7 @@ export default class State {
         if (this.keyGenerator === undefined) {
             this.keyGenerator = createKeyGenerator(
                 this.file.fileName,
-                this.options.projectRoot || process.cwd(),
+                this.options.projectRoot || process.cwd()
             );
         }
         return this.keyGenerator.generate();
@@ -146,7 +146,7 @@ export default class State {
         }
         const importDeclaration = t.importDeclaration(
             [t.importNamespaceSpecifier(t.identifier(alias))],
-            t.stringLiteral(source),
+            t.stringLiteral(source)
         );
         this.program.body.splice(0, 0, importDeclaration);
         return importDeclaration;
@@ -180,8 +180,8 @@ export default class State {
                 importDecl.specifiers.push(
                     t.importSpecifier(
                         t.identifier(local),
-                        t.identifier(identifier),
-                    ),
+                        t.identifier(identifier)
+                    )
                 );
                 return local;
             }
@@ -189,7 +189,7 @@ export default class State {
 
         importDecl = t.importDeclaration(
             [t.importSpecifier(t.identifier(local), t.identifier(identifier))],
-            t.stringLiteral(source),
+            t.stringLiteral(source)
         );
         this._importCache[source] = importDecl;
         this.program.body.splice(0, 0, importDecl);
@@ -201,7 +201,7 @@ export default class State {
         if (!importDecl) {
             importDecl = t.importDeclaration(
                 [t.importDefaultSpecifier(t.identifier(local))],
-                t.stringLiteral(source),
+                t.stringLiteral(source)
             );
             this._importCache[source] = importDecl;
             this.program.body.splice(0, 0, importDecl);
@@ -210,7 +210,7 @@ export default class State {
                 return importDecl.specifiers[0].local.name;
             }
             importDecl.specifiers.unshift(
-                t.importDefaultSpecifier(t.identifier(local)),
+                t.importDefaultSpecifier(t.identifier(local))
             );
         }
         return local;

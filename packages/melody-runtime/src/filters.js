@@ -40,7 +40,7 @@ export function attrs(attrMap: Object) {
             attr,
             value === false || value === null || value === 0 || value === ''
                 ? undefined
-                : value,
+                : value
         );
     }
     return attrArray;
@@ -262,7 +262,7 @@ export function format(...a) {
         leftJustify,
         minWidth,
         zeroPad,
-        customPadChar,
+        customPadChar
     ) {
         var diff = minWidth - value.length;
         if (diff > 0) {
@@ -287,7 +287,7 @@ export function format(...a) {
         leftJustify,
         minWidth,
         precision,
-        zeroPad,
+        zeroPad
     ) {
         // Note: casts negative numbers to positive ones
         var number = n >>> 0;
@@ -312,7 +312,7 @@ export function format(...a) {
         minWidth,
         precision,
         zeroPad,
-        customPadChar,
+        customPadChar
     ) {
         let value = valueParam;
         if (precision !== null && precision !== undefined) {
@@ -324,7 +324,7 @@ export function format(...a) {
             leftJustify,
             minWidth,
             zeroPad,
-            customPadChar,
+            customPadChar
         );
     };
 
@@ -335,7 +335,7 @@ export function format(...a) {
         flags,
         minWidthParam,
         precisionParam,
-        type,
+        type
     ) {
         var number, prefix, method, textTransform, value;
 
@@ -421,7 +421,7 @@ export function format(...a) {
                     minWidth,
                     precision,
                     zeroPad,
-                    customPadChar,
+                    customPadChar
                 );
             case 'c':
                 return formatString(
@@ -429,7 +429,7 @@ export function format(...a) {
                     leftJustify,
                     minWidth,
                     precision,
-                    zeroPad,
+                    zeroPad
                 );
             case 'b':
                 return formatBaseX(
@@ -439,7 +439,7 @@ export function format(...a) {
                     leftJustify,
                     minWidth,
                     precision,
-                    zeroPad,
+                    zeroPad
                 );
             case 'o':
                 return formatBaseX(
@@ -449,7 +449,7 @@ export function format(...a) {
                     leftJustify,
                     minWidth,
                     precision,
-                    zeroPad,
+                    zeroPad
                 );
             case 'x':
                 return formatBaseX(
@@ -459,7 +459,7 @@ export function format(...a) {
                     leftJustify,
                     minWidth,
                     precision,
-                    zeroPad,
+                    zeroPad
                 );
             case 'X':
                 return formatBaseX(
@@ -469,7 +469,7 @@ export function format(...a) {
                     leftJustify,
                     minWidth,
                     precision,
-                    zeroPad,
+                    zeroPad
                 ).toUpperCase();
             case 'u':
                 return formatBaseX(
@@ -479,7 +479,7 @@ export function format(...a) {
                     leftJustify,
                     minWidth,
                     precision,
-                    zeroPad,
+                    zeroPad
                 );
             case 'i':
             case 'd':
@@ -543,7 +543,7 @@ export function url_encode(input) {
     for (const key in input) {
         if (input.hasOwnProperty(key)) {
             parts.push(
-                encodeURIComponent(key) + '=' + encodeURIComponent(input[key]),
+                encodeURIComponent(key) + '=' + encodeURIComponent(input[key])
             );
         }
     }
@@ -611,7 +611,7 @@ export function strtotime(input, now) {
     // etc...etc...
     // ...therefore we manually parse lots of common date formats
     match = text.match(
-        /^(\d{1,4})([\-\.\/\:])(\d{1,2})([\-\.\/\:])(\d{1,4})(?:\s(\d{1,2}):(\d{2})?:?(\d{2})?)?(?:\s([A-Z]+)?)?$/,
+        /^(\d{1,4})([\-\.\/\:])(\d{1,2})([\-\.\/\:])(\d{1,4})(?:\s(\d{1,2}):(\d{2})?:?(\d{2})?)?(?:\s([A-Z]+)?)?$/
     );
 
     if (match && match[2] === match[4]) {
@@ -631,7 +631,7 @@ export function strtotime(input, now) {
                             match[6] || 0,
                             match[7] || 0,
                             match[8] || 0,
-                            match[9] || 0,
+                            match[9] || 0
                         ) / 1000
                     );
                 }
@@ -653,7 +653,7 @@ export function strtotime(input, now) {
                             match[6] || 0,
                             match[7] || 0,
                             match[8] || 0,
-                            match[9] || 0,
+                            match[9] || 0
                         ) / 1000
                     );
                 }
@@ -674,7 +674,7 @@ export function strtotime(input, now) {
                             match[6] || 0,
                             match[7] || 0,
                             match[8] || 0,
-                            match[9] || 0,
+                            match[9] || 0
                         ) / 1000
                     );
                 }
@@ -692,7 +692,7 @@ export function strtotime(input, now) {
                             match[6] || 0,
                             match[7] || 0,
                             match[8] || 0,
-                            match[9] || 0,
+                            match[9] || 0
                         ) / 1000
                     );
                 }
@@ -710,7 +710,7 @@ export function strtotime(input, now) {
                             match[6] || 0,
                             match[7] || 0,
                             match[8] || 0,
-                            match[9] || 0,
+                            match[9] || 0
                         ) / 1000
                     );
                 }
@@ -739,7 +739,7 @@ export function strtotime(input, now) {
                             match[6] || 0,
                             match[7] || 0,
                             match[8] || 0,
-                            match[9] || 0,
+                            match[9] || 0
                         ) / 1000
                     );
                 }
@@ -759,7 +759,7 @@ export function strtotime(input, now) {
                                 match[6] || 0,
                                 match[7] || 0,
                                 match[8] || 0,
-                                match[9] || 0,
+                                match[9] || 0
                             ) / 1000
                         );
                     }
@@ -778,7 +778,7 @@ export function strtotime(input, now) {
                                 match[1] || 0,
                                 match[3] || 0,
                                 match[5] || 0,
-                                match[9] || 0,
+                                match[9] || 0
                             ) / 1000
                         );
                     }
@@ -808,7 +808,7 @@ export function strtotime(input, now) {
                             match[6] || 0,
                             match[7] || 0,
                             match[8] || 0,
-                            match[9] || 0,
+                            match[9] || 0
                         ) / 1000
                     );
                 }
@@ -826,7 +826,7 @@ export function strtotime(input, now) {
                             today.getDate(),
                             match[1] || 0,
                             match[3] || 0,
-                            match[5] || 0,
+                            match[5] || 0
                         ) / 1000
                     );
                 }
@@ -851,7 +851,7 @@ export function strtotime(input, now) {
     //   2015-04-15 20:33:59z
     //   2015-04-15t20:33:59+02:00
     match = text.match(
-        /^([0-9]{4}-[0-9]{2}-[0-9]{2})[ t]([0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?)([\+-][0-9]{2}(:[0-9]{2})?|z)/,
+        /^([0-9]{4}-[0-9]{2}-[0-9]{2})[ t]([0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?)([\+-][0-9]{2}(:[0-9]{2})?|z)/
     );
     if (match) {
         // fix time zone information
@@ -920,7 +920,7 @@ export function strtotime(input, now) {
 
         if (ranges.hasOwnProperty(range) && !splt[1].match(/^mon(day|\.)?$/i)) {
             return date['set' + ranges[range]](
-                date['get' + ranges[range]]() + num,
+                date['get' + ranges[range]]() + num
             );
         }
 

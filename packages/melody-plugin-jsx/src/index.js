@@ -35,17 +35,17 @@ export default {
                                 t.objectExpression([
                                     t.objectProperty(
                                         t.identifier('__html'),
-                                        path.node.target,
+                                        path.node.target
                                     ),
-                                ]),
-                            ),
+                                ])
+                            )
                         ),
                     ],
-                    true,
+                    true
                 ),
                 null,
                 [],
-                true,
+                true
             );
 
             path.replaceWithJS(jsxElement);

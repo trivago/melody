@@ -36,10 +36,10 @@ export default function({ rawLines, lineNumber, colNumber, length }) {
                 //params.line = params.line.substring(0, colNumber) + chalk.underline(params.line.substring(colNumber, colNumber + length)) + params.line.substring(colNumber + length, params.line.length - 1);
                 params.line += `\n${params.before}${repeat(
                     ' ',
-                    params.width,
+                    params.width
                 )}${params.after}${repeat(' ', colNumber)}${repeat(
                     '^',
-                    length,
+                    length
                 )}`;
             }
 

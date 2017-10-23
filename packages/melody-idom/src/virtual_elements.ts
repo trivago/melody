@@ -283,7 +283,7 @@ var rawString = function(value) {
         if (typeof value !== 'string') {
             throw new Error(
                 'Tried to create a RawString from non-string value: ' +
-                    JSON.stringify(value),
+                    JSON.stringify(value)
             );
         }
     }

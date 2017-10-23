@@ -72,7 +72,7 @@ ${names.length} variable names and ${values.length} values.`,
         for (let i = 0, len = names.length; i < len; i++) {
             assignments[i] = new VariableDeclarationStatement(
                 names[i],
-                values[i],
+                values[i]
             );
         }
 

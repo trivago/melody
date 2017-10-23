@@ -44,12 +44,12 @@ export default {
                     if (path.node.name) {
                         localName = this.addImportFrom(
                             source,
-                            path.node.name.name,
+                            path.node.name.name
                         );
                     } else {
                         localName = this.addDefaultImportFrom(
                             source,
-                            this.generateComponentUid(source),
+                            this.generateComponentUid(source)
                         );
                     }
                     path.scope.registerBinding(localName, path, 'var');
@@ -66,8 +66,8 @@ export default {
                             t.binaryExpression(
                                 '+',
                                 t.stringLiteral(''),
-                                path.node.key,
-                            ),
+                                path.node.key
+                            )
                         );
                     }
                 } else if (
@@ -88,12 +88,12 @@ export default {
                             t.identifier(
                                 path.state.addImportFrom(
                                     'melody-idom',
-                                    'component',
-                                ),
+                                    'component'
+                                )
                             ),
-                            args,
-                        ),
-                    ),
+                            args
+                        )
+                    )
                 );
             },
         },

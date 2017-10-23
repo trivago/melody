@@ -107,8 +107,8 @@ export default class Parser {
                     p.add(
                         copyLoc(
                             new n.PrintExpressionStatement(expression),
-                            expression,
-                        ),
+                            expression
+                        )
                     );
                     setEndFromToken(p, tokens.expect(Types.EXPRESSION_END));
                     break;
@@ -121,8 +121,8 @@ export default class Parser {
                         createNode(
                             n.PrintTextStatement,
                             token,
-                            createNode(n.StringLiteral, token, token.text),
-                        ),
+                            createNode(n.StringLiteral, token, token.text)
+                        )
                     );
                     break;
                 case Types.ENTITY:
@@ -133,9 +133,9 @@ export default class Parser {
                             createNode(
                                 n.StringLiteral,
                                 token,
-                                he.decode(token.text),
-                            ),
-                        ),
+                                he.decode(token.text)
+                            )
+                        )
                     );
                     break;
                 case Types.ELEMENT_START:
@@ -230,7 +230,7 @@ export default class Parser {
                             nodes[nodes.length] = createNode(
                                 n.StringLiteral,
                                 token,
-                                token.text,
+                                token.text
                             );
                             canBeString = false;
                         } else if (
@@ -262,7 +262,7 @@ export default class Parser {
                     element.attributes.push(attr);
                 } else {
                     element.attributes.push(
-                        copyLoc(new n.Attribute(keyNode), keyNode),
+                        copyLoc(new n.Attribute(keyNode), keyNode)
                     );
                 }
             } else if (tokens.nextIf(Types.EXPRESSION_START)) {
@@ -292,9 +292,9 @@ export default class Parser {
                 `Unknown tag "${tag.text}"`,
                 tag.pos,
                 `Expected a known tag such as\n- ${Object.getOwnPropertyNames(
-                    this[TAG],
+                    this[TAG]
                 ).join('\n- ')}`,
-                tag.length,
+                tag.length
             );
         }
         return parser.parse(this, tag);
@@ -318,7 +318,7 @@ export default class Parser {
                 const expr1 = this.matchExpression(
                     op.associativity === LEFT
                         ? op.precedence + 1
-                        : op.precedence,
+                        : op.precedence
                 );
                 expr = op.createNode(token, expr, expr1);
             }
@@ -366,7 +366,7 @@ export default class Parser {
                     // SYMBOL '(' arguments* ')'
                     node = new n.CallExpression(
                         createNode(n.Identifier, token, token.text),
-                        this.matchArguments(),
+                        this.matchArguments()
                     );
                     copyStart(node, node.callee);
                     setEndFromToken(node, tokens.la(-1)); // ')'
@@ -378,7 +378,7 @@ export default class Parser {
                 node = createNode(
                     n.NumericLiteral,
                     token,
-                    Number(tokens.next()),
+                    Number(tokens.next())
                 );
                 break;
             case Types.STRING_START:
@@ -420,7 +420,7 @@ export default class Parser {
                 nodes[nodes.length] = createNode(
                     n.StringLiteral,
                     token,
-                    token.text,
+                    token.text
                 );
                 canBeString = false;
             } else if ((token = tokens.nextIf(Types.INTERPOLATION_START))) {
@@ -436,7 +436,7 @@ export default class Parser {
         if (!nodes.length) {
             return setEndFromToken(
                 createNode(n.StringLiteral, stringStart, ''),
-                stringEnd,
+                stringEnd
             );
         }
 
@@ -473,7 +473,7 @@ export default class Parser {
             condition = new n.ConditionalExpression(
                 condition,
                 consequent,
-                alternate,
+                alternate
             );
             condition.loc.start = { line, column };
             copyEnd(condition, alternate || consequent);
@@ -579,7 +579,7 @@ export default class Parser {
                 property = createNode(
                     n.NumericLiteral,
                     token,
-                    Number(token.text),
+                    Number(token.text)
                 );
                 computed = true;
             } else {
@@ -599,7 +599,7 @@ export default class Parser {
             if (tokens.test(Types.LPAREN)) {
                 const callExpr = new n.CallExpression(
                     memberExpr,
-                    this.matchArguments(),
+                    this.matchArguments()
                 );
                 copyStart(callExpr, memberExpr);
                 setEndFromToken(callExpr, tokens.la(-1));
@@ -624,14 +624,14 @@ export default class Parser {
             if (arg) {
                 return setEndFromToken(
                     copyStart(new n.MemberExpression(node, arg, true), node),
-                    tokens.expect(Types.RBRACE),
+                    tokens.expect(Types.RBRACE)
                 );
             } else {
                 // slice
                 const result = new n.SliceExpression(
                     node,
                     start,
-                    tokens.test(Types.RBRACE) ? null : this.matchExpression(),
+                    tokens.test(Types.RBRACE) ? null : this.matchExpression()
                 );
                 copyStart(result, node);
                 setEndFromToken(result, tokens.expect(Types.RBRACE));
@@ -657,7 +657,7 @@ export default class Parser {
             if (newTarget.arguments.length) {
                 copyEnd(
                     newTarget,
-                    newTarget.arguments[newTarget.arguments.length - 1],
+                    newTarget.arguments[newTarget.arguments.length - 1]
                 );
             } else {
                 copyEnd(newTarget, target);
@@ -687,7 +687,7 @@ export default class Parser {
                 const value = this.matchExpression();
                 const arg = new n.NamedArgumentExpression(
                     createNode(n.Identifier, name, name.text),
-                    value,
+                    value
                 );
                 copyEnd(arg, value);
                 args.push(arg);

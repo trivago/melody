@@ -148,7 +148,7 @@ function createReactCompositeComponent(component) {
     // containing the child component instance.
     if (component.childInstance) {
         instance._renderedComponent = updateReactComponent(
-            component.childInstance,
+            component.childInstance
         );
     } else if (node) {
         // Otherwise, if the render() function returned an HTML/SVG element,
@@ -204,7 +204,7 @@ function findRoots(node, roots) {
         const nodeData = getNodeData(child);
         if (nodeData && nodeData.componentInstance) {
             roots[nextRootKey(roots)] = updateReactComponent(
-                nodeData.componentInstance,
+                nodeData.componentInstance
             );
         } else {
             findRoots(child, roots);

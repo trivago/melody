@@ -28,7 +28,7 @@ const MAX_SAFE_INTEGER =
     'MAX_SAFE_INTEGER' in Number ? Number.MAX_SAFE_INTEGER : 9007199254740991;
 
 export function random(
-    iterable: Array | Number | String = MAX_SAFE_INTEGER,
+    iterable: Array | Number | String = MAX_SAFE_INTEGER
 ): any {
     if (isNumber(iterable)) {
         return rand(0, iterable);

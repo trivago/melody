@@ -41,7 +41,7 @@ export const FromParser = {
 
             const importDeclaration = new ImportDeclaration(
                 createNode(Identifier, name, name.text),
-                createNode(Identifier, alias, alias.text),
+                createNode(Identifier, alias, alias.text)
             );
             setStartFromToken(importDeclaration, name);
             setEndFromToken(importDeclaration, alias);

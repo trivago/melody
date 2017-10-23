@@ -38,7 +38,7 @@ export const FilterParser = {
 
         const filterBlockStatement = new FilterBlockStatement(
             filterExpression,
-            body,
+            body
         );
         setStartFromToken(filterBlockStatement, token);
         setEndFromToken(filterBlockStatement, tokens.expect(Types.TAG_END));

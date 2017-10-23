@@ -61,7 +61,7 @@ export class MountStatement extends Node {
         name?: Identifier,
         source?: String,
         key?: Node,
-        argument?: Node,
+        argument?: Node
     ) {
         super();
         this.name = name;
@@ -135,7 +135,7 @@ export class ForStatement extends Node {
         sequence?: Node = null,
         condition?: Node = null,
         body?: Node = null,
-        otherwise?: Node = null,
+        otherwise?: Node = null
     ) {
         super();
         this.keyTarget = keyTarget;
@@ -155,7 +155,7 @@ visitor(
     'sequence',
     'condition',
     'body',
-    'otherwise',
+    'otherwise'
 );
 
 export class ImportDeclaration extends Node {

@@ -21,11 +21,11 @@
     "shortid"
   ],
   "peerDependencies": {
-    "melody-idom": "^0.10.0",
-    "melody-parser": "^0.10.0",
-    "melody-runtime": "^0.10.0",
-    "melody-traverse": "^0.10.0",
-    "melody-types": "^0.10.0"
+    "melody-idom": "^1.0.0",
+    "melody-parser": "^1.0.0",
+    "melody-runtime": "^1.0.0",
+    "melody-traverse": "^1.0.0",
+    "melody-types": "^1.0.0"
   },
   "devDependencies": {
     "rollup-plugin-babel": "^2.6.1"

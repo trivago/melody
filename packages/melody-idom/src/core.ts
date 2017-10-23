@@ -185,7 +185,7 @@ const patchOuter = patchFactory(function(node, fn, data) {
             startNode,
             currentNode,
             expectedNextNode,
-            expectedPrevNode,
+            expectedPrevNode
         );
     }
 
@@ -207,7 +207,7 @@ const patchOuter = patchFactory(function(node, fn, data) {
 var matches = function(
     matchNode: Node,
     nodeName: string,
-    key?: string,
+    key?: string
 ): boolean {
     var data = getData(matchNode);
 
@@ -436,7 +436,7 @@ var scheduleComponent = function(
     Component: Class<CallableComponent> | CallableComponent,
     key: string,
     props: any,
-    el?: Node,
+    el?: Node
 ): any {
     var comp;
     if (el) {
@@ -482,7 +482,7 @@ var scheduleComponent = function(
 var component = function(
     Component: Class<CallableComponent> | CallableComponent,
     key: string,
-    props: any,
+    props: any
 ): any {
     var el = getData(currentParent).keyMap[key];
     return scheduleComponent(Component, key, props, el);
@@ -495,7 +495,7 @@ var getCurrentComponent = function(): RenderableComponent {
 var mount = function(
     element: Node,
     Component: Class<CallableComponent> | CallableComponent,
-    props: any,
+    props: any
 ): any {
     var data = getData(element);
     var key = data && data.key;

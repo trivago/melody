@@ -46,14 +46,14 @@ export function prepareNode(path) {
         const parentForStatement = findParentPathOfTypeAndBreakWhen(
             path,
             'ForStatement',
-            path => path && path.is('Element'),
+            path => path && path.is('Element')
         );
 
         const isRootElementOfLoop = !!parentForStatement;
 
         if (isRootElementOfLoop) {
             const parentForStatementChildName = parentForStatement.getData(
-                'childName',
+                'childName'
             );
             if (!parentForStatementChildName) {
                 childName = parentElement.scope.generateUid('child');
@@ -81,7 +81,7 @@ export function assembleNode(path, expression) {
 
     if (parentElement && !is(path.parent, 'BlockStatement')) {
         const parentElementContainsStatements = parentElement.getData(
-            'containsStatements',
+            'containsStatements'
         );
 
         if (!parentElementContainsStatements) {
@@ -105,16 +105,16 @@ export function assembleNode(path, expression) {
                         t.identifier(childName),
                         t.memberExpression(
                             t.identifier(childName),
-                            t.identifier('length'),
+                            t.identifier('length')
                         ),
-                        true,
+                        true
                     ),
-                    expression,
-                ),
+                    expression
+                )
             );
         }
         return t.expressionStatement(
-            t.assignmentExpression('=', t.identifier(childName), expression),
+            t.assignmentExpression('=', t.identifier(childName), expression)
         );
     }
 

@@ -67,13 +67,13 @@ export const MacroParser = {
         const macroDeclarationStatement = new MacroDeclarationStatement(
             createNode(Identifier, nameToken, nameToken.text),
             args,
-            body,
+            body
         );
 
         setStartFromToken(macroDeclarationStatement, token);
         setEndFromToken(
             macroDeclarationStatement,
-            tokens.expect(Types.TAG_END),
+            tokens.expect(Types.TAG_END)
         );
 
         return macroDeclarationStatement;

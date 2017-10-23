@@ -87,7 +87,7 @@ Object.assign(Component.prototype, {
         if (this.isMounted) {
             this.componentDidUpdate(
                 this.oldProps || this.props,
-                this.oldState || this.state,
+                this.oldState || this.state
             );
             if (options.afterUpdate) {
                 options.afterUpdate(this);
@@ -157,7 +157,7 @@ function createComponentConstructor(Parent, parentReducer) {
         if (!this || !(this instanceof ChildComponent)) {
             const EnhancedChild = createComponentConstructor(
                 ChildComponent,
-                parentReducer,
+                parentReducer
             );
             for (let i = 0, len = arguments.length; i < len; i++) {
                 mixin(EnhancedChild, arguments[i]);
@@ -174,7 +174,7 @@ function createComponentConstructor(Parent, parentReducer) {
 
 export function createComponent(
     templateFnOrObj: Template,
-    reducer: ?Reducer,
+    reducer: ?Reducer
 ): Component {
     const template = templateFnOrObj.render
         ? props => templateFnOrObj.render(props)

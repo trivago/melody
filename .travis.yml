@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+    - "node"
+    - "8"
+    - "7"
+    - "6"
+
+install:
+    - yarn
+
+before_script:
+    - yarn run pretest
+
+script:
+    - travis_retry yarn test-travis
+
+after_script:
+    - yarn run posttest

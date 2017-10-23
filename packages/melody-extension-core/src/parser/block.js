@@ -37,7 +37,7 @@ export const BlockParser = {
                         token.type === Types.TAG_START &&
                         tokens.nextIf(Types.SYMBOL, 'endblock')
                     );
-                }).expressions,
+                }).expressions
             );
 
             if (tokens.nextIf(Types.SYMBOL, nameToken.text)) {
@@ -49,7 +49,7 @@ export const BlockParser = {
                         advice:
                             unexpectedToken.type == Types.SYMBOL
                                 ? `Expected end of block ${nameToken.text} but instead found end of block ${tokens.la(
-                                      0,
+                                      0
                                   ).text}.`
                                 : `endblock must be followed by either '%}' or the name of the open block. Found a token of type ${Types
                                       .ERROR_TABLE[unexpectedToken.type] ||
@@ -60,7 +60,7 @@ export const BlockParser = {
         } else {
             blockStatement = new BlockStatement(
                 createNode(Identifier, nameToken, nameToken.text),
-                new PrintExpressionStatement(parser.matchExpression()),
+                new PrintExpressionStatement(parser.matchExpression())
             );
         }
 

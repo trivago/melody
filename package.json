@@ -4,8 +4,8 @@
   "license": "Apache-2.0",
   "private": true,
   "engines": {
-    "node": ">=7.0.0"
-  }, 
+    "node": ">=6.0.0"
+  },
   "scripts": {
     "bootstrap": "npm run lerna bootstrap",
     "build": "lerna run build",
@@ -22,9 +22,10 @@
     "prepublish": "npm run bootstrap && npm run build:release",
     "pretest": "./bin/pretest.sh",
     "posttest": "./bin/posttest.sh",
-    "prettier": "prettier --single-quote --tab-width 4 --trailing-comma all --write \"./packages/melody-*/src/**/*.[tj]s\"",
+    "prettier": "prettier --write \"./packages/melody-*/src/**/*.[tj]s\"",
     "release": "./bin/release.sh",
     "test": "jest",
+    "test-travis": "jest --maxWorkers=4",
     "test-accept": "cross-env NODE_ENV=mocha lerna run test-accept",
     "test-debug": "node --inspect --debug-brk ./node_modules/jest-cli/bin/jest.js -i"
   },

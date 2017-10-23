@@ -13,7 +13,7 @@
     "melody-component": "^1.0.0"
   },
   "peerDependencies": {
-    "melody-idom": "^0.10.0"
+    "melody-idom": "^1.0.0"
   },
   "devDependencies": {
     "redux": "^3.6.0",

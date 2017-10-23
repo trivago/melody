@@ -18,7 +18,6 @@
   },
   "devDependencies": {
     "melody-idom": "^1.0.0",
-    "melody-test-utils": "^0.11.1-rc.1",
     "redux": "^3.6.0"
   }
 }

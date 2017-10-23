@@ -36,7 +36,7 @@ module.exports = function loader(content) {
                         'Could not find plugin ' +
                             pluginName +
                             '. Expected name to be melody-plugin-' +
-                            pluginName,
+                            pluginName
                     );
                 }
             } else if (isObject(pluginName)) {
@@ -47,7 +47,7 @@ module.exports = function loader(content) {
                         pluginName +
                         ' of type ' +
                         typeof pluginName +
-                        ' was given',
+                        ' was given'
                 );
             }
         }

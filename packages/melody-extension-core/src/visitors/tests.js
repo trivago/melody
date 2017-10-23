@@ -24,8 +24,8 @@ export default {
                     t.binaryExpression(
                         '%',
                         path.get('expression').node,
-                        t.numericLiteral(2),
-                    ),
+                        t.numericLiteral(2)
+                    )
                 );
                 expr.extra = { parenthesizedArgument: true };
                 path.replaceWithJS(expr);
@@ -40,9 +40,9 @@ export default {
                         t.binaryExpression(
                             '%',
                             path.get('expression').node,
-                            t.numericLiteral(2),
-                        ),
-                    ),
+                            t.numericLiteral(2)
+                        )
+                    )
                 );
                 expr.extra = { parenthesizedArgument: true };
                 path.replaceWithJS(expr);
@@ -55,10 +55,10 @@ export default {
                         '!==',
                         t.unaryExpression(
                             'typeof',
-                            path.get('expression').node,
+                            path.get('expression').node
                         ),
-                        t.stringLiteral('undefined'),
-                    ),
+                        t.stringLiteral('undefined')
+                    )
                 );
             },
         },
@@ -67,10 +67,10 @@ export default {
                 path.replaceWithJS(
                     t.callExpression(
                         t.identifier(
-                            this.addImportFrom('melody-runtime', 'isEmpty'),
+                            this.addImportFrom('melody-runtime', 'isEmpty')
                         ),
-                        [path.get('expression').node],
-                    ),
+                        [path.get('expression').node]
+                    )
                 );
             },
         },
@@ -80,8 +80,8 @@ export default {
                     t.binaryExpression(
                         '===',
                         path.get('expression').node,
-                        path.get('arguments')[0].node,
-                    ),
+                        path.get('arguments')[0].node
+                    )
                 );
             },
         },
@@ -91,8 +91,8 @@ export default {
                     t.binaryExpression(
                         '===',
                         path.get('expression').node,
-                        t.nullLiteral(),
-                    ),
+                        t.nullLiteral()
+                    )
                 );
             },
         },
@@ -104,9 +104,9 @@ export default {
                         t.binaryExpression(
                             '%',
                             path.get('expression').node,
-                            path.node.arguments[0],
-                        ),
-                    ),
+                            path.node.arguments[0]
+                        )
+                    )
                 );
             },
         },
@@ -116,10 +116,10 @@ export default {
                     t.callExpression(
                         t.memberExpression(
                             t.identifier('Array'),
-                            t.identifier('isArray'),
+                            t.identifier('isArray')
                         ),
-                        [path.node.expression],
-                    ),
+                        [path.node.expression]
+                    )
                 );
             },
         },

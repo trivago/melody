@@ -20,12 +20,12 @@ import { createWrapperComponent } from './WrapperComponent';
 
 export type StateToPropsMapper = (state: Object, ownProps: Object) => Object;
 export type DispatchToPropsMapper = (
-    dispatch: (action: Action) => void,
+    dispatch: (action: Action) => void
 ) => Object;
 export type PropsMerger = (
     stateProps: Object,
     dispatchProps: Object,
-    ownProps: Object,
+    ownProps: Object
 ) => Object;
 
 const findNextStore = comp => {
@@ -46,13 +46,13 @@ const defaultMapDispatchToProps: DispatchToPropsMapper = dispatch => ({
 const defaultMergeProps: PropsMerger = (
     stateProps,
     dispatchProps,
-    parentProps,
+    parentProps
 ) => Object.assign({}, parentProps, stateProps, dispatchProps);
 
 export function connect(
     mapStateToProps: ?StateToPropsMapper,
     mapDispatchToProps: ?(DispatchToPropsMapper | Object),
-    mergeProps: ?PropsMerger,
+    mergeProps: ?PropsMerger
 ) {
     const shouldSubscribeToStore = !!mapStateToProps;
     const doStatePropsDependOnOwnProps =
@@ -74,7 +74,7 @@ export function connect(
 
     return Component =>
         class ConnectWrapperComponent extends createWrapperComponent(
-            Component,
+            Component
         ) {
             constructor() {
                 super();
@@ -107,7 +107,7 @@ export function connect(
                     if (doStatePropsDependOnOwnProps || !this.stateProps) {
                         this.stateProps = this.mapStateToProps(
                             store.getState(),
-                            props,
+                            props
                         );
                     }
 
@@ -117,14 +117,14 @@ export function connect(
                     ) {
                         this.dispatchProps = this.mapDispatchToProps(
                             store.dispatch,
-                            props,
+                            props
                         );
                     }
 
                     this.renderProps = finalMergeProps(
                         this.stateProps,
                         this.dispatchProps,
-                        props,
+                        props
                     );
                 }
                 this.childInstance.apply(this.renderProps);
@@ -139,18 +139,18 @@ export function connect(
                         const props = this.ownProps;
                         const newStateProps = this.mapStateToProps(
                             this.store.getState(),
-                            props,
+                            props
                         );
                         if (newStateProps !== this.stateProps) {
                             const newRenderProps = finalMergeProps(
                                 newStateProps,
                                 this.dispatchProps,
-                                props,
+                                props
                             );
                             this.stateProps = newStateProps;
                             const didRenderPropsChange = !shallowEquals(
                                 this.renderProps,
-                                newRenderProps,
+                                newRenderProps
                             );
                             this.renderProps = newRenderProps;
                             if (didRenderPropsChange) {
@@ -174,14 +174,14 @@ export function connect(
                 let result = this.mapDispatchToPropsFn.call(
                     null,
                     dispatch,
-                    props,
+                    props
                 );
                 if (typeof result === 'function') {
                     this.mapDispatchToPropsFn = result;
                     result = this.mapDispatchToPropsFn.call(
                         null,
                         dispatch,
-                        props,
+                        props
                     );
                 }
                 return result;
@@ -201,7 +201,7 @@ export function connect(
 
 export function provide(store: ReduxStore, Component: Component): Component {
     return class StoreProviderComponent extends createWrapperComponent(
-        Component,
+        Component
     ) {
         constructor() {
             super();

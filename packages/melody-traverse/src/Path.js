@@ -77,7 +77,7 @@ export default class Path {
         if (!path.node) {
             /*eslint no-console: off*/
             console.log(
-                'Path has no node ' + path.parentKey + ' > ' + path.key,
+                'Path has no node ' + path.parentKey + ' > ' + path.key
             );
         }
         paths.push(path);
@@ -327,7 +327,7 @@ export default class Path {
                         parent: node,
                         container,
                         key: i,
-                    }).setContext(context),
+                    }).setContext(context)
                 );
             } else {
                 return Path.get({

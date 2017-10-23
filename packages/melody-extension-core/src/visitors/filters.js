@@ -32,7 +32,7 @@ export default {
             defaultFilter({
                 VAR: path.node.target,
                 DEFAULT: path.node.arguments[0] || t.stringLiteral(''),
-            }).expression,
+            }).expression
         );
     },
     abs(path) {
@@ -40,16 +40,16 @@ export default {
         path.replaceWithJS(
             t.callExpression(
                 t.memberExpression(t.identifier('Math'), t.identifier('abs')),
-                [path.node.target],
-            ),
+                [path.node.target]
+            )
         );
     },
     join(path) {
         path.replaceWithJS(
             t.callExpression(
                 t.memberExpression(path.node.target, t.identifier('join')),
-                path.node.arguments,
-            ),
+                path.node.arguments
+            )
         );
     },
     json_encode(path) {
@@ -58,15 +58,15 @@ export default {
             t.callExpression(
                 t.memberExpression(
                     t.identifier('JSON'),
-                    t.identifier('stringify'),
+                    t.identifier('stringify')
                 ),
-                [path.node.target],
-            ),
+                [path.node.target]
+            )
         );
     },
     length(path) {
         path.replaceWithJS(
-            t.memberExpression(path.node.target, t.identifier('length')),
+            t.memberExpression(path.node.target, t.identifier('length'))
         );
     },
     lower(path) {
@@ -74,10 +74,10 @@ export default {
             t.callExpression(
                 t.memberExpression(
                     path.node.target,
-                    t.identifier('toLowerCase'),
+                    t.identifier('toLowerCase')
                 ),
-                [],
-            ),
+                []
+            )
         );
     },
     upper(path) {
@@ -85,42 +85,42 @@ export default {
             t.callExpression(
                 t.memberExpression(
                     path.node.target,
-                    t.identifier('toUpperCase'),
+                    t.identifier('toUpperCase')
                 ),
-                [],
-            ),
+                []
+            )
         );
     },
     slice(path) {
         path.replaceWithJS(
             t.callExpression(
                 t.memberExpression(path.node.target, t.identifier('slice')),
-                path.node.arguments,
-            ),
+                path.node.arguments
+            )
         );
     },
     sort(path) {
         path.replaceWithJS(
             t.callExpression(
                 t.memberExpression(path.node.target, t.identifier('sort')),
-                path.node.arguments,
-            ),
+                path.node.arguments
+            )
         );
     },
     split(path) {
         path.replaceWithJS(
             t.callExpression(
                 t.memberExpression(path.node.target, t.identifier('split')),
-                path.node.arguments,
-            ),
+                path.node.arguments
+            )
         );
     },
     trim(path) {
         path.replaceWithJS(
             t.callExpression(
                 t.memberExpression(path.node.target, t.identifier('trim')),
-                path.node.arguments,
-            ),
+                path.node.arguments
+            )
         );
     },
     convert_encoding(path) {
@@ -131,10 +131,10 @@ export default {
         path.replaceWithJS(
             t.callExpression(
                 t.identifier(
-                    path.state.addImportFrom('melody-runtime', 'strtotime'),
+                    path.state.addImportFrom('melody-runtime', 'strtotime')
                 ),
-                [path.node.arguments[0], path.node.target],
-            ),
+                [path.node.arguments[0], path.node.target]
+            )
         );
     },
     date(path) {
@@ -145,10 +145,10 @@ export default {
             t.callExpression(
                 t.callExpression(
                     t.identifier(path.state.addDefaultImportFrom('moment')),
-                    [path.node.target],
+                    [path.node.target]
                 ),
-                [path.node.arguments[0]],
-            ),
+                [path.node.arguments[0]]
+            )
         );
     },
 };

@@ -40,7 +40,7 @@ interface WhatWGAddEventListenerArgs extends WhatWGEventListenerArgs {
 type WhatWGAddEventListener = (
     type: string,
     listener: (event: Event) => void,
-    options?: WhatWGAddEventListenerArgs,
+    options?: WhatWGAddEventListenerArgs
 ) => void;
 
 let supportsPassiveListeners = false;
@@ -264,7 +264,7 @@ function drain(): Array<RenderableComponent> {
             patchOuter(
                 next.component.el,
                 _ => updateComponent(next.component),
-                {},
+                {}
             );
             mounted.push(next.component);
         }
@@ -287,7 +287,7 @@ export function flush(deadline: Deadline): void {
             patchOuter(
                 next.component.el,
                 _ => updateComponent(next.component),
-                {},
+                {}
             );
             mounted.add(next.component);
             if (isNew && queue !== NIL) {
@@ -331,7 +331,7 @@ export function flush(deadline: Deadline): void {
 export function clear() {
     if (process.env.NODE_ENV !== 'test') {
         throw new Error(
-            'Clearing the queue is only allowed within a test environment.',
+            'Clearing the queue is only allowed within a test environment.'
         );
     }
     queue = NIL;
@@ -387,6 +387,6 @@ function attachScrollListener(): void {
             idealFrameLength = BUSY_FRAME_LENGTH;
             detectIdleCallback();
         },
-        { passive: true },
+        { passive: true }
     );
 }

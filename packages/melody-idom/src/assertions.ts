@@ -57,7 +57,7 @@ var assertNoUnclosedTags = function(openElement, root) {
     }
 
     throw new Error(
-        'One or more tags were not closed:\n' + openTags.join('\n'),
+        'One or more tags were not closed:\n' + openTags.join('\n')
     );
 };
 
@@ -70,7 +70,7 @@ var assertNotInAttributes = function(functionName) {
         throw new Error(
             functionName +
                 '() can not be called between ' +
-                'elementOpenStart() and elementOpenEnd().',
+                'elementOpenStart() and elementOpenEnd().'
         );
     }
 };
@@ -84,7 +84,7 @@ var assertNotInSkip = function(functionName) {
         throw new Error(
             functionName +
                 '() may not be called inside an element ' +
-                'that has called skip().',
+                'that has called skip().'
         );
     }
 };
@@ -98,7 +98,7 @@ var assertInAttributes = function(functionName) {
         throw new Error(
             functionName +
                 '() can only be called after calling ' +
-                'elementOpenStart().',
+                'elementOpenStart().'
         );
     }
 };
@@ -110,7 +110,7 @@ var assertVirtualAttributesClosed = function() {
     if (inAttributes) {
         throw new Error(
             'elementOpenEnd() must be called after calling ' +
-                'elementOpenStart().',
+                'elementOpenStart().'
         );
     }
 };
@@ -127,7 +127,7 @@ var assertCloseMatchesOpenTag = function(nodeName, tag) {
                 tag +
                 '" but "' +
                 nodeName +
-                '" was open.',
+                '" was open.'
         );
     }
 };
@@ -143,7 +143,7 @@ var assertNoChildrenDeclaredYet = function(functionName, previousNode) {
         throw new Error(
             functionName +
                 '() must come before any child ' +
-                'declarations inside the current element.',
+                'declarations inside the current element.'
         );
     }
 };
@@ -157,7 +157,7 @@ var assertPatchElementNoExtras = function(
     startNode,
     currentNode,
     expectedNextNode,
-    expectedPrevNode,
+    expectedPrevNode
 ) {
     const wasUpdated =
         currentNode.nextSibling === expectedNextNode &&
@@ -170,7 +170,7 @@ var assertPatchElementNoExtras = function(
     if (!wasUpdated && !wasChanged && !wasRemoved) {
         throw new Error(
             'There must be exactly one top level call corresponding ' +
-                'to the patched element.',
+                'to the patched element.'
         );
     }
 };

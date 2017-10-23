@@ -46,7 +46,7 @@ I expected the current string to end with a ${stringStartToken.text} but instead
                 title: 'Invalid autoescape type declaration',
                 pos: tokens.la(0).pos,
                 advice: `Expected type of autoescape to be a string, boolean or not specified. Found ${tokens.la(
-                    0,
+                    0
                 ).type} instead.`,
             });
         }

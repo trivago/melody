@@ -23,7 +23,7 @@ function toJSXMemberExpression(memberExpression) {
         is(object, 'MemberExpression')
             ? toJSXMemberExpression(object)
             : t.jSXIdentifier(object.name),
-        t.jSXIdentifier(property.name),
+        t.jSXIdentifier(property.name)
     );
 }
 
@@ -41,14 +41,14 @@ export default {
                     if (path.node.name) {
                         localName = this.addImportFrom(
                             source,
-                            path.node.name.name,
+                            path.node.name.name
                         );
                     } else {
                         localName = this.addDefaultImportFrom(
                             source,
                             // JSX expects component names to be capitalized, otherwise
                             // it assumes it's an html element
-                            this.generateComponentUid(source),
+                            this.generateComponentUid(source)
                         );
                     }
                     path.scope.registerBinding(localName, path, 'var');
@@ -70,11 +70,11 @@ export default {
                                     t.jSXIdentifier(
                                         is(key, 'Identifier')
                                             ? key.name
-                                            : key.value,
+                                            : key.value
                                     ),
-                                    t.jSXExpressionContainer(value),
+                                    t.jSXExpressionContainer(value)
                                 );
-                            },
+                            }
                         );
                     } else {
                         properties = [t.jSXSpreadAttribute(attributes)];
@@ -85,8 +85,8 @@ export default {
                     properties.push(
                         t.jSXAttribute(
                             t.jSXIdentifier('key'),
-                            t.jSXExpressionContainer(path.node.key),
-                        ),
+                            t.jSXExpressionContainer(path.node.key)
+                        )
                     );
                 }
 
@@ -101,7 +101,7 @@ export default {
                     t.jSXOpeningElement(identifier, properties, true),
                     null,
                     [],
-                    true,
+                    true
                 );
 
                 replacements.push(assembleNode(path, jsxElement));

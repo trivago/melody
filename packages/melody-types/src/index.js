@@ -48,7 +48,7 @@ export class Node {
             },
             {
                 type: this.type,
-            },
+            }
         );
     }
 

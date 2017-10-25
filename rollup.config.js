@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'production') {
             mangle: {
                 toplevel: true,
             },
-        }),
+        })
     );
 }
 

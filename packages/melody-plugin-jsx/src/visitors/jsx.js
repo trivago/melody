@@ -145,16 +145,16 @@ export default {
                                     isArray
                                         ? t.newExpression(
                                               t.identifier('Array'),
-                                              [],
+                                              []
                                           )
-                                        : undefined,
-                                ),
+                                        : undefined
+                                )
                             );
                         });
                     }
                     if (declarations.length) {
                         replacements.push(
-                            t.variableDeclaration('let', declarations),
+                            t.variableDeclaration('let', declarations)
                         );
                     }
 
@@ -167,21 +167,21 @@ export default {
                 saveAttributes.forEach(node => {
                     if (is(node, 'StringLiteral')) {
                         properties.push(
-                            t.jSXAttribute(getJSXAttributeName(node), null),
+                            t.jSXAttribute(getJSXAttributeName(node), null)
                         );
                     } else if (is(node, 'Attribute')) {
                         properties.push(
                             t.jSXAttribute(
                                 getJSXAttributeName(node.name),
-                                getJSXAttributeValue(node.value),
-                            ),
+                                getJSXAttributeValue(node.value)
+                            )
                         );
                     } else if (is(node, 'ObjectProperty')) {
                         properties.push(
                             t.jSXAttribute(
                                 getJSXAttributeName(node.key),
-                                getJSXAttributeValue(node.value),
-                            ),
+                                getJSXAttributeValue(node.value)
+                            )
                         );
                     } else {
                         properties.push(t.jSXSpreadAttribute(node));
@@ -195,15 +195,15 @@ export default {
                         properties.push(
                             t.jSXAttribute(
                                 getJSXAttributeName(node.name),
-                                t.JSXExpressionContainer(identifier),
-                            ),
+                                t.JSXExpressionContainer(identifier)
+                            )
                         );
                     } else if (is(node, 'ObjectProperty')) {
                         properties.push(
                             t.jSXAttribute(
                                 getJSXAttributeName(node.key),
-                                t.JSXExpressionContainer(identifier),
-                            ),
+                                t.JSXExpressionContainer(identifier)
+                            )
                         );
                     } else {
                         properties.push(t.jSXSpreadAttribute(identifier));
@@ -216,24 +216,24 @@ export default {
                         t.jSXOpeningElement(
                             t.JSXIdentifier(node.name),
                             properties,
-                            true,
+                            true
                         ),
                         null,
                         [],
-                        true,
+                        true
                     );
                 } else {
                     jsxElement = t.jSXElement(
                         t.jSXOpeningElement(
                             t.JSXIdentifier(node.name),
-                            properties,
+                            properties
                         ),
                         t.jSXClosingElement(t.JSXIdentifier(node.name)),
                         containsStatements
                             ? childNames.map(n =>
-                                  t.jSXExpressionContainer(t.identifier(n)),
+                                  t.jSXExpressionContainer(t.identifier(n))
                               )
-                            : node.children,
+                            : node.children
                     );
                 }
 

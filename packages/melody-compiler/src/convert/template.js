@@ -35,9 +35,9 @@ function buildRenderFunction(ctx) {
             t.functionExpression(
                 null,
                 [t.identifier('_context')],
-                t.blockStatement(ctx.BODY),
-            ),
-        ),
+                t.blockStatement(ctx.BODY)
+            )
+        )
     );
 }
 
@@ -78,7 +78,7 @@ export default {
             if (contextName) {
                 const replacement = t.memberExpression(
                     t.identifier(contextName),
-                    t.identifier(path.node.name),
+                    t.identifier(path.node.name)
                 );
                 path.replaceWithJS(replacement);
             }
@@ -108,7 +108,7 @@ export default {
                 }
                 value.node.value = value.node.value.replace(
                     /^\s{2,}|\s{2,}$/g,
-                    ' ',
+                    ' '
                 );
             }
         },
@@ -128,7 +128,7 @@ export default {
             const scope = path.scope.getRootScope();
             let localMacroImportUsages;
             for (const identifier of Object.keys(
-                path.scope.getRootScope().bindings,
+                path.scope.getRootScope().bindings
             )) {
                 const binding = scope.getBinding(identifier);
                 if (
@@ -158,13 +158,13 @@ export default {
                                 t.identifier(
                                     this.addImportFrom(
                                         'melody-runtime',
-                                        'createSubContext',
-                                    ),
+                                        'createSubContext'
+                                    )
                                 ),
-                                [t.identifier('_context')],
-                            ),
+                                [t.identifier('_context')]
+                            )
                         ),
-                    ]),
+                    ])
                 );
             }
         },
@@ -205,14 +205,14 @@ export default {
                                 t.callExpression(
                                     t.memberExpression(
                                         t.identifier('Object'),
-                                        t.identifier('create'),
+                                        t.identifier('create')
                                     ),
-                                    [t.identifier(this.parentName)],
-                                ),
+                                    [t.identifier(this.parentName)]
+                                )
                             ),
                         ]),
-                        [],
-                    ),
+                        []
+                    )
                 );
                 if (path.node.body.length) {
                     path.node.body.push(
@@ -221,16 +221,16 @@ export default {
                                 t.memberExpression(
                                     t.memberExpression(
                                         t.identifier(this.parentName),
-                                        t.identifier('render'),
+                                        t.identifier('render')
                                     ),
-                                    t.identifier('call'),
+                                    t.identifier('call')
                                 ),
                                 [
                                     t.identifier(this.templateVariableName),
                                     t.identifier(path.scope.contextName),
-                                ],
-                            ),
-                        ),
+                                ]
+                            )
+                        )
                     );
                 }
             } else {
@@ -241,11 +241,11 @@ export default {
                         t.variableDeclaration('const', [
                             t.variableDeclarator(
                                 t.identifier(this.templateVariableName),
-                                t.objectExpression([]),
+                                t.objectExpression([])
                             ),
                         ]),
-                        [],
-                    ),
+                        []
+                    )
                 );
             }
             path.replaceWith(path.node);
@@ -260,13 +260,13 @@ export default {
                                 t.identifier(
                                     this.addImportFrom(
                                         'melody-runtime',
-                                        'createSubContext',
-                                    ),
+                                        'createSubContext'
+                                    )
                                 ),
-                                [t.identifier('_context')],
-                            ),
+                                [t.identifier('_context')]
+                            )
                         ),
-                    ]),
+                    ])
                 );
             }
             insertVariableDeclarations(path);
@@ -278,7 +278,7 @@ export default {
                         TEMPLATE: t.identifier(this.templateVariableName),
                         NAME: t.identifier('render'),
                         BODY: path.node.body,
-                    }),
+                    })
                 );
             } else {
                 const parentName = this.parentName;
@@ -286,10 +286,10 @@ export default {
                     [
                         t.importSpecifier(
                             t.identifier(parentName),
-                            t.identifier('_template'),
+                            t.identifier('_template')
                         ),
                     ],
-                    path.node.parentName,
+                    path.node.parentName
                 );
                 this.program.body.splice(0, 0, importDecl);
                 const body = path.get('body').map(e => e.node);
@@ -309,11 +309,11 @@ export default {
                         t.memberExpression(
                             t.memberExpression(
                                 t.identifier('process'),
-                                t.identifier('env'),
+                                t.identifier('env')
                             ),
-                            t.identifier('NODE_ENV'),
+                            t.identifier('NODE_ENV')
                         ),
-                        t.stringLiteral('production'),
+                        t.stringLiteral('production')
                     ),
                     t.blockStatement([
                         t.expressionStatement(
@@ -321,13 +321,13 @@ export default {
                                 '=',
                                 t.memberExpression(
                                     t.identifier(this.templateVariableName),
-                                    t.identifier('displayName'),
+                                    t.identifier('displayName')
                                 ),
-                                t.stringLiteral(fileName),
-                            ),
+                                t.stringLiteral(fileName)
+                            )
                         ),
-                    ]),
-                ),
+                    ])
+                )
             );
             this.program.body.push(
                 t.exportDefaultDeclaration(
@@ -339,15 +339,15 @@ export default {
                                 t.callExpression(
                                     t.memberExpression(
                                         t.identifier(this.templateVariableName),
-                                        t.identifier('render'),
+                                        t.identifier('render')
                                     ),
-                                    [t.identifier('props')],
-                                ),
+                                    [t.identifier('props')]
+                                )
                             ),
-                        ]),
-                    ),
+                        ])
+                    )
                     //t.identifier(this.templateVariableName),
-                ),
+                )
             );
             path.replaceWithJS(this.program);
         },

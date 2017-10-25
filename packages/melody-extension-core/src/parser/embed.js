@@ -47,7 +47,7 @@ export const EmbedParser = {
                     tokens.nextIf(Types.SYMBOL, 'endembed')
                 );
             }).expressions,
-            Node.isBlockStatement,
+            Node.isBlockStatement
         );
 
         setStartFromToken(embedStatement, token);

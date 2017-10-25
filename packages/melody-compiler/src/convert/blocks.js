@@ -43,7 +43,7 @@ export default {
                 !parentPath.is('BlockStatement')
             ) {
                 throw new Error(
-                    'Import must be used in macro, block or template',
+                    'Import must be used in macro, block or template'
                 );
             }
             if (!keyPath.is('StringLiteral')) {
@@ -52,7 +52,7 @@ export default {
                     throw Error();
                 } else {
                     const selfBinding = path.scope.getBinding(
-                            path.node.alias.name,
+                            path.node.alias.name
                         ),
                         macroNames = [];
                     for (const usagePath of selfBinding.referencePaths) {
@@ -63,17 +63,17 @@ export default {
                                 t.identifier(boundName),
                                 t.identifier(boundName),
                                 false,
-                                true,
-                            ),
+                                true
+                            )
                         );
                     }
                     path.scope.block.body.unshift(
                         t.variableDeclaration('const', [
                             t.variableDeclarator(
                                 t.identifier(selfBinding.identifier),
-                                t.objectExpression(macroNames),
+                                t.objectExpression(macroNames)
                             ),
-                        ]),
+                        ])
                     );
                 }
             } else {
@@ -91,7 +91,7 @@ export default {
             }
             const macroStmt = t.exportNamedDeclaration(
                 t.functionDeclaration(node.name, args, node.body),
-                [],
+                []
             );
             path.remove();
             this.program.body.push(macroStmt);
@@ -111,27 +111,27 @@ export default {
                         t.identifier(aliasName),
                         t.identifier(aliasName),
                         false,
-                        true,
-                    ),
+                        true
+                    )
                 );
             }
             const inheritBlocks = t.expressionStatement(
                 t.callExpression(
                     t.memberExpression(
                         t.identifier('Object'),
-                        t.identifier('assign'),
+                        t.identifier('assign')
                     ),
                     [
                         t.identifier(this.templateVariableName),
                         t.objectExpression(members),
-                    ],
-                ),
+                    ]
+                )
             );
             this.program.body.push(inheritBlocks);
         } else {
             const name = this.addDefaultImportFrom(
                 source.value,
-                path.scope.generateUid('use'),
+                path.scope.generateUid('use')
             );
             this.program.body.push(
                 t.expressionStatement(
@@ -139,15 +139,15 @@ export default {
                         t.identifier(
                             this.addImportFrom(
                                 'melody-runtime',
-                                'inheritBlocks',
-                            ),
+                                'inheritBlocks'
+                            )
                         ),
                         [
                             t.identifier(this.templateVariableName),
                             t.identifier(name),
-                        ],
-                    ),
-                ),
+                        ]
+                    )
+                )
             );
         }
         path.remove();
@@ -163,13 +163,13 @@ export default {
                                 t.identifier('this'),
                                 t.identifier(
                                     toBlockName(
-                                        path.get('arguments')[0].node.value,
-                                    ),
-                                ),
+                                        path.get('arguments')[0].node.value
+                                    )
+                                )
                             ),
-                            [t.identifier(path.scope.contextName)],
-                        ),
-                    ),
+                            [t.identifier(path.scope.contextName)]
+                        )
+                    )
                 );
             } else if (
                 callee.is('MemberExpression') &&
@@ -190,9 +190,9 @@ export default {
                 t.memberExpression(
                     t.identifier('this'),
                     t.identifier(toBlockName(node.callee.name)),
-                    true,
+                    true
                 ),
-                [t.identifier(path.scope.contextName)],
+                [t.identifier(path.scope.contextName)]
             );
             path.replaceWith(new Fragment(callExpression));
         },
@@ -212,8 +212,8 @@ export default {
                         ref.replaceWithJS(
                             t.memberExpression(
                                 t.identifier(this.parentName),
-                                t.identifier(blockName),
-                            ),
+                                t.identifier(blockName)
+                            )
                         );
                     }
                 }
@@ -228,9 +228,9 @@ export default {
                     const callExpression = t.callExpression(
                         t.memberExpression(
                             t.identifier('this'),
-                            t.identifier(blockName),
+                            t.identifier(blockName)
                         ),
-                        [t.identifier(path.parentPath.scope.contextName)],
+                        [t.identifier(path.parentPath.scope.contextName)]
                     );
                     path.replaceWith(new Fragment(callExpression));
                 }
@@ -239,7 +239,7 @@ export default {
                         TEMPLATE: t.identifier(this.templateVariableName),
                         NAME: t.identifier(blockName),
                         BODY: node.body,
-                    }),
+                    })
                 );
             }
         },
@@ -248,7 +248,7 @@ export default {
         exit(path) {
             const includeName = this.addDefaultImportFrom(
                 path.node.source.value,
-                path.scope.generateUid('include'),
+                path.scope.generateUid('include')
             );
             path.scope.getRootScope().registerBinding(includeName);
 
@@ -263,10 +263,10 @@ export default {
                         t.identifier(
                             this.addImportFrom(
                                 'melody-runtime',
-                                'createSubContext',
-                            ),
+                                'createSubContext'
+                            )
                         ),
-                        [t.identifier(path.scope.contextName), node.argument],
+                        [t.identifier(path.scope.contextName), node.argument]
                     );
                 }
             } else if (!node.contextFree) {
@@ -275,7 +275,7 @@ export default {
 
             const includeCall = t.callExpression(
                 t.identifier(includeName),
-                argument ? [argument] : [],
+                argument ? [argument] : []
             );
             path.replaceWith(new Fragment(includeCall));
         },
@@ -289,10 +289,10 @@ export default {
                 [
                     t.importSpecifier(
                         t.identifier(embedName),
-                        t.identifier('_template'),
+                        t.identifier('_template')
                     ),
                 ],
-                path.node.parent,
+                path.node.parent
             );
             this.program.body.splice(0, 0, importDecl);
             rootScope.registerBinding(embedName);
@@ -305,10 +305,10 @@ export default {
                 t.callExpression(
                     t.memberExpression(
                         t.identifier('Object'),
-                        t.identifier('create'),
+                        t.identifier('create')
                     ),
-                    [t.identifier(embedName)],
-                ),
+                    [t.identifier(embedName)]
+                )
             );
             if (path.get('blocks')) {
                 for (const blockPath of (path.get('blocks'): Array)) {
@@ -322,7 +322,7 @@ export default {
                             '=',
                             t.memberExpression(
                                 t.identifier(embeddedName),
-                                t.identifier(blockName),
+                                t.identifier(blockName)
                             ),
                             {
                                 type: 'FunctionExpression',
@@ -331,8 +331,8 @@ export default {
                                 expression: false,
                                 params: [t.identifier('_context')],
                                 body: t.blockStatement(block.body),
-                            },
-                        ),
+                            }
+                        )
                     );
                     lastStmt = this.insertAfter(stmt, lastStmt);
 
@@ -343,8 +343,8 @@ export default {
                             ref.replaceWithJS(
                                 t.memberExpression(
                                     t.identifier(embedName),
-                                    t.identifier(blockName),
-                                ),
+                                    t.identifier(blockName)
+                                )
                             );
                         }
                     }
@@ -357,20 +357,20 @@ export default {
                         t.identifier(
                             this.addImportFrom(
                                 'melody-runtime',
-                                'createSubContext',
-                            ),
+                                'createSubContext'
+                            )
                         ),
-                        [context, path.node.argument],
+                        [context, path.node.argument]
                     );
                 } else {
                     context = t.callExpression(
                         t.identifier(
                             this.addImportFrom(
                                 'melody-runtime',
-                                'createSubContext',
-                            ),
+                                'createSubContext'
+                            )
                         ),
-                        [context, path.node.argument],
+                        [context, path.node.argument]
                     );
                 }
             }
@@ -378,9 +378,9 @@ export default {
             const callExpression = t.callExpression(
                 t.memberExpression(
                     t.identifier(embeddedName),
-                    t.identifier('render'),
+                    t.identifier('render')
                 ),
-                [context],
+                [context]
             );
 
             path.replaceWith(new Fragment(callExpression));

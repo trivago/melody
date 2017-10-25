@@ -172,7 +172,7 @@ export default class Lexer {
                                     this.error(
                                         'Unexpected end for HTML comment',
                                         input.mark(),
-                                        `Expected comment to end with '>' but found '${c}' instead.`,
+                                        `Expected comment to end with '>' but found '${c}' instead.`
                                     );
                                 }
                                 break;
@@ -461,11 +461,11 @@ export default class Lexer {
                 pos,
                 inElement
                     ? `Expected a valid attribute name, but instead found "${input.la(
-                          0,
+                          0
                       )}", which is not part of a valid attribute name.`
                     : `Expected letter, digit or underscore but found ${input.la(
-                          0,
-                      )} instead.`,
+                          0
+                      )} instead.`
             );
         }
         return this.createToken(TokenTypes.SYMBOL, pos);

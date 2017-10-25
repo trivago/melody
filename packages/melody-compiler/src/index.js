@@ -51,13 +51,13 @@ export function compile(fileName: String, source: String, ...extensions) {
                 if (ext.visitors.analyse) {
                     analyseVisitor = merge(
                         analyseVisitor,
-                        ext.visitors.analyse,
+                        ext.visitors.analyse
                     );
                 }
                 if (ext.visitors.convert) {
                     convertVisitor = merge(
                         convertVisitor,
-                        ext.visitors.convert,
+                        ext.visitors.convert
                     );
                 }
             }
@@ -77,7 +77,7 @@ export function compile(fileName: String, source: String, ...extensions) {
         Path.get({
             container: file,
             key: 'template',
-        }),
+        })
     );
     traverse(file, analyseVisitor, scope, state);
     traverse(file, convertVisitor, scope, state);

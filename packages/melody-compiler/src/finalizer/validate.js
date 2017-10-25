@@ -17,7 +17,7 @@ function throwMissingMelodyPluginError(path) {
     this.error(
         'Missing melody plugin',
         0,
-        'Cannot convert templates, since there seems to be no melody plugin to convert the template to a certain output format. You can choose for example between `melody-plugin-idom` and `melody-plugin-jsx`.',
+        'Cannot convert templates, since there seems to be no melody plugin to convert the template to a certain output format. You can choose for example between `melody-plugin-idom` and `melody-plugin-jsx`.'
     );
 }
 
@@ -57,7 +57,7 @@ Some of the known filters include:
 
 Please report this as a bug if the filter you've tried to use is listed here:
 http://twig.sensiolabs.org/doc/filters/index.html`,
-                name.length,
+                name.length
             );
         },
     },

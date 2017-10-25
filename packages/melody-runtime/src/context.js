@@ -21,7 +21,7 @@
  */
 export function createSubContext(
     parent: Object,
-    customValues?: Object,
+    customValues?: Object
 ): Object {
     const subContext = Object.create(parent);
     if (customValues) {

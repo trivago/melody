@@ -35,7 +35,7 @@ export function mixin(target) {
         mixin &&
             Object.assign(
                 obj,
-                typeof mixin === 'function' ? mixin(obj) : mixin,
+                typeof mixin === 'function' ? mixin(obj) : mixin
             );
     }
     return target;

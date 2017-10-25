@@ -27,14 +27,14 @@ export const IfParser = {
 
         const ifStatement = new IfStatement(
             test,
-            parser.parse(matchConsequent).expressions,
+            parser.parse(matchConsequent).expressions
         );
 
         do {
             if (tokens.nextIf(Types.SYMBOL, 'else')) {
                 tokens.expect(Types.TAG_END);
                 (alternate || ifStatement).alternate = parser.parse(
-                    matchAlternate,
+                    matchAlternate
                 ).expressions;
             } else if (tokens.nextIf(Types.SYMBOL, 'elseif')) {
                 test = parser.matchExpression();

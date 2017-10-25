@@ -37,7 +37,7 @@ const TOKENS = Symbol(),
 export default class TokenStream {
     constructor(
         lexer,
-        options = { ignoreComments: true, ignoreWhitespace: true },
+        options = { ignoreComments: true, ignoreWhitespace: true }
     ) {
         this.input = lexer;
         this.index = 0;
@@ -54,7 +54,7 @@ export default class TokenStream {
                 errorToken.message,
                 errorToken.pos,
                 errorToken.advice,
-                errorToken.endPos.index - errorToken.pos.index || 1,
+                errorToken.endPos.index - errorToken.pos.index || 1
             );
         }
     }
@@ -102,7 +102,7 @@ export default class TokenStream {
                 text} but found ${ERROR_TABLE[token.type] ||
                 token.type ||
                 token.text} instead.`,
-            token.length,
+            token.length
         );
     }
 
@@ -140,7 +140,7 @@ function getAllTokens(lexer, options) {
                 case TAG_START:
                     if (token.text[token.text.length - 1] === '-') {
                         tokens[tokens.length - 1].text = trimEnd(
-                            tokens[tokens.length - 1].text,
+                            tokens[tokens.length - 1].text
                         );
                     }
                     break;

@@ -117,14 +117,14 @@ export default {
                     scope.registerBinding(
                         forStmt.keyTarget.name,
                         path.get('keyTarget'),
-                        'var',
+                        'var'
                     );
                 }
                 if (forStmt.valueTarget) {
                     scope.registerBinding(
                         forStmt.valueTarget.name,
                         path.get('valueTarget'),
-                        'var',
+                        'var'
                     );
                 }
                 scope.registerBinding('loop', path, 'var');
@@ -227,14 +227,14 @@ export default {
                     if (sequence.is('Identifier')) {
                         sequence.setData(
                             'Identifier.contextName',
-                            parentContextName,
+                            parentContextName
                         );
                     } else {
                         traverse(path.node.sequence, {
                             Identifier(id) {
                                 id.setData(
                                     'Identifier.contextName',
-                                    parentContextName,
+                                    parentContextName
                                 );
                             },
                         });
@@ -244,7 +244,7 @@ export default {
             exit(path) {
                 const node = path.node;
                 const { sequenceName, lenName, iName } = path.getData(
-                    'forStatement.variableLookup',
+                    'forStatement.variableLookup'
                 );
                 let expr;
                 if (path.scope.escapesContext) {
@@ -255,8 +255,8 @@ export default {
                         CREATE_SUB_CONTEXT: t.identifier(
                             this.addImportFrom(
                                 'melody-runtime',
-                                'createSubContext',
-                            ),
+                                'createSubContext'
+                            )
                         ),
                         KEY_TARGET: t.identifier(iName),
                         SOURCE: path.get('sequence').node,
@@ -344,16 +344,16 @@ export default {
                     path.scope.parent.registerBinding(
                         uniteratedName,
                         path,
-                        'var',
+                        'var'
                     );
                     expr.forStmt.body.body.push(
                         t.expressionStatement(
                             t.assignmentExpression(
                                 '=',
                                 t.identifier(uniteratedName),
-                                t.booleanLiteral(false),
-                            ),
-                        ),
+                                t.booleanLiteral(false)
+                            )
+                        )
                     );
                 }
 
@@ -363,7 +363,7 @@ export default {
                             type: 'IfStatement',
                             test: node.condition,
                             consequent: t.blockStatement(
-                                expr.forStmt.body.body,
+                                expr.forStmt.body.body
                             ),
                         },
                     ]);
@@ -374,14 +374,14 @@ export default {
                         t.variableDeclaration('let', [
                             t.variableDeclarator(
                                 t.identifier(uniteratedName),
-                                t.booleanLiteral(true),
+                                t.booleanLiteral(true)
                             ),
                         ]),
                         expr.exprStmt,
                         t.ifStatement(
                             t.identifier(uniteratedName),
-                            node.otherwise,
-                        ),
+                            node.otherwise
+                        )
                     );
                 } else {
                     path.replaceWithJS(expr.exprStmt);

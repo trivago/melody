@@ -22,7 +22,7 @@ const STORE = 'MELODY/WITH_STORE/STORE';
 const withStore = (
     storeFactory,
     stateName = 'state',
-    dispatchName = 'dispatch',
+    dispatchName = 'dispatch'
 ) => Component => {
     return class WithStoreComponent extends Component {
         constructor(...args) {

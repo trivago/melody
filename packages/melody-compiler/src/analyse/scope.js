@@ -66,7 +66,7 @@ export default {
             path.scope.registerBinding(
                 varName.name,
                 path,
-                'var',
+                'var'
             ).contextual = true;
             path.scope.mutated = true;
         }
@@ -86,7 +86,7 @@ export default {
         const binding = rootScope.registerBinding(
             identifier.name,
             path.node.alias ? path.get('alias') : path.get('key'),
-            'macro',
+            'macro'
         );
         if (
             path.get('key').is('Identifier') &&
@@ -101,7 +101,7 @@ export default {
         rootScope.registerBinding(
             path.node.name.name,
             path.get('name'),
-            'macro',
+            'macro'
         );
 
         scope.registerBinding('varargs', path, 'param');

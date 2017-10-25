@@ -21,7 +21,7 @@ export function traverse(
     visitor: Object,
     scope?: Object,
     state?: Object = {},
-    parentPath?: Object,
+    parentPath?: Object
 ) {
     if (!parentNode) {
         return;

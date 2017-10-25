@@ -26,23 +26,20 @@ export default {
                     t.expressionStatement(
                         t.callExpression(
                             t.identifier(
-                                path.state.addImportFrom('melody-idom', 'raw'),
+                                path.state.addImportFrom('melody-idom', 'raw')
                             ),
-                            [path.get('target').node],
-                        ),
-                    ),
+                            [path.get('target').node]
+                        )
+                    )
                 );
             } else {
                 path.replaceWithJS(
                     t.callExpression(
                         t.identifier(
-                            path.state.addImportFrom(
-                                'melody-idom',
-                                'rawString',
-                            ),
+                            path.state.addImportFrom('melody-idom', 'rawString')
                         ),
-                        [path.get('target').node],
-                    ),
+                        [path.get('target').node]
+                    )
                 );
             }
         },

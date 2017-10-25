@@ -40,9 +40,9 @@ export default {
                 path.node.end ||
                     new MemberExpression(
                         path.node.target,
-                        new Identifier('length'),
+                        new Identifier('length')
                     ),
-            ]),
+            ])
         );
     },
 };

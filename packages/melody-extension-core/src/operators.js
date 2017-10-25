@@ -40,17 +40,17 @@ export const tests = [];
 export const UnaryNotExpression = createUnaryOperator(
     'not',
     'UnaryNotExpression',
-    50,
+    50
 );
 export const UnaryNeqExpression = createUnaryOperator(
     '-',
     'UnaryNeqExpression',
-    500,
+    500
 );
 export const UnaryPosExpression = createUnaryOperator(
     '+',
     'UnaryPosExpression',
-    500,
+    500
 );
 //endregion
 
@@ -233,7 +233,7 @@ binaryOperators.push({
         if (not) {
             return copyLoc(
                 new UnaryNotExpression(testExpression),
-                testExpression,
+                testExpression
             );
         }
         return testExpression;
@@ -283,11 +283,11 @@ export const TestEvenExpression = createTest('even', 'TestEvenExpression');
 export const TestOddExpression = createTest('odd', 'TestOddExpression');
 export const TestDefinedExpression = createTest(
     'defined',
-    'TestDefinedExpression',
+    'TestDefinedExpression'
 );
 export const TestSameAsExpression = createTest(
     'same as',
-    'TestSameAsExpression',
+    'TestSameAsExpression'
 );
 tests.push({
     text: 'sameas',
@@ -305,7 +305,7 @@ tests.push({
 });
 export const TestDivisibleByExpression = createTest(
     'divisible by',
-    'TestDivisibleByExpression',
+    'TestDivisibleByExpression'
 );
 tests.push({
     text: 'divisibleby',
@@ -316,12 +316,12 @@ tests.push({
 });
 export const TestConstantExpression = createTest(
     'constant',
-    'TestConstantExpression',
+    'TestConstantExpression'
 );
 export const TestEmptyExpression = createTest('empty', 'TestEmptyExpression');
 export const TestIterableExpression = createTest(
     'iterable',
-    'TestIterableExpression',
+    'TestIterableExpression'
 );
 //endregion
 

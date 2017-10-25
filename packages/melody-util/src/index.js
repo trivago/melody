@@ -49,7 +49,7 @@ export const applyMiddleware = (...middlewares) => proto => {
  */
 export const createActionReducer = (pattern, initialState) => (
     state,
-    action,
+    action
 ) => {
     if (action.type && pattern[action.type]) {
         return (
@@ -66,7 +66,7 @@ const mapDispatchToStateWithProps = fn => (state, action) => {
         return Object.assign(
             {},
             state,
-            fn(action.meta.dispatch, action.payload),
+            fn(action.meta.dispatch, action.payload)
         );
     }
     return state;
@@ -107,7 +107,7 @@ const wrapObjectToDispatch = dispatchToState => dispatch => {
         if (typeof actionCreator === 'function') {
             mappedDispatchers[keys[i]] = bindActionToDispatch(
                 actionCreator,
-                dispatch,
+                dispatch
             );
         }
     }
@@ -170,14 +170,14 @@ export function exposeToState(list = [], reducer = defaultReducer) {
             const prop = meta[key];
             if (!prop) {
                 throw new Error(
-                    'Property `' + key + '` was not found on the component.',
+                    'Property `' + key + '` was not found on the component.'
                 );
             }
             if (typeof prop !== 'function') {
                 throw new Error(
                     'Property `' +
                         key +
-                        '` is not a function. Only functions can be exposed to the state.',
+                        '` is not a function. Only functions can be exposed to the state.'
                 );
             }
             acc[key] = prop.bind(meta);

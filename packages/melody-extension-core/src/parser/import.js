@@ -33,7 +33,7 @@ export const ImportParser = {
 
         const importStatement = new ImportDeclaration(
             source,
-            createNode(Identifier, alias, alias.text),
+            createNode(Identifier, alias, alias.text)
         );
 
         setStartFromToken(importStatement, token);

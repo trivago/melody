@@ -35,15 +35,15 @@ export default {
             path.state.error(
                 'Invalid range call',
                 path.node.pos,
-                `The range function accepts 1 to 3 arguments but you have specified ${args.length} arguments instead.`,
+                `The range function accepts 1 to 3 arguments but you have specified ${args.length} arguments instead.`
             );
         }
 
         path.replaceWithJS(
             t.callExpression(
                 t.identifier(path.state.addImportFrom('lodash', 'range')),
-                callArgs,
-            ),
+                callArgs
+            )
         );
     },
     // range: 'lodash',
@@ -52,7 +52,7 @@ export default {
             path.state.error(
                 'dump must be used in a lone expression',
                 path.node.pos,
-                'The dump function does not have a return value. Thus it must be used as the only expression.',
+                'The dump function does not have a return value. Thus it must be used as the only expression.'
             );
         }
         path.parentPath.replaceWithJS(
@@ -60,11 +60,11 @@ export default {
                 t.callExpression(
                     t.memberExpression(
                         t.identifier('console'),
-                        t.identifier('log'),
+                        t.identifier('log')
                     ),
-                    path.node.arguments,
-                ),
-            ),
+                    path.node.arguments
+                )
+            )
         );
     },
     include(path) {
@@ -79,7 +79,7 @@ export default {
         const includeName = path.scope.generateUid('include');
         const importDecl = t.importDeclaration(
             [t.importDefaultSpecifier(t.identifier(includeName))],
-            path.node.arguments[0],
+            path.node.arguments[0]
         );
         path.state.program.body.splice(0, 0, importDecl);
         path.scope.registerBinding(includeName);
@@ -90,10 +90,10 @@ export default {
             t.callExpression(
                 t.memberExpression(
                     t.identifier(includeName),
-                    t.identifier('render'),
+                    t.identifier('render')
                 ),
-                argument ? [argument] : [],
-            ),
+                argument ? [argument] : []
+            )
         );
         path.replaceWithJS(includeCall);
     },

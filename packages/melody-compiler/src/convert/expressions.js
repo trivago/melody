@@ -34,10 +34,7 @@ export default {
     UnaryExpression: {
         exit(path) {
             path.replaceWithJS(
-                t.unaryExpression(
-                    path.node.operator,
-                    path.get('argument').node,
-                ),
+                t.unaryExpression(path.node.operator, path.get('argument').node)
             );
         },
     },
@@ -58,10 +55,10 @@ export default {
                 t.callExpression(
                     t.memberExpression(
                         t.identifier('Math'),
-                        t.identifier('pow'),
+                        t.identifier('pow')
                     ),
-                    [path.get('left').node, path.get('right').node],
-                ),
+                    [path.get('left').node, path.get('right').node]
+                )
             );
         },
     },
@@ -72,11 +69,11 @@ export default {
                     t.binaryExpression(
                         '!=',
                         path.get('left').node,
-                        t.nullLiteral(),
+                        t.nullLiteral()
                     ),
                     path.get('left').node,
-                    path.get('right').node,
-                ),
+                    path.get('right').node
+                )
             );
         },
     },
@@ -89,12 +86,12 @@ export default {
                         t.binaryExpression(
                             '/',
                             path.get('left').node,
-                            path.get('right').node,
+                            path.get('right').node
                         ),
                         t.numericLiteral(0),
                         t.stringLiteral('floor'),
-                    ],
-                ),
+                    ]
+                )
             );
         },
     },
@@ -105,9 +102,9 @@ export default {
                     '!',
                     t.callExpression(
                         t.identifier(this.addImportFrom('lodash', 'includes')),
-                        [path.get('right').node, path.get('left').node],
-                    ),
-                ),
+                        [path.get('right').node, path.get('left').node]
+                    )
+                )
             );
         },
     },
@@ -116,8 +113,8 @@ export default {
             path.replaceWithJS(
                 t.callExpression(
                     t.identifier(this.addImportFrom('lodash', 'includes')),
-                    [path.get('right').node, path.get('left').node],
-                ),
+                    [path.get('right').node, path.get('left').node]
+                )
             );
         },
     },
@@ -126,8 +123,8 @@ export default {
             path.replaceWithJS(
                 t.callExpression(
                     t.identifier(this.addImportFrom('lodash', 'startsWith')),
-                    [path.get('left').node, path.get('right').node],
-                ),
+                    [path.get('left').node, path.get('right').node]
+                )
             );
         },
     },
@@ -136,8 +133,8 @@ export default {
             path.replaceWithJS(
                 t.callExpression(
                     t.identifier(this.addImportFrom('lodash', 'endsWith')),
-                    [path.get('left').node, path.get('right').node],
-                ),
+                    [path.get('left').node, path.get('right').node]
+                )
             );
         },
     },
@@ -146,8 +143,8 @@ export default {
             path.replaceWithJS(
                 t.callExpression(
                     t.identifier(this.addImportFrom('lodash', 'range')),
-                    [path.get('left').node, path.get('right').node],
-                ),
+                    [path.get('left').node, path.get('right').node]
+                )
             );
         },
     },
@@ -165,12 +162,12 @@ export default {
                         t.callExpression(
                             t.memberExpression(
                                 path.get('left').node,
-                                t.identifier('match'),
+                                t.identifier('match')
                             ),
-                            [pattern],
-                        ),
-                    ),
-                ),
+                            [pattern]
+                        )
+                    )
+                )
             );
         },
     },
@@ -200,16 +197,16 @@ export default {
                             new Fragment(
                                 t.callExpression(
                                     t.identifier(functionName),
-                                    path.node.arguments,
-                                ),
-                            ),
+                                    path.node.arguments
+                                )
+                            )
                         );
                     } else if (binding.kind === 'function') {
                         const functionSource = this.functionMap[functionName];
                         if (isString(functionSource)) {
                             callee.node.name = this.addImportFrom(
                                 functionSource,
-                                functionName,
+                                functionName
                             );
                         } else if (isFunction(functionSource)) {
                             functionSource(path);
@@ -268,10 +265,10 @@ export default {
                 path.replaceWithJS(
                     t.callExpression(
                         t.identifier(
-                            this.addImportFrom(filterSource, expr.name.name),
+                            this.addImportFrom(filterSource, expr.name.name)
                         ),
-                        [expr.target, ...expr.arguments],
-                    ),
+                        [expr.target, ...expr.arguments]
+                    )
                 );
             } else if (isFunction(filterSource)) {
                 filterSource.call(this, path);
@@ -299,14 +296,14 @@ export default {
                         '=',
                         t.memberExpression(
                             t.identifier(path.scope.contextName),
-                            node.name,
+                            node.name
                         ),
-                        node.value,
-                    ),
+                        node.value
+                    )
                 );
             } else {
                 path.replaceWithJS(
-                    t.assignmentExpression('=', node.name, node.value),
+                    t.assignmentExpression('=', node.name, node.value)
                 );
             }
         },
@@ -321,15 +318,15 @@ export default {
                 } else {
                     // todo better error handling
                     throw new Error(
-                        'Must be variable declaration or assignment',
+                        'Must be variable declaration or assignment'
                     );
                 }
             }
             if (assignments.length) {
                 replacements.push(
                     ...path.node.assignments.map(expr =>
-                        t.expressionStatement(expr),
-                    ),
+                        t.expressionStatement(expr)
+                    )
                 );
             }
             path.replaceWithMultipleJS(...replacements);

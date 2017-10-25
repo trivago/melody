@@ -16,8 +16,8 @@
     "babel-types"
   ],
   "peerDependencies": {
-    "melody-traverse": "^0.10.0",
-    "melody-types": "^0.10.0"
+    "melody-traverse": "^1.0.0",
+    "melody-types": "^1.0.0"
   },
   "devDependencies": {
     "melody-compiler": "^1.0.0",

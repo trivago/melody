@@ -33,20 +33,20 @@ export const ForParser = {
             forStatement.keyTarget = createNode(
                 Identifier,
                 keyTarget,
-                keyTarget.text,
+                keyTarget.text
             );
             const valueTarget = tokens.expect(Types.SYMBOL);
             forStatement.valueTarget = createNode(
                 Identifier,
                 valueTarget,
-                valueTarget.text,
+                valueTarget.text
             );
         } else {
             forStatement.keyTarget = null;
             forStatement.valueTarget = createNode(
                 Identifier,
                 keyTarget,
-                keyTarget.text,
+                keyTarget.text
             );
         }
 
@@ -76,7 +76,7 @@ export const ForParser = {
                         token.type === Types.TAG_START &&
                         tokens.test(Types.SYMBOL, 'endfor')
                     );
-                },
+                }
             );
         }
         tokens.expect(Types.SYMBOL, 'endfor');

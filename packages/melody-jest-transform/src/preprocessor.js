@@ -25,7 +25,7 @@ export function getBabelConf() {
 
     if (!config) {
         throw new Error(
-            'Couldn\'t find .babelrc or babel entry on package.json! You can specify custom config with "transformer". Please consult documentation.',
+            'Couldn\'t find .babelrc or babel entry on package.json! You can specify custom config with "transformer". Please consult documentation.'
         );
     }
     return config;

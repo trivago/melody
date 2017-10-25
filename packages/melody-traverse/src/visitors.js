@@ -96,11 +96,11 @@ export function merge(...visitors: Array) {
             const nodeVisitor = rootVisitor[key];
             nodeVisitor.enter = [].concat(
                 nodeVisitor.enter || [],
-                visitorType.enter || [],
+                visitorType.enter || []
             );
             nodeVisitor.exit = [].concat(
                 nodeVisitor.exit || [],
-                visitorType.exit || [],
+                visitorType.exit || []
             );
         }
     }

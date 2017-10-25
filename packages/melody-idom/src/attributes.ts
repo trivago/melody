@@ -134,7 +134,7 @@ const updateAttribute = function(el, name, value) {
                 typeof attrs.ref.disposer.unsubscribe !== 'function'
             ) {
                 throw new Error(
-                    `A ref handler is supposed to return a Subscription object which must have a "unsubscribe" method.`,
+                    `A ref handler is supposed to return a Subscription object which must have a "unsubscribe" method.`
                 );
             }
         }

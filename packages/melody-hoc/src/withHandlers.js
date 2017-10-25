@@ -56,12 +56,12 @@ const withHandlers = handlers => Component => {
                         // eslint-disable-next-line no-console
                         console.error(
                             'withHandlers(): Expected a map of higher-order functions. ' +
-                                'Refer to the docs for more info.',
+                                'Refer to the docs for more info.'
                         );
                     }
 
                     return handler(...args);
-                },
+                }
             );
         }
 

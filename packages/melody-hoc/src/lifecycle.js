@@ -73,7 +73,7 @@ export default function lifecycle(def = {}) {
                         def.componentWillUpdate.call(
                             this[scope],
                             newProps,
-                            newState,
+                            newState
                         );
                     }
                 },
@@ -83,7 +83,7 @@ export default function lifecycle(def = {}) {
                         def.componentDidUpdate.call(
                             this[scope],
                             prevProps,
-                            prevState,
+                            prevState
                         );
                     }
                 },

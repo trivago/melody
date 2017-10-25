@@ -24,7 +24,7 @@ export default {
                 path.replaceWithJS(
                     value.is('ExpressionStatement')
                         ? value.node
-                        : callIdomFunction(this, 'text', [value.node]),
+                        : callIdomFunction(this, 'text', [value.node])
                 );
             },
         },
@@ -39,8 +39,8 @@ export default {
                         openElementWithoutAttributes(
                             this,
                             'elementVoid',
-                            el.name,
-                        ),
+                            el.name
+                        )
                     );
                 } else {
                     const replacements = [];
@@ -51,8 +51,8 @@ export default {
                             openElementWithoutAttributes(
                                 this,
                                 'elementOpen',
-                                el.name,
-                            ),
+                                el.name
+                            )
                         );
                     } else {
                         // has attributes
@@ -60,7 +60,7 @@ export default {
                             this,
                             path,
                             el,
-                            replacements,
+                            replacements
                         );
                     }
 
@@ -101,8 +101,8 @@ function openElementWithAttributes(state, path, el, replacements) {
                 t.stringLiteral('ref'),
                 t.callExpression(
                     t.identifier(state.addImportFrom('melody-idom', 'ref')),
-                    [attr.value],
-                ),
+                    [attr.value]
+                )
             );
         } else if (attr.isImmutable()) {
             staticAttributes.push(t.stringLiteral(attr.name.name), attr.value);
@@ -126,7 +126,7 @@ function openElementWithAttributes(state, path, el, replacements) {
         staticId,
         attributes,
         dynamicAttributeExpressions,
-        replacements,
+        replacements
     );
     return ref;
 }
@@ -155,7 +155,7 @@ function getStaticId(state, path, staticAttributes) {
         state.insertGlobalVariableDeclaration(
             'const',
             staticId,
-            t.arrayExpression(staticAttributes),
+            t.arrayExpression(staticAttributes)
         );
     } else {
         staticId = t.nullLiteral();
@@ -171,7 +171,7 @@ function openSimpleElement(
     staticId,
     attributes,
     dynamicAttributeExpressions,
-    replacements,
+    replacements
 ) {
     const el = path.node;
     const isSelfClosing = el.selfClosing || !el.children.length;
@@ -181,12 +181,12 @@ function openSimpleElement(
         el.name,
         key,
         staticId,
-        attributes,
+        attributes
     );
     if (isSelfClosing && ref) {
         openElementCall = t.callExpression(
             t.identifier(state.addImportFrom('melody-idom', 'ref')),
-            [ref, openElementCall],
+            [ref, openElementCall]
         );
     }
     replacements.push(t.expressionStatement(openElementCall));
@@ -196,7 +196,7 @@ function addStaticAttribute(attributes, attr) {
     if (Node.isIdentifier(attr.name)) {
         attributes.push(
             t.stringLiteral(attr.name.name),
-            attr.value || t.booleanLiteral(true),
+            attr.value || t.booleanLiteral(true)
         );
     } else {
         attributes.push(attr.name, attr.value || t.nullLiteral());
@@ -211,7 +211,7 @@ function openDynamicAttributesElement(
     staticId,
     attributes,
     dynamicAttributeExpressions,
-    replacements,
+    replacements
 ) {
     const el = path.node;
     const isSelfClosing = el.selfClosing || !el.children.length;
@@ -225,9 +225,9 @@ function openDynamicAttributesElement(
                 el.name,
                 key,
                 staticId,
-                attributes,
-            ),
-        ),
+                attributes
+            )
+        )
     );
     // todo adjust unit tests to remove this line
     state.addImportFrom('melody-idom', 'elementOpenEnd');
@@ -236,7 +236,7 @@ function openDynamicAttributesElement(
         state,
         path,
         dynamicAttributeExpressions,
-        replacements,
+        replacements
     );
 
     // close the opening tag
@@ -249,7 +249,7 @@ function openDynamicAttributesElement(
         // we handle closing the tag here since there is
         // no equivalent of 'elementVoid' when using dynamic attributes
         replacements.push(
-            callIdomFunction(state, 'elementClose', [t.stringLiteral(el.name)]),
+            callIdomFunction(state, 'elementClose', [t.stringLiteral(el.name)])
         );
     }
 }
@@ -258,7 +258,7 @@ function addDynamicAttributeCalls(
     state,
     path,
     dynamicAttributeExpressions,
-    replacements,
+    replacements
 ) {
     let i = 0;
     const attrFn = t.identifier(state.addImportFrom('melody-idom', 'attr'));
@@ -279,7 +279,7 @@ function addDynamicAttributeCalls(
                 LOCAL_ITERABLE: t.identifier(localIterableName),
                 LENGTH: t.identifier(lengthName),
                 ITERABLE: dynamicAttributeExpressions[i],
-            }),
+            })
         );
     }
 }
@@ -287,7 +287,7 @@ function addDynamicAttributeCalls(
 function elementOpen(state, openType, name, key, staticId, attributes) {
     return t.callExpression(
         t.identifier(state.addImportFrom('melody-idom', openType)),
-        [t.stringLiteral(name), key, staticId, ...attributes],
+        [t.stringLiteral(name), key, staticId, ...attributes]
     );
 }
 
@@ -303,8 +303,8 @@ function callIdomFunction(state, name, args) {
     return t.expressionStatement(
         t.callExpression(
             t.identifier(state.addImportFrom('melody-idom', name)),
-            args,
-        ),
+            args
+        )
     );
 }
 
@@ -316,7 +316,7 @@ function closeElement(state, ref, replacements, el) {
         replacements.push(...el.children);
     }
     replacements.push(
-        callIdomFunction(state, 'elementClose', [t.stringLiteral(el.name)]),
+        callIdomFunction(state, 'elementClose', [t.stringLiteral(el.name)])
     );
 }
 

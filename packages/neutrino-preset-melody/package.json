@@ -1,0 +1,26 @@
+{
+  "name": "neutrino-preset-melody",
+  "version": "1.0.0",
+  "description": "Neutrino preset for building melody web applications",
+  "main": "index.js",
+  "author": "Efe Gürkan YALAMAN <efe-gurkan.yalaman@trivago.com>",
+  "license": "MPL-2.0",
+  "dependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-classes": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "deepmerge": "^1.5.0",
+    "melody-loader": "^1.0.0",
+    "neutrino-middleware-compile-loader": "^6.1.4",
+    "neutrino-middleware-loader-merge": "^6.1.4",
+    "neutrino-preset-web": "^6.1.4"
+  },
+  "peerDependencies": {
+    "neutrino": "^6.1.4"
+  },
+  "keywords": [
+    "neutrino",
+    "neutrino-preset",
+    "melody"
+  ]
+}

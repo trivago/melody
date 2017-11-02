@@ -16,4 +16,4 @@ fi
 
 yarn install && \
 npm test && \
-./node_modules/.bin/lerna publish
+./node_modules/.bin/lerna publish --exact --force-publish=*

@@ -1,6 +1,6 @@
 {
   "name": "melody-loader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "./lib/index.js",
   "jsnext:main": "./src/index.js",
@@ -12,16 +12,16 @@
   "dependencies": {
     "loader-utils": "^1.1.0",
     "lodash": "^4.12.0",
-    "melody-compiler": "^1.0.0",
-    "melody-extension-core": "^1.0.0",
-    "melody-runtime": "^1.0.0"
+    "melody-compiler": "1.0.1",
+    "melody-extension-core": "1.0.1",
+    "melody-runtime": "1.0.1"
   },
   "peerDependencies": {
-    "melody-idom": "^1.0.0"
+    "melody-idom": "1.0.1"
   },
   "devDependencies": {
-    "melody-idom": "^1.0.0",
-    "melody-plugin-idom": "^1.0.0",
+    "melody-idom": "1.0.1",
+    "melody-plugin-idom": "1.0.1",
     "mkdirp": "^0.5.1",
     "mz": "^2.6.0",
     "rimraf": "^2.6.1",

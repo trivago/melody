@@ -114,7 +114,7 @@ const updateAttribute = function(el, name, value) {
         }
     } else if (name === 'ref') {
         const old = attrs.ref;
-        if (old) {
+        if (old && old.disposer) {
             if (old.creator === value) {
                 return;
             }

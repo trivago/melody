@@ -1,6 +1,6 @@
 # [**Melody**](https://melody.js.org/)
 
-![alt text](https://melody.js.org/images/melody-logo.jpg "Melody Logo")
+![Melody Logo](https://melody.js.org/melody-logo-banner.jpg "Melody Logo")
 
 Melody is a UI library for building JavaScript applications.
 

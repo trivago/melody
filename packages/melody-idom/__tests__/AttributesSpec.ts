@@ -24,7 +24,7 @@ import {
     elementClose,
     elementVoid,
 } from '../src';
-import { importNode, getData } from '../src/node_data';
+import { importNode } from '../src/node_data';
 import { expect } from 'chai';
 
 describe('attribute updates', () => {

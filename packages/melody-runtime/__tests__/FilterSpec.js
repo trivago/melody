@@ -299,7 +299,7 @@ describe('Twig filter runtime', function() {
     describe('number_format filter', function() {
         it('should format a number', function() {
             expect(number_format(455121.213, 2, ',', '.')).to.equal(
-                '455.121,21',
+                '455.121,21'
             );
         });
 
@@ -335,7 +335,7 @@ describe('Twig filter runtime', function() {
             const c = 65;
 
             expect(format("%%b = '%b'", n)).to.equal(
-                "%b = '10100111101010011010101101'",
+                "%b = '10100111101010011010101101'"
             );
             expect(format("%%c = '%c'", c)).to.equal("%c = 'A'");
             expect(format("%%d = '%d'", c)).to.equal("%d = '65'");
@@ -360,7 +360,7 @@ describe('Twig filter runtime', function() {
             expect(format("%%+d = '%+d'", u)).to.equal("%+d = '-43951789'");
 
             expect(() => format("%%f = '%*.*f'", 1, n)).to.throw(
-                'toFixed() digits argument must be between 0 and 20',
+                'toFixed() digits argument must be between 0 and 20'
             );
         });
 
@@ -370,25 +370,25 @@ describe('Twig filter runtime', function() {
             expect(format('[%*s]', -10, 'monkey')).to.equal('[monkey    ]');
             expect(format('[%-10s]', 'monkey')).to.equal('[monkey    ]');
             expect(format('[%10.10s]', 'many monkeys')).to.equal(
-                '[many monke]',
+                '[many monke]'
             );
             expect(format("[%'#10s]", 'monkey')).to.equal('[####monkey]');
             expect(format('%-03s', 'E')).to.equal('E00');
 
             expect(() => format('[%*s]', 'fun', 'monkey')).to.throw(
-                'sprintf: (minimum-)width must be finite',
+                'sprintf: (minimum-)width must be finite'
             );
         });
 
         it('should swap arguments', function() {
             expect(format('%2$s %1$s!', 'world', 'Hello')).to.equal(
-                'Hello world!',
+                'Hello world!'
             );
             expect(
-                format('The %2$s contains %1$04d monkeys', 12000, 'zoo'),
+                format('The %2$s contains %1$04d monkeys', 12000, 'zoo')
             ).to.equal('The zoo contains 12000 monkeys');
             expect(
-                format('The %2$s contains %1$04d monkeys', 120, 'zoo'),
+                format('The %2$s contains %1$04d monkeys', 120, 'zoo')
             ).to.equal('The zoo contains 0120 monkeys');
         });
 
@@ -399,103 +399,51 @@ describe('Twig filter runtime', function() {
 
     describe('strtotime filter', function() {
         const now = 1129633200;
+        const time = new Date();
+        time.setHours(12);
+        time.setMinutes(6);
+        time.setSeconds(45);
+        const unixTime = Math.floor(time.getTime() / 1000);
         it('should convert relative timestamps', function() {
             expect(strtotime('+1 day', now)).to.equal(1129719600);
             expect(strtotime('+1 week 2 days 4 hours 2 seconds', now)).to.equal(
-                1130425202,
+                1130425202
             );
             expect(
-                strtotime('+1 day 1 week 2 days 4 hours 2 seconds', now),
+                strtotime('+1 day 1 week 2 days 4 hours 2 seconds', now)
             ).to.equal(1130511602);
             expect(strtotime('last month', now)).to.equal(1127041200);
             expect(strtotime('next Thursday', now)).to.equal(1129806000);
             expect(strtotime('last Monday', now)).to.equal(1129546800);
             expect(strtotime('now', now)).to.equal(now);
 
-            // expect(strtotime('12.06.45', now)).to.equal(1467194805);
-            // expect(strtotime('12:06:45', now)).to.equal(1467194805);
+            expect(strtotime('12.06.45', now)).to.equal(unixTime);
+            expect(strtotime('12:06:45', now)).to.equal(unixTime);
         });
 
         it('should convert dates after 2000', function() {
-            expect(strtotime('10 September 09')).to.be.within(
-                1252533600 - 10000,
-                1252533600 + 10000,
-            );
-            expect(strtotime('10 September 2009')).to.be.within(
-                1252533600 - 10000,
-                1252533600 + 10000,
-            );
-            expect(strtotime('2009-09-10', now)).to.be.within(
-                1252533600 - 10000,
-                1252533600 + 10000,
-            );
-            expect(strtotime('2009/09/10', now)).to.be.within(
-                1252533600 - 10000,
-                1252533600 + 10000,
-            );
-            expect(strtotime('10-09-2009', now)).to.be.within(
-                1252533600 - 10000,
-                1252533600 + 10000,
-            );
-            expect(strtotime('10.09.2009', now)).to.be.within(
-                1252533600 - 10000,
-                1252533600 + 10000,
-            );
-            expect(strtotime('09/10/2009', now)).to.be.within(
-                1252533600 - 10000,
-                1252533600 + 10000,
-            );
-            expect(strtotime('09-09-10', now)).to.be.within(
-                1252533600 - 10000,
-                1252533600 + 10000,
-            );
-            expect(strtotime('09/10/09', now)).to.be.within(
-                1252533600 - 10000,
-                1252533600 + 10000,
-            );
+            expect(strtotime('10 September 09')).to.equal(1252537200);
+            expect(strtotime('10 September 2009')).to.equal(1252537200);
+            expect(strtotime('2009-09-10', now)).to.equal(1252537200);
+            expect(strtotime('2009/09/10', now)).to.equal(1252537200);
+            expect(strtotime('10-09-2009', now)).to.equal(1252537200);
+            expect(strtotime('10.09.2009', now)).to.equal(1252537200);
+            expect(strtotime('09/10/2009', now)).to.equal(1252537200);
+            expect(strtotime('09-09-10', now)).to.equal(1252537200);
+            expect(strtotime('09/10/09', now)).to.equal(1252537200);
         });
 
         it('should convert dates before 2000', function() {
-            expect(strtotime('10 September 79', now)).to.be.within(
-                305766000 - 10000,
-                305766000 + 10000,
-            );
-            expect(strtotime('10 September 1979', now)).to.within(
-                305766000 - 10000,
-                305766000 + 10000,
-            );
-            expect(strtotime('1979-09-10', now)).to.be.within(
-                305766000 - 10000,
-                305766000 + 10000,
-            );
-            expect(strtotime('1979/09/10', now)).to.be.within(
-                305766000 - 10000,
-                305766000 + 10000,
-            );
-            expect(strtotime('10-09-1979', now)).to.be.within(
-                305766000 - 10000,
-                305766000 + 10000,
-            );
-            expect(strtotime('10.09.1979', now)).to.be.within(
-                305766000 - 10000,
-                305766000 + 10000,
-            );
-            expect(strtotime('09/10/1979', now)).to.be.within(
-                305766000 - 10000,
-                305766000 + 10000,
-            );
-            expect(strtotime('79-09-10', now)).to.be.within(
-                305766000 - 10000,
-                305766000 + 10000,
-            );
-            expect(strtotime('10.09.79', now)).to.be.within(
-                305766000 - 10000,
-                305766000 + 10000,
-            );
-            expect(strtotime('09/10/79', now)).to.be.within(
-                305766000 - 10000,
-                305766000 + 10000,
-            );
+            expect(strtotime('10 September 79', now)).to.equal(305766000);
+            expect(strtotime('10 September 1979', now)).to.equal(305766000);
+            expect(strtotime('1979-09-10', now)).to.equal(305766000);
+            expect(strtotime('1979/09/10', now)).to.equal(305766000);
+            expect(strtotime('10-09-1979', now)).to.equal(305766000);
+            expect(strtotime('10.09.1979', now)).to.equal(305766000);
+            expect(strtotime('09/10/1979', now)).to.equal(305766000);
+            expect(strtotime('79-09-10', now)).to.equal(305766000);
+            expect(strtotime('10.09.79', now)).to.equal(305766000);
+            expect(strtotime('09/10/79', now)).to.equal(305766000);
         });
 
         it('should convert timestamps', function() {

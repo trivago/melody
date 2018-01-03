@@ -1,8 +1,11 @@
 require('babel-register');
 const fs = require('fs');
 const path = require('path');
-const { compile, toString } = require('../packages/compiler');
-const { extension: coreExtension } = require('../packages/extension-core');
+const { compile, toString } = require('melody-compiler');
+const { extension: coreExtension } = require('melody-extension-core');
+const idomPlugin = require('melody-plugin-idom');
+
+const plugins = [coreExtension, idomPlugin];
 
 const name = 'itemElement';
 fs.readFile(
@@ -10,10 +13,11 @@ fs.readFile(
         __dirname,
         '..',
         'packages',
-        'compiler',
+        'melody-compiler',
         '__tests__',
-        'fixtures',
-        name + '.twig',
+        '__fixtures__',
+        'success',
+        name + '.template'
     ),
     (err, content) => {
         if (err) {
@@ -21,12 +25,12 @@ fs.readFile(
         }
         const code = content.toString();
         const startTime = +new Date();
-        var jsAst = compile(name + '.twig', code, coreExtension, {
+        const jsAst = compile(name + '.twig', code, ...plugins, {
             options: {
                 generateKey: false,
             },
         });
         toString(jsAst, code);
         console.log('Elapsed time: %dms', +new Date() - startTime);
-    },
+    }
 );

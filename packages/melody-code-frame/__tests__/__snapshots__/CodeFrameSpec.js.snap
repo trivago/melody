@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`codeframe should match output with line -1, col -1 and length -1 1`] = `
+"  1 | <div class=\\"home\\">
+  2 |     <h1 class=\\"title\\">"
+`;
+
+exports[`codeframe should match output with line 0, col 1 and length 0 1`] = `
+"  1 | <div class=\\"home\\">
+  2 |     <h1 class=\\"title\\">
+  3 |         {{ message }}"
+`;
+
+exports[`codeframe should match output with line 1, col 1 and length 1 1`] = `
+"> 1 | <div class=\\"home\\">
+    |  ^
+  2 |     <h1 class=\\"title\\">
+  3 |         {{ message }}
+  4 |     </h1>"
+`;
+
+exports[`codeframe should match output with line 1, col 1 and length 1 for blank rowLines 1`] = `
+"> 1 | 
+    |  ^"
+`;
+
+exports[`codeframe should match output with line 2, col 4 and length 2 1`] = `
+"  1 | <div class=\\"home\\">
+> 2 |     <h1 class=\\"title\\">
+    |     ^^
+  3 |         {{ message }}
+  4 |     </h1>
+  5 |     {% for key in [1,2,3,4] %}"
+`;
+
+exports[`codeframe should match output with line 5, col -1 and length 1 1`] = `
+"  3 |         {{ message }}
+  4 |     </h1>
+> 5 |     {% for key in [1,2,3,4] %}
+    | ^
+  6 |         <div>
+  7 |             {% mount '../counter' as key with { count: 5 } %}
+  8 |         </div>"
+`;
+
+exports[`codeframe should match output with line 5, col 4 and length 1 1`] = `
+"  3 |         {{ message }}
+  4 |     </h1>
+> 5 |     {% for key in [1,2,3,4] %}
+    |     ^
+  6 |         <div>
+  7 |             {% mount '../counter' as key with { count: 5 } %}
+  8 |         </div>"
+`;
+
+exports[`codeframe should match output with line 5, col 14 and length 4 1`] = `
+"  3 |         {{ message }}
+  4 |     </h1>
+> 5 |     {% for key in [1,2,3,4] %}
+    |               ^^^^
+  6 |         <div>
+  7 |             {% mount '../counter' as key with { count: 5 } %}
+  8 |         </div>"
+`;
+
+exports[`codeframe should match output with line 5, col 44 and length 2 1`] = `
+"  3 |         {{ message }}
+  4 |     </h1>
+> 5 |     {% for key in [1,2,3,4] %}
+    |                                             ^^
+  6 |         <div>
+  7 |             {% mount '../counter' as key with { count: 5 } %}
+  8 |         </div>"
+`;
+
+exports[`codeframe should match output with line 10, col 1 and length 0 1`] = `
+"   8 |         </div>
+   9 |     {% endfor %}
+> 10 | </div>
+     |  "
+`;
+
+exports[`codeframe should match output with line 10, col 1 and length 1 1`] = `
+"   8 |         </div>
+   9 |     {% endfor %}
+> 10 | </div>
+     |  ^"
+`;
+
+exports[`codeframe should match output with line 10, col 1 and length 2 1`] = `
+"   8 |         </div>
+   9 |     {% endfor %}
+> 10 | </div>
+     |  ^^"
+`;

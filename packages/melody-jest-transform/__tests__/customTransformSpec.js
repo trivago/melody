@@ -63,6 +63,17 @@ describe('Custom transformer', () => {
                 },
             },
         ];
+
+        const babel = {
+            env: {
+                test: {
+                    presets: ['node6', 'stage-1'],
+                    plugins: ['transform-inline-environment-variables'],
+                },
+            },
+        };
+
+        test('test.twig', { plugins, babel });
     });
 
     it('should throw error if it cannot find a config in regular locations', () => {
@@ -70,7 +81,7 @@ describe('Custom transformer', () => {
         mockedFindBabel.sync.mockImplementationOnce(() => false);
         const regularFixture = getFixture('test.twig');
         expect(() =>
-            transformer(regularFixture, 'test.twig'),
+            transformer(regularFixture, 'test.twig')
         ).toThrowErrorMatchingSnapshot();
     });
 

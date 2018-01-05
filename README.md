@@ -22,6 +22,7 @@ yarn create melody-app my-app
 ```
 ```bash
 cd my-app
+yarn
 yarn start
 ```
 

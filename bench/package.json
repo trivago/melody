@@ -1,0 +1,21 @@
+{
+  "name": "bench",
+  "version": "1.0.2",
+  "description": "melody benchmark",
+  "main": "compiler.js",
+  "scripts": {
+    "benchmark": "node compiler.js"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "melody-component": "^1.0.2",
+    "melody-hoc": "^1.0.2",
+    "melody-idom": "^1.0.2",
+    "melody-loader": "^1.0.2",
+    "melody-parser": "^1.0.2",
+    "melody-plugin-idom": "^1.0.2",
+    "melody-traverse": "^1.0.2",
+    "melody-types": "^1.0.2"
+  }
+}

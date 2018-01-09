@@ -146,6 +146,7 @@ export class ConstantValue extends Node {
         return `Const(${this.value})`;
     }
 }
+type(ConstantValue, 'ConstantValue');
 alias(ConstantValue, 'Expression', 'Literal', 'Immutable');
 
 export class StringLiteral extends ConstantValue {}

@@ -12,6 +12,7 @@ before_script:
 
 script:
     - travis_retry yarn test-travis
+    - travis_retry yarn bundlesize
 
 after_script:
     - yarn run posttest

@@ -27,6 +27,10 @@ export default class State {
         this.options = {
             generateKey: true,
             projectRoot: undefined,
+            // eslint-disable-next-line
+            warn: console.warn.bind(console),
+            // eslint-disable-next-line
+            error: console.error.bind(console),
         };
         this.program = {
             type: 'Program',
@@ -74,6 +78,20 @@ export default class State {
             errorMessage += '\n\n' + advice;
         }
         throw new Error(errorMessage);
+    }
+
+    warn(message, pos, advice, length = 1) {
+        let warnMessage = `${message}\n`;
+        warnMessage += codeFrame({
+            rawLines: this.source,
+            lineNumber: pos.line,
+            colNumber: pos.column,
+            length,
+        });
+        if (advice) {
+            warnMessage += '\n\n' + advice;
+        }
+        this.options.warn(warnMessage);
     }
 
     markIdentifier(name) {

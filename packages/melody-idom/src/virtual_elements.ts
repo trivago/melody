@@ -21,6 +21,7 @@ import {
     text as coreText,
     raw as coreRaw,
     currentComponent,
+    skip,
 } from './core';
 import { updateAttribute } from './attributes';
 import { getData } from './node_data';
@@ -230,6 +231,7 @@ var elementClose = function(tag) {
  */
 var elementVoid = function(tag, key, statics, var_args) {
     elementOpen.apply(null, arguments);
+    skip();
     return elementClose(tag);
 };
 

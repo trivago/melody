@@ -24,8 +24,8 @@
     "posttest": "./bin/posttest.sh",
     "prettier": "prettier --write \"./packages/melody-*/src/**/*.[tj]s\"",
     "release": "./bin/release.sh",
-    "test": "jest",
-    "test-travis": "jest --maxWorkers=4",
+    "test": "TZ=Europe/London jest",
+    "test-travis": "TZ=Europe/London jest --maxWorkers=4",
     "test-accept": "cross-env NODE_ENV=mocha lerna run test-accept",
     "test-debug": "node --inspect --debug-brk ./node_modules/jest-cli/bin/jest.js -i"
   },

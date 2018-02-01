@@ -93,7 +93,7 @@
         },
         {
             "path": "./packages/melody-idom/lib/index.js",
-            "maxSize": "4.61 kB"
+            "maxSize": "4.63 kB"
         },
         {
             "path": "./packages/melody-hoc/lib/index.js",

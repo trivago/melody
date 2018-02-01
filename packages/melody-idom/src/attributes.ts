@@ -159,6 +159,7 @@ const updateAttribute = function(el, name, value) {
     } else if (
         name !== 'list' &&
         name !== 'type' &&
+        name !== 'draggable' &&
         !(el.ownerSVGElement || el.localName === 'svg') &&
         name in el
     ) {

@@ -1,6 +1,6 @@
 {
   "name": "melody-hoc",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "./lib/index.js",
   "jsnext:main": "./src/index.js",
@@ -11,13 +11,13 @@
   "license": "Apache-2.0",
   "dependencies": {
     "lodash": "^4.15.0",
-    "melody-component": "1.0.2"
+    "melody-component": "1.0.3"
   },
   "peerDependencies": {
-    "melody-idom": "1.0.2"
+    "melody-idom": "1.0.3"
   },
   "devDependencies": {
-    "melody-idom": "1.0.2",
+    "melody-idom": "1.0.3",
     "redux": "^3.6.0"
   }
 }

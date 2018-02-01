@@ -1,6 +1,6 @@
 {
   "name": "melody-jest-transform",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -11,11 +11,11 @@
   "dependencies": {
     "babel-core": "^6.18.0",
     "find-babel-config": "^1.0.1",
-    "melody-compiler": "1.0.2",
-    "melody-extension-core": "1.0.2"
+    "melody-compiler": "1.0.3",
+    "melody-extension-core": "1.0.3"
   },
   "devDependencies": {
-    "melody-plugin-idom": "1.0.2",
+    "melody-plugin-idom": "1.0.3",
     "rollup-plugin-babel": "^2.6.1"
   },
   "peerDependencies": {

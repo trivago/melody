@@ -24,15 +24,8 @@ export default class State {
         this.file = file;
         this.source = source;
         this.template = file.template;
-        this.options = {
-            generateKey: true,
-            projectRoot: undefined,
-        };
-        this.program = {
-            type: 'Program',
-            body: [],
-            sourceType: 'module',
-        };
+        this.options = { generateKey: true, projectRoot: undefined };
+        this.program = { type: 'Program', body: [], sourceType: 'module' };
         this._importCache = Object.create(null);
         this.filterMap = Object.create(null);
         this.functionMap = Object.create(null);
@@ -214,6 +207,15 @@ export default class State {
             );
         }
         return local;
+    }
+
+    ensureImportFrom(source) {
+        let importDecl = this.getImportFrom(source);
+        if (!importDecl) {
+            importDecl = t.importDeclaration([], t.stringLiteral(source));
+            this._importCache[source] = importDecl;
+            this.program.body.splice(0, 0, importDecl);
+        }
     }
 
     insertGlobalVariableDeclaration(kind, id, init) {

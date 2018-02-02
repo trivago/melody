@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`skip if client should skip content 1`] = `
+"import { skip, elementOpen, elementClose } from \\"melody-idom\\";
+export const _template = {};
+
+_template.render = function (_context) {
+  elementOpen(\\"div\\", null, null);
+  skip();
+  elementClose(\\"div\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;
+
+exports[`skip if defined should check if parent element is defined 1`] = `
+"import { text, skip, elementOpen, elementClose } from \\"melody-idom\\";
+export const _template = {};
+
+_template.render = function (_context) {
+  elementOpen(\\"x-div\\", null, null);
+
+  if (customElements.get(\\"x-div\\") !== undefined) {
+    skip();
+  } else {
+    text(\\"hello world\\");
+  }
+
+  elementClose(\\"x-div\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;
+
+exports[`skip if defined should fail if parent element is not a custom element 1`] = `
+"skip if defined can only be used inside of a custom element
+> 1 | <div>{% skip if defined %}hello world{% endskip %}</div>
+    |  ^^^
+
+Custom Element must contain a \\"-\\" within their name but \\"div\\" does not seem to contain one.
+More information about custom elements can be found here: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements"
+`;
+
+exports[`skip if server should be ignored 1`] = `
+"import { text, elementOpen, elementClose } from \\"melody-idom\\";
+export const _template = {};
+
+_template.render = function (_context) {
+  elementOpen(\\"div\\", null, null);
+  text(\\"hello world\\");
+  elementClose(\\"div\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;

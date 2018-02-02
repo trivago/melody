@@ -14,54 +14,6 @@
  * limitations under the License.
  */
 import * as t from 'babel-types';
-import { Node, type, alias, visitor } from 'melody-types';
-import template from 'babel-template';
-import { Types, setStartFromToken, setEndFromToken } from 'melody-parser';
-
-export class SkipIfBlock extends Node {
-    constructor(target, expressions) {
-        super();
-        this.target = target;
-        this.expressions = expressions;
-    }
-}
-type(SkipIfBlock, 'SkipIfBlock');
-alias(SkipIfBlock, 'Block');
-visitor(SkipIfBlock, 'expressions');
-
-export const SkipIfParser = {
-    name: 'skip',
-    parse(parser, token) {
-        const tokens = parser.tokens;
-
-        tokens.expect(Types.SYMBOL, 'if');
-        const condition = tokens.expect(Types.SYMBOL);
-        tokens.expect(Types.TAG_END);
-
-        const skipIfBlock = new SkipIfBlock(
-            condition.text,
-            parser.parse((tokenText, token, tokens) => {
-                return !!(
-                    token.type === Types.TAG_START &&
-                    tokens.nextIf(Types.SYMBOL, 'endskip')
-                );
-            }).expressions
-        );
-
-        setStartFromToken(skipIfBlock, token);
-        setEndFromToken(skipIfBlock, tokens.expect(Types.TAG_END));
-
-        return skipIfBlock;
-    },
-};
-
-const buildSkipIfDefined = template(`
-if (customElements.get(ELEMENT_NAME) !== undefined) {
-    SKIP
-} else {
-    BODY
-}
-`);
 
 export default {
     functionMap: {
@@ -80,64 +32,4 @@ export default {
             path.parentPath.remove();
         },
     },
-    tags: [SkipIfParser],
-    visitors: [
-        {
-            analyse: {
-                SkipIfBlock(path) {
-                    if (path.node.target === 'client') {
-                        path.skip();
-                    }
-                },
-            },
-            convert: {
-                SkipIfBlock: {
-                    enter(path) {
-                        if (path.node.target === 'client') {
-                            //path.skip();
-                            path.replaceWithJS(skip(this));
-                        }
-                    },
-                    exit(path) {
-                        const { target } = path.node;
-                        if (target === 'client') {
-                            path.replaceWithJS(skip(this));
-                        } else if (target === 'server') {
-                            path.replaceWithMultipleJS(
-                                ...path.node.expressions
-                            );
-                        } else if (target === 'defined') {
-                            const el = path.findParentPathOfType('Element');
-                            const elementName = el.node.name;
-                            if (elementName.indexOf('-') === -1) {
-                                this.error(
-                                    'skip if defined can only be used inside of a custom element',
-                                    el.node.loc.start,
-                                    `Custom Element must contain a "-" within their name but "${elementName}" does not seem to contain one.
-More information about custom elements can be found here: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements`,
-                                    elementName.length
-                                );
-                            }
-                            path.replaceWithJS(
-                                buildSkipIfDefined({
-                                    ELEMENT_NAME: t.stringLiteral(elementName),
-                                    SKIP: skip(this),
-                                    BODY: path.node.expressions,
-                                })
-                            );
-                        }
-                    },
-                },
-            },
-        },
-    ],
 };
-
-function skip(state) {
-    return t.expressionStatement(
-        t.callExpression(
-            t.identifier(state.addImportFrom('melody-idom', 'skip')),
-            []
-        )
-    );
-}

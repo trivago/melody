@@ -27,6 +27,12 @@ test('skip if defined should fail if parent element is not a custom element', ()
     ).toMatchSnapshot();
 });
 
+test('skip if defined should fail if target is unknown', () => {
+    expect(
+        render(`<div>{% skip if notHavingFun %}hello world{% endskip %}</div>`)
+    ).toMatchSnapshot();
+});
+
 function render(template) {
     try {
         const jsTemplate = compile(

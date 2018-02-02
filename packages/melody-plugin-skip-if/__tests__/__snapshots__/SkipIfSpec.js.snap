@@ -53,6 +53,14 @@ Custom Element must contain a \\"-\\" within their name but \\"div\\" does not s
 More information about custom elements can be found here: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements"
 `;
 
+exports[`skip if defined should fail if target is unknown 1`] = `
+"Unknown skip if target
+> 1 | <div>{% skip if notHavingFun %}hello world{% endskip %}</div>
+    |                 ^^^^^^^^^^^^
+
+The target of the skip must be either 'client', 'server' or 'defined' but was \\"notHavingFun\\" instead."
+`;
+
 exports[`skip if server should be ignored 1`] = `
 "import { text, elementOpen, elementClose } from \\"melody-idom\\";
 export const _template = {};

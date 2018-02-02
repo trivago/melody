@@ -39,7 +39,7 @@ export const SkipIfParser = {
         tokens.expect(Types.TAG_END);
 
         const skipIfBlock = new SkipIfBlock(
-            condition.text,
+            condition,
             parser.parse((tokenText, token, tokens) => {
                 return !!(
                     token.type === Types.TAG_START &&
@@ -69,7 +69,7 @@ export default {
         {
             analyse: {
                 SkipIfBlock(path) {
-                    if (path.node.target === 'client') {
+                    if (path.node.target.text === 'client') {
                         path.skip();
                     }
                 },
@@ -77,16 +77,13 @@ export default {
             convert: {
                 SkipIfBlock: {
                     enter(path) {
-                        if (path.node.target === 'client') {
-                            //path.skip();
+                        if (path.node.target.text === 'client') {
                             path.replaceWithJS(skip(this));
                         }
                     },
                     exit(path) {
-                        const { target } = path.node;
-                        if (target === 'client') {
-                            path.replaceWithJS(skip(this));
-                        } else if (target === 'server') {
+                        const target = path.node.target.text;
+                        if (target === 'server') {
                             path.replaceWithMultipleJS(
                                 ...path.node.expressions
                             );
@@ -108,6 +105,13 @@ More information about custom elements can be found here: https://developer.mozi
                                     SKIP: skip(this),
                                     BODY: path.node.expressions,
                                 })
+                            );
+                        } else {
+                            this.error(
+                                'Unknown skip if target',
+                                path.node.target.pos,
+                                `The target of the skip must be either 'client', 'server' or 'defined' but was "${target}" instead.`,
+                                target.length
                             );
                         }
                     },

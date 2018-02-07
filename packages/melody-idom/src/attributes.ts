@@ -140,21 +140,18 @@ const updateAttribute = function(el, name, value) {
         }
         return;
     } else if (name[0] === 'o' && name[1] === 'n') {
-        if (typeof value === 'string') {
-            applyAttributeTyped(el, name, value);
-        } else {
-            let eventName = name.replace(/Capture$/, '');
-            let useCapture = name !== eventName;
-            eventName = eventName.toLowerCase().substring(2);
+        if (typeof value === 'function') {
+            let useCapture = name !== (name = name.replace(/Capture$/, ''));
+            name = name.toLowerCase().substring(2);
             if (value) {
                 if (!attrs[name])
-                    el.addEventListener(eventName, eventProxy, useCapture);
-            } else if (typeof attrs[name] === 'string') {
-                applyAttributeTyped(el, name, null);
+                    el.addEventListener(name, eventProxy, useCapture);
             } else {
-                el.removeEventListener(eventName, eventProxy, useCapture);
+                el.removeEventListener(name, eventProxy, useCapture);
             }
-            (el._listeners || (el._listeners = {}))[eventName] = value;
+            (el._listeners || (el._listeners = {}))[name] = value;
+        } else {
+            applyAttributeTyped(el, name, value);
         }
     } else if (
         name !== 'list' &&

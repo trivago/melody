@@ -1,6 +1,6 @@
 {
   "name": "melody-parser",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "./lib/index.js",
   "jsnext:main": "./src/index.js",
@@ -12,7 +12,7 @@
   "dependencies": {
     "he": "^1.1.0",
     "lodash": "^4.12.0",
-    "melody-code-frame": "1.0.3"
+    "melody-code-frame": "1.0.4"
   },
   "bundledDependencies": [
     "he"

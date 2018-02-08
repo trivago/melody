@@ -4,6 +4,9 @@
         "lodash"
     ],
     "env": {
+        "development": {
+            "presets": [["es2015", {modules: false, loose: true}], "stage-1", "react"],
+        },
         "production": {
             "presets": [["es2015", {modules: false, loose: true}], "stage-1", "react"],
             "plugins": ["transform-inline-environment-variables"]

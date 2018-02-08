@@ -1789,6 +1789,36 @@ export default function MultiInclude(props) {
 "
 `;
 
+exports[`Compiler should correctly transform not in.template 1`] = `
+"
+import { text, elementOpen, elementClose } from \\"melody-idom\\";
+import { includes } from \\"lodash\\";
+export const _template = {};
+
+_template.render = function (_context) {
+    if (!includes(_context.elements, 1)) {
+        elementOpen(\\"p\\", null, null);
+        text(\\"The number 1 is not present in the elements array.\\");
+        elementClose(\\"p\\");
+    }
+
+    if (!_context.invalid) {
+        elementOpen(\\"p\\", null, null);
+        text(\\"All's well.\\");
+        elementClose(\\"p\\");
+    }
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"NotIn\\";
+}
+
+export default function NotIn(props) {
+    return _template.render(props);
+}
+"
+`;
+
 exports[`Compiler should correctly transform raw.template 1`] = `
 "
 import { rawString, raw, text } from \\"melody-idom\\";

@@ -370,8 +370,15 @@ export default class Lexer {
         for (let i = 0, ops = this[OPERATORS], len = ops.length; i < len; i++) {
             const op = ops[i];
             if (op.length > longestMatchingOperator.length && input.match(op)) {
-                longestMatchingOperator = op;
-                longestMatchEndPos = input.mark();
+                const cc = input.lac(0);
+
+                // prevent mixing up operators with symbols (e.g. matching
+                // 'not in' in 'not invalid').
+                if (op.indexOf(' ') === -1 || !(isAlpha(cc) || isDigit(cc))) {
+                    longestMatchingOperator = op;
+                    longestMatchEndPos = input.mark();
+                }
+
                 input.rewind(start);
             }
         }

@@ -53,7 +53,7 @@ describe('attribute updates', () => {
             patch(container, () =>
                 render({
                     'data-expanded': 'hello',
-                })
+                }),
             );
             const el = container.childNodes[0];
 
@@ -64,7 +64,7 @@ describe('attribute updates', () => {
             patch(container, () =>
                 render({
                     'data-expanded': false,
-                })
+                }),
             );
             const el = container.childNodes[0];
 
@@ -77,7 +77,7 @@ describe('attribute updates', () => {
                     id: undefined,
                     tabindex: undefined,
                     'data-expanded': undefined,
-                })
+                }),
             );
             const el = container.childNodes[0];
 
@@ -90,12 +90,12 @@ describe('attribute updates', () => {
             patch(container, () =>
                 render({
                     'data-expanded': 'foo',
-                })
+                }),
             );
             patch(container, () =>
                 render({
                     'data-expanded': 'bar',
-                })
+                }),
             );
             const el = container.childNodes[0];
 
@@ -106,12 +106,12 @@ describe('attribute updates', () => {
             patch(container, () =>
                 render({
                     'data-foo': 'foo',
-                })
+                }),
             );
             patch(container, () =>
                 render({
                     'data-bar': 'foo',
-                })
+                }),
             );
             const el = container.childNodes[0];
 
@@ -125,12 +125,12 @@ describe('attribute updates', () => {
                     render({
                         'data-foo': 'foo',
                         'data-bar': 'bar',
-                    })
+                    }),
                 );
                 patch(container, () =>
                     render({
                         'data-bar': 'bar',
-                    })
+                    }),
                 );
                 const el = container.childNodes[0];
 
@@ -142,13 +142,13 @@ describe('attribute updates', () => {
                 patch(container, () =>
                     render({
                         'data-bar': 'bar',
-                    })
+                    }),
                 );
                 patch(container, () =>
                     render({
                         'data-foo': 'foo',
                         'data-bar': 'bar',
-                    })
+                    }),
                 );
                 const el = container.childNodes[0];
 
@@ -162,13 +162,13 @@ describe('attribute updates', () => {
                         'data-foo': 'foo',
                         'data-bar': 'bar',
                         'data-baz': 'baz',
-                    })
+                    }),
                 );
                 patch(container, () =>
                     render({
                         'data-bar': 'bar',
                         'data-baz': 'baz',
-                    })
+                    }),
                 );
                 const el = container.childNodes[0];
 
@@ -179,7 +179,7 @@ describe('attribute updates', () => {
                 patch(container, () =>
                     render({
                         'data-bar': 'bar',
-                    })
+                    }),
                 );
                 expect(el.getAttribute('data-foo')).to.equal(null);
                 expect(el.getAttribute('data-bar')).to.equal('bar');
@@ -191,14 +191,14 @@ describe('attribute updates', () => {
                     render({
                         'data-bar': 'bar',
                         'data-baz': 'baz',
-                    })
+                    }),
                 );
                 patch(container, () =>
                     render({
                         'data-foo': 'foo',
                         'data-bar': 'bar',
                         'data-baz': 'baz',
-                    })
+                    }),
                 );
                 const el = container.childNodes[0];
 
@@ -210,7 +210,7 @@ describe('attribute updates', () => {
                     render({
                         'data-foo': 'foo',
                         'data-bar': 'bar',
-                    })
+                    }),
                 );
                 expect(el.getAttribute('data-foo')).to.equal('foo');
                 expect(el.getAttribute('data-bar')).to.equal('bar');
@@ -223,7 +223,7 @@ describe('attribute updates', () => {
                 render({
                     'data-foo': 'foo',
                     'data-bar': 'bar',
-                })
+                }),
             );
             patch(container, () => render({}));
             const el = container.childNodes[0];
@@ -231,31 +231,6 @@ describe('attribute updates', () => {
             expect(el.getAttribute('data-foo')).to.equal(null);
             expect(el.getAttribute('data-bar')).to.equal(null);
         });
-    });
-
-    it('should add string event listeners', () => {
-        let count = 0;
-        const old = window.handler;
-        window.handler = () => count++;
-        patch(
-            container,
-            () => {
-                elementVoid('button', 'test', null, 'onclick', 'handler();');
-            },
-            {}
-        );
-        const el = container.childNodes[0];
-        el.click();
-        patch(
-            container,
-            () => {
-                elementVoid('button', 'test', null, 'onclick', undefined);
-            },
-            {}
-        );
-        el.click();
-        expect(count).to.equal(1);
-        window.handler = old;
     });
 
     describe('for function attributes', () => {
@@ -277,29 +252,6 @@ describe('attribute updates', () => {
             const el = container.childNodes[0];
 
             expect(el.fn).to.equal(fn);
-        });
-
-        it('should remove event listeners', () => {
-            let count = 0;
-            const handler = () => count++;
-            patch(
-                container,
-                () => {
-                    elementVoid('button', 'test', null, 'onclick', handler);
-                },
-                {}
-            );
-            const el = container.childNodes[0];
-            el.click();
-            patch(
-                container,
-                () => {
-                    elementVoid('button', 'test', null, 'onclick', undefined);
-                },
-                {}
-            );
-            el.click();
-            expect(count).to.equal(1);
         });
     });
 
@@ -343,7 +295,7 @@ describe('attribute updates', () => {
             });
             const el = container.childNodes[0].childNodes[0];
             expect(
-                el.getAttributeNS('http://www.w3.org/1999/xlink', 'href')
+                el.getAttributeNS('http://www.w3.org/1999/xlink', 'href'),
             ).to.equal('#foo');
         });
 

@@ -102,7 +102,7 @@ describe('Lexer', () => {
     describe('in expression state', function() {
         it('should parse an expression that is a string', () => {
             var lexer = new Lexer(
-                    new CharStream(' hello {{- "test " -}} world'),
+                    new CharStream(' hello {{- "test " -}} world')
                 ),
                 token = lexer.next();
             expect(token.type).to.eql(Types.TEXT);
@@ -131,7 +131,7 @@ describe('Lexer', () => {
 
         it('should parse an expression that is a string and contains escaping', () => {
             var lexer = new Lexer(
-                    new CharStream("hello {{ 'test\\'n this' }}world"),
+                    new CharStream("hello {{ 'test\\'n this' }}world")
                 ),
                 token = lexer.next();
             expect(token.type).to.eql(Types.TEXT);
@@ -416,6 +416,31 @@ describe('Lexer', () => {
             expect(token.text).to.equal('}}');
             expect(token.type).to.equal(Types.EXPRESSION_END);
         });
+
+        it('should match a not expression', () => {
+            var lexer = new Lexer(new CharStream('{{ not invalid }}')),
+                token;
+            lexer.addOperators('not', 'not in');
+            token = lexer.next();
+            expect(token.text).to.equal('{{');
+            expect(token.type).to.equal(Types.EXPRESSION_START);
+            token = lexer.next();
+            expect(token.type).to.equal(Types.WHITESPACE);
+            token = lexer.next();
+            expect(token.text).to.equal('not');
+            expect(token.type).to.equal(Types.OPERATOR);
+            token = lexer.next();
+            expect(token.type).to.equal(Types.WHITESPACE);
+            token = lexer.next();
+            expect(token.text).to.equal('invalid');
+            expect(token.type).to.equal(Types.SYMBOL);
+            token = lexer.next();
+            expect(token.type).to.equal(Types.WHITESPACE);
+            token = lexer.next();
+            expect(token.text).to.equal('}}');
+            expect(token.type).to.equal(Types.EXPRESSION_END);
+        });
+
         //it('should match a test by length', () => {
         //    var lexer = new Lexer(new CharStream(`{{ foo is divisible by bar }}`)),
         //        token;
@@ -463,7 +488,7 @@ describe('Lexer', () => {
 
         it('should match an extends tag', function() {
             var lexer = new Lexer(
-                    new CharStream('{% extends "foo.html.twig" %}'),
+                    new CharStream('{% extends "foo.html.twig" %}')
                 ),
                 token;
             lexer.addOperators('+');
@@ -524,7 +549,7 @@ describe('Lexer', () => {
 
         it('should match simple HTML attributes', () => {
             var lexer = new Lexer(
-                    new CharStream('<div class="foo">Test</div>'),
+                    new CharStream('<div class="foo">Test</div>')
                 ),
                 token;
             token = lexer.next();
@@ -572,7 +597,7 @@ describe('Lexer', () => {
 
         it('should match simple HTML attributes with expression value', () => {
             var lexer = new Lexer(
-                    new CharStream('<div class="{{name}}">Test</div>'),
+                    new CharStream('<div class="{{name}}">Test</div>')
                 ),
                 token;
             token = lexer.next();
@@ -626,7 +651,7 @@ describe('Lexer', () => {
 
         it('should match HTML attributes with mixed values', () => {
             var lexer = new Lexer(
-                    new CharStream('<div class="test-{{name}} foo">Test</div>'),
+                    new CharStream('<div class="test-{{name}} foo">Test</div>')
                 ),
                 token;
             token = lexer.next();
@@ -687,8 +712,8 @@ describe('Lexer', () => {
         it('should keep quotes in interpolation', () => {
             var lexer = new Lexer(
                     new CharStream(
-                        '{{ even ? \'class="#{evenClass}" data-even\' }}',
-                    ),
+                        '{{ even ? \'class="#{evenClass}" data-even\' }}'
+                    )
                 ),
                 token;
             token = lexer.next();

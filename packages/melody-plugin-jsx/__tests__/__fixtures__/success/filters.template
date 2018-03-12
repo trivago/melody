@@ -1,0 +1,38 @@
+{% set myData = {
+    "test": "value",
+    "meaningOfLife": 42,
+    "True" : false
+} %}
+{% set myArray = ["This", "is", "an", "array"] %}
+
+<ul class="filters">
+    <li>{{ 1.5 | abs }}</li>
+    <li>{{ myArray | batch(2, 'batch') }}</li>
+    <li>{{ "capitalise" | capitalize }}</li>
+    <li>{{ "Test String" | convert_encoding('UTF-8', 'ASCII') | raw }}</li>
+    <li>{{ "2018-03-01" | date_modify("+1 day") | date('Y-m-d') }}</li>
+    <li>{{ elephant | default('elephant') }}</li>
+    <li>{{ "<div>HTML</div>" | escape }}</li>
+    <li>{{ myArray | first }}</li>
+    <li>{{ "I like %s, it is %s" | format("Twig", "nice") }}</li>
+    <li>{{ [1, 2, 3] | join('|') }}</li>
+    <li>{{ myData | json_encode() | raw }}</li>
+    <li>{{ myData | keys }}</li>
+    <li>{{ myArray | last }}</li>
+    <li>{{ myArray | length }}</li>
+    <li>{{ "Lower" | lower }}</li>
+    <li>{{ myArray | merge(["Yes"]) | length }}</li>
+    <li>{{ "\nThis is a new line\nAnd this" | nl2br | raw }}</li>
+    <li>{{ 9800.333 | number_format(2, '.', ',') }}</li>
+    <li>{{ "I like fish" | replace({'fish': 'meat'}) }}</li>
+    <li>{{ myArray | reverse }}</li>
+    <li>{{ 42.55 | round }}</li>
+    <li>{{ "12345" | slice(1, 3) }}</li>
+    <li>{{ myArray | sort }}</li>
+    <li>{{ "one, two, three, four, five" | split(',' , 3) }}</li>
+    <li>{{ "<div>HTML</div>" | striptags }}</li>
+    <li>{{ "Huzzah for twig!" | title }}</li>
+    <li>{{ "  I like Twig.  " | trim }}</li>
+    <li>{{ "Upper" | upper }}</li>
+    <li>{{ "path-seg*ment" | url_encode }}</li>
+</ul>

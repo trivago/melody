@@ -141,7 +141,7 @@ export default {
         // Not really happy about this since moment.js could well be incompatible with
         // the default twig behaviour
         // might need to switch to an actual strftime implementation
-        path.repalceWithJS(
+        path.replaceWithJS(
             t.callExpression(
                 t.callExpression(
                     t.identifier(path.state.addDefaultImportFrom('moment')),

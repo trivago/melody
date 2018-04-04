@@ -360,7 +360,7 @@ describe('Twig filter runtime', function() {
             expect(format("%%+d = '%+d'", u)).to.equal("%+d = '-43951789'");
 
             expect(() => format("%%f = '%*.*f'", 1, n)).to.throw(
-                'toFixed() digits argument must be between 0 and 20'
+                /toFixed\(\) digits argument must be between 0 and (20|100)/
             );
         });
 

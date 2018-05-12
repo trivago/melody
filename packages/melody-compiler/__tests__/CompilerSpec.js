@@ -17,6 +17,9 @@ import { compile, toString } from '../src';
 import { extension as coreExtension } from 'melody-extension-core';
 import idomPlugin from 'melody-plugin-idom';
 import { stripIndent } from 'common-tags';
+import State from '../src/state/State';
+import { File, Template } from '../src/Template';
+import { Parser, Lexer, CharStream, TokenStream } from 'melody-parser';
 
 const fs = require('fs'),
     path = require('path');
@@ -31,7 +34,7 @@ describe('Compiler', function() {
     getFixtures('error').forEach(({ name, twigPath }) => {
         it('should fail transforming ' + name.replace(/_/g, ' '), function() {
             expect(
-                fixture.bind(null, twigPath, name),
+                fixture.bind(null, twigPath, name)
             ).toThrowErrorMatchingSnapshot();
         });
     });
@@ -64,7 +67,7 @@ describe('Compiler', function() {
                     functionMap: {
                         yay: 'foo',
                     },
-                },
+                }
             );
             const jsCode = toString(jsTemplate, code);
             expect(jsCode).toMatchSnapshot();
@@ -82,8 +85,8 @@ describe('Compiler', function() {
             expect(
                 toString(
                     compile('test.twig', code, coreExtension, idomPlugin),
-                    code,
-                ).code,
+                    code
+                ).code
             ).toMatchSnapshot();
         });
 
@@ -93,8 +96,8 @@ describe('Compiler', function() {
             expect(
                 toString(
                     compile('test.twig', code, coreExtension, idomPlugin),
-                    code,
-                ).code,
+                    code
+                ).code
             ).toMatchSnapshot();
         });
     });
@@ -105,8 +108,8 @@ describe('Compiler', function() {
             expect(
                 toString(
                     compile('test.twig', code, coreExtension, idomPlugin),
-                    code,
-                ).code,
+                    code
+                ).code
             ).toMatchSnapshot();
         });
     });
@@ -120,10 +123,10 @@ describe('Compiler', function() {
                         'foo/bar/test.melody.twig',
                         code,
                         coreExtension,
-                        idomPlugin,
+                        idomPlugin
                     ),
-                    code,
-                ).code,
+                    code
+                ).code
             ).toMatchSnapshot();
         });
         it('should take dir name if file name is index', function() {
@@ -133,10 +136,10 @@ describe('Compiler', function() {
                         'foo/bar/index.melody.twig',
                         code,
                         coreExtension,
-                        idomPlugin,
+                        idomPlugin
                     ),
-                    code,
-                ).code,
+                    code
+                ).code
             ).toMatchSnapshot();
         });
         it('should take dir name if file name is base', function() {
@@ -146,10 +149,10 @@ describe('Compiler', function() {
                         'foo/bar/base.melody.twig',
                         code,
                         coreExtension,
-                        idomPlugin,
+                        idomPlugin
                     ),
-                    code,
-                ).code,
+                    code
+                ).code
             ).toMatchSnapshot();
         });
     });
@@ -185,20 +188,51 @@ describe('Compiler', function() {
         it('should throw an error', function() {
             const code = '<div/>';
             expect(() =>
-                compile('test.twig', code, coreExtension),
+                compile('test.twig', code, coreExtension)
             ).toThrowErrorMatchingSnapshot();
         });
         it('should throw an error', function() {
             const code = 'foo';
             expect(() =>
-                compile('test.twig', code, coreExtension),
+                compile('test.twig', code, coreExtension)
             ).toThrowErrorMatchingSnapshot();
         });
         it('should throw an error', function() {
             const code = '{% include "foo.twig" %}';
             expect(() =>
-                compile('test.twig', code, coreExtension),
+                compile('test.twig', code, coreExtension)
             ).toThrowErrorMatchingSnapshot();
+        });
+    });
+
+    describe('State', () => {
+        it('should add an import if it does not exist', () => {
+            const source = 'hello {{ target }}!';
+            const lexer = new Lexer(new CharStream(source));
+            const parser = new Parser(new TokenStream(lexer));
+            const root = parser.parse();
+            const template = new Template(root.expressions);
+            const file = new File('fileName.twig', template);
+            const state = new State(file, source);
+            expect(state.program.body.length).toBe(0);
+            state.ensureImportFrom('foo');
+            expect(state.program.body.length).toBe(1);
+            expect(state.program.body).toMatchSnapshot();
+        });
+
+        it('should not add duplicate imports', () => {
+            const source = 'hello {{ target }}!';
+            const lexer = new Lexer(new CharStream(source));
+            const parser = new Parser(new TokenStream(lexer));
+            const root = parser.parse();
+            const template = new Template(root.expressions);
+            const file = new File('fileName.twig', template);
+            const state = new State(file, source);
+            expect(state.program.body.length).toBe(0);
+            state.ensureImportFrom('foo');
+            state.ensureImportFrom('foo');
+            expect(state.program.body.length).toBe(1);
+            expect(state.program.body).toMatchSnapshot();
         });
     });
 });

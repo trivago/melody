@@ -147,10 +147,11 @@ const updateAttribute = function(el, name, value) {
             let useCapture = name !== eventName;
             eventName = eventName.toLowerCase().substring(2);
             if (value) {
-                if (!attrs[name])
+                if (!attrs[name]) {
                     el.addEventListener(eventName, eventProxy, useCapture);
+                }
             } else if (typeof attrs[name] === 'string') {
-                applyAttributeTyped(el, name, null);
+                el.removeAttribute(name);
             } else {
                 el.removeEventListener(eventName, eventProxy, useCapture);
             }

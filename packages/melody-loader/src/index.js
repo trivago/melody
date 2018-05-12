@@ -24,7 +24,11 @@ module.exports = function loader(content) {
     const loaderOptions = getOptions(this) || {
         plugins: [],
     };
-
+    // configuring logger using webpack logging mechanism.
+    CoreExtension.options = {
+        warn: this.emitWarning,
+        error: this.emitError,
+    };
     const args = [this.resourcePath, content, CoreExtension];
     if (loaderOptions.plugins) {
         for (const pluginName of loaderOptions.plugins) {

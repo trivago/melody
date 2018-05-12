@@ -152,6 +152,42 @@ export default function Extends(props) {
 "
 `;
 
+exports[`Compiler should correctly transform filters.template 1`] = `
+"
+import temp from \\"moment\\";
+import { capitalize, first, keys, last } from \\"lodash\\";
+import { batch, strtotime, escape, format, merge, nl2br, number_format, replace, reverse, round, striptags, title, url_encode } from \\"melody-runtime\\";
+export const _template = {};
+
+_template.render = function (_context) {
+    let myData, myArray;
+    myData = {
+        \\"test\\": \\"value\\",
+        \\"meaningOfLife\\": 42,
+        \\"True\\": false
+    };
+    myArray = [\\"This\\", \\"is\\", \\"an\\", \\"array\\"];
+    return <ul className=\\"filters\\"><li>{Math.abs(1.5)}</li><li>{batch(myArray, 2, \\"batch\\")}</li><li>{capitalize(\\"capitalise\\")}</li><li><span dangerouslySetInnerHTML={{
+                __html: \\"Test String\\"
+            }} /></li><li>{temp(strtotime(\\"+1 day\\", \\"2018-03-01\\"))(\\"Y-m-d\\")}</li><li>{_context.elephant != null && _context.elephant !== '' ? _context.elephant : \\"elephant\\"}</li><li>{escape(\\"<div>HTML</div>\\")}</li><li>{first(myArray)}</li><li>{format(\\"I like %s, it is %s\\", \\"Twig\\", \\"nice\\")}</li><li>{[1, 2, 3].join(\\"|\\")}</li><li><span dangerouslySetInnerHTML={{
+                __html: JSON.stringify(myData)
+            }} /></li><li>{keys(myData)}</li><li>{last(myArray)}</li><li>{myArray.length}</li><li>{\\"Lower\\".toLowerCase()}</li><li>{merge(myArray, [\\"Yes\\"]).length}</li><li><span dangerouslySetInnerHTML={{
+                __html: nl2br(\\"nThis is a new line\\\\\\\\nAnd this\\")
+            }} /></li><li>{number_format(9800.333, 2, \\".\\", \\",\\")}</li><li>{replace(\\"I like fish\\", {
+                \\"fish\\": \\"meat\\"
+            })}</li><li>{reverse(myArray)}</li><li>{round(42.55)}</li><li>{\\"12345\\".slice(1, 3)}</li><li>{myArray.sort()}</li><li>{\\"one, two, three, four, five\\".split(\\",\\", 3)}</li><li>{striptags(\\"<div>HTML</div>\\")}</li><li>{title(\\"Huzzah for twig!\\")}</li><li>{\\"  I like Twig.  \\".trim()}</li><li>{\\"Upper\\".toUpperCase()}</li><li>{url_encode(\\"path-seg*ment\\")}</li></ul>;
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"Filters\\";
+}
+
+export default function Filters(props) {
+    return _template.render(props);
+}
+"
+`;
+
 exports[`Compiler should correctly transform for if else.template 1`] = `
 "
 import { isEmpty } from \\"melody-runtime\\";

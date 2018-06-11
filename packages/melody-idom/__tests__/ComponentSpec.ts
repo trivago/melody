@@ -24,6 +24,7 @@ import {
     mount,
     link,
     getParent,
+    options,
 } from '../src';
 import { getChildren } from '../src/hierarchy';
 
@@ -80,7 +81,7 @@ describe('component', function() {
             data => {
                 component(Component, 'test', data);
             },
-            { text: 'Hello' },
+            { text: 'Hello' }
         );
         expect(el.innerHTML).toEqual('<m-placeholder></m-placeholder>');
         run();
@@ -94,7 +95,7 @@ describe('component', function() {
             data => {
                 mount(el, Component, data);
             },
-            { text: 'Hello' },
+            { text: 'Hello' }
         );
         run();
         expect(el.outerHTML).toEqual('<div>Hello</div>');
@@ -106,7 +107,7 @@ describe('component', function() {
             data => {
                 component(Component, 'test', data);
             },
-            { text: 'Hello' },
+            { text: 'Hello' }
         );
         run();
         expect(notified).toEqual(true);
@@ -118,7 +119,7 @@ describe('component', function() {
             data => {
                 component(Component, 'test', data);
             },
-            { text: 'Hello' },
+            { text: 'Hello' }
         );
         run();
         patch(
@@ -127,7 +128,7 @@ describe('component', function() {
                 elementOpen('div');
                 elementClose('div');
             },
-            { text: 'Hello' },
+            { text: 'Hello' }
         );
         expect(unmounted).toEqual(true);
     });
@@ -142,12 +143,12 @@ describe('component', function() {
                     secondChild: { text: 'World' },
                 });
             },
-            {},
+            {}
         );
         expect(el.innerHTML).toEqual('<m-placeholder></m-placeholder>');
         run(1);
         expect(el.innerHTML).toEqual(
-            '<section><div>Hello</div><div>World</div></section>',
+            '<section><div>Hello</div><div>World</div></section>'
         );
 
         patch(
@@ -158,23 +159,64 @@ describe('component', function() {
                     secondChild: { text: 'universe' },
                 });
             },
-            {},
+            {}
         );
         run(1);
         // Updates outer element
         expect(el.innerHTML).toEqual(
-            '<section><div>Hello</div><div>World</div></section>',
+            '<section><div>Hello</div><div>World</div></section>'
         );
         run(1);
         // updates first child component
         expect(el.innerHTML).toEqual(
-            '<section><div>hello</div><div>World</div></section>',
+            '<section><div>hello</div><div>World</div></section>'
         );
         run(1);
         // updates second child component
         expect(el.innerHTML).toEqual(
-            '<section><div>hello</div><div>universe</div></section>',
+            '<section><div>hello</div><div>universe</div></section>'
         );
+    });
+
+    it('should render synchronously', function() {
+        // activate synchronous rendering option
+        options.experimentalSyncDeepRendering = true;
+
+        // initial rendering happens immediately
+        patch(
+            el,
+            data => {
+                component(ParentComponent, 'test', {
+                    firstChild: { text: 'Hello' },
+                    secondChild: { text: 'World' },
+                });
+            },
+            {}
+        );
+        expect(el.innerHTML).toEqual('<m-placeholder></m-placeholder>');
+        run(1);
+        expect(el.innerHTML).toEqual(
+            '<section><div>Hello</div><div>World</div></section>'
+        );
+
+        patch(
+            el,
+            data => {
+                component(ParentComponent, 'test', {
+                    firstChild: { text: 'hello' },
+                    secondChild: { text: 'universe' },
+                });
+            },
+            {}
+        );
+        run(1);
+        // updates outer element, first and second child component synchronously
+        expect(el.innerHTML).toEqual(
+            '<section><div>hello</div><div>universe</div></section>'
+        );
+
+        // deactivate synchronous rendering option
+        options.experimentalSyncDeepRendering = false;
     });
 
     it('should render new hierachies immediately', function() {
@@ -186,11 +228,11 @@ describe('component', function() {
                     secondChild: { text: 'World' },
                 });
             },
-            {},
+            {}
         );
         run(1);
         expect(el.innerHTML).toEqual(
-            '<section><div>Hello</div><div>World</div></section>',
+            '<section><div>Hello</div><div>World</div></section>'
         );
     });
 
@@ -206,22 +248,22 @@ describe('component', function() {
                     secondChild: { text: 'universe' },
                 });
             },
-            {},
+            {}
         );
         run(1);
         // Updates outer element
         expect(el.innerHTML).toEqual(
-            '<section><div key="child1">Hello</div><div key="child2">World</div></section>',
+            '<section><div key="child1">Hello</div><div key="child2">World</div></section>'
         );
         run(1);
         // updates first child component
         expect(el.innerHTML).toEqual(
-            '<section><div>hello</div><div key="child2">World</div></section>',
+            '<section><div>hello</div><div key="child2">World</div></section>'
         );
         run(1);
         // updates second child component
         expect(el.innerHTML).toEqual(
-            '<section><div>hello</div><div>universe</div></section>',
+            '<section><div>hello</div><div>universe</div></section>'
         );
     });
 
@@ -235,13 +277,13 @@ describe('component', function() {
                     secondChild: { text: 'World' },
                 });
             },
-            {},
+            {}
         );
         expect(el.innerHTML).toEqual('<m-placeholder></m-placeholder>');
         run(1);
         jest.runAllTimers();
         expect(el.innerHTML).toEqual(
-            '<section><div>Hello</div><div>World</div></section>',
+            '<section><div>Hello</div><div>World</div></section>'
         );
     });
 

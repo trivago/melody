@@ -17,7 +17,7 @@
 import { patchOuter, updateComponent, RenderableComponent } from './core';
 import { getParent } from './hierarchy';
 import { debounce } from 'lodash';
-
+import { options } from './index';
 interface Node {
     component: RenderableComponent;
     next: Node;
@@ -303,7 +303,12 @@ export function flush(deadline: Deadline): void {
             hasNew = true;
         }
         queue = concat(queue, prevQueue);
-        next = 0 < deadline.timeRemaining() ? pop() : null;
+
+        if (options.experimentalSyncDeepRendering) {
+            next = pop();
+        } else {
+            next = 0 < deadline.timeRemaining() ? pop() : null;
+        }
     }
     // notify the freshly mounted components
     const notified = mounted.values();

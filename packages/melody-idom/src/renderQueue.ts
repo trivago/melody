@@ -17,7 +17,7 @@
 import { patchOuter, updateComponent, RenderableComponent } from './core';
 import { getParent } from './hierarchy';
 import { debounce } from 'lodash';
-import { options } from './index';
+import options from './options';
 interface Node {
     component: RenderableComponent;
     next: Node;

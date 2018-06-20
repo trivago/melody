@@ -68,7 +68,7 @@ export const mountedComponents = new WeakSet<RenderableComponent>();
 let idealFrameLength = IDLE_FRAME_LENGTH;
 let scrollListenerAttached = false;
 let prioritizationRequested = false;
-let prioritizationDisabled = false;
+let prioritizationDisabled = !!options.experimentalSyncDeepRendering;
 
 const NIL: Node = { component: null, next: null };
 let queue: Node = NIL;
@@ -349,9 +349,7 @@ function performReordering(event: MessageEvent): void {
     prioritizationRequested = false;
 
     let timeSpent = Date.now();
-    queue = options.experimentalSyncDeepRendering
-        ? queue
-        : prioritizeQueue(queue);
+    queue = prioritizeQueue(queue);
     timeSpent = Date.now() - timeSpent;
 
     // Usually prioritization takes 0 - 4 ms on fast browsers. If browser is not

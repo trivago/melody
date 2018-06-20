@@ -349,7 +349,9 @@ function performReordering(event: MessageEvent): void {
     prioritizationRequested = false;
 
     let timeSpent = Date.now();
-    queue = prioritizeQueue(queue);
+    queue = options.experimentalSyncDeepRendering
+        ? queue
+        : prioritizeQueue(queue);
     timeSpent = Date.now() - timeSpent;
 
     // Usually prioritization takes 0 - 4 ms on fast browsers. If browser is not

@@ -17,7 +17,7 @@
 import { patchOuter, updateComponent, RenderableComponent } from './core';
 import { getParent } from './hierarchy';
 import { debounce } from 'lodash';
-
+import options from './options';
 interface Node {
     component: RenderableComponent;
     next: Node;
@@ -68,7 +68,7 @@ export const mountedComponents = new WeakSet<RenderableComponent>();
 let idealFrameLength = IDLE_FRAME_LENGTH;
 let scrollListenerAttached = false;
 let prioritizationRequested = false;
-let prioritizationDisabled = false;
+let prioritizationDisabled = !!options.experimentalSyncDeepRendering;
 
 const NIL: Node = { component: null, next: null };
 let queue: Node = NIL;
@@ -303,7 +303,12 @@ export function flush(deadline: Deadline): void {
             hasNew = true;
         }
         queue = concat(queue, prevQueue);
-        next = 0 < deadline.timeRemaining() ? pop() : null;
+
+        if (options.experimentalSyncDeepRendering) {
+            next = pop();
+        } else {
+            next = 0 < deadline.timeRemaining() ? pop() : null;
+        }
     }
     // notify the freshly mounted components
     const notified = mounted.values();

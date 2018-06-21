@@ -114,18 +114,18 @@ describe('conditional rendering', () => {
             if (condition) {
                 elementOpen(
                     'span',
-                    null,
+                    'conditional',
                     null,
                     'id',
                     'conditional-one',
                     'data-foo',
-                    'foo',
+                    'foo'
                 );
                 elementVoid('span');
                 elementClose('span');
             }
 
-            elementVoid('span', null, null, 'id', 'two');
+            elementVoid('span', 'last', null, 'id', 'two');
             elementClose('div');
         }
 

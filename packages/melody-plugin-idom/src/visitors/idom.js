@@ -246,6 +246,8 @@ function openDynamicAttributesElement(
         if (ref) {
             replacements.push(callIdomFunction(state, 'ref', [ref]));
         }
+        // insert skip to jump over any children
+        replacements.push(callIdomFunction(state, 'skip', []));
         // we handle closing the tag here since there is
         // no equivalent of 'elementVoid' when using dynamic attributes
         replacements.push(

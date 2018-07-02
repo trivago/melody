@@ -25,6 +25,8 @@ export type Options = {
     afterUpdate?: (component) => void;
     /** Hook invoked immediately before a component is unmounted. */
     beforeUnmount?: (component) => void;
+    /** Test synchronous loading of child components */
+    experimentalSyncDeepRendering?: boolean;
 };
 
 const options: Options = {};

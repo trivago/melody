@@ -22,6 +22,7 @@ module.exports = {
         'packages/melody-loader/**',
         'packages/melody-plugin-jsx/**',
         'packages/melody-plugin-skip-if/**',
+        'packages/melody-plugin-load-functions/**',
         'packages/melody-jest-transform/**',
         'packages/melody-redux/**',
         'packages/melody-util/**',

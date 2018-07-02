@@ -15,7 +15,6 @@
  */
 import * as t from 'babel-types';
 import { Fragment } from 'melody-types';
-import { parse } from 'path';
 import { camelCase } from 'lodash';
 
 // Not using lodash capitalize here, because it makes the rest of the string lowercase
@@ -180,12 +179,12 @@ export default {
             this.templateVariableName = '_template';
             path.scope.registerBinding(this.templateVariableName);
             let fileName = this.file.fileName || '<unknown>';
-            const nameParts = parse(fileName);
 
-            const name = nameParts.name.split('.')[0];
+            const fileParts = fileName.split('/');
+            const name = fileParts.pop().split('.')[0];
 
             if (name === 'index' || name === 'base') {
-                fileName = getDisplayName(parse(nameParts.dir).name);
+                fileName = getDisplayName(fileParts.pop());
             } else {
                 fileName = getDisplayName(name);
             }

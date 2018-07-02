@@ -1,8 +1,16 @@
 version: 2
 jobs:
-  build:
+  build-node-6:
     docker:
       - image: circleci/node:6
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run pretest
+      - run: npm run test-ci
+      - run: npm run posttest
+  build-node-8:
+    docker:
       - image: circleci/node:8
     steps:
       - checkout
@@ -10,3 +18,9 @@ jobs:
       - run: npm run pretest
       - run: npm run test-ci
       - run: npm run posttest
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build-node-6
+      - build-node-8

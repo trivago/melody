@@ -234,6 +234,15 @@ export default class State {
         return local;
     }
 
+    ensureImportFrom(source) {
+        let importDecl = this.getImportFrom(source);
+        if (!importDecl) {
+            importDecl = t.importDeclaration([], t.stringLiteral(source));
+            this._importCache[source] = importDecl;
+            this.program.body.splice(0, 0, importDecl);
+        }
+    }
+
     insertGlobalVariableDeclaration(kind, id, init) {
         const decl = t.variableDeclarator(id, init);
         for (const stmt of (this.program.body: Array)) {

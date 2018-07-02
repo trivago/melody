@@ -1,5 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Compiler State should add an import if it does not exist 1`] = `
+Array [
+  Object {
+    "source": Object {
+      "type": "StringLiteral",
+      "value": "foo",
+    },
+    "specifiers": Array [],
+    "type": "ImportDeclaration",
+  },
+]
+`;
+
+exports[`Compiler State should not add duplicate imports 1`] = `
+Array [
+  Object {
+    "source": Object {
+      "type": "StringLiteral",
+      "value": "foo",
+    },
+    "specifiers": Array [],
+    "type": "ImportDeclaration",
+  },
+]
+`;
+
 exports[`Compiler displayName should capitalize file name 1`] = `
 "import { elementVoid } from \\"melody-idom\\";
 export const _template = {};

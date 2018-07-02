@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`load should compile to import() 1`] = `
+"export const _template = {};
+
+_template.render = function (_context) {
+  import(\\"fancy-component\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;
+
+exports[`loadSync should compile to import statement 1`] = `
+"import \\"fancy-component\\";
+export const _template = {};
+
+_template.render = function (_context) {};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"Test\\";
+}
+
+export default function Test(props) {
+  return _template.render(props);
+}"
+`;

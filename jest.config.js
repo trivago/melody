@@ -21,6 +21,7 @@ module.exports = {
         'packages/melody-component/**',
         'packages/melody-loader/**',
         'packages/melody-plugin-jsx/**',
+        'packages/melody-plugin-load-functions/**',
         'packages/melody-jest-transform/**',
         'packages/melody-redux/**',
         'packages/melody-util/**',

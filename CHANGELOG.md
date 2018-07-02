@@ -23,7 +23,7 @@
 
 ### Fixes
 
-- `[melody-idom]` revert commit `fdeef10`: bugfix/remove-event-handlers
+- `[melody-idom]` revert commit [fdeef10](https://github.com/trivago/melody/commit/fdeef107bede824260916d458f956d3ee77d04e2): bugfix/remove-event-handlers
 - `[melody-jest-transform]` fixed peer dependencies
 
 ## 1.0.3

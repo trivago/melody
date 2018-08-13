@@ -4,7 +4,7 @@
 
 ### Features
 
-- `[melody-compiler]`, `[meldoy-loader]` added `melody-logger`
+- `[melody-compiler]`, `[melody-loader]` added `melody-logger`
 - `[melody-idom]` added experimental synchronous deep rendering
 - Added `melody-plugin-load-functions`
 - Added `melody-plugin-skip-if`

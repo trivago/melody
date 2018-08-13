@@ -15,7 +15,7 @@
     },
     "bundledDependencies": ["babel-types"],
     "peerDependencies": {
-        "melody-types": "^1.0.0"
+        "melody-types": "^1.1.0"
     },
     "devDependencies": {
         "rollup-plugin-babel": "^2.6.1"

@@ -18,11 +18,11 @@
     "random-seed": "^0.3.0"
   },
   "peerDependencies": {
-    "melody-idom": "^1.0.0",
-    "melody-parser": "^1.0.0",
-    "melody-runtime": "^1.0.0",
-    "melody-traverse": "^1.0.0",
-    "melody-types": "^1.0.0"
+    "melody-idom": "^1.1.0",
+    "melody-parser": "^1.1.0",
+    "melody-runtime": "^1.1.0",
+    "melody-traverse": "^1.1.0",
+    "melody-types": "^1.1.0"
   },
   "bundledDependencies": [
     "babel-types",

@@ -1,19 +1,20 @@
 {
     "name": "melody-plugin-load-functions",
-    "version": "1.0.3",
+    "version": "1.1.0",
     "description": "",
     "main": "./lib/index.js",
     "jsnext:main": "./src/index.js",
     "scripts": {
-        "build":
-            "mkdir lib; SUPPORT_CJS=true rollup -c ../../rollup.config.js -i src/index.js -o lib/index.js"
+        "build": "mkdir lib; SUPPORT_CJS=true rollup -c ../../rollup.config.js -i src/index.js -o lib/index.js"
     },
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
         "babel-types": "^6.8.1"
     },
-    "bundledDependencies": ["babel-types"],
+    "bundledDependencies": [
+        "babel-types"
+    ],
     "peerDependencies": {
         "melody-types": "^1.1.0"
     },

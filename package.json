@@ -70,7 +70,7 @@
         "redux-promise": "^0.5.3",
         "redux-thunk": "^2.2.0",
         "rimraf": "^2.6.1",
-        "rollup": "^0.41.4",
+        "rollup": "^0.63.5",
         "rollup-plugin-babel": "^2.7.1",
         "rollup-plugin-json": "^2.1.0",
         "rollup-plugin-uglify": "^2.0.1",

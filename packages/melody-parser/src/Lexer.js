@@ -560,9 +560,8 @@ export default class Lexer {
 
     matchText(pos) {
         let input = this.input,
-            exit = false,
             c;
-        while (!exit && ((c = input.la(0)) && c !== EOF)) {
+        while ((c = input.la(0)) && c !== EOF) {
             if (c === '{') {
                 const c2 = input.la(1);
                 if (c2 === '{' || c2 === '#' || c2 === '%') {

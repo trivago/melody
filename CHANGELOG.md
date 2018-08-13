@@ -1,5 +1,7 @@
 ## master
 
+## 1.1.0
+
 ### Features
 
 - `[melody-compiler]`, `[meldoy-loader]` added `melody-logger`

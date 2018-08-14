@@ -6,8 +6,8 @@
         {% include "test.twig" with { foo: "bar" } only %}
         {{ include("test.twig", { foo: "bar" }) }}
 
-        {% mount Item with item %}
-        {% mount './Item' with item %}
-        {% mount Item from './ItemList' with {item: item} %}
+        {% mount Item as 'bar' with item %}
+        {% mount './Item' as 'bar' with item %}
+        {% mount Item from './ItemList' as 'bar' with {item: item} %}
     </div>
 {% endblock %}

@@ -1,0 +1,4 @@
+{% mount './component' %}
+{% mount 'foo.twig' with { foo: 'bar' } %}
+{% mount Foo %}
+{% mount Foo with { foo: 'bar' } %}

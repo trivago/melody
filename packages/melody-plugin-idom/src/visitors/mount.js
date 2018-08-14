@@ -58,6 +58,13 @@ export default {
                 } else {
                     args.push(path.node.name);
                 }
+                if (path.node.key === null) {
+                    const message = 'mount is missing a key.';
+                    const advice =
+                        "When mounting a component please make sure to always specify a key, i.e. `{% mount './component' as 'comp' %}";
+                    const location = path.node.loc.start;
+                    path.state.warn(message, location, advice, 5);
+                }
                 if (path.node.key) {
                     if (path.get('key').is('StringLiteral')) {
                         args.push(path.node.key);

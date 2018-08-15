@@ -28,7 +28,7 @@
         "test-ci": "TZ=Europe/London jest --coverage --runInBand --no-cache && cat ./coverage/lcov.info | coveralls",
         "test-travis": "TZ=Europe/London jest --maxWorkers=4",
         "test-accept": "cross-env NODE_ENV=mocha lerna run test-accept",
-        "test-debug": "node --inspect --debug-brk ./node_modules/jest-cli/bin/jest.js -i"
+        "test-debug": "TZ=Europe/London node --inspect-brk ./node_modules/jest/bin/jest.js -i"
     },
     "devDependencies": {
         "@types/jest": "^22.0.1",

@@ -3,6 +3,7 @@
 ### Chore & Maintenance
 - Added PR template
 - Fix rollup config to generate esm properly [#42](https://github.com/trivago/melody/pull/42)
+- Added `testURL` in Jest config. [#49](https://github.com/trivago/melody/pull/49)
 
 ## 1.1.0
 

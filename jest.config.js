@@ -1,5 +1,6 @@
 module.exports = {
     testRegex: '/__tests__/.*[sS]pec\\.([jt]s)$',
+    testURL: 'http://localhost/',
     transform: {
         '^.+\\.(ts|tsx)$': 'typescript-babel-jest',
         '^.+\\.twig$': '<rootDir>/testsetup/melody-transform.js',

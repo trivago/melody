@@ -1,5 +1,7 @@
 ## master
 
+### Chore & Maintenance
+- Fix rollup config to generate esm properly  [#42](https://github.com/trivago/melody/pull/42)
 ## 1.1.0
 
 ### Features

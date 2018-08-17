@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import babel from 'rollup-plugin-babel';
 import json from 'rollup-plugin-json';
-import uglify from 'rollup-plugin-uglify';
+import { uglify } from 'rollup-plugin-uglify';
 
 // reads package.json of packages (melody-*) in packages directory
 const pkg = fs.readFileSync(path.join(process.cwd(), './package.json'));
@@ -18,7 +18,13 @@ const config = {
             format: 'cjs',
         },
     ],
-    plugins: [json(), babel()],
+    plugins: [
+        json(),
+        babel({
+            exclude: 'node_modules/**',
+            plugins: ['external-helpers'],
+        }),
+    ],
     external: [
         ...Object.keys(pkgJSON.dependencies || {}),
         ...Object.keys(pkgJSON.peerDependencies || {}),

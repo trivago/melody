@@ -4,7 +4,7 @@
 - Added PR template
 - Fix rollup config to generate esm properly [#42](https://github.com/trivago/melody/pull/42)
 - Added `testURL` in Jest config. [#49](https://github.com/trivago/melody/pull/49)
-- Migation to `babel-preset-env`. [#50](https://github.com/trivago/melody/issues/50)
+- Migration to `babel-preset-env`. [#50](https://github.com/trivago/melody/issues/50)
 
 ## 1.1.0
 

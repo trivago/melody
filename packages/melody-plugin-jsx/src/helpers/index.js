@@ -88,7 +88,7 @@ export function assembleNode(path, expression) {
             if (is(expression, 'StringLiteral')) {
                 return t.jSXText(expression.value);
             }
-            if (is(expression, 'Expression')) {
+            if (is(expression, 'Expression') && !t.isJSXElement(expression)) {
                 return t.jSXExpressionContainer(expression);
             }
             return expression;

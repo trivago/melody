@@ -135,7 +135,7 @@ const importNode = function(node) {
     const stack = [node];
     while (stack.length) {
         const node = stack.pop();
-        if (node['__incrementalDOMData']) {
+        if (!node || node['__incrementalDOMData']) {
             continue;
         }
         const isElement = node instanceof Element;

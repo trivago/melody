@@ -512,7 +512,7 @@ export default class Parser {
                 value;
             if (tokens.test(Types.STRING_START)) {
                 key = this.matchStringExpression();
-                if (!n.is('StringLiteral', key)) {
+                if (!n.is(key, 'StringLiteral')) {
                     computed = true;
                 }
             } else if ((token = tokens.nextIf(Types.SYMBOL))) {

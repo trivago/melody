@@ -71,11 +71,12 @@ export class Node {
 Node.registerType('Scope');
 
 export function is(node, type) {
+    if (!node) return false;
+
     return (
-        node &&
-        (node.type === type ||
-            (IS_ALIAS_OF[type] && IS_ALIAS_OF[type][node.type]) ||
-            t.is(node, type))
+        node.type === type ||
+        (IS_ALIAS_OF[type] && IS_ALIAS_OF[type][node.type]) ||
+        t.is(type, node)
     );
 }
 

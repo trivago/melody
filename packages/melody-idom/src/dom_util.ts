@@ -70,6 +70,28 @@ const getActiveElement = function(node) {
 };
 
 /**
+ * Function that checks whether some element is contained inside a node. This function
+ * has a fallback implementation for cases where Node.prototype.contains is
+ * not implemented (e.g. IE11 for SVGElements).
+ * @param {!Node} node The node that should be parent of elm.
+ * @param {?Element} elm The element that should be child of elm.
+ * @return {Boolean} whether or not elm is contained within node.
+ */
+const nodeContainsElm = function(node, elm) {
+    if (node.contains) {
+        return node.contains(elm);
+    }
+
+    do {
+        if (elm === node) {
+            return true;
+        }
+    } while ((elm = elm && elm.parentNode));
+
+    return false;
+};
+
+/**
  * Gets the path of nodes that contain the focused node in the same document as
  * a reference node, up until the root.
  * @param {!Node} node The reference node to get the activeElement for.
@@ -79,7 +101,7 @@ const getActiveElement = function(node) {
 const getFocusedPath = function(node, root) {
     const activeElement = getActiveElement(node);
 
-    if (!activeElement || !node.contains(activeElement)) {
+    if (!activeElement || !nodeContainsElm(node, activeElement)) {
         return [];
     }
 

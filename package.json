@@ -5,6 +5,10 @@
     "engines": {
         "node": ">=6.0.0"
     },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/trivago/melody.git"
+    },
     "scripts": {
         "bootstrap": "npm run lerna bootstrap",
         "build": "lerna run build",
@@ -19,7 +23,7 @@
         "flow": "flow; test $? -eq 0 -o $? -eq 2",
         "lerna": "lerna",
         "lint": "eslint ./packages/*/src",
-        "prepublish": "npm run bootstrap && npm run build:release",
+        "prepare": "npm run bootstrap && npm run build:release",
         "pretest": "./bin/pretest.sh",
         "posttest": "./bin/posttest.sh",
         "prettier": "prettier --write \"./packages/melody-*/src/**/*.[tj]s\"",
@@ -50,7 +54,7 @@
         "babel-preset-env": "^1.7.0",
         "babel-preset-react": "^6.23.0",
         "babel-register": "^6.23.0",
-        "bundlesize": "^0.13.2",
+        "bundlesize": "^0.15.2",
         "chai": "^3.0.0",
         "chai-subset": "^1.5.0",
         "commitizen": "^2.9.6",

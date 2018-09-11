@@ -54,6 +54,7 @@ const filterMap = [
     'striptags',
     'title',
     'url_encode',
+    'trim',
 ].reduce((map, filterName) => {
     map[filterName] = 'melody-runtime';
     return map;

@@ -29,6 +29,7 @@ export {
     title,
     url_encode,
     strtotime,
+    trim,
 } from './filters';
 export { random, min, max, cycle, attribute } from './functions';
 export { isEmpty, inheritBlocks } from './helpers';

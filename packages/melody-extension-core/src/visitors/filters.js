@@ -115,14 +115,6 @@ export default {
             )
         );
     },
-    trim(path) {
-        path.replaceWithJS(
-            t.callExpression(
-                t.memberExpression(path.node.target, t.identifier('trim')),
-                path.node.arguments
-            )
-        );
-    },
     convert_encoding(path) {
         // encoding conversion is not supported
         path.replaceWith(path.node.target);

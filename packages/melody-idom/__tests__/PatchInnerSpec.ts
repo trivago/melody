@@ -97,6 +97,17 @@ describe("patching an element's children", () => {
 
                 expect(node).to.equal(div);
             });
+
+            it('from elementOpen when Node.prototype.contains not available', () => {
+                container.contains = undefined;
+
+                patchInner(container, () => {
+                    node = elementOpen('div');
+                    elementClose('div');
+                });
+
+                expect(node).to.equal(div);
+            });
         });
     });
 
@@ -169,7 +180,7 @@ describe('when patching an non existing element', function() {
         expect(() =>
             patchInner(null, function() {
                 expect(false).to.be.true;
-            }),
+            })
         ).to.throw('Patch invoked without an element');
     });
 });

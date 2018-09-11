@@ -77,18 +77,16 @@ const getActiveElement = function(node) {
  * @param {?Element} elm The element that should be child of elm.
  * @return {Boolean} whether or not elm is contained within node.
  */
-const nodeContainsElm = function(node, elm) {
+const nodeContainsElement = function(node, elm) {
     if (node.contains) {
         return node.contains(elm);
     }
 
-    do {
-        if (elm === node) {
-            return true;
-        }
-    } while ((elm = elm && elm.parentNode));
+    while (elm && elm !== node) {
+        elm = elm.parentNode;
+    }
 
-    return false;
+    return elm === node;
 };
 
 /**
@@ -101,7 +99,7 @@ const nodeContainsElm = function(node, elm) {
 const getFocusedPath = function(node, root) {
     const activeElement = getActiveElement(node);
 
-    if (!activeElement || !nodeContainsElm(node, activeElement)) {
+    if (!activeElement || !nodeContainsElement(node, activeElement)) {
         return [];
     }
 

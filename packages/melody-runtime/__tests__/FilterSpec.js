@@ -30,6 +30,7 @@ import {
     number_format,
     format,
     strtotime,
+    trim,
 } from '../src';
 
 describe('Twig filter runtime', function() {
@@ -461,6 +462,49 @@ describe('Twig filter runtime', function() {
             expect(strtotime('1801/09/10', now)).to.equal(false);
             expect(strtotime('1979-13-10', now)).to.equal(false);
             expect(strtotime('1979/13/10', now)).to.equal(false);
+        });
+    });
+
+    describe('trim filter', function() {
+        it('should fallback to native trim', function() {
+            expect(trim('  melody  ')).to.equal('melody');
+        });
+
+        it('should correctly trim one character', function() {
+            expect(trim('--melody--', '-', 'left')).to.equal('melody--');
+            expect(trim('--melody--', '-', 'right')).to.equal('--melody');
+            expect(trim('--melody--', '-', 'both')).to.equal('melody');
+            expect(trim('--mel--ody--', '-', 'both')).to.equal('mel--ody');
+        });
+
+        it('should correctly trim multiple characters', function() {
+            expect(trim('(()melody())', '()', 'left')).to.equal('melody())');
+            expect(trim('(()melody())', '()', 'right')).to.equal('(()melody');
+            expect(trim('(()melody())', '()', 'both')).to.equal('melody');
+            expect(trim('(()me(l)ody())', '()', 'both')).to.equal('me(l)ody');
+        });
+
+        it('should not change the source string if not needed', function() {
+            expect(trim('(()melody())', '-my', 'both')).to.equal(
+                '(()melody())'
+            );
+        });
+
+        it('should work with empty strings', function() {
+            expect(trim('', '-', 'both')).to.equal('');
+            expect(trim('', '-', 'left')).to.equal('');
+            expect(trim('', '-', 'right')).to.equal('');
+            expect(trim('  melody  ', '', 'both')).to.equal('  melody  ');
+        });
+
+        it('should return an empty string if every character is removed', function() {
+            expect(trim('----', '-', 'both')).to.equal('');
+            expect(trim('----', '-', 'left')).to.equal('');
+            expect(trim('----', '-', 'right')).to.equal('');
+        });
+
+        it('should error if side is not valid', function() {
+            expect(() => trim('----', '-', 'foobar')).to.throw();
         });
     });
 });

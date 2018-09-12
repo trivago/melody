@@ -1,5 +1,9 @@
 ## master
 
+### Features
+
+- Filter `trim`: add support for advanced features [#64](https://github.com/trivago/melody/pull/64)
+
 ### Fixes
 
 - incorrect 'is' method call in melody-types [#20](https://github.com/trivago/melody/issues/20)

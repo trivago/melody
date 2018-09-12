@@ -23,3 +23,6 @@ jobs:
         - stage: npm release
           node_js: "8"
           script: yarn release-travis
+env:
+    global:
+        secure: M0LOw84M51PwFgLnOIpHZLXVIYjW21tNkohWRM22n/25Ajg2bV8ZkaBgo/wdLfHENB1LbsQScJPSBy2oy6hL1xOVKithxEB1pGR6/xcQc6f5XmEOFf645O7Kr+vsY0Zuz6ROAmii5dZegZbkNizagpqAPAPCUk9eWn1gNL6prWIE24IYsNQdvZUNzhmd9mEz52IJA9D8Nd4e4Bd6TurBP/DweAf/mpIkyyAKcqZ80PeQNBgiqMjremBShp57AxZkmt/pWFuDfYLK9uwQXnALWYbPO9PHejRW/0zNKId0yTaOaduzm/x46E+e6knhRt1oi7Tf+Uqy+hwNHJtZM2ueOEmMPDTIryLySFsqcyxCL4toDdxnGrkaR21Se0+8rEgj25mxndaUayXcuRImW3fhSvfusjTbrPAo/4Ux8Fdukafs6x0tr2cvo8PLZCjeLx6UexlZ2OFQK6TphUOr9GcsXZxr8ySuKADvZR2wNnfux+dezaz3m6yYkxXjuIrS3dhV0dee8S+El7IBskagOJnwHiuy948n25IO/vKy65Jsh04r7wJCZri1eIcpER9TMPfw0wNeHmgJh0MwfB+3kZ2uWaw+vqWojEavlmeo9FQvUNbTpvqWeocAjZOH9BY3N0lG23YSccU1QNTFztluFqIKcDXxDPyj58/WZm5DwTWKrV8=

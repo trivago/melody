@@ -156,7 +156,7 @@ exports[`Compiler should correctly transform filters.template 1`] = `
 "
 import temp from \\"moment\\";
 import { capitalize, first, keys, last } from \\"lodash\\";
-import { batch, strtotime, escape, format, merge, nl2br, number_format, replace, reverse, round, striptags, title, url_encode } from \\"melody-runtime\\";
+import { batch, strtotime, escape, format, merge, nl2br, number_format, replace, reverse, round, striptags, title, trim, url_encode } from \\"melody-runtime\\";
 export const _template = {};
 
 _template.render = function (_context) {
@@ -175,7 +175,7 @@ _template.render = function (_context) {
                 __html: nl2br(\\"nThis is a new line\\\\\\\\nAnd this\\")
             }} /></li><li>{number_format(9800.333, 2, \\".\\", \\",\\")}</li><li>{replace(\\"I like fish\\", {
                 \\"fish\\": \\"meat\\"
-            })}</li><li>{reverse(myArray)}</li><li>{round(42.55)}</li><li>{\\"12345\\".slice(1, 3)}</li><li>{myArray.sort()}</li><li>{\\"one, two, three, four, five\\".split(\\",\\", 3)}</li><li>{striptags(\\"<div>HTML</div>\\")}</li><li>{title(\\"Huzzah for twig!\\")}</li><li>{\\"  I like Twig.  \\".trim()}</li><li>{\\"Upper\\".toUpperCase()}</li><li>{url_encode(\\"path-seg*ment\\")}</li></ul>;
+            })}</li><li>{reverse(myArray)}</li><li>{round(42.55)}</li><li>{\\"12345\\".slice(1, 3)}</li><li>{myArray.sort()}</li><li>{\\"one, two, three, four, five\\".split(\\",\\", 3)}</li><li>{striptags(\\"<div>HTML</div>\\")}</li><li>{title(\\"Huzzah for twig!\\")}</li><li>{trim(\\"  I like Twig.  \\")}</li><li>{\\"Upper\\".toUpperCase()}</li><li>{url_encode(\\"path-seg*ment\\")}</li></ul>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {

@@ -213,7 +213,7 @@ export default function EmbedNested(props) {
 
 exports[`Compiler should correctly transform expressions.template 1`] = `
 "
-import { isEmpty } from \\"melody-runtime\\";
+import { isEmpty, trim } from \\"melody-runtime\\";
 import { includes, startsWith, endsWith, range } from \\"lodash\\";
 import { text, raw } from \\"melody-idom\\";
 export const _template = {};
@@ -269,9 +269,9 @@ _template.render = function (_context) {
   text(range(2, 3 + 1, 2).sort().join(\\",\\"));
   raw(_context.test);
   text(Math.abs(2.4));
-  text(JSON.stringify({
+  text(trim(JSON.stringify({
     a: \\"b\\"
-  }).trim());
+  })));
   text([2, 3].length);
   text(\\"test.foo\\".split(\\".\\"));
 };

@@ -961,3 +961,36 @@ export function strtotime(input, now) {
 
     return date.getTime() / 1000;
 }
+
+export function trim(str, charList, side = 'both') {
+    if (charList === undefined && side === 'both') {
+        // Use String.prototype.trim() for efficiency
+        return String(str).trim();
+    }
+
+    if (side !== 'both' && side !== 'left' && side !== 'right') {
+        throw new Error(
+            'Filter "trim". Invalid value ' +
+                side +
+                ' for parameter "side". Valid values are "both", "left", "right".'
+        );
+    }
+
+    const strLen = str.length;
+
+    let trimStart = 0;
+    if (side === 'both' || side === 'left') {
+        while (trimStart < strLen && charList.indexOf(str[trimStart]) !== -1) {
+            trimStart++;
+        }
+    }
+
+    let trimEnd = strLen;
+    if (side === 'both' || side === 'right') {
+        while (trimEnd > 0 && charList.indexOf(str[trimEnd - 1]) !== -1) {
+            trimEnd--;
+        }
+    }
+
+    return str.substr(trimStart, trimEnd - trimStart);
+}

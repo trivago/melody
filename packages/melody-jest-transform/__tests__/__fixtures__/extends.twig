@@ -6,6 +6,6 @@
         {% include "./test.twig" with { foo: "bar" } only %}
         {{ include("./test.twig", { foo: "bar" }) }}
 
-        {% mount Item with item %}
+        {% mount Item as bar with item %}
     </div>
 {% endblock %}

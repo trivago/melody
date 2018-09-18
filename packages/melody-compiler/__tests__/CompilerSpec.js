@@ -39,6 +39,18 @@ describe('Compiler', function() {
         });
     });
 
+    getFixtures('warn').forEach(({ name, twigPath }) => {
+        it(
+            'should transform templates with warnings ' +
+                name.replace(/_/g, ' '),
+            function() {
+                global.console.warn = jest.fn();
+                fixture(twigPath, name);
+                expect(global.console.warn).toMatchSnapshot();
+            }
+        );
+    });
+
     describe('when converting', function() {
         it('expressions to JS', function() {
             const code = stripIndent`

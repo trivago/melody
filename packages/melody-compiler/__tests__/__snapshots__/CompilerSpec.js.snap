@@ -342,9 +342,9 @@ _template.renderHello = function (_context) {
         foo: \\"bar\\"
     });
 
-    component(_context.Item, \\"mm3lv9U\\", _context.item);
-    component(Item$1, \\">VPRiNW\\", _context.item);
-    component(Item$2, \\"iQ;mqqq\\", {
+    component(_context.Item, \\"bar\\", _context.item);
+    component(Item$1, \\"bar\\", _context.item);
+    component(Item$2, \\"bar\\", {
         item: _context.item
     });
     elementClose(\\"div\\");
@@ -1594,20 +1594,13 @@ import Component from \\"./component\\";
 export const _template = {};
 
 _template.render = function (_context) {
-  component(Component, \\"wP#ads,\\");
+  component(Component, \\"bar\\");
   component(Footwig, \\"bar\\");
   component(Footwig, \\"bar\\", {
     foo: \\"bar\\"
   });
-  component(Footwig, \\"=[3}~G^\\", {
-    foo: \\"bar\\"
-  });
-  component(_context.Foo, \\"];!3u7b\\");
   component(_context.Foo, \\"bar\\");
   component(_context.Foo, \\"bar\\", {
-    foo: \\"bar\\"
-  });
-  component(_context.Foo, \\">iBO<;!\\", {
     foo: \\"bar\\"
   });
 };
@@ -2234,6 +2227,80 @@ http://twig.sensiolabs.org/doc/filters/index.html"
 `;
 
 exports[`Compiler should fail transforming wrong import.template 1`] = `"Import must be used in macro, block or template"`;
+
+exports[`Compiler should transform templates with warnings mount without as.template 1`] = `
+"
+import Footwig from \\"foo.twig\\";
+import { component } from \\"melody-idom\\";
+import Component from \\"./component\\";
+export const _template = {};
+
+_template.render = function (_context) {
+  component(Component, \\"bg/=vtO\\");
+  component(Footwig, \\"%XboJwd\\", {
+    foo: \\"bar\\"
+  });
+  component(_context.Foo, \\"GwcMyf%\\");
+  component(_context.Foo, \\"$~m0VFY\\", {
+    foo: \\"bar\\"
+  });
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+  _template.displayName = \\"MountWithoutAs\\";
+}
+
+export default function MountWithoutAs(props) {
+  return _template.render(props);
+}
+"
+`;
+
+exports[`Compiler should transform templates with warnings mount without as.template 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "mount is missing a key.
+> 1 | {% mount './component' %}
+    |    ^^^^^
+  2 | {% mount 'foo.twig' with { foo: 'bar' } %}
+  3 | {% mount Foo %}
+  4 | {% mount Foo with { foo: 'bar' } %}
+
+When mounting a component please make sure to always specify a key, i.e. \`{% mount './component' as 'comp' %}",
+    ],
+    Array [
+      "mount is missing a key.
+  1 | {% mount './component' %}
+> 2 | {% mount 'foo.twig' with { foo: 'bar' } %}
+    |    ^^^^^
+  3 | {% mount Foo %}
+  4 | {% mount Foo with { foo: 'bar' } %}
+
+When mounting a component please make sure to always specify a key, i.e. \`{% mount './component' as 'comp' %}",
+    ],
+    Array [
+      "mount is missing a key.
+  1 | {% mount './component' %}
+  2 | {% mount 'foo.twig' with { foo: 'bar' } %}
+> 3 | {% mount Foo %}
+    |    ^^^^^
+  4 | {% mount Foo with { foo: 'bar' } %}
+
+When mounting a component please make sure to always specify a key, i.e. \`{% mount './component' as 'comp' %}",
+    ],
+    Array [
+      "mount is missing a key.
+  2 | {% mount 'foo.twig' with { foo: 'bar' } %}
+  3 | {% mount Foo %}
+> 4 | {% mount Foo with { foo: 'bar' } %}
+    |    ^^^^^
+
+When mounting a component please make sure to always specify a key, i.e. \`{% mount './component' as 'comp' %}",
+    ],
+  ],
+}
+`;
 
 exports[`Compiler when a target plugin is missing should throw an error 1`] = `
 "Missing melody plugin

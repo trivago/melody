@@ -135,7 +135,7 @@ _template.renderHello = function (_context) {
             foo: \\"bar\\"
         })}{_include$1.render({
             foo: \\"bar\\"
-        })}<_context.Item {..._context.item} /><Item$1 {..._context.item} /><Item$2 item={_context.item} /></div>;
+        })}<_context.Item {..._context.item} key={\\"bar\\"} /><Item$1 {..._context.item} key={\\"bar\\"} /><Item$2 item={_context.item} key={\\"bar\\"} /></div>;
 };
 
 _template.render = function (_context) {
@@ -568,7 +568,7 @@ import Component from \\"./component\\";
 export const _template = {};
 
 _template.render = function (_context) {
-    return <div><Component /><Footwig key={\\"bar\\"} /><Footwig foo={\\"bar\\"} key={\\"bar\\"} /><Footwig foo={\\"bar\\"} /><_context.Foo /><_context.Foo key={_context.bar} /><_context.Foo foo={\\"bar\\"} key={\\"bar\\"} /><_context.Foo foo={\\"bar\\"} /></div>;
+    return <div><Component key={\\"bar\\"} /><Footwig key={\\"bar\\"} /><Footwig foo={\\"bar\\"} key={\\"bar\\"} /><_context.Foo key={_context.bar} /><_context.Foo foo={\\"bar\\"} key={\\"bar\\"} /></div>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {

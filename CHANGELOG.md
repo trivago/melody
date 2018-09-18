@@ -5,6 +5,10 @@
 - incorrect 'is' method call in melody-types [#20](https://github.com/trivago/melody/issues/20)
 - getFocusedPath can break on IE11 for svg elements [#57](https://github.com/trivago/melody/issues/57)
 
+### Features
+
+- `[melody-compiler]` warns on `mount` statement without `as` key [#48](https://github.com/trivago/melody/pull/48)
+
 ### Chore & Maintenance
 
 - Added PR template

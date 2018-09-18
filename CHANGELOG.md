@@ -13,6 +13,9 @@
 - Migration to `babel-preset-env`. [#50](https://github.com/trivago/melody/issues/50)
 - Drops node 7 support `babel-preset-env`. [#55](https://github.com/trivago/melody/issues/55)
 - Adds node 10 support `babel-preset-env`. [#55](https://github.com/trivago/melody/issues/55)
+- Updates `bundlesize` dependency to `^0.15.2`, the latest release
+- Removes warnings during installation thrown by `lerna` and `npm`
+- Adds bundlesize token to travis config
 
 ## 1.1.0
 

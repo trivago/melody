@@ -5,6 +5,10 @@
     "engines": {
         "node": ">=6.0.0"
     },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/trivago/melody.git"
+    },
     "scripts": {
         "bootstrap": "npm run lerna bootstrap",
         "build": "lerna run build",
@@ -19,11 +23,13 @@
         "flow": "flow; test $? -eq 0 -o $? -eq 2",
         "lerna": "lerna",
         "lint": "eslint ./packages/*/src",
-        "prepublish": "npm run bootstrap && npm run build:release",
+        "prepare": "npm run bootstrap && npm run build:release",
         "pretest": "./bin/pretest.sh",
         "posttest": "./bin/posttest.sh",
         "prettier": "prettier --write \"./packages/melody-*/src/**/*.[tj]s\"",
+        "update-peers": "./bin/updatePeerDependencies.js",
         "release": "./bin/release.sh",
+        "release-travis": "./bin/ci-release.sh",
         "test": "TZ=Europe/London jest",
         "test-ci": "TZ=Europe/London jest --coverage --runInBand --no-cache && cat ./coverage/lcov.info | coveralls",
         "test-travis": "TZ=Europe/London jest --maxWorkers=4",
@@ -48,7 +54,7 @@
         "babel-preset-env": "^1.7.0",
         "babel-preset-react": "^6.23.0",
         "babel-register": "^6.23.0",
-        "bundlesize": "^0.13.2",
+        "bundlesize": "^0.15.2",
         "chai": "^3.0.0",
         "chai-subset": "^1.5.0",
         "commitizen": "^2.9.6",
@@ -59,7 +65,10 @@
         "eslint-config-idiomatic": "^3.1.0",
         "eslint-config-prettier": "^2.3.0",
         "eslint-plugin-prettier": "^2.1.2",
+        "fs-extra": "^7.0.0",
+        "glob-fs": "^0.1.7",
         "husky": "^0.14.3",
+        "inquirer": "^6.2.0",
         "jest": "^22.0.6",
         "json": "^9.0.6",
         "lerna": "^2.0.0-rc.4",
@@ -73,6 +82,7 @@
         "rollup-plugin-babel": "^3.0.7",
         "rollup-plugin-json": "^3.0.0",
         "rollup-plugin-uglify": "^4.0.0",
+        "semver": "^5.5.1",
         "sinon": "^1.17.7",
         "sinon-chai": "^2.8.0",
         "source-map": "^0.5.6",

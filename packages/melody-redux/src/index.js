@@ -16,7 +16,6 @@
 import type { ReduxStore, Action } from 'melody-component';
 import type { Component } from 'melody-component/component';
 import { getParent } from 'melody-idom';
-import invariant from 'invariant';
 import { createWrapperComponent } from './WrapperComponent';
 
 export type StateToPropsMapper = (state: Object, ownProps: Object) => Object;
@@ -35,10 +34,9 @@ const findNextStore = comp => {
             return node.store;
         }
     }
-    invariant(
-        false,
-        'Could not find store. Did you forget to provide a store?'
-    );
+    if (process.env.NODE_ENV !== 'production') {
+        console.error('Could not find store. Did you forget to provide a store?');
+    }
     return null;
 };
 

@@ -15,7 +15,7 @@
  */
 import type { ReduxStore, Action } from 'melody-component';
 import type { Component } from 'melody-component/component';
-import { getParent } from 'melody-idom';
+import { getParent, enqueueComponent } from 'melody-idom';
 import { createWrapperComponent } from './WrapperComponent';
 
 export type StateToPropsMapper = (state: Object, ownProps: Object) => Object;
@@ -89,6 +89,8 @@ export function connect(
                 this.mapStateToPropsFn = finalMapStateToProps;
                 this.mapDispatchToPropsFn = finalMapDispatchToProps;
 
+                this.isMounted = false;
+
                 if (process.env.NODE_ENV !== 'production') {
                     this.displayName = `connect`;
                 }
@@ -127,6 +129,12 @@ export function connect(
                         props
                     );
                 }
+
+                if (!this.isMounted) {
+                    this.isMounted = true;
+                    enqueueComponent(this);
+                }
+
                 this.childInstance.apply(this.renderProps);
             }
 
@@ -188,6 +196,7 @@ export function connect(
             }
 
             componentWillUnmount() {
+                this.childInstance.componentWillUnmount();
                 if (shouldSubscribeToStore) {
                     this.storeConnection();
                     this.storeConnection = null;
@@ -195,6 +204,14 @@ export function connect(
                 }
                 this.mapStateToPropsFn = null;
                 this.mapDispatchToPropsFn = null;
+            }
+
+            render(props) {
+                this.childInstance.render(props);
+            }
+
+            notify() {
+                this.childInstance.notify();
             }
         };
 }

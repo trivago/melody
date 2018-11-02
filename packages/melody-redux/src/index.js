@@ -73,9 +73,7 @@ export function connect(
     const finalMergeProps = mergeProps || defaultMergeProps;
 
     return Component =>
-        class ConnectWrapperComponent extends createWrapperComponent(
-            Component
-        ) {
+        class ConnectWrapperComponent extends Component {
             constructor() {
                 super();
                 this.store = null;
@@ -127,7 +125,7 @@ export function connect(
                         props
                     );
                 }
-                this.childInstance.apply(this.renderProps);
+                Component.prototype.apply.call(this, this.renderProps);
             }
 
             subscribeToStore() {
@@ -154,7 +152,10 @@ export function connect(
                             );
                             this.renderProps = newRenderProps;
                             if (didRenderPropsChange) {
-                                this.childInstance.apply(this.renderProps);
+                                Component.prototype.apply.call(
+                                    this,
+                                    this.renderProps
+                                );
                             }
                         }
                     });
@@ -188,6 +189,7 @@ export function connect(
             }
 
             componentWillUnmount() {
+                Component.prototype.componentWillUnmount.call(this);
                 if (shouldSubscribeToStore) {
                     this.storeConnection();
                     this.storeConnection = null;

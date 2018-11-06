@@ -24,6 +24,7 @@
 - Updates `bundlesize` dependency to `^0.15.2`, the latest release
 - Removes warnings during installation thrown by `lerna` and `npm`
 - Adds bundlesize token to travis config
+- Publishes packages for pushes to pull requests, based on the merge result
 
 ## 1.1.0
 

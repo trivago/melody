@@ -17,6 +17,7 @@ script:
 
 after_script:
     - yarn run posttest
+
 jobs:
     include:
         - stage: npm release

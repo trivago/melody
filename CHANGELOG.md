@@ -3,6 +3,7 @@
 ### Features
 
 - Filter `trim`: add support for advanced features [#64](https://github.com/trivago/melody/pull/64)
+- Throw an error in melody-redux's connect if no store found [#68](https://github.com/trivago/melody/pull/68)
 
 ### Fixes
 

@@ -15,8 +15,7 @@
  */
 const hasOwn = Object.prototype.hasOwnProperty;
 
-// based on react-redux
-export default function shallowEquals(a, b) {
+export const shallowEquals = (a, b) => {
     if (a === b) {
         return true;
     }
@@ -39,4 +38,25 @@ export default function shallowEquals(a, b) {
     }
 
     return true;
-}
+};
+
+export const shallowEqualsScalar = (a, b) => {
+    const at = typeof a;
+    const bt = typeof b;
+    if (at !== bt) return false;
+    if (at === 'boolean' || at === 'string' || at === 'number') {
+        return a === b;
+    }
+    return shallowEquals(a, b);
+};
+
+export const shallowEqualsArray = (a, b) => {
+    const l = a.length;
+    if (l !== b.length) return false;
+
+    for (let i = 0; i < l; i++) {
+        if (a[i] !== b[i]) return false;
+    }
+
+    return true;
+};

@@ -1,0 +1,20 @@
+{
+    "name": "melody-hooks",
+    "version": "1.1.0",
+    "description": "",
+    "main": "./lib/index.js",
+    "jsnext:main": "./lib/index.esm.js",
+    "scripts": {
+        "build": "mkdir lib; rollup -c ../../rollup.config.js -i src/index.js",
+        "coverage": "nyc npm run test"
+    },
+    "author": "",
+    "license": "Apache-2.0",
+    "peerDependencies": {
+        "melody-component": "^1.1.0",
+        "melody-idom": "^1.1.0"
+    },
+    "devDependencies": {
+        "rollup-plugin-babel": "^2.6.1"
+    }
+}

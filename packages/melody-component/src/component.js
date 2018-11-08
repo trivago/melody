@@ -18,7 +18,7 @@ import type { Reducer, Action, Template } from './index.js.flow';
 import { mixin } from './mixin';
 import { createState } from './state';
 import { setProps, RECEIVE_PROPS } from './actions';
-import { shallowEquals } from './shallowEquals';
+import shallowEquals from './shallowEquals';
 import { enqueueComponent, options } from 'melody-idom';
 
 // type ComponentImpl = {

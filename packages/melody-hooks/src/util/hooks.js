@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 trivago N.V.
+ * Copyright 2018 trivago N.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,30 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const hasOwn = Object.prototype.hasOwnProperty;
 
-// based on react-redux
-export default function shallowEquals(a, b) {
-    if (a === b) {
-        return true;
+let currentComponent = null;
+
+export const setCurrentComponent = c => {
+    if (currentComponent) {
+        throw new Error('Cannot override currentComponent');
     }
+    currentComponent = c;
+};
 
-    if (!a || !b) {
-        return false;
+export const unsetCurrentComponent = () => {
+    currentComponent = null;
+};
+
+export const getCurrentComponent = () => currentComponent;
+
+export const enterHook = () => {
+    if (!currentComponent) {
+        throw new Error('Cannot use hooks outside of Component functions');
     }
-
-    const keyOfA = Object.keys(a),
-        keysOfB = Object.keys(b);
-
-    if (keyOfA.length !== keysOfB.length) {
-        return false;
-    }
-
-    for (let i = 0; i < keyOfA.length; i++) {
-        if (!hasOwn.call(b, keyOfA[i]) || a[keyOfA[i]] !== b[keyOfA[i]]) {
-            return false;
-        }
-    }
-
-    return true;
-}
+    currentComponent.hooksPointer += 1;
+};

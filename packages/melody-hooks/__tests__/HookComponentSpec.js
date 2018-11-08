@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 trivago N.V.
+ * Copyright 2018 trivago N.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,26 +15,17 @@
  */
 import { assert } from 'chai';
 
+import { render, unmountComponentAtNode } from 'melody-component';
 import {
-    createHookComponent,
-    render,
-    useState,
-    useEffect,
-    useRef,
-    unmountComponentAtNode,
-} from '../src';
-import {
-    patch,
-    patchOuter,
     flush,
     component,
-    ref,
     elementOpen,
     elementClose,
     elementVoid,
     text,
 } from 'melody-idom';
-import { getRefCounter } from '../src/hookComponent';
+import { createComponent, useState, useEffect, useRef } from '../src';
+import { getRefCounter } from '../src/hooks/useRef';
 
 const flushNow = () =>
     flush({
@@ -53,7 +44,7 @@ const template = {
 };
 
 const createParentComponent = Child => {
-    return createHookComponent({
+    return createComponent({
         render(_context) {
             elementOpen('div');
             if (_context.show) {
@@ -71,7 +62,7 @@ describe('HookComponent', function() {
     describe('useState', () => {
         it('should read initial value from a useState hook', function() {
             const root = document.createElement('div');
-            const MyComponent = createHookComponent(template, () => {
+            const MyComponent = createComponent(template, () => {
                 const [value] = useState('foo');
                 return { value };
             });
@@ -80,7 +71,7 @@ describe('HookComponent', function() {
         });
         it('should read multiple initial values from useState hooks', function() {
             const root = document.createElement('div');
-            const MyComponent = createHookComponent(template, () => {
+            const MyComponent = createComponent(template, () => {
                 const [foo] = useState('foo');
                 const [bar] = useState('bar');
                 return { value: foo + bar };
@@ -91,7 +82,7 @@ describe('HookComponent', function() {
         it('should update when state is changed', function() {
             const root = document.createElement('div');
             let setter;
-            const MyComponent = createHookComponent(template, () => {
+            const MyComponent = createComponent(template, () => {
                 const [foo, setFoo] = useState('foo');
                 const [bar] = useState('bar');
                 setter = setFoo;
@@ -106,7 +97,7 @@ describe('HookComponent', function() {
         it('should update when state is changed 2', function() {
             const root = document.createElement('div');
             let setter;
-            const MyComponent = createHookComponent(template, () => {
+            const MyComponent = createComponent(template, () => {
                 const [foo] = useState('foo');
                 const [bar, setBar] = useState('bar');
                 setter = setBar;
@@ -125,7 +116,7 @@ describe('HookComponent', function() {
                 const root = document.createElement('div');
                 let called = 0;
                 let rerender;
-                const MyComponent = createHookComponent(template, () => {
+                const MyComponent = createComponent(template, () => {
                     rerender = useState()[1];
                     useEffect(() => {
                         called++;
@@ -141,7 +132,7 @@ describe('HookComponent', function() {
                 const root = document.createElement('div');
                 let called = 0;
                 let rerender;
-                const MyComponent = createHookComponent(template, () => {
+                const MyComponent = createComponent(template, () => {
                     rerender = useState()[1];
                     useEffect(() => {
                         called++;
@@ -161,7 +152,7 @@ describe('HookComponent', function() {
                 let called = 0;
                 let rerender;
                 let setValue;
-                const MyComponent = createHookComponent(template, () => {
+                const MyComponent = createComponent(template, () => {
                     rerender = useState()[1];
                     const state = useState(0);
                     const value = state[0];
@@ -198,7 +189,7 @@ describe('HookComponent', function() {
                 let called = 0;
                 let calledUnsubscribe = 0;
                 let rerender;
-                const MyComponent = createHookComponent(template, () => {
+                const MyComponent = createComponent(template, () => {
                     rerender = useState()[1];
                     useEffect(() => {
                         called++;
@@ -222,7 +213,7 @@ describe('HookComponent', function() {
                 let called = 0;
                 let calledUnsubscribe = 0;
                 let rerender;
-                const MyComponent = createHookComponent(template, () => {
+                const MyComponent = createComponent(template, () => {
                     rerender = useState()[1];
                     useEffect(() => {
                         called++;
@@ -251,7 +242,7 @@ describe('HookComponent', function() {
                 let calledUnsubscribe = 0;
                 let rerender;
                 let setValue;
-                const MyComponent = createHookComponent(template, () => {
+                const MyComponent = createComponent(template, () => {
                     rerender = useState()[1];
                     const state = useState(0);
                     const value = state[0];
@@ -302,7 +293,7 @@ describe('HookComponent', function() {
             let current;
             let currentInEffect;
             let ref;
-            const MyComponent = createHookComponent(template, () => {
+            const MyComponent = createComponent(template, () => {
                 const myref = useRef(null);
                 ref = myref;
                 current = myref.current;
@@ -318,7 +309,7 @@ describe('HookComponent', function() {
         it('should remove the reference when a component is unmounted', () => {
             const root = document.createElement('div');
             let ref;
-            const Child = createHookComponent(
+            const Child = createComponent(
                 {
                     render(_context) {
                         elementOpen('span');
@@ -368,7 +359,7 @@ describe('HookComponent', function() {
             let ref;
             let current;
             let currentInEffect;
-            const MyComponent = createHookComponent(template, () => {
+            const MyComponent = createComponent(template, () => {
                 const [foo, setFoo] = useState(false);
                 setter = setFoo;
                 const myref = useRef(null);

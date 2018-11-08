@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 trivago N.V.
+ * Copyright 2018 trivago N.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 export { createComponent } from './component';
-export { setProps, RECEIVE_PROPS } from './actions';
-export { render, unmountComponentAtNode } from './render';
+export { useState } from './hooks/useState';
+export { useEffect } from './hooks/useEffect';
+export { useRef } from './hooks/useRef';

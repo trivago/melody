@@ -17,3 +17,4 @@
 export const HOOK_TYPE_USE_STATE = 1;
 export const HOOK_TYPE_USE_EFFECT = 2;
 export const HOOK_TYPE_USE_REF = 3;
+export const HOOK_TYPE_USE_CALLBACK = 4;

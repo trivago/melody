@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 export { createComponent } from './component';
-export { createHookComponent, useState, useEffect } from './hookComponent';
+export {
+    createHookComponent,
+    useState,
+    useEffect,
+    useRef,
+} from './hookComponent';
 export { setProps, RECEIVE_PROPS } from './actions';
 export { render, unmountComponentAtNode } from './render';

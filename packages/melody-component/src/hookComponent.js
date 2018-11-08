@@ -24,6 +24,7 @@ let currentComponent = null;
 
 const HOOK_TYPE_USE_STATE = 1;
 const HOOK_TYPE_USE_EFFECT = 2;
+const HOOK_TYPE_USE_REF = 3;
 
 const enterHook = () => {
     if (!currentComponent) {
@@ -76,13 +77,52 @@ export const useEffect = (callback, shouldUpdateOrDataArray) => {
     hooks[hooksPointer][3] = dirty;
 };
 
+const refCounter = Symbol();
+
+const createRef = initialValue => {
+    const ref = el => {
+        if (el !== ref.current) {
+            ref[refCounter]++;
+        }
+        ref.current = el;
+        return {
+            unsubscribe() {
+                if (!ref[refCounter]) {
+                    ref.current = undefined;
+                }
+                ref[refCounter]--;
+            },
+        };
+    };
+    ref.current = initialValue;
+    ref[refCounter] = -1;
+    return ref;
+};
+
+// Only for testing purposes
+export const getRefCounter = ref => ref[refCounter];
+
+export const useRef = initialValue => {
+    enterHook();
+    const { hooks, hooksPointer } = currentComponent;
+
+    if (!currentComponent.isMounted) {
+        const ref = createRef(initialValue);
+        hooks.push([HOOK_TYPE_USE_REF, ref]);
+        return ref;
+    }
+
+    return hooks[hooksPointer][1];
+};
+
+const defaultComponentFn = props => props;
+
 function Component(element, componentFn) {
     // part of the public API
     this.el = element;
-    this.refs = Object.create(null);
 
     // needed for this type of component
-    this.componentFn = componentFn;
+    this.componentFn = componentFn ? componentFn : defaultComponentFn;
     this.hooks = [];
     this.hooksPointer = -1;
     this.isMounted = false;
@@ -118,17 +158,23 @@ Object.assign(Component.prototype, {
             const hook = hooks[i];
             const type = hook[0];
 
-            if (type !== HOOK_TYPE_USE_EFFECT) continue;
+            switch (type) {
+                case HOOK_TYPE_USE_EFFECT: {
+                    const dirty = hook[3];
+                    if (!dirty) continue;
 
-            const dirty = hook[3];
-            if (!dirty) continue;
+                    const callback = hook[1];
+                    const unsubscribe = hook[4];
 
-            const callback = hook[1];
-            const unsubscribe = hook[4];
-
-            if (unsubscribe) unsubscribe();
-            const unsubscribeNext = callback() || null;
-            hook[4] = unsubscribeNext;
+                    if (unsubscribe) unsubscribe();
+                    const unsubscribeNext = callback() || null;
+                    hook[4] = unsubscribeNext;
+                    break;
+                }
+                default: {
+                    continue;
+                }
+            }
         }
 
         if (this.isMounted) {
@@ -179,10 +225,21 @@ Object.assign(Component.prototype, {
         for (let i = 0, l = hooks.length; i < l; i++) {
             const hook = hooks[i];
             const type = hook[0];
-            if (type !== HOOK_TYPE_USE_EFFECT) continue;
-
-            const unsubscribe = hook[4];
-            if (unsubscribe) unsubscribe();
+            switch (type) {
+                case HOOK_TYPE_USE_EFFECT: {
+                    const unsubscribe = hook[4];
+                    if (unsubscribe) unsubscribe();
+                    break;
+                }
+                case HOOK_TYPE_USE_REF: {
+                    const ref = hook[1];
+                    ref.current = undefined;
+                    break;
+                }
+                default: {
+                    continue;
+                }
+            }
         }
         this.hooks = undefined;
     },

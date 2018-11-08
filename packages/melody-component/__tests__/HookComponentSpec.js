@@ -20,6 +20,7 @@ import {
     render,
     useState,
     useEffect,
+    useRef,
     unmountComponentAtNode,
 } from '../src';
 import {
@@ -30,8 +31,10 @@ import {
     ref,
     elementOpen,
     elementClose,
+    elementVoid,
     text,
 } from 'melody-idom';
+import { getRefCounter } from '../src/hookComponent';
 
 const flushNow = () =>
     flush({
@@ -47,6 +50,18 @@ const template = {
         text(_context.value);
         elementClose('div');
     },
+};
+
+const createParentComponent = Child => {
+    return createHookComponent({
+        render(_context) {
+            elementOpen('div');
+            if (_context.show) {
+                component(Child, 'MyComponent');
+            }
+            elementClose('div');
+        },
+    });
 };
 
 let uniqueId = 0;
@@ -274,6 +289,109 @@ describe('HookComponent', function() {
                 unmountComponentAtNode(root);
                 assert.equal(calledUnsubscribe, 2);
             });
+        });
+    });
+    describe('useRef', () => {
+        it('should give a reference to the element', () => {
+            const template = {
+                render(_context) {
+                    elementVoid('div', null, null, 'ref', _context.myref);
+                },
+            };
+            const root = document.createElement('div');
+            let current;
+            let currentInEffect;
+            let ref;
+            const MyComponent = createHookComponent(template, () => {
+                const myref = useRef(null);
+                ref = myref;
+                current = myref.current;
+                useEffect(() => {
+                    currentInEffect = myref.current;
+                });
+                return { myref };
+            });
+            render(root, MyComponent);
+            assert.equal(current, null);
+            assert.instanceOf(currentInEffect, HTMLDivElement);
+        });
+        it('should remove the reference when a component is unmounted', () => {
+            const root = document.createElement('div');
+            let ref;
+            const Child = createHookComponent(
+                {
+                    render(_context) {
+                        elementOpen('span');
+                        elementVoid('div', null, null, 'ref', _context.myref);
+                        elementClose('span');
+                    },
+                },
+                () => {
+                    const myref = useRef(null);
+                    ref = myref;
+                    return { myref };
+                }
+            );
+            const Parent = createParentComponent(Child);
+            render(root, Parent, { show: true });
+            assert.equal(getRefCounter(ref), 0);
+            render(root, Parent, { show: false });
+            assert.equal(getRefCounter(ref), -1);
+            assert.equal(ref.current, undefined);
+        });
+        it('should move the reference to another element', () => {
+            const template = {
+                render(_context) {
+                    elementOpen('div');
+                    if (_context.foo) {
+                        elementVoid(
+                            'span',
+                            null,
+                            ['class', 'foo'],
+                            'ref',
+                            _context.myref
+                        );
+                    } else {
+                        elementVoid(
+                            'div',
+                            null,
+                            ['class', 'bar'],
+                            'ref',
+                            _context.myref
+                        );
+                    }
+                    elementClose('div');
+                },
+            };
+            const root = document.createElement('div');
+            let setter;
+            let ref;
+            let current;
+            let currentInEffect;
+            const MyComponent = createHookComponent(template, () => {
+                const [foo, setFoo] = useState(false);
+                setter = setFoo;
+                const myref = useRef(null);
+                ref = myref;
+                current = myref.current;
+                useEffect(() => {
+                    currentInEffect = myref.current;
+                }, true);
+                return { myref, foo };
+            });
+            render(root, MyComponent);
+            assert.equal(current, null);
+            assert.equal(currentInEffect.className, 'bar');
+            assert.equal(getRefCounter(ref), 0);
+            setter(true);
+            flushNow();
+            assert.equal(current.className, 'bar');
+            assert.equal(currentInEffect.className, 'foo');
+            assert.equal(getRefCounter(ref), 0);
+            setter(false);
+            flushNow();
+            assert.equal(current.className, 'foo');
+            assert.equal(getRefCounter(ref), 0);
         });
     });
 });

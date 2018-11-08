@@ -18,3 +18,5 @@ export { createComponent } from './component';
 export { useState } from './hooks/useState';
 export { useEffect } from './hooks/useEffect';
 export { useRef } from './hooks/useRef';
+export { useCallback } from './hooks/useCallback';
+export { useMemo } from './hooks/useMemo';

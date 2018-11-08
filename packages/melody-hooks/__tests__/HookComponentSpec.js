@@ -24,9 +24,15 @@ import {
     elementVoid,
     text,
 } from 'melody-idom';
-import { createComponent, useState, useEffect, useRef } from '../src';
+import {
+    createComponent,
+    useState,
+    useEffect,
+    useRef,
+    useCallback,
+    useMemo,
+} from '../src';
 import { getRefCounter } from '../src/hooks/useRef';
-import { useCallback } from '../src/hooks/useCallback';
 
 const flushNow = () =>
     flush({
@@ -428,6 +434,58 @@ describe('HookComponent', function() {
                 callbacks[0] !== callbacks[1] &&
                     callbacks[1] !== callbacks[2] &&
                     callbacks[2] !== callbacks[0],
+                true
+            );
+        });
+    });
+    describe('useMemo', () => {
+        it('should memoize the value', () => {
+            const root = document.createElement('div');
+            const values = [];
+            let setter;
+            const MyComponent = createComponent(template, () => {
+                const [value, setValue] = useState(false);
+                setter = setValue;
+
+                // always return a new array from getter
+                const memoized = useMemo(() => []);
+                values.push(memoized);
+
+                return { value };
+            });
+            render(root, MyComponent);
+            setter(true);
+            flushNow();
+            setter(false);
+            flushNow();
+            assert.equal(
+                values[0] === values[1] && values[1] === values[2],
+                true
+            );
+        });
+        it('should update the value when inputs change', () => {
+            const root = document.createElement('div');
+            const values = [];
+            let setter;
+            const MyComponent = createComponent(template, () => {
+                const [value, setValue] = useState(false);
+                setter = setValue;
+
+                // always return a new array from getter
+                const memoized = useMemo(() => [], [value]);
+                values.push(memoized);
+
+                return { value };
+            });
+            render(root, MyComponent);
+            setter(true);
+            flushNow();
+            setter(false);
+            flushNow();
+            assert.equal(
+                values[0] !== values[1] &&
+                    values[1] !== values[2] &&
+                    values[2] !== values[0],
                 true
             );
         });

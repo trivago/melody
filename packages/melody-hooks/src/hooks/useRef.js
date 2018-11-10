@@ -47,7 +47,7 @@ export const useRef = initialValue => {
     const currentComponent = getCurrentComponent();
     const { hooks, hooksPointer } = currentComponent;
 
-    if (!currentComponent.isMounted) {
+    if (currentComponent.isCollectingHooks) {
         const ref = createRef(initialValue);
         hooks.push([HOOK_TYPE_USE_REF, ref]);
         return ref;

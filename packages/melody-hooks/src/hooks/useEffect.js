@@ -23,7 +23,7 @@ export const useEffect = (callback, shouldUpdateOrDataArray) => {
     const currentComponent = getCurrentComponent();
     const { hooksPointer, hooks } = currentComponent;
 
-    if (!currentComponent.isMounted) {
+    if (currentComponent.isCollectingHooks) {
         const dirty = true;
         const unsubscribe = null;
         hooks.push([

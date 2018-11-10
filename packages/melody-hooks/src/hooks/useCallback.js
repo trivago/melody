@@ -23,7 +23,7 @@ export const useCallback = (callback, inputs) => {
     const currentComponent = getCurrentComponent();
     const { hooksPointer, hooks } = currentComponent;
 
-    if (!currentComponent.isMounted) {
+    if (currentComponent.isCollectingHooks) {
         hooks.push([HOOK_TYPE_USE_CALLBACK, callback, inputs]);
         return callback;
     }

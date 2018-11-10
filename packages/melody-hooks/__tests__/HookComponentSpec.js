@@ -117,6 +117,62 @@ describe('HookComponent', () => {
             flushNow();
             assert.equal(root.outerHTML, '<div>foofoo</div>');
         });
+        it('should update from an effect', () => {
+            const root = document.createElement('div');
+            let called = 0;
+            const MyComponent = createComponent(template, () => {
+                called++;
+                const [foo, setFoo] = useState('foo');
+                useEffect(() => {
+                    setFoo('bar');
+                });
+                return { value: foo };
+            });
+            render(root, MyComponent);
+            assert.equal(root.outerHTML, '<div>foo</div>');
+            flushNow();
+            assert.equal(root.outerHTML, '<div>bar</div>');
+            assert.equal(called, 2);
+        });
+        it('should only update once from an effect', () => {
+            const root = document.createElement('div');
+            let called = 0;
+            const MyComponent = createComponent(template, () => {
+                called++;
+                const [foo, setFoo] = useState('foo');
+                const [bar, setBar] = useState('bar');
+                useEffect(() => {
+                    setFoo('bar');
+                    setBar('foo');
+                });
+                return { value: foo + bar };
+            });
+            render(root, MyComponent);
+            assert.equal(root.outerHTML, '<div>foobar</div>');
+            flushNow();
+            assert.equal(root.outerHTML, '<div>barfoo</div>');
+            assert.equal(called, 2);
+        });
+        it('should apply setState calls from the component function without rerendering', () => {
+            const root = document.createElement('div');
+            let called = 0;
+            const values = [];
+            const MyComponent = createComponent(template, () => {
+                called++;
+                const [foo, setFoo] = useState('foo');
+                const [bar, setBar] = useState('bar');
+                values.push(foo, bar);
+                setFoo('foo1');
+                setFoo('foo2');
+                setBar('bar1');
+                setBar('bar2');
+                return { value: foo + bar };
+            });
+            render(root, MyComponent);
+            assert.equal(root.outerHTML, '<div>foo2bar2</div>');
+            assert.equal(called, 2);
+            assert.deepEqual(values, ['foo', 'bar', 'foo2', 'bar2']);
+        });
     });
     describe('useEffect', () => {
         describe('without unsubscribe', () => {

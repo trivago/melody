@@ -22,7 +22,7 @@ export const useState = initialState => {
     const currentComponent = getCurrentComponent();
     const { hooksPointer, hooks, state, setState } = currentComponent;
 
-    if (!currentComponent.isMounted) {
+    if (currentComponent.isCollectingHooks) {
         const setter = value => setState(hooksPointer, value);
         const value = initialState;
         hooks.push([HOOK_TYPE_USE_STATE, setter]);

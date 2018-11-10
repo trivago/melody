@@ -23,7 +23,7 @@ export const useMemo = (getter, inputs) => {
     const currentComponent = getCurrentComponent();
     const { hooksPointer, hooks } = currentComponent;
 
-    if (!currentComponent.isMounted) {
+    if (currentComponent.isCollectingHooks) {
         const value = getter();
         hooks.push([HOOK_TYPE_USE_MEMO, value, inputs]);
         return value;

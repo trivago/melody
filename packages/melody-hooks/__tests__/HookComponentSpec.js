@@ -31,6 +31,7 @@ import {
     useRef,
     useCallback,
     useMemo,
+    useReducer,
 } from '../src';
 import { getRefCounter } from '../src/hooks/useRef';
 
@@ -65,9 +66,9 @@ const createParentComponent = Child => {
 let uniqueId = 0;
 const unique = () => uniqueId++;
 
-describe('HookComponent', function() {
+describe('HookComponent', () => {
     describe('useState', () => {
-        it('should read initial value from a useState hook', function() {
+        it('should read initial value from a useState hook', () => {
             const root = document.createElement('div');
             const MyComponent = createComponent(template, () => {
                 const [value] = useState('foo');
@@ -76,7 +77,7 @@ describe('HookComponent', function() {
             render(root, MyComponent);
             assert.equal(root.outerHTML, '<div>foo</div>');
         });
-        it('should read multiple initial values from useState hooks', function() {
+        it('should read multiple initial values from useState hooks', () => {
             const root = document.createElement('div');
             const MyComponent = createComponent(template, () => {
                 const [foo] = useState('foo');
@@ -86,7 +87,7 @@ describe('HookComponent', function() {
             render(root, MyComponent);
             assert.equal(root.outerHTML, '<div>foobar</div>');
         });
-        it('should update when state is changed', function() {
+        it('should update when state is changed', () => {
             const root = document.createElement('div');
             let setter;
             const MyComponent = createComponent(template, () => {
@@ -101,7 +102,7 @@ describe('HookComponent', function() {
             flushNow();
             assert.equal(root.outerHTML, '<div>barbar</div>');
         });
-        it('should update when state is changed 2', function() {
+        it('should update when state is changed 2', () => {
             const root = document.createElement('div');
             let setter;
             const MyComponent = createComponent(template, () => {
@@ -119,7 +120,7 @@ describe('HookComponent', function() {
     });
     describe('useEffect', () => {
         describe('without unsubscribe', () => {
-            it('should call effect on mount', function() {
+            it('should call effect on mount', () => {
                 const root = document.createElement('div');
                 let called = 0;
                 let rerender;
@@ -135,7 +136,7 @@ describe('HookComponent', function() {
                 flushNow();
                 assert.equal(called, 1);
             });
-            it('should call effect on mount and every update', function() {
+            it('should call effect on mount and every update', () => {
                 const root = document.createElement('div');
                 let called = 0;
                 let rerender;
@@ -154,7 +155,7 @@ describe('HookComponent', function() {
                 flushNow();
                 assert.equal(called, 3);
             });
-            it('should call effect on mount and when a value changes', function() {
+            it('should call effect on mount and when a value changes', () => {
                 const root = document.createElement('div');
                 let called = 0;
                 let rerender;
@@ -191,7 +192,7 @@ describe('HookComponent', function() {
             });
         });
         describe('with unsubscribe', () => {
-            it('should call effect on mount and unsubscribe on unmount', function() {
+            it('should call effect on mount and unsubscribe on unmount', () => {
                 const root = document.createElement('div');
                 let called = 0;
                 let calledUnsubscribe = 0;
@@ -215,7 +216,7 @@ describe('HookComponent', function() {
                 unmountComponentAtNode(root);
                 assert.equal(calledUnsubscribe, 1);
             });
-            it('should call effect on mount and every update and unsubscribe after every update and on unmount', function() {
+            it('should call effect on mount and every update and unsubscribe after every update and on unmount', () => {
                 const root = document.createElement('div');
                 let called = 0;
                 let calledUnsubscribe = 0;
@@ -243,7 +244,7 @@ describe('HookComponent', function() {
                 unmountComponentAtNode(root);
                 assert.equal(calledUnsubscribe, 3);
             });
-            it('should call effect on mount and when a value changes', function() {
+            it('should call effect on mount and when a value changes', () => {
                 const root = document.createElement('div');
                 let called = 0;
                 let calledUnsubscribe = 0;
@@ -488,6 +489,90 @@ describe('HookComponent', function() {
                     values[2] !== values[0],
                 true
             );
+        });
+    });
+    describe('useReducer', () => {
+        const initialState = {
+            foo: 'bar',
+            bar: 'foo',
+        };
+        const reducer = (state, action) => {
+            switch (action.type) {
+                case 'FOO_CHANGED': {
+                    return {
+                        ...state,
+                        foo: action.payload,
+                    };
+                }
+                default: {
+                    return state;
+                }
+            }
+        };
+        it('should read initialState from a useReducer hook', () => {
+            const root = document.createElement('div');
+            const MyComponent = createComponent(template, () => {
+                const [value] = useReducer(reducer, initialState);
+                return { value: JSON.stringify(value) };
+            });
+            render(root, MyComponent);
+            assert.equal(
+                root.outerHTML,
+                '<div>{"foo":"bar","bar":"foo"}</div>'
+            );
+        });
+        it('should update when an action is dispatched', () => {
+            const root = document.createElement('div');
+            let setter;
+            const MyComponent = createComponent(template, () => {
+                const [state, dispatch] = useReducer(reducer, initialState);
+                setter = dispatch;
+                return { value: JSON.stringify(state) };
+            });
+            render(root, MyComponent);
+            assert.equal(
+                root.outerHTML,
+                '<div>{"foo":"bar","bar":"foo"}</div>'
+            );
+            setter({ type: 'FOO_CHANGED', payload: 'qux' });
+            flushNow();
+            assert.equal(
+                root.outerHTML,
+                '<div>{"foo":"qux","bar":"foo"}</div>'
+            );
+        });
+        it('should not update when an unhandled action is dispatched', () => {
+            const root = document.createElement('div');
+            let setter;
+            let called = 0;
+            const MyComponent = createComponent(template, () => {
+                const [state, dispatch] = useReducer(reducer, initialState);
+                called++;
+                setter = dispatch;
+                return { value: JSON.stringify(state) };
+            });
+            render(root, MyComponent);
+            assert.equal(
+                root.outerHTML,
+                '<div>{"foo":"bar","bar":"foo"}</div>'
+            );
+            setter({ type: 'UNHANDLED', payload: 42 });
+            flushNow();
+            assert.equal(
+                root.outerHTML,
+                '<div>{"foo":"bar","bar":"foo"}</div>'
+            );
+            assert.equal(called, 1);
+        });
+        it('should throw when no reducer function was passed', () => {
+            const root = document.createElement('div');
+            const MyComponent = createComponent(template, () => {
+                const [value] = useReducer();
+                return { value: JSON.stringify(value) };
+            });
+            assert.throws(() => {
+                render(root, MyComponent);
+            }, '`useReducer` expects a reducer function as first argument');
         });
     });
 });

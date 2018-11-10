@@ -14,10 +14,19 @@
  * limitations under the License.
  */
 
-export { createComponent } from './component';
-export { useState } from './hooks/useState';
-export { useEffect } from './hooks/useEffect';
-export { useRef } from './hooks/useRef';
-export { useCallback } from './hooks/useCallback';
-export { useMemo } from './hooks/useMemo';
-export { useReducer } from './hooks/useReducer';
+import { useState } from './useState';
+import { useCallback } from './useCallback';
+
+export const useReducer = (reducer, initialState) => {
+    if (typeof reducer !== 'function') {
+        throw new Error(
+            '`useReducer` expects a reducer function as first argument'
+        );
+    }
+    const [state, setState] = useState(initialState);
+    const dispatch = useCallback(action => {
+        const nextState = reducer(state, action);
+        setState(nextState);
+    });
+    return [state, dispatch];
+};

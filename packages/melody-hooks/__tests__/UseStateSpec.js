@@ -134,4 +134,16 @@ describe('useState', () => {
         assert.equal(called, 2);
         assert.deepEqual(values, ['foo', 'bar', 'foo2', 'bar2']);
     });
+    it('should throw when component function leads to an infinite loop', () => {
+        const root = document.createElement('div');
+        const MyComponent = createComponent(template, () => {
+            const [value, setValue] = useState(0);
+            setValue(value + 1);
+            return { value };
+        });
+
+        assert.throws(() => {
+            render(root, MyComponent);
+        }, 'Too many re-renders. Melody limits the number of renders to prevent an infinite loop.');
+    });
 });

@@ -48,7 +48,7 @@ describe('useRef', () => {
             current = myref.current;
             useEffect(() => {
                 currentInEffect = myref.current;
-            });
+            }, []);
             return { myref };
         });
         render(root, MyComponent);
@@ -116,7 +116,7 @@ describe('useRef', () => {
             current = myref.current;
             useEffect(() => {
                 currentInEffect = myref.current;
-            }, true);
+            });
             return { myref, foo };
         });
         render(root, MyComponent);
@@ -170,7 +170,7 @@ describe('useRef', () => {
             current = myref.current;
             useEffect(() => {
                 currentInEffect = myref.current;
-            }, true);
+            });
             return { myref, foo };
         });
         render(root, MyComponent);

@@ -89,7 +89,7 @@ describe('useState', () => {
                     ...state,
                     counter: state.counter + 1,
                 }));
-            });
+            }, []);
             return { value: JSON.stringify(state) };
         });
         render(root, MyComponent);
@@ -107,7 +107,7 @@ describe('useState', () => {
             useEffect(() => {
                 setValue(value => value + 1);
                 setValue(value => value + 1);
-            });
+            }, []);
             return { value };
         });
         render(root, MyComponent);
@@ -125,7 +125,7 @@ describe('useState', () => {
             useEffect(() => {
                 setValue(value => undefined);
                 setValue(value => value + 1);
-            });
+            }, []);
             return { value };
         });
         render(root, MyComponent);
@@ -151,7 +151,7 @@ describe('useState', () => {
             const [foo, setFoo] = useState('foo');
             useEffect(() => {
                 setFoo('bar');
-            });
+            }, []);
             return { value: foo };
         });
         render(root, MyComponent);
@@ -170,7 +170,7 @@ describe('useState', () => {
             useEffect(() => {
                 setFoo('bar');
                 setBar('foo');
-            });
+            }, []);
             return { value: foo + bar };
         });
         render(root, MyComponent);

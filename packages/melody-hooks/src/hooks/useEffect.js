@@ -18,7 +18,7 @@ import { HOOK_TYPE_USE_EFFECT } from '../constants';
 import { enterHook } from '../util/hooks';
 import { shallowEqualsArray } from '../util/shallowEquals';
 
-export const useEffect = (callback, shouldUpdateOrDataArray) => {
+export const useEffect = (callback, inputs) => {
     const currentComponent = enterHook(HOOK_TYPE_USE_EFFECT);
     const { hooksPointer, hooks } = currentComponent;
 
@@ -28,7 +28,7 @@ export const useEffect = (callback, shouldUpdateOrDataArray) => {
         hooks.push([
             HOOK_TYPE_USE_EFFECT,
             callback,
-            shouldUpdateOrDataArray,
+            inputs,
             dirty,
             unsubscribe,
         ]);
@@ -37,14 +37,17 @@ export const useEffect = (callback, shouldUpdateOrDataArray) => {
 
     const dataPrev = hooks[hooksPointer][2];
     const dirty =
-        shouldUpdateOrDataArray === true ||
-        (shouldUpdateOrDataArray &&
-            shouldUpdateOrDataArray.length &&
-            !shallowEqualsArray(dataPrev, shouldUpdateOrDataArray));
+        !inputs || (inputs.length && !shallowEqualsArray(dataPrev, inputs));
 
     if (dirty) {
         hooks[hooksPointer][1] = callback;
     }
-    hooks[hooksPointer][2] = shouldUpdateOrDataArray;
+    hooks[hooksPointer][2] = inputs;
     hooks[hooksPointer][3] = dirty;
+};
+
+const DO_NOT_UPDATE = [];
+
+export const useEffectOnce = callback => {
+    useEffect(callback, DO_NOT_UPDATE);
 };

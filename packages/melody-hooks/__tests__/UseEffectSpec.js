@@ -33,7 +33,7 @@ const unique = () => uniqueId++;
 
 describe('useEffect', () => {
     describe('without unsubscribe', () => {
-        it('should call effect on mount', () => {
+        it('should call effect on mount and every update', () => {
             const root = document.createElement('div');
             let called = 0;
             let rerender;
@@ -47,9 +47,12 @@ describe('useEffect', () => {
             assert.equal(called, 1);
             rerender(unique());
             flush();
-            assert.equal(called, 1);
+            assert.equal(called, 2);
+            rerender(unique());
+            flush();
+            assert.equal(called, 3);
         });
-        it('should call effect on mount and every update', () => {
+        it('should call effect on mount', () => {
             const root = document.createElement('div');
             let called = 0;
             let rerender;
@@ -57,16 +60,13 @@ describe('useEffect', () => {
                 rerender = useState()[1];
                 useEffect(() => {
                     called++;
-                }, true);
+                }, []);
             });
             render(root, MyComponent);
             assert.equal(called, 1);
             rerender(unique());
             flush();
-            assert.equal(called, 2);
-            rerender(unique());
-            flush();
-            assert.equal(called, 3);
+            assert.equal(called, 1);
         });
         it('should call effect on mount and when a value changes', () => {
             const root = document.createElement('div');
@@ -105,7 +105,7 @@ describe('useEffect', () => {
         });
     });
     describe('with unsubscribe', () => {
-        it('should call effect on mount and unsubscribe on unmount', () => {
+        it('should call effect on mount and every update and unsubscribe after every update and on unmount', () => {
             const root = document.createElement('div');
             let called = 0;
             let calledUnsubscribe = 0;
@@ -124,12 +124,16 @@ describe('useEffect', () => {
             assert.equal(calledUnsubscribe, 0);
             rerender(unique());
             flush();
-            assert.equal(called, 1);
-            assert.equal(calledUnsubscribe, 0);
-            unmountComponentAtNode(root);
+            assert.equal(called, 2);
             assert.equal(calledUnsubscribe, 1);
+            rerender(unique());
+            flush();
+            assert.equal(called, 3);
+            assert.equal(calledUnsubscribe, 2);
+            unmountComponentAtNode(root);
+            assert.equal(calledUnsubscribe, 3);
         });
-        it('should call effect on mount and every update and unsubscribe after every update and on unmount', () => {
+        it('should call effect on mount and unsubscribe on unmount', () => {
             const root = document.createElement('div');
             let called = 0;
             let calledUnsubscribe = 0;
@@ -141,21 +145,17 @@ describe('useEffect', () => {
                     return () => {
                         calledUnsubscribe++;
                     };
-                }, true);
+                }, []);
             });
             render(root, MyComponent);
             assert.equal(called, 1);
             assert.equal(calledUnsubscribe, 0);
             rerender(unique());
             flush();
-            assert.equal(called, 2);
-            assert.equal(calledUnsubscribe, 1);
-            rerender(unique());
-            flush();
-            assert.equal(called, 3);
-            assert.equal(calledUnsubscribe, 2);
+            assert.equal(called, 1);
+            assert.equal(calledUnsubscribe, 0);
             unmountComponentAtNode(root);
-            assert.equal(calledUnsubscribe, 3);
+            assert.equal(calledUnsubscribe, 1);
         });
         it('should call effect on mount and when a value changes', () => {
             const root = document.createElement('div');

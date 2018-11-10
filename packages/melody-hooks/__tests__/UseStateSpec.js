@@ -78,6 +78,26 @@ describe('useState', () => {
         flush();
         assert.equal(root.outerHTML, '<div>foofoo</div>');
     });
+    it('should be possible to pass a function to set the state', () => {
+        const root = document.createElement('div');
+        let called = 0;
+        const MyComponent = createComponent(template, () => {
+            called++;
+            const [state, setState] = useState({ counter: 1, foo: 'bar' });
+            useEffect(() => {
+                setState(state => ({
+                    ...state,
+                    counter: state.counter + 1,
+                }));
+            });
+            return { value: JSON.stringify(state) };
+        });
+        render(root, MyComponent);
+        assert.equal(root.outerHTML, '<div>{"counter":1,"foo":"bar"}</div>');
+        flush();
+        assert.equal(root.outerHTML, '<div>{"counter":2,"foo":"bar"}</div>');
+        assert.equal(called, 2);
+    });
     it('should update from an effect', () => {
         const root = document.createElement('div');
         let called = 0;

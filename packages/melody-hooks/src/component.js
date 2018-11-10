@@ -124,9 +124,9 @@ Object.assign(Component.prototype, {
 
             const dirty = hook[3];
 
-            // If this effect hook is not maked as
-            // `dirty` we can skip the invokation.
-            // A hook is considered `dirty` when
+            // If this effect hook is not marked as
+            // `dirty` we can skip the invocation.
+            // A hook is considered `dirty` when the
             // input values have changed
             if (!dirty) continue;
 
@@ -249,23 +249,22 @@ Object.assign(Component.prototype, {
                         'an infinite loop.'
                 );
             }
-            // Reset the hooks pointer
-            this.hooksPointer = -1;
-
             // the state is now not considered dirty anymore
             this.isStateDirty = false;
             // the props is now not considered dirty anymore
             this.isPropsDirty = false;
 
+            // Reset the hooks pointer
+            this.hooksPointer = -1;
             // Run the component functions
             this.data = this.componentFn(this.props) || {};
-
-            // mark that we have run the component function at least once
-            updated = true;
 
             // Mark that we have already collected the hooks
             // This only may happen once.
             this.isCollectingHooks = false;
+
+            // mark that we have run the component function at least once
+            updated = true;
         }
 
         // Let the component know that we are not running

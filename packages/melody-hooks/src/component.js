@@ -118,7 +118,7 @@ Object.assign(Component.prototype, {
             const type = hook[0];
 
             // We are only interested in effect hooks
-            if (!type === HOOK_TYPE_USE_EFFECT) {
+            if (type !== HOOK_TYPE_USE_EFFECT) {
                 continue;
             }
 

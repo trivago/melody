@@ -163,11 +163,18 @@ Object.assign(Component.prototype, {
      * @return void
      */
     setState(hookIndex, valueNext) {
+        const { state, stateQueue } = this;
         // Store the new state in the queue
-        const finalValue =
-            typeof valueNext === 'function'
-                ? valueNext(this.state[hookIndex])
-                : valueNext;
+        let finalValue;
+        if (typeof valueNext === 'function') {
+            const prevValue =
+                stateQueue[hookIndex] !== undefined
+                    ? stateQueue[hookIndex]
+                    : state[hookIndex];
+            finalValue = valueNext(prevValue);
+        } else {
+            finalValue = valueNext;
+        }
 
         this.stateQueue[hookIndex] = finalValue;
         // Mark the state as dirty

@@ -98,6 +98,24 @@ describe('useState', () => {
         assert.equal(root.outerHTML, '<div>{"counter":2,"foo":"bar"}</div>');
         assert.equal(called, 2);
     });
+    it('should have the correct value when called subsequently', () => {
+        const root = document.createElement('div');
+        let called = 0;
+        const MyComponent = createComponent(template, () => {
+            called++;
+            const [value, setValue] = useState(0);
+            useEffect(() => {
+                setValue(value => value + 1);
+                setValue(value => value + 1);
+            });
+            return { value };
+        });
+        render(root, MyComponent);
+        assert.equal(root.outerHTML, '<div>0</div>');
+        flush();
+        assert.equal(root.outerHTML, '<div>2</div>');
+        assert.equal(called, 2);
+    });
     it('should be possible to pass a function as initialState', () => {
         const root = document.createElement('div');
         const MyComponent = createComponent(template, () => {

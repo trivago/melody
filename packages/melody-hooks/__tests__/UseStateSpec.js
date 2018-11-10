@@ -116,6 +116,24 @@ describe('useState', () => {
         assert.equal(root.outerHTML, '<div>2</div>');
         assert.equal(called, 2);
     });
+    it('should have the correct value when called subsequently 2', () => {
+        const root = document.createElement('div');
+        let called = 0;
+        const MyComponent = createComponent(template, () => {
+            called++;
+            const [value, setValue] = useState(0);
+            useEffect(() => {
+                setValue(value => undefined);
+                setValue(value => value + 1);
+            });
+            return { value };
+        });
+        render(root, MyComponent);
+        assert.equal(root.outerHTML, '<div>0</div>');
+        flush();
+        assert.equal(root.outerHTML, '<div>NaN</div>');
+        assert.equal(called, 2);
+    });
     it('should be possible to pass a function as initialState', () => {
         const root = document.createElement('div');
         const MyComponent = createComponent(template, () => {

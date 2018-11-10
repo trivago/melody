@@ -65,6 +65,7 @@ function Component(element, componentFn) {
     // anymore updates we render the component
     // with the new state
     this.stateQueue = Object.create(null);
+    this.hasQueuedState = Object.create(null);
     // Calling `setState` will mark the state as dirty.
     this.isStateDirty = false;
     // Binds the `setState` function to our component instance
@@ -163,20 +164,22 @@ Object.assign(Component.prototype, {
      * @return void
      */
     setState(hookIndex, valueNext) {
-        const { state, stateQueue } = this;
+        const { state, stateQueue, hasQueuedState } = this;
         // Store the new state in the queue
         let finalValue;
         if (typeof valueNext === 'function') {
-            const prevValue =
-                stateQueue[hookIndex] !== undefined
-                    ? stateQueue[hookIndex]
-                    : state[hookIndex];
+            // We need `hasQueuedState` here because `stateQueue[hookIndex]`
+            // could be set to `undefined` by a previous `setState`.
+            const prevValue = hasQueuedState[hookIndex]
+                ? stateQueue[hookIndex]
+                : state[hookIndex];
             finalValue = valueNext(prevValue);
         } else {
             finalValue = valueNext;
         }
 
-        this.stateQueue[hookIndex] = finalValue;
+        stateQueue[hookIndex] = finalValue;
+        hasQueuedState[hookIndex] = true;
         // Mark the state as dirty
         this.isStateDirty = true;
 
@@ -219,6 +222,7 @@ Object.assign(Component.prototype, {
 
         // Reset the state queue
         this.stateQueue = Object.create(null);
+        this.hasQueuedState = Object.create(null);
 
         // Return whether the state has changed or not
         return changed;

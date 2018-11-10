@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-export { createComponent } from './component';
-export { useState } from './hooks/useState';
-export { useEffect } from './hooks/useEffect';
-export { useRef } from './hooks/useRef';
-export { useCallback } from './hooks/useCallback';
-export { useMemo } from './hooks/useMemo';
-export { useReducer } from './hooks/useReducer';
-export { usePrevious } from './hooks/usePrevious';
+import { useRef } from './useRef';
+import { useEffect } from './useEffect';
+
+export const usePrevious = value => {
+    const ref = useRef();
+    useEffect(() => {
+        ref.current = value;
+    }, true);
+    return ref.current;
+};

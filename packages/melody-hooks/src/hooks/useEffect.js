@@ -42,6 +42,9 @@ export const useEffect = (callback, shouldUpdateOrDataArray) => {
             shouldUpdateOrDataArray.length &&
             !shallowEqualsArray(dataPrev, shouldUpdateOrDataArray));
 
+    if (dirty) {
+        hooks[hooksPointer][1] = callback;
+    }
     hooks[hooksPointer][2] = shouldUpdateOrDataArray;
     hooks[hooksPointer][3] = dirty;
 };

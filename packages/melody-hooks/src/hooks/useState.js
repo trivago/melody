@@ -24,7 +24,8 @@ export const useState = initialState => {
 
     if (currentComponent.isCollectingHooks) {
         const setter = value => setState(hooksPointer, value);
-        const value = initialState;
+        const value =
+            typeof initialState === 'function' ? initialState() : initialState;
         hooks.push([HOOK_TYPE_USE_STATE, setter]);
         state[hooksPointer] = value;
         return [value, setter];

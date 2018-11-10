@@ -98,6 +98,15 @@ describe('useState', () => {
         assert.equal(root.outerHTML, '<div>{"counter":2,"foo":"bar"}</div>');
         assert.equal(called, 2);
     });
+    it('should be possible to pass a function as initialState', () => {
+        const root = document.createElement('div');
+        const MyComponent = createComponent(template, () => {
+            const [value] = useState(() => 'foo');
+            return { value };
+        });
+        render(root, MyComponent);
+        assert.equal(root.outerHTML, '<div>foo</div>');
+    });
     it('should update from an effect', () => {
         const root = document.createElement('div');
         let called = 0;

@@ -19,8 +19,11 @@ import { useEffect } from './useEffect';
 
 export const usePrevious = value => {
     const ref = useRef();
-    useEffect(() => {
-        ref.current = value;
-    }, true);
+    useEffect(
+        () => {
+            ref.current = value;
+        },
+        [value]
+    );
     return ref.current;
 };

@@ -300,10 +300,8 @@ describe('HookComponent', () => {
             const root = document.createElement('div');
             let current;
             let currentInEffect;
-            let ref;
             const MyComponent = createComponent(template, () => {
                 const myref = useRef(null);
-                ref = myref;
                 current = myref.current;
                 useEffect(() => {
                     currentInEffect = myref.current;
@@ -390,6 +388,60 @@ describe('HookComponent', () => {
             setter(false);
             flushNow();
             assert.equal(current.className, 'foo');
+            assert.equal(getRefCounter(ref), 0);
+        });
+        it('should move the reference to another element 2', () => {
+            const template = {
+                render(_context) {
+                    elementOpen('div');
+                    if (!_context.foo) {
+                        elementVoid(
+                            'span',
+                            null,
+                            ['class', 'foo'],
+                            'ref',
+                            _context.myref
+                        );
+                    } else {
+                        elementVoid(
+                            'div',
+                            null,
+                            ['class', 'bar'],
+                            'ref',
+                            _context.myref
+                        );
+                    }
+                    elementClose('div');
+                },
+            };
+            const root = document.createElement('div');
+            let setter;
+            let ref;
+            let current;
+            let currentInEffect;
+            const MyComponent = createComponent(template, () => {
+                const [foo, setFoo] = useState(false);
+                setter = setFoo;
+                const myref = useRef(null);
+                ref = myref;
+                current = myref.current;
+                useEffect(() => {
+                    currentInEffect = myref.current;
+                }, true);
+                return { myref, foo };
+            });
+            render(root, MyComponent);
+            assert.equal(current, null);
+            assert.equal(currentInEffect.className, 'foo');
+            assert.equal(getRefCounter(ref), 0);
+            setter(true);
+            flushNow();
+            assert.equal(current.className, 'foo');
+            assert.equal(currentInEffect.className, 'bar');
+            assert.equal(getRefCounter(ref), 0);
+            setter(false);
+            flushNow();
+            assert.equal(current.className, 'bar');
             assert.equal(getRefCounter(ref), 0);
         });
     });

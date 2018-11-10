@@ -15,7 +15,7 @@
  */
 
 import { HOOK_TYPE_USE_REF } from '../constants';
-import { enterHook, getCurrentComponent } from '../util/hooks';
+import { enterHook } from '../util/hooks';
 
 const refCounter = Symbol();
 
@@ -43,8 +43,7 @@ const createRef = initialValue => {
 export const getRefCounter = ref => ref[refCounter];
 
 export const useRef = initialValue => {
-    enterHook();
-    const currentComponent = getCurrentComponent();
+    const currentComponent = enterHook(HOOK_TYPE_USE_REF);
     const { hooks, hooksPointer } = currentComponent;
 
     if (currentComponent.isCollectingHooks) {

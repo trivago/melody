@@ -15,11 +15,10 @@
  */
 
 import { HOOK_TYPE_USE_STATE } from '../constants';
-import { getCurrentComponent, enterHook } from '../util/hooks';
+import { enterHook } from '../util/hooks';
 
 export const useState = initialState => {
-    enterHook();
-    const currentComponent = getCurrentComponent();
+    const currentComponent = enterHook(HOOK_TYPE_USE_STATE);
     const { hooksPointer, hooks, state, setState } = currentComponent;
 
     if (currentComponent.isCollectingHooks) {

@@ -15,12 +15,11 @@
  */
 
 import { HOOK_TYPE_USE_MEMO } from '../constants';
-import { getCurrentComponent, enterHook } from '../util/hooks';
+import { enterHook } from '../util/hooks';
 import { shallowEqualsArray } from '../util/shallowEquals';
 
 export const useMemo = (getter, inputs) => {
-    enterHook();
-    const currentComponent = getCurrentComponent();
+    const currentComponent = enterHook(HOOK_TYPE_USE_MEMO);
     const { hooksPointer, hooks } = currentComponent;
 
     if (currentComponent.isCollectingHooks) {

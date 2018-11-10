@@ -15,12 +15,11 @@
  */
 
 import { HOOK_TYPE_USE_EFFECT } from '../constants';
-import { enterHook, getCurrentComponent } from '../util/hooks';
+import { enterHook } from '../util/hooks';
 import { shallowEqualsArray } from '../util/shallowEquals';
 
 export const useEffect = (callback, shouldUpdateOrDataArray) => {
-    enterHook();
-    const currentComponent = getCurrentComponent();
+    const currentComponent = enterHook(HOOK_TYPE_USE_EFFECT);
     const { hooksPointer, hooks } = currentComponent;
 
     if (currentComponent.isCollectingHooks) {

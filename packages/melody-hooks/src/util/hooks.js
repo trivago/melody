@@ -27,11 +27,26 @@ export const unsetCurrentComponent = () => {
     currentComponent = null;
 };
 
-export const getCurrentComponent = () => currentComponent;
-
-export const enterHook = () => {
+export const enterHook = type => {
+    if (!type) {
+        throw new Error('Please provide a hook type when calling `enterHook`');
+    }
     if (!currentComponent) {
-        throw new Error('Cannot use hooks outside of Component functions');
+        throw new Error('Cannot use hooks outside of component functions');
     }
     currentComponent.hooksPointer += 1;
+
+    // Check if hook types differ and throw if so.
+    if (!currentComponent.isCollectingHooks) {
+        const hooks = currentComponent.hooks;
+        if (hooks[currentComponent.hooksPointer][0] !== type) {
+            throw new Error(
+                'The order of hooks changed. This breaks the internals ' +
+                    'of the component. It is not allowed to call hooks inside ' +
+                    'loops, conditions, or nested functions'
+            );
+        }
+    }
+
+    return currentComponent;
 };

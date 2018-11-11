@@ -21,6 +21,7 @@ import {
     HOOK_TYPE_USE_EFFECT,
     HOOK_TYPE_USE_REF,
     RENDER_LIMIT,
+    HOOK_TYPE_USE_MUTATION_EFFECT,
 } from './constants';
 
 const { afterUpdate, afterMount } = options;
@@ -48,6 +49,8 @@ function Component(element, componentFn) {
     this.isCollectingHooks = true;
     // tracks whether we are in the phase of running effects
     this.isRunningEffects = false;
+    // tracks whether we are in the phase of running mutation effects
+    this.isRunningMutationEffects = false;
     // stores the data returned from `componentFn`
     this.data = null;
 
@@ -109,21 +112,22 @@ Object.assign(Component.prototype, {
             if (afterMount) afterMount(this);
         }
 
-        const hooks = this.hooks;
+        this.runEffects();
+    },
 
-        // Mark this component as in running effects
-        // This is needed in order to not immediately enqueue
-        // the component again when `setState` is called while
-        // we are running the effects
-        this.isRunningEffects = true;
+    /**
+     * Runs the effect hooks
+     */
+    runEffectHooks(hookType) {
+        const hooks = this.hooks;
 
         // Run through hooks and call effects
         for (let i = 0, l = hooks.length; i < l; i++) {
             const hook = hooks[i];
             const type = hook[0];
 
-            // We are only interested in effect hooks
-            if (type !== HOOK_TYPE_USE_EFFECT) {
+            // We are only interested in `hookType` hooks
+            if (type !== hookType) {
                 continue;
             }
 
@@ -150,8 +154,18 @@ Object.assign(Component.prototype, {
             const unsubscribeNext = callback() || null;
             hook[4] = unsubscribeNext;
         }
+    },
 
-        // Reset `isRunningEffects`
+    /**
+     * Runs the `useEffect` hooks
+     */
+    runEffects() {
+        // Mark this component as in running effects
+        // This is needed in order to not immediately enqueue
+        // the component again when `setState` is called while
+        // we are running the effects
+        this.isRunningEffects = true;
+        this.runEffectHooks(HOOK_TYPE_USE_EFFECT);
         this.isRunningEffects = false;
 
         // If `setState` was called during the effects,
@@ -162,13 +176,44 @@ Object.assign(Component.prototype, {
     },
 
     /**
+     * Runs the `useMutationEffect` hooks
+     */
+    runMutationEffects() {
+        // Mark this component as in running mutation effects
+        // This is needed in order to not immediately enqueue
+        // the component again when `setState` is called while
+        // we are running the effects
+        this.isRunningMutationEffects = true;
+        this.runEffectHooks(HOOK_TYPE_USE_MUTATION_EFFECT);
+        this.isRunningMutationEffects = false;
+        // Usually we would check for `isStateDirty` here and
+        // enqueue the component if so, but we don't allow
+        // calls to `setState` inside a mutation effect in
+        // order to avoid rendering performance issues
+    },
+
+    /**
      * Enqeues a state change for a hook slot at index `hookIndex`
      * @param {*} hookIndex Index of the `useState` hook
      * @param {*} valueNext Updated value for this state hook
      * @return void
      */
     setState(hookIndex, valueNext) {
-        const { state, stateQueue, hasQueuedState } = this;
+        const {
+            state,
+            stateQueue,
+            hasQueuedState,
+            isRunningMutationEffects,
+        } = this;
+
+        if (isRunningMutationEffects) {
+            throw new Error(
+                'Melody does not allow using `setState` in `useMutationEffect` ' +
+                    'since this would harm rendering performance. This hook is meant ' +
+                    'for manually mutating the DOM'
+            );
+        }
+
         // Store the new state in the queue
         let finalValue;
         if (typeof valueNext === 'function') {
@@ -305,7 +350,17 @@ Object.assign(Component.prototype, {
     /**
      * Invoked when a component should render itself.
      */
-    render() {},
+    render() {
+        this.renderTemplate();
+        // Run mutation effects immediately
+        // after touching the DOM
+        this.runMutationEffects();
+    },
+
+    /**
+     * Renders the template;
+     */
+    renderTemplate() {},
 
     /**
      * Invoked before a component is unmounted.
@@ -319,7 +374,8 @@ Object.assign(Component.prototype, {
             const type = hook[0];
             switch (type) {
                 // Call potential unsubscribe functions for effects
-                case HOOK_TYPE_USE_EFFECT: {
+                case HOOK_TYPE_USE_EFFECT:
+                case HOOK_TYPE_USE_MUTATION_EFFECT: {
                     const unsubscribe = hook[4];
                     if (unsubscribe) unsubscribe();
                     break;
@@ -360,7 +416,7 @@ const baseCreateComponent = (componentFn, templateFnOrObj) => {
     ChildComponent.prototype.displayName =
         template.name || template.displayName || 'Unknown';
 
-    ChildComponent.prototype.render = function() {
+    ChildComponent.prototype.renderTemplate = function() {
         return template(this.data);
     };
 

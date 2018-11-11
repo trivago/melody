@@ -14,24 +14,21 @@
  * limitations under the License.
  */
 
-import { HOOK_TYPE_USE_EFFECT } from '../constants';
+import {
+    HOOK_TYPE_USE_EFFECT,
+    HOOK_TYPE_USE_MUTATION_EFFECT,
+} from '../constants';
 import { enterHook } from '../util/hooks';
 import { shallowEqualsArray } from '../util/shallowEquals';
 
-export const useEffect = (callback, inputs) => {
-    const currentComponent = enterHook(HOOK_TYPE_USE_EFFECT);
+const createEffectHook = type => (callback, inputs) => {
+    const currentComponent = enterHook(type);
     const { hooksPointer, hooks } = currentComponent;
 
     if (currentComponent.isCollectingHooks) {
         const dirty = true;
         const unsubscribe = null;
-        hooks.push([
-            HOOK_TYPE_USE_EFFECT,
-            callback,
-            inputs,
-            dirty,
-            unsubscribe,
-        ]);
+        hooks.push([type, callback, inputs, dirty, unsubscribe]);
         return;
     }
 
@@ -46,8 +43,10 @@ export const useEffect = (callback, inputs) => {
     hooks[hooksPointer][3] = dirty;
 };
 
-const DO_NOT_UPDATE = [];
+export const useEffect = createEffectHook(HOOK_TYPE_USE_EFFECT);
 
-export const useEffectOnce = callback => {
-    useEffect(callback, DO_NOT_UPDATE);
-};
+export const useEffectOnce = callback => useEffect(callback, []);
+
+export const useMutationEffect = createEffectHook(
+    HOOK_TYPE_USE_MUTATION_EFFECT
+);

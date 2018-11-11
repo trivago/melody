@@ -16,8 +16,9 @@
 
 export const HOOK_TYPE_USE_STATE = 1;
 export const HOOK_TYPE_USE_EFFECT = 2;
-export const HOOK_TYPE_USE_REF = 3;
-export const HOOK_TYPE_USE_CALLBACK = 4;
-export const HOOK_TYPE_USE_MEMO = 5;
+export const HOOK_TYPE_USE_MUTATION_EFFECT = 3;
+export const HOOK_TYPE_USE_REF = 4;
+export const HOOK_TYPE_USE_CALLBACK = 5;
+export const HOOK_TYPE_USE_MEMO = 6;
 
 export const RENDER_LIMIT = 50;

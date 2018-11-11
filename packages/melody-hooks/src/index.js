@@ -16,7 +16,7 @@
 
 export { createComponent } from './component';
 export { useState } from './hooks/useState';
-export { useEffect, useEffectOnce } from './hooks/useEffect';
+export { useEffect, useEffectOnce, useMutationEffect } from './hooks/useEffect';
 export { useRef } from './hooks/useRef';
 export { useCallback } from './hooks/useCallback';
 export { useMemo } from './hooks/useMemo';

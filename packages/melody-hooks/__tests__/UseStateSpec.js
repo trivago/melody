@@ -78,6 +78,21 @@ describe('useState', () => {
         flush();
         assert.equal(root.outerHTML, '<div>foofoo</div>');
     });
+    it("should not update when state hasn't changed", () => {
+        const root = document.createElement('div');
+        let setter;
+        let called = 0;
+        const MyComponent = createComponent(template, () => {
+            called++;
+            const [foo, setFoo] = useState({ foo: 'bar', bar: 'foo' });
+            setter = setFoo;
+            return { value: foo };
+        });
+        render(root, MyComponent);
+        setter({ bar: 'foo', foo: 'bar' });
+        flush();
+        assert.equal(called, 1);
+    });
     it('should be possible to pass a function to set the state', () => {
         const root = document.createElement('div');
         let called = 0;

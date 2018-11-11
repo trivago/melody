@@ -17,7 +17,7 @@ import { assert } from 'chai';
 
 import { render, unmountComponentAtNode } from 'melody-component';
 import { elementOpen, elementClose, text } from 'melody-idom';
-import { createComponent, useState, useEffect } from '../src';
+import { createComponent, useState, useEffect, useEffectOnce } from '../src';
 import { flush } from './util/flush';
 
 const template = {
@@ -200,6 +200,52 @@ describe('useEffect', () => {
             assert.equal(called, 2);
             unmountComponentAtNode(root);
             assert.equal(calledUnsubscribe, 2);
+        });
+    });
+});
+describe('useEffectOnce', () => {
+    describe('without unsubscribe', () => {
+        it('should call effect on mount', () => {
+            const root = document.createElement('div');
+            let called = 0;
+            let rerender;
+            const MyComponent = createComponent(template, () => {
+                rerender = useState()[1];
+                useEffectOnce(() => {
+                    called++;
+                });
+            });
+            render(root, MyComponent);
+            assert.equal(called, 1);
+            rerender(unique());
+            flush();
+            assert.equal(called, 1);
+        });
+    });
+    describe('with unsubscribe', () => {
+        it('should call effect on mount and unsubscribe on unmount', () => {
+            const root = document.createElement('div');
+            let called = 0;
+            let calledUnsubscribe = 0;
+            let rerender;
+            const MyComponent = createComponent(template, () => {
+                rerender = useState()[1];
+                useEffectOnce(() => {
+                    called++;
+                    return () => {
+                        calledUnsubscribe++;
+                    };
+                });
+            });
+            render(root, MyComponent);
+            assert.equal(called, 1);
+            assert.equal(calledUnsubscribe, 0);
+            rerender(unique());
+            flush();
+            assert.equal(called, 1);
+            assert.equal(calledUnsubscribe, 0);
+            unmountComponentAtNode(root);
+            assert.equal(calledUnsubscribe, 1);
         });
     });
 });

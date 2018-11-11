@@ -67,9 +67,9 @@ function Component(element: Element, reducer: Reducer) {
 }
 Object.assign(Component.prototype, {
     /**
-   * Set new properties for the Component.
-   * This might cause the component to request an update.
-   */
+     * Set new properties for the Component.
+     * This might cause the component to request an update.
+     */
     apply(props) {
         if (!this.oldProps) {
             this.oldProps = this.props;
@@ -78,11 +78,11 @@ Object.assign(Component.prototype, {
     },
 
     /**
-   * Executed after a component has been mounted or updated.
-   * After this method has been triggered, the component is considered stable and
-   * accessing the DOM should be safe.
-   * The children of this Component might not have been rendered.
-   */
+     * Executed after a component has been mounted or updated.
+     * After this method has been triggered, the component is considered stable and
+     * accessing the DOM should be safe.
+     * The children of this Component might not have been rendered.
+     */
     notify() {
         if (this.isMounted) {
             this.componentDidUpdate(
@@ -134,8 +134,8 @@ Object.assign(Component.prototype, {
     },
 
     /**
-   * Invoked when a component should render itself.
-   */
+     * Invoked when a component should render itself.
+     */
     render() {},
     componentDidInitialize() {},
     componentWillMount() {},
@@ -143,8 +143,8 @@ Object.assign(Component.prototype, {
     componentWillUpdate() {},
     componentDidUpdate(prevProps: Object, prevState: Object) {},
     /**
-   * Invoked before a component is unmounted.
-   */
+     * Invoked before a component is unmounted.
+     */
     componentWillUnmount() {},
 });
 

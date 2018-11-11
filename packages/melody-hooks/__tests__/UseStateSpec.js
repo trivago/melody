@@ -31,32 +31,32 @@ const template = {
 describe('useState', () => {
     it('should read initial value from a useState hook', () => {
         const root = document.createElement('div');
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [value] = useState('foo');
             return { value };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(root.outerHTML, '<div>foo</div>');
     });
     it('should read multiple initial values from useState hooks', () => {
         const root = document.createElement('div');
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [foo] = useState('foo');
             const [bar] = useState('bar');
             return { value: foo + bar };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(root.outerHTML, '<div>foobar</div>');
     });
     it('should update when state is changed', () => {
         const root = document.createElement('div');
         let setter;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [foo, setFoo] = useState('foo');
             const [bar] = useState('bar');
             setter = setFoo;
             return { value: foo + bar };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(root.outerHTML, '<div>foobar</div>');
         setter('bar');
@@ -66,12 +66,12 @@ describe('useState', () => {
     it('should update when state is changed 2', () => {
         const root = document.createElement('div');
         let setter;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [foo] = useState('foo');
             const [bar, setBar] = useState('bar');
             setter = setBar;
             return { value: foo + bar };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(root.outerHTML, '<div>foobar</div>');
         setter('foo');
@@ -82,12 +82,12 @@ describe('useState', () => {
         const root = document.createElement('div');
         let setter;
         let called = 0;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             called++;
             const [foo, setFoo] = useState({ foo: 'bar', bar: 'foo' });
             setter = setFoo;
             return { value: foo };
-        });
+        }, template);
         render(root, MyComponent);
         setter({ bar: 'foo', foo: 'bar' });
         flush();
@@ -96,7 +96,7 @@ describe('useState', () => {
     it('should be possible to pass a function to set the state', () => {
         const root = document.createElement('div');
         let called = 0;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             called++;
             const [state, setState] = useState({ counter: 1, foo: 'bar' });
             useEffect(() => {
@@ -106,7 +106,7 @@ describe('useState', () => {
                 }));
             }, []);
             return { value: JSON.stringify(state) };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(root.outerHTML, '<div>{"counter":1,"foo":"bar"}</div>');
         flush();
@@ -116,7 +116,7 @@ describe('useState', () => {
     it('should have the correct value when called subsequently', () => {
         const root = document.createElement('div');
         let called = 0;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             called++;
             const [value, setValue] = useState(0);
             useEffect(() => {
@@ -124,7 +124,7 @@ describe('useState', () => {
                 setValue(value => value + 1);
             }, []);
             return { value };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(root.outerHTML, '<div>0</div>');
         flush();
@@ -134,7 +134,7 @@ describe('useState', () => {
     it('should have the correct value when called subsequently 2', () => {
         const root = document.createElement('div');
         let called = 0;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             called++;
             const [value, setValue] = useState(0);
             useEffect(() => {
@@ -142,7 +142,7 @@ describe('useState', () => {
                 setValue(value => value + 1);
             }, []);
             return { value };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(root.outerHTML, '<div>0</div>');
         flush();
@@ -151,24 +151,24 @@ describe('useState', () => {
     });
     it('should be possible to pass a function as initialState', () => {
         const root = document.createElement('div');
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [value] = useState(() => 'foo');
             return { value };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(root.outerHTML, '<div>foo</div>');
     });
     it('should update from an effect', () => {
         const root = document.createElement('div');
         let called = 0;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             called++;
             const [foo, setFoo] = useState('foo');
             useEffect(() => {
                 setFoo('bar');
             }, []);
             return { value: foo };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(root.outerHTML, '<div>foo</div>');
         flush();
@@ -178,7 +178,7 @@ describe('useState', () => {
     it('should only update once from an effect', () => {
         const root = document.createElement('div');
         let called = 0;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             called++;
             const [foo, setFoo] = useState('foo');
             const [bar, setBar] = useState('bar');
@@ -187,7 +187,7 @@ describe('useState', () => {
                 setBar('foo');
             }, []);
             return { value: foo + bar };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(root.outerHTML, '<div>foobar</div>');
         flush();
@@ -198,7 +198,7 @@ describe('useState', () => {
         const root = document.createElement('div');
         let called = 0;
         const values = [];
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             called++;
             const [foo, setFoo] = useState('foo');
             const [bar, setBar] = useState('bar');
@@ -208,7 +208,7 @@ describe('useState', () => {
             setBar('bar1');
             setBar('bar2');
             return { value: foo + bar };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(root.outerHTML, '<div>foo2bar2</div>');
         assert.equal(called, 2);
@@ -216,11 +216,11 @@ describe('useState', () => {
     });
     it('should throw when component function leads to an infinite loop', () => {
         const root = document.createElement('div');
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [value, setValue] = useState(0);
             setValue(value + 1);
             return { value };
-        });
+        }, template);
 
         assert.throws(() => {
             render(root, MyComponent);

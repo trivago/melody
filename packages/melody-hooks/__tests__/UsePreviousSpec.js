@@ -32,12 +32,12 @@ describe('usePrevious', () => {
     it('should return the previous value', () => {
         const root = document.createElement('div');
         let setter;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [value, setValue] = useState(0);
             setter = setValue;
             const prev = usePrevious(value);
             return { value: JSON.stringify({ value, prev }) };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(root.outerHTML, '<div>{"value":0}</div>');
         setter(2);

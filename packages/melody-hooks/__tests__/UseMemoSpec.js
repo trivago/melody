@@ -33,7 +33,7 @@ describe('useMemo', () => {
         const root = document.createElement('div');
         const values = [];
         let setter;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [value, setValue] = useState(false);
             setter = setValue;
 
@@ -42,7 +42,7 @@ describe('useMemo', () => {
             values.push(memoized);
 
             return { value };
-        });
+        }, template);
         render(root, MyComponent);
         setter(true);
         flush();
@@ -54,7 +54,7 @@ describe('useMemo', () => {
         const root = document.createElement('div');
         const values = [];
         let setter;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [value, setValue] = useState(false);
             setter = setValue;
 
@@ -63,7 +63,7 @@ describe('useMemo', () => {
             values.push(memoized);
 
             return { value };
-        });
+        }, template);
         render(root, MyComponent);
         setter(true);
         flush();

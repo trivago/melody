@@ -24,7 +24,6 @@ import {
 } from './constants';
 
 const { afterUpdate, afterMount } = options;
-const defaultComponentFn = props => props;
 
 function Component(element, componentFn) {
     // part of the public API
@@ -35,7 +34,12 @@ function Component(element, componentFn) {
     // passed to the template. If we don't get a component
     // function we us the default component function which
     // just forwards the received props
-    this.componentFn = componentFn ? componentFn : defaultComponentFn;
+    if (!componentFn) {
+        throw new Error(
+            'Can not construct component without component function'
+        );
+    }
+    this.componentFn = componentFn;
     // tracks whether we are in the phase of calling
     // the component function
     this.isRunningComponentFn = false;
@@ -346,7 +350,7 @@ const createComponentConstructor = (Parent, parentComponentFn) => {
     return ChildComponent;
 };
 
-export const createComponent = (templateFnOrObj, componentFn) => {
+const baseCreateComponent = (componentFn, templateFnOrObj) => {
     const template = templateFnOrObj.render
         ? props => templateFnOrObj.render(props)
         : templateFnOrObj;
@@ -361,4 +365,11 @@ export const createComponent = (templateFnOrObj, componentFn) => {
     };
 
     return ChildComponent;
+};
+
+export const createComponent = (...args) => {
+    if (args.length >= baseCreateComponent.length) {
+        return baseCreateComponent.apply(null, args);
+    }
+    return (...args2) => createComponent.apply(null, args.concat(args2));
 };

@@ -35,13 +35,44 @@ const template = {
 };
 
 describe('component', () => {
+    it('createComponent should support currying', () => {
+        const template1 = {
+            render(_context) {
+                elementOpen('div');
+                elementOpen('span');
+                text(_context.value);
+                elementClose('span');
+                elementClose('div');
+            },
+        };
+        const template2 = {
+            render(_context) {
+                elementOpen('div');
+                elementOpen('div');
+                text(_context.value);
+                elementClose('div');
+                elementClose('div');
+            },
+        };
+        const createHashtagComponent = createComponent(props => ({
+            value: `#${props.value}`,
+        }));
+        const SpanHashtagComponent = createHashtagComponent(template1);
+        const DivHashtagComponent = createHashtagComponent(template2);
+
+        const root1 = document.createElement('div');
+        render(root1, SpanHashtagComponent, { value: 'foo' });
+
+        const root2 = document.createElement('div');
+        render(root2, DivHashtagComponent, { value: 'foo' });
+    });
     it('should rerender when props have changed', () => {
         const root = document.createElement('div');
         let called = 0;
-        const MyComponent = createComponent(template, ({ value }) => {
+        const MyComponent = createComponent(({ value }) => {
             called++;
             return { value };
-        });
+        }, template);
         render(root, MyComponent, { value: 'foo' });
         render(root, MyComponent, { value: 'bar' });
         assert.equal(called, 2);
@@ -49,15 +80,15 @@ describe('component', () => {
     it("should not rerender when props haven't changed", () => {
         const root = document.createElement('div');
         let called = 0;
-        const MyComponent = createComponent(template, ({ value }) => {
+        const MyComponent = createComponent(({ value }) => {
             called++;
             return { value };
-        });
+        }, template);
         render(root, MyComponent, { value: 'foo' });
         render(root, MyComponent, { value: 'foo' });
         assert.equal(called, 1);
     });
-    it('should replace components', function() {
+    it('should replace components', () => {
         const template = {
             render(_context) {
                 elementOpen('div', 'test', null);
@@ -66,8 +97,8 @@ describe('component', () => {
             },
         };
         const root = document.createElement('div');
-        const MyComponent = createComponent(template);
-        const MyOtherComponent = createComponent(template);
+        const MyComponent = createComponent(props => props, template);
+        const MyOtherComponent = createComponent(props => props, template);
 
         render(root, MyComponent, { text: 'hello' });
         assert.equal(root.outerHTML, '<div>hello</div>');
@@ -75,7 +106,7 @@ describe('component', () => {
         render(root, MyOtherComponent, { text: 'test' });
         assert.equal(root.outerHTML, '<div>test</div>');
     });
-    it('should unmount replaced components', function() {
+    it('should unmount replaced components', () => {
         const template = {
             render(_context) {
                 elementOpen('div', 'test', null);
@@ -85,13 +116,13 @@ describe('component', () => {
         };
         const root = document.createElement('div');
         let unmounted = 0;
-        const MyComponent = createComponent(template, ({ text }) => {
+        const MyComponent = createComponent(({ text }) => {
             useEffect(() => () => {
                 unmounted++;
             });
             return { text };
-        });
-        const MyOtherComponent = createComponent(template);
+        }, template);
+        const MyOtherComponent = createComponent(props => props, template);
 
         render(root, MyComponent, { text: 'hello' });
         assert.equal(root.outerHTML, '<div>hello</div>');
@@ -100,7 +131,7 @@ describe('component', () => {
         assert.equal(root.outerHTML, '<div>test</div>');
         assert.equal(unmounted, 1);
     });
-    it('should render components into an existing DOM', function() {
+    it('should render components into an existing DOM', () => {
         const childTemplate = {
             render(_context) {
                 elementOpen('div', null, null);
@@ -110,7 +141,7 @@ describe('component', () => {
         };
 
         let mounted = 0;
-        const MyComponent = createComponent(childTemplate, props => {
+        const MyComponent = createComponent(props => {
             useEffectOnce(() => {
                 mounted++;
                 if (mounted === 3) {
@@ -118,7 +149,7 @@ describe('component', () => {
                 }
             });
             return props;
-        });
+        }, childTemplate);
 
         const parentTemplate = {
             render(_context) {
@@ -127,7 +158,10 @@ describe('component', () => {
                 elementClose('div');
             },
         };
-        const MyParentComponent = createComponent(parentTemplate);
+        const MyParentComponent = createComponent(
+            props => props,
+            parentTemplate
+        );
 
         const root = document.createElement('div');
         root.innerHTML = '<div>test</div>';
@@ -136,7 +170,7 @@ describe('component', () => {
         assert.equal(root.outerHTML, '<div><div>hello</div></div>');
         assert.equal(mounted, 1);
     });
-    it('should render components into an existing DOM', function() {
+    it('should render components into an existing DOM', () => {
         const childTemplate = {
             render(_context) {
                 elementOpen('div', null, null);
@@ -146,7 +180,7 @@ describe('component', () => {
         };
 
         let mounted = 0;
-        const MyComponent = createComponent(childTemplate, props => {
+        const MyComponent = createComponent(props => {
             useEffectOnce(() => {
                 mounted++;
                 if (mounted === 3) {
@@ -154,7 +188,7 @@ describe('component', () => {
                 }
             });
             return props;
-        });
+        }, childTemplate);
 
         const parentTemplate = {
             render(_context) {
@@ -163,7 +197,10 @@ describe('component', () => {
                 elementClose('div');
             },
         };
-        const MyParentComponent = createComponent(parentTemplate);
+        const MyParentComponent = createComponent(
+            props => props,
+            parentTemplate
+        );
 
         const root = document.createElement('div');
         root.innerHTML = '<div key="test">test</div>';
@@ -178,7 +215,7 @@ describe('component', () => {
             'Previous child no longer has a parent'
         );
     });
-    it('should reuse moved child components', function() {
+    it('should reuse moved child components', () => {
         const childTemplate = {
             render(_context) {
                 elementOpen('div', null, null);
@@ -188,7 +225,7 @@ describe('component', () => {
         };
 
         let mounted = 0;
-        const MyComponent = createComponent(childTemplate, props => {
+        const MyComponent = createComponent(props => {
             useEffectOnce(() => {
                 mounted++;
                 if (mounted === 3) {
@@ -196,7 +233,7 @@ describe('component', () => {
                 }
             });
             return props;
-        });
+        }, childTemplate);
 
         const parentTemplate = {
             render(_context) {
@@ -211,7 +248,10 @@ describe('component', () => {
                 elementClose('div');
             },
         };
-        const MyParentComponent = createComponent(parentTemplate);
+        const MyParentComponent = createComponent(
+            props => props,
+            parentTemplate
+        );
 
         const root = document.createElement('div');
         render(root, MyParentComponent, {
@@ -237,7 +277,7 @@ describe('component', () => {
         assert.equal(secondCompEl, root.childNodes[0]);
         assert.equal(mounted, 2);
     });
-    it('should render existing components into an existing DOM', function() {
+    it('should render existing components into an existing DOM', () => {
         const childTemplate = {
             render(_context) {
                 elementOpen('div', null, null);
@@ -247,12 +287,12 @@ describe('component', () => {
         };
 
         let mounted = 0;
-        const MyComponent = createComponent(childTemplate, props => {
+        const MyComponent = createComponent(props => {
             useEffectOnce(() => {
                 mounted++;
             });
             return props;
-        });
+        }, childTemplate);
 
         const parentTemplate = {
             render(_context) {
@@ -261,7 +301,10 @@ describe('component', () => {
                 elementClose('div');
             },
         };
-        const MyParentComponent = createComponent(parentTemplate);
+        const MyParentComponent = createComponent(
+            props => props,
+            parentTemplate
+        );
 
         const root = document.createElement('div');
         root.innerHTML = '<div key="test">test</div>';
@@ -276,7 +319,7 @@ describe('component', () => {
             'Previous child no longer has a parent'
         );
     });
-    it('should trigger unmount callback when a Component is removed', function() {
+    it('should trigger unmount callback when a Component is removed', () => {
         const template = {
             render(_context) {
                 elementOpen('div', null, null);
@@ -291,12 +334,12 @@ describe('component', () => {
         };
         const root = document.createElement('div');
         let unmounted = 0;
-        const MyComponent = createComponent(template, props => {
+        const MyComponent = createComponent(props => {
             useEffectOnce(() => () => {
                 unmounted++;
             });
             return props;
-        });
+        }, template);
 
         const renderTemplate = _context => {
             elementOpen('div');
@@ -317,7 +360,7 @@ describe('component', () => {
         assert.equal(unmounted, 1);
     });
 
-    it('should trigger unmount callback when a Component is removed within an element', function() {
+    it('should trigger unmount callback when a Component is removed within an element', () => {
         const template = {
             render(_context) {
                 elementOpen('div', null, null);
@@ -327,12 +370,12 @@ describe('component', () => {
         };
         const root = document.createElement('div');
         let unmounted = 0;
-        const MyComponent = createComponent(template, props => {
+        const MyComponent = createComponent(props => {
             useEffectOnce(() => () => {
                 unmounted++;
             });
             return props;
-        });
+        }, template);
 
         const renderTemplate = _context => {
             elementOpen('div');
@@ -354,7 +397,7 @@ describe('component', () => {
         assert.equal(root.innerHTML, '');
         assert.equal(unmounted, 1);
     });
-    it('should trigger unmount callback for child components when a Component is removed', function() {
+    it('should trigger unmount callback for child components when a Component is removed', () => {
         let MyComponent;
         const template = {
             render(_context) {
@@ -371,7 +414,7 @@ describe('component', () => {
         };
         const root = document.createElement('div');
         let mounted = 0;
-        MyComponent = createComponent(template, props => {
+        MyComponent = createComponent(props => {
             useEffectOnce(() => {
                 mounted++;
                 return () => {
@@ -379,7 +422,7 @@ describe('component', () => {
                 };
             });
             return props;
-        });
+        }, template);
 
         const renderTemplate = _context => {
             elementOpen('div');
@@ -399,7 +442,7 @@ describe('component', () => {
         assert.equal(root.innerHTML, '');
         assert.equal(mounted, 0);
     });
-    it('should trigger unmount callback for deep nested child components when a Component is removed', function() {
+    it('should trigger unmount callback for deep nested child components when a Component is removed', () => {
         let mounted = { inner: 0, middle: 0, outer: 0 };
         const root = document.createElement('div');
         const CountInstances = name => props => {
@@ -412,37 +455,28 @@ describe('component', () => {
             return props;
         };
 
-        const InnerComponent = createComponent(
-            {
-                render(_context) {
-                    elementOpen('div', null, null);
-                    elementClose('div');
-                },
+        const InnerComponent = createComponent(CountInstances('inner'), {
+            render(_context) {
+                elementOpen('div', null, null);
+                elementClose('div');
             },
-            CountInstances('inner')
-        );
+        });
 
-        const MiddleComponent = createComponent(
-            {
-                render(_context) {
-                    elementOpen('div', null, null);
-                    component(InnerComponent, 'child', { inner: true });
-                    elementClose('div');
-                },
+        const MiddleComponent = createComponent(CountInstances('middle'), {
+            render(_context) {
+                elementOpen('div', null, null);
+                component(InnerComponent, 'child', { inner: true });
+                elementClose('div');
             },
-            CountInstances('middle')
-        );
+        });
 
-        const OuterComponent = createComponent(
-            {
-                render(_context) {
-                    elementOpen('div', null, null);
-                    component(MiddleComponent, 'child', {});
-                    elementClose('div');
-                },
+        const OuterComponent = createComponent(CountInstances('outer'), {
+            render(_context) {
+                elementOpen('div', null, null);
+                component(MiddleComponent, 'child', {});
+                elementClose('div');
             },
-            CountInstances('outer')
-        );
+        });
 
         const renderTemplate = _context => {
             elementOpen('div');
@@ -466,7 +500,7 @@ describe('component', () => {
         assert.equal(mounted.middle, 0);
         assert.equal(mounted.outer, 0);
     });
-    it('should trigger unmount callback for deep nested child components when a Component is removed', function() {
+    it('should trigger unmount callback for deep nested child components when a Component is removed', () => {
         let mounted = { innermost: 0, inner: 0, middle: 0, outer: 0 };
         const root = document.createElement('div');
         const CountInstances = name => props => {
@@ -480,49 +514,40 @@ describe('component', () => {
         };
 
         const InnerMostComponent = createComponent(
+            CountInstances('innermost'),
             {
                 render(_context) {
                     elementOpen('div', null, null);
                     elementClose('div');
                 },
-            },
-            CountInstances('innermost')
+            }
         );
 
-        const InnerComponent = createComponent(
-            {
-                render(_context) {
-                    elementOpen('div', null, null);
-                    component(InnerMostComponent, 'child', {});
-                    elementClose('div');
-                },
+        const InnerComponent = createComponent(CountInstances('inner'), {
+            render(_context) {
+                elementOpen('div', null, null);
+                component(InnerMostComponent, 'child', {});
+                elementClose('div');
             },
-            CountInstances('inner')
-        );
+        });
 
-        const MiddleComponent = createComponent(
-            {
-                render(_context) {
-                    elementOpen('div', null, null);
-                    component(InnerComponent, 'child', {});
-                    elementClose('div');
-                },
+        const MiddleComponent = createComponent(CountInstances('middle'), {
+            render(_context) {
+                elementOpen('div', null, null);
+                component(InnerComponent, 'child', {});
+                elementClose('div');
             },
-            CountInstances('middle')
-        );
+        });
 
-        const OuterComponent = createComponent(
-            {
-                render(_context) {
-                    elementOpen('div', null, null);
-                    if (_context.comp) {
-                        component(MiddleComponent, 'child', {});
-                    }
-                    elementClose('div');
-                },
+        const OuterComponent = createComponent(CountInstances('outer'), {
+            render(_context) {
+                elementOpen('div', null, null);
+                if (_context.comp) {
+                    component(MiddleComponent, 'child', {});
+                }
+                elementClose('div');
             },
-            CountInstances('outer')
-        );
+        });
 
         render(root, OuterComponent, { comp: true });
         assert.equal(root.innerHTML, '<div><div><div></div></div></div>');
@@ -537,7 +562,7 @@ describe('component', () => {
         assert.equal(mounted.outer, 1);
     });
 
-    it('should trigger mount callback once even for nested components', function() {
+    it('should trigger mount callback once even for nested components', () => {
         const childTemplate = {
             render(_context) {
                 elementOpen('div', null, null);
@@ -547,12 +572,12 @@ describe('component', () => {
         };
 
         let mounted = 0;
-        const MyComponent = createComponent(childTemplate, props => {
+        const MyComponent = createComponent(props => {
             useEffectOnce(() => {
                 mounted++;
             });
             return props;
-        });
+        }, childTemplate);
 
         const parentTemplate = {
             render(_context) {
@@ -561,7 +586,10 @@ describe('component', () => {
                 elementClose('div');
             },
         };
-        const MyParentComponent = createComponent(parentTemplate);
+        const MyParentComponent = createComponent(
+            props => props,
+            parentTemplate
+        );
 
         const root = document.createElement('div');
         render(root, MyParentComponent, { childProps: { text: 'hello' } });

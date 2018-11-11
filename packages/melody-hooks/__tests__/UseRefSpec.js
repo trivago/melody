@@ -22,7 +22,7 @@ import { getRefCounter } from '../src/hooks/useRef';
 import { flush } from './util/flush';
 
 const createParentComponent = Child => {
-    return createComponent({
+    return createComponent(props => props, {
         render(_context) {
             elementOpen('div');
             if (_context.show) {
@@ -43,14 +43,14 @@ describe('useRef', () => {
         const root = document.createElement('div');
         let current;
         let currentInEffect;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const myref = useRef(null);
             current = myref.current;
             useEffect(() => {
                 currentInEffect = myref.current;
             }, []);
             return { myref };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(current, null);
         assert.instanceOf(currentInEffect, HTMLDivElement);
@@ -59,17 +59,17 @@ describe('useRef', () => {
         const root = document.createElement('div');
         let ref;
         const Child = createComponent(
+            () => {
+                const myref = useRef(null);
+                ref = myref;
+                return { myref };
+            },
             {
                 render(_context) {
                     elementOpen('span');
                     elementVoid('div', null, null, 'ref', _context.myref);
                     elementClose('span');
                 },
-            },
-            () => {
-                const myref = useRef(null);
-                ref = myref;
-                return { myref };
             }
         );
         const Parent = createParentComponent(Child);
@@ -108,7 +108,7 @@ describe('useRef', () => {
         let ref;
         let current;
         let currentInEffect;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [foo, setFoo] = useState(false);
             setter = setFoo;
             const myref = useRef(null);
@@ -118,7 +118,7 @@ describe('useRef', () => {
                 currentInEffect = myref.current;
             });
             return { myref, foo };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(current, null);
         assert.equal(currentInEffect.className, 'bar');
@@ -162,7 +162,7 @@ describe('useRef', () => {
         let ref;
         let current;
         let currentInEffect;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [foo, setFoo] = useState(false);
             setter = setFoo;
             const myref = useRef(null);
@@ -172,7 +172,7 @@ describe('useRef', () => {
                 currentInEffect = myref.current;
             });
             return { myref, foo };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(current, null);
         assert.equal(currentInEffect.className, 'foo');

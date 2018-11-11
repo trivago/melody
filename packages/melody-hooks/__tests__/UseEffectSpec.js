@@ -37,12 +37,12 @@ describe('useEffect', () => {
             const root = document.createElement('div');
             let called = 0;
             let rerender;
-            const MyComponent = createComponent(template, () => {
+            const MyComponent = createComponent(() => {
                 rerender = useState()[1];
                 useEffect(() => {
                     called++;
                 });
-            });
+            }, template);
             render(root, MyComponent);
             assert.equal(called, 1);
             rerender(unique());
@@ -56,12 +56,12 @@ describe('useEffect', () => {
             const root = document.createElement('div');
             let called = 0;
             let rerender;
-            const MyComponent = createComponent(template, () => {
+            const MyComponent = createComponent(() => {
                 rerender = useState()[1];
                 useEffect(() => {
                     called++;
                 }, []);
-            });
+            }, template);
             render(root, MyComponent);
             assert.equal(called, 1);
             rerender(unique());
@@ -73,7 +73,7 @@ describe('useEffect', () => {
             let called = 0;
             let rerender;
             let setValue;
-            const MyComponent = createComponent(template, () => {
+            const MyComponent = createComponent(() => {
                 rerender = useState()[1];
                 const state = useState(0);
                 const value = state[0];
@@ -87,7 +87,7 @@ describe('useEffect', () => {
                 return {
                     value,
                 };
-            });
+            }, template);
             render(root, MyComponent);
             assert.equal(root.outerHTML, '<div>0</div>');
             assert.equal(called, 1);
@@ -110,7 +110,7 @@ describe('useEffect', () => {
             let called = 0;
             let calledUnsubscribe = 0;
             let rerender;
-            const MyComponent = createComponent(template, () => {
+            const MyComponent = createComponent(() => {
                 rerender = useState()[1];
                 useEffect(() => {
                     called++;
@@ -118,7 +118,7 @@ describe('useEffect', () => {
                         calledUnsubscribe++;
                     };
                 });
-            });
+            }, template);
             render(root, MyComponent);
             assert.equal(called, 1);
             assert.equal(calledUnsubscribe, 0);
@@ -138,7 +138,7 @@ describe('useEffect', () => {
             let called = 0;
             let calledUnsubscribe = 0;
             let rerender;
-            const MyComponent = createComponent(template, () => {
+            const MyComponent = createComponent(() => {
                 rerender = useState()[1];
                 useEffect(() => {
                     called++;
@@ -146,7 +146,7 @@ describe('useEffect', () => {
                         calledUnsubscribe++;
                     };
                 }, []);
-            });
+            }, template);
             render(root, MyComponent);
             assert.equal(called, 1);
             assert.equal(calledUnsubscribe, 0);
@@ -163,7 +163,7 @@ describe('useEffect', () => {
             let calledUnsubscribe = 0;
             let rerender;
             let setValue;
-            const MyComponent = createComponent(template, () => {
+            const MyComponent = createComponent(() => {
                 rerender = useState()[1];
                 const state = useState(0);
                 const value = state[0];
@@ -180,7 +180,7 @@ describe('useEffect', () => {
                 return {
                     value,
                 };
-            });
+            }, template);
             render(root, MyComponent);
             assert.equal(root.outerHTML, '<div>0</div>');
             assert.equal(called, 1);
@@ -209,12 +209,12 @@ describe('useEffectOnce', () => {
             const root = document.createElement('div');
             let called = 0;
             let rerender;
-            const MyComponent = createComponent(template, () => {
+            const MyComponent = createComponent(() => {
                 rerender = useState()[1];
                 useEffectOnce(() => {
                     called++;
                 });
-            });
+            }, template);
             render(root, MyComponent);
             assert.equal(called, 1);
             rerender(unique());
@@ -228,7 +228,7 @@ describe('useEffectOnce', () => {
             let called = 0;
             let calledUnsubscribe = 0;
             let rerender;
-            const MyComponent = createComponent(template, () => {
+            const MyComponent = createComponent(() => {
                 rerender = useState()[1];
                 useEffectOnce(() => {
                     called++;
@@ -236,7 +236,7 @@ describe('useEffectOnce', () => {
                         calledUnsubscribe++;
                     };
                 });
-            });
+            }, template);
             render(root, MyComponent);
             assert.equal(called, 1);
             assert.equal(calledUnsubscribe, 0);

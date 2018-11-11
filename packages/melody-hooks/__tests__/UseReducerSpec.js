@@ -48,21 +48,21 @@ describe('useReducer', () => {
     };
     it('should read initialState from a useReducer hook', () => {
         const root = document.createElement('div');
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [value] = useReducer(reducer, initialState);
             return { value: JSON.stringify(value) };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(root.outerHTML, '<div>{"foo":"bar","bar":"foo"}</div>');
     });
     it('should update when an action is dispatched', () => {
         const root = document.createElement('div');
         let setter;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [state, dispatch] = useReducer(reducer, initialState);
             setter = dispatch;
             return { value: JSON.stringify(state) };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(root.outerHTML, '<div>{"foo":"bar","bar":"foo"}</div>');
         setter({ type: 'FOO_CHANGED', payload: 'qux' });
@@ -73,12 +73,12 @@ describe('useReducer', () => {
         const root = document.createElement('div');
         let setter;
         let called = 0;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [state, dispatch] = useReducer(reducer, initialState);
             called++;
             setter = dispatch;
             return { value: JSON.stringify(state) };
-        });
+        }, template);
         render(root, MyComponent);
         assert.equal(root.outerHTML, '<div>{"foo":"bar","bar":"foo"}</div>');
         setter({ type: 'UNHANDLED', payload: 42 });
@@ -88,10 +88,10 @@ describe('useReducer', () => {
     });
     it('should throw when no reducer function was passed', () => {
         const root = document.createElement('div');
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [value] = useReducer();
             return { value: JSON.stringify(value) };
-        });
+        }, template);
         assert.throws(() => {
             render(root, MyComponent);
         }, '`useReducer` expects a reducer function as first argument');

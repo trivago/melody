@@ -36,7 +36,7 @@ describe('hooks', () => {
     it('should throw when hook slots differ', () => {
         const root = document.createElement('div');
         let setter;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [value, setValue] = useState(0);
             setter = setValue;
             if (value === 1) {
@@ -44,7 +44,7 @@ describe('hooks', () => {
             } else {
                 useEffect(() => {});
             }
-        });
+        }, template);
         render(root, MyComponent);
 
         assert.throws(() => {

@@ -33,13 +33,13 @@ describe('useCallback', () => {
         const root = document.createElement('div');
         const callbacks = [];
         let setter;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [value, setValue] = useState(false);
             setter = setValue;
             const callback = useCallback(() => {});
             callbacks.push(callback);
             return { value };
-        });
+        }, template);
         render(root, MyComponent);
         setter(true);
         flush();
@@ -54,13 +54,13 @@ describe('useCallback', () => {
         const root = document.createElement('div');
         const callbacks = [];
         let setter;
-        const MyComponent = createComponent(template, () => {
+        const MyComponent = createComponent(() => {
             const [value, setValue] = useState(false);
             setter = setValue;
             const callback = useCallback(() => {}, [value]);
             callbacks.push(callback);
             return { value };
-        });
+        }, template);
         render(root, MyComponent);
         setter(true);
         flush();

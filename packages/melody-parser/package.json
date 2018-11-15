@@ -1,6 +1,6 @@
 {
   "name": "melody-parser",
-  "version": "1.1.0",
+  "version": "1.2.0-0",
   "description": "",
   "main": "./lib/index.js",
   "jsnext:main": "./lib/index.esm.js",
@@ -12,7 +12,7 @@
   "dependencies": {
     "he": "^1.1.0",
     "lodash": "^4.12.0",
-    "melody-code-frame": "1.1.0"
+    "melody-code-frame": "1.2.0-0"
   },
   "bundledDependencies": [
     "he"

@@ -1,6 +1,6 @@
 {
   "name": "melody-util",
-  "version": "1.1.0",
+  "version": "1.2.0-0",
   "description": "",
   "main": "./lib/index.js",
   "jsnext:main": "./lib/index.esm.js",
@@ -10,10 +10,10 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "melody-component": "1.1.0"
+    "melody-component": "1.2.0-0"
   },
   "devDependencies": {
-    "melody-idom": "1.1.0",
+    "melody-idom": "1.2.0-0",
     "rollup-plugin-babel": "^2.6.1"
   }
 }

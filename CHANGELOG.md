@@ -3,16 +3,15 @@
 ### Features
 
 - Filter `trim`: add support for advanced features [#64](https://github.com/trivago/melody/pull/64)
-- Throw an error in melody-redux's connect if no store found [#68](https://github.com/trivago/melody/pull/68)
+- Throw an error in `melody-redux`'s connect if no store found [#68](https://github.com/trivago/melody/pull/68)
+- Introduce `melody-hooks` API [#74](https://github.com/trivago/melody/pull/74)
+- `[melody-compiler]` warns on `mount` statement without `as` key [#48](https://github.com/trivago/melody/pull/48)
 
 ### Fixes
 
 - incorrect 'is' method call in melody-types [#20](https://github.com/trivago/melody/issues/20)
 - getFocusedPath can break on IE11 for svg elements [#57](https://github.com/trivago/melody/issues/57)
 
-### Features
-
-- `[melody-compiler]` warns on `mount` statement without `as` key [#48](https://github.com/trivago/melody/pull/48)
 
 ### Chore & Maintenance
 

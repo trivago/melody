@@ -22,21 +22,24 @@ export const useCallback = (callback, inputs) => {
     const currentComponent = enterHook(HOOK_TYPE_USE_CALLBACK);
     const { hooksPointer, hooks } = currentComponent;
 
+    const inputsNext =
+        inputs !== undefined && inputs !== null ? inputs : [callback];
+
     if (currentComponent.isCollectingHooks) {
-        hooks.push([HOOK_TYPE_USE_CALLBACK, callback, inputs]);
+        hooks.push([HOOK_TYPE_USE_CALLBACK, callback, inputsNext]);
         return callback;
     }
 
     const hook = hooks[hooksPointer];
     const callbackPrev = hook[1];
     const inputsPrev = hook[2];
-    const dirty =
-        inputs && inputs.length && !shallowEqualsArray(inputsPrev, inputs);
+
+    const dirty = !shallowEqualsArray(inputsPrev, inputsNext);
 
     if (!dirty) return callbackPrev;
 
-    // Update callback
+    // Update callback & inputs
     hook[1] = callback;
-    hook[2] = inputs;
+    hook[2] = inputsNext;
     return callback;
 };

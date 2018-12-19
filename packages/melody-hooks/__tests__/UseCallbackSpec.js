@@ -29,48 +29,71 @@ const template = {
 };
 
 describe('useCallback', () => {
-    it('should return a memoized callback', () => {
-        const root = document.createElement('div');
-        const callbacks = [];
-        let setter;
-        const MyComponent = createComponent(() => {
-            const [value, setValue] = useState(false);
-            setter = setValue;
-            const callback = useCallback(() => {});
-            callbacks.push(callback);
-            return { value };
-        }, template);
-        render(root, MyComponent);
-        setter(true);
-        flush();
-        setter(false);
-        flush();
-        assert.equal(
-            callbacks[0] === callbacks[1] && callbacks[1] === callbacks[2],
-            true
-        );
+    describe('without inputs being specified', () => {
+        it('should return the passed callback on every update', () => {
+            const root = document.createElement('div');
+            const callbacks = [];
+            let setter;
+            const MyComponent = createComponent(() => {
+                const [value, setValue] = useState(false);
+                setter = setValue;
+                const callback = useCallback(() => {});
+                callbacks.push(callback);
+                return { value };
+            }, template);
+            render(root, MyComponent);
+            setter(true);
+            flush();
+            setter(false);
+            flush();
+            assert.equal(callbacks[0] !== callbacks[1], true);
+            assert.equal(callbacks[1] !== callbacks[2], true);
+        });
     });
-    it('should return an updated callback when inputs change', () => {
-        const root = document.createElement('div');
-        const callbacks = [];
-        let setter;
-        const MyComponent = createComponent(() => {
-            const [value, setValue] = useState(false);
-            setter = setValue;
-            const callback = useCallback(() => {}, [value]);
-            callbacks.push(callback);
-            return { value };
-        }, template);
-        render(root, MyComponent);
-        setter(true);
-        flush();
-        setter(false);
-        flush();
-        assert.equal(
-            callbacks[0] !== callbacks[1] &&
-                callbacks[1] !== callbacks[2] &&
-                callbacks[2] !== callbacks[0],
-            true
-        );
+    describe('with inputs being specified', () => {
+        it('should return an updated callback when inputs change', () => {
+            const root = document.createElement('div');
+            const callbacks = [];
+            let setter;
+            let setter2;
+            const MyComponent = createComponent(() => {
+                const [value, setValue] = useState(false);
+                const [, setValue2] = useState(false);
+                setter = setValue;
+                setter2 = setValue2;
+                const callback = useCallback(() => {}, [value]);
+                callbacks.push(callback);
+                return { value };
+            }, template);
+            render(root, MyComponent);
+            setter2(true);
+            flush();
+            setter(true);
+            flush();
+            assert.equal(callbacks[0] === callbacks[1], true);
+            assert.equal(callbacks[1] !== callbacks[2], true);
+        });
+        it('should return the same callback when inputs are empty', () => {
+            const root = document.createElement('div');
+            const callbacks = [];
+            let setter;
+            let setter2;
+            const MyComponent = createComponent(() => {
+                const [value, setValue] = useState(false);
+                const [, setValue2] = useState(false);
+                setter = setValue;
+                setter2 = setValue2;
+                const callback = useCallback(() => {}, []);
+                callbacks.push(callback);
+                return { value };
+            }, template);
+            render(root, MyComponent);
+            setter2(true);
+            flush();
+            setter(true);
+            flush();
+            assert.equal(callbacks[0] === callbacks[1], true);
+            assert.equal(callbacks[1] === callbacks[2], true);
+        });
     });
 });

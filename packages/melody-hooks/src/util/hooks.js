@@ -23,6 +23,13 @@ export const setCurrentComponent = c => {
     currentComponent = c;
 };
 
+export const getCurrentComponent = () => {
+    if (!currentComponent) {
+        throw new Error('Cannot use hooks outside of component functions');
+    }
+    return currentComponent;
+};
+
 export const unsetCurrentComponent = () => {
     currentComponent = null;
 };

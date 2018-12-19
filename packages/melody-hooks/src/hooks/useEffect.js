@@ -32,15 +32,16 @@ const createEffectHook = type => (callback, inputs) => {
         return;
     }
 
-    const dataPrev = hooks[hooksPointer][2];
+    const hook = hooks[hooksPointer];
+    const inputsPrev = hook[2];
     const dirty =
-        !inputs || (inputs.length && !shallowEqualsArray(dataPrev, inputs));
+        !inputs || (inputs.length && !shallowEqualsArray(inputsPrev, inputs));
 
     if (dirty) {
-        hooks[hooksPointer][1] = callback;
+        hook[1] = callback;
     }
-    hooks[hooksPointer][2] = inputs;
-    hooks[hooksPointer][3] = dirty;
+    hook[2] = inputs;
+    hook[3] = dirty;
 };
 
 export const useEffect = createEffectHook(HOOK_TYPE_USE_EFFECT);

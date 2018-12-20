@@ -246,6 +246,15 @@ export default {
     },
     IncludeStatement: {
         exit(path) {
+            const sourceType = path.node.source.type;
+            if (sourceType !== 'StringLiteral') {
+                this.error(
+                    'Expected a StringLiteral',
+                    0,
+                    'Include statement expected StringLiteral but got' +
+                        sourceType
+                );
+            }
             const includeName = this.addDefaultImportFrom(
                 path.node.source.value,
                 path.scope.generateUid('include')

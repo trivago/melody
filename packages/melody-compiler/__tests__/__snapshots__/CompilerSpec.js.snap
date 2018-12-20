@@ -2228,6 +2228,13 @@ http://twig.sensiolabs.org/doc/filters/index.html"
 
 exports[`Compiler should fail transforming wrong import.template 1`] = `"Import must be used in macro, block or template"`;
 
+exports[`Compiler should fail transforming wrong include.template 1`] = `
+"Expected a StringLiteral
+
+
+Include statement expected StringLiteral but gotBinaryExpression"
+`;
+
 exports[`Compiler should transform templates with warnings mount without as.template 1`] = `
 "
 import Footwig from \\"foo.twig\\";

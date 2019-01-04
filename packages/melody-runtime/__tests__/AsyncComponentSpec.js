@@ -64,7 +64,8 @@ describe('AsyncComponent', () => {
     it('should render a promised component', async function() {
         const template = data => {
             component(AsyncComponent, 'test', {
-                promisedComponent: () => Promise.resolve(Component),
+                promisedComponent: () =>
+                    Promise.resolve({ default: Component }),
                 whileLoading: () => {
                     elementOpen('b');
                     text('Loading...');

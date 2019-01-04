@@ -25,22 +25,25 @@ const createEffectHook = type => (callback, inputs) => {
     const currentComponent = enterHook(type);
     const { hooksPointer, hooks } = currentComponent;
 
+    const inputsNext =
+        inputs !== undefined && inputs !== null ? inputs : [callback];
+
     if (currentComponent.isCollectingHooks) {
         const dirty = true;
         const unsubscribe = null;
-        hooks.push([type, callback, inputs, dirty, unsubscribe]);
+        hooks.push([type, callback, inputsNext, dirty, unsubscribe]);
         return;
     }
 
-    const dataPrev = hooks[hooksPointer][2];
-    const dirty =
-        !inputs || (inputs.length && !shallowEqualsArray(dataPrev, inputs));
+    const hook = hooks[hooksPointer];
+    const inputsPrev = hook[2];
+    const dirty = !shallowEqualsArray(inputsPrev, inputsNext);
 
     if (dirty) {
-        hooks[hooksPointer][1] = callback;
+        hook[1] = callback;
     }
-    hooks[hooksPointer][2] = inputs;
-    hooks[hooksPointer][3] = dirty;
+    hook[2] = inputsNext;
+    hook[3] = dirty;
 };
 
 export const useEffect = createEffectHook(HOOK_TYPE_USE_EFFECT);

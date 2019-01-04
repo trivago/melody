@@ -3,5 +3,36 @@
 {% mount 'foo.twig' as 'bar' with {foo: 'bar'} %}
 
 {% mount Foo as 'bar' %}
-{% mount Foo as 'bar' with {foo: 'bar'} %}
+{% mount async as 'bar' with {foo: 'bar'} %}
 
+{% mount async 'foo.twig' as 'bar' with {foo: 'bar'} %}
+  Loading... {{ err }}
+{% catch err %}
+  Failed to load with {{ err }}
+{% endmount %}
+
+{% mount async 'foo.twig' as 'bar' with {foo: 'bar'} delay placeholder by 500ms %}
+  Loading... {{ err }}
+{% catch err %}
+  Failed to load with {{ err }}
+{% endmount %}
+
+{% mount async 'foo.twig' as 'bar' with {foo: 'bar'} delay placeholder by 1s %}
+  Loading... {{ err }}
+{% catch error %}
+  Failed to load with {{ error }} {{err}}
+{% endmount %}
+
+{% mount async './parts/#{ part }.twig' as 'bar-#{part}' with {foo: 'bar'} delay placeholder by 1s %}
+  Loading... {{ err }}
+{% catch err %}
+  Failed to load with {{ err }}
+{% endmount %}
+
+{% mount async './parts/#{ part }.twig' as 'bar' with {foo: 'bar'} delay placeholder by 1s %}
+  Loading... {{ err }}
+{% endmount %}
+
+{% mount async './parts/#{ part }.twig' as 'bar' with {foo: 'bar'} delay placeholder by 1s %}
+<strong>Loading...</strong>
+{% endmount %}

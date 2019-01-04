@@ -1588,8 +1588,9 @@ export default function Macros(props) {
 
 exports[`Compiler should correctly transform mount.template 1`] = `
 "
+import { AsyncComponent } from \\"melody-runtime\\";
 import Footwig from \\"foo.twig\\";
-import { component } from \\"melody-idom\\";
+import { component, text, elementOpen, elementClose } from \\"melody-idom\\";
 import Component from \\"./component\\";
 export const _template = {};
 
@@ -1600,8 +1601,92 @@ _template.render = function (_context) {
     foo: \\"bar\\"
   });
   component(_context.Foo, \\"bar\\");
-  component(_context.Foo, \\"bar\\", {
+  component(_context.async, \\"bar\\", {
     foo: \\"bar\\"
+  });
+  component(AsyncComponent, \\"bar\\", {
+    promisedComponent: () => import( /* webpackChunkName: \\"bar\\", webpackPrefetch: true */\\"foo.twig\\"),
+    delayLoadingAnimation: 0,
+    whileLoading: () => {
+      text(\\" Loading... \\");
+      text(_context.err);
+    },
+    onError: err => {
+      text(\\" Failed to load with \\");
+      text(err);
+    },
+    data: {
+      foo: \\"bar\\"
+    }
+  });
+  component(AsyncComponent, \\"bar\\", {
+    promisedComponent: () => import( /* webpackChunkName: \\"bar\\", webpackPrefetch: true */\\"foo.twig\\"),
+    delayLoadingAnimation: 500,
+    whileLoading: () => {
+      text(\\" Loading... \\");
+      text(_context.err);
+    },
+    onError: err => {
+      text(\\" Failed to load with \\");
+      text(err);
+    },
+    data: {
+      foo: \\"bar\\"
+    }
+  });
+  component(AsyncComponent, \\"bar\\", {
+    promisedComponent: () => import( /* webpackChunkName: \\"bar\\", webpackPrefetch: true */\\"foo.twig\\"),
+    delayLoadingAnimation: 1000,
+    whileLoading: () => {
+      text(\\" Loading... \\");
+      text(_context.err);
+    },
+    onError: error => {
+      text(\\" Failed to load with \\");
+      text(error);
+      text(_context.err);
+    },
+    data: {
+      foo: \\"bar\\"
+    }
+  });
+  component(AsyncComponent, \\"\\" + (\\"bar-\\" + _context.part), {
+    promisedComponent: () => import( /* webpackPrefetch: true */\\"./parts/\\" + _context.part + \\".twig\\"),
+    delayLoadingAnimation: 1000,
+    whileLoading: () => {
+      text(\\" Loading... \\");
+      text(_context.err);
+    },
+    onError: err => {
+      text(\\" Failed to load with \\");
+      text(err);
+    },
+    data: {
+      foo: \\"bar\\"
+    }
+  });
+  component(AsyncComponent, \\"bar\\", {
+    promisedComponent: () => import( /* webpackChunkName: \\"bar\\", webpackPrefetch: true */\\"./parts/\\" + _context.part + \\".twig\\"),
+    delayLoadingAnimation: 1000,
+    whileLoading: () => {
+      text(\\" Loading... \\");
+      text(_context.err);
+    },
+    data: {
+      foo: \\"bar\\"
+    }
+  });
+  component(AsyncComponent, \\"bar\\", {
+    promisedComponent: () => import( /* webpackChunkName: \\"bar\\", webpackPrefetch: true */\\"./parts/\\" + _context.part + \\".twig\\"),
+    delayLoadingAnimation: 1000,
+    whileLoading: () => {
+      elementOpen(\\"strong\\", null, null);
+      text(\\"Loading...\\");
+      elementClose(\\"strong\\");
+    },
+    data: {
+      foo: \\"bar\\"
+    }
   });
 };
 
@@ -2177,6 +2262,19 @@ export default function Svg(props) {
   return _template.render(props);
 }
 "
+`;
+
+exports[`Compiler should fail transforming empty async mount.template 1`] = `
+"Asynchronously mounted components must have a placeholder
+> 1 | {% mount async './parts/#{ part }.twig' as 'bar' with {foo: 'bar'} delay placeholder by 1s %}
+    |    ^^^^^^^^^^^
+  2 | {% endmount %}
+  3 | 
+
+When using an async component you must provide a placeholder that can be rendered while your component is being loaded.
+Example:
+{% mount async 'my-component' as 'mycomp' %}
+This is the placeholder content that will be shown to your users while the async component is being loaded."
 `;
 
 exports[`Compiler should fail transforming unknown filter.template 1`] = `

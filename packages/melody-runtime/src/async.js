@@ -36,7 +36,7 @@ export default class AsyncComponent {
             this.isLoading = true;
             promisedComponent()
                 .then(
-                    Component => {
+                    ({ default: Component }) => {
                         if (this.alreadyUnmounted) {
                             return;
                         }

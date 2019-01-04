@@ -25,79 +25,79 @@ import { createMap } from './util';
  */
 function NodeData(nodeName, key) {
     /**
-   * The attributes and their values.
-   * @const {!Object<string, *>}
-   */
+     * The attributes and their values.
+     * @const {!Object<string, *>}
+     */
     this.attrs = createMap();
 
     /**
-   * An array of attribute name/value pairs, used for quickly diffing the
-   * incomming attributes to see if the DOM node's attributes need to be
-   * updated.
-   * @const {Array<*>}
-   */
+     * An array of attribute name/value pairs, used for quickly diffing the
+     * incomming attributes to see if the DOM node's attributes need to be
+     * updated.
+     * @const {Array<*>}
+     */
     this.attrsArr = [];
 
     /**
-   * The incoming attributes for this Node, before they are updated.
-   * @const {!Object<string, *>}
-   */
+     * The incoming attributes for this Node, before they are updated.
+     * @const {!Object<string, *>}
+     */
     this.newAttrs = createMap();
 
     /**
-   * The key used to identify this node, used to preserve DOM nodes when they
-   * move within their parent.
-   * @const
-   */
+     * The key used to identify this node, used to preserve DOM nodes when they
+     * move within their parent.
+     * @const
+     */
     this.key = key;
 
     /**
-   * Keeps track of children within this node by their key.
-   * {?Object<string, !Element>}
-   */
+     * Keeps track of children within this node by their key.
+     * {?Object<string, !Element>}
+     */
     this.keyMap = createMap();
 
     /**
-   * Whether or not the keyMap is currently valid.
-   * {boolean}
-   */
+     * Whether or not the keyMap is currently valid.
+     * {boolean}
+     */
     this.keyMapValid = true;
 
     /**
-   * Whether or not the statics for the given node have already been applied.
-   *
-   * @type {boolean}
-   */
+     * Whether or not the statics for the given node have already been applied.
+     *
+     * @type {boolean}
+     */
     this.staticsApplied = false;
 
     /**
-   * Whether or not the associated node is or contains a focused Element.
-   * @type {boolean}
-   */
+     * Whether or not the associated node is or contains a focused Element.
+     * @type {boolean}
+     */
     this.focused = false;
 
     /**
-   * The node name for this node.
-   * @const {string}
-   */
+     * The node name for this node.
+     * @const {string}
+     */
     this.nodeName = nodeName;
 
     /**
-   * @type {?string}
-   */
+     * @type {?string}
+     */
     this.text = null;
 
     /**
-   * The component instance associated with this element.
-   * @type {Object}
-   */
+     * The component instance associated with this element.
+     * @type {Object}
+     */
     this.componentInstance = null;
 
     /**
-   * The length of the children in this element.
-   * This value is only calculated for raw elements.
-   * @type {number}
-   */
+     * The length of the children in this element.
+     * This value is only calculated for raw elements.
+     * @type {number}
+     */
     this.childLength = 0;
 }
 

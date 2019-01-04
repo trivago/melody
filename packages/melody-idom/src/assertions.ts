@@ -16,17 +16,17 @@
  */
 
 /**
-  * Keeps track whether or not we are in an attributes declaration (after
-  * elementOpenStart, but before elementOpenEnd).
-  * @type {boolean}
-  */
+ * Keeps track whether or not we are in an attributes declaration (after
+ * elementOpenStart, but before elementOpenEnd).
+ * @type {boolean}
+ */
 var inAttributes = false;
 
 /**
-  * Keeps track whether or not we are in an element that should not have its
-  * children cleared.
-  * @type {boolean}
-  */
+ * Keeps track whether or not we are in an element that should not have its
+ * children cleared.
+ * @type {boolean}
+ */
 var inSkip = false;
 
 /**
@@ -116,10 +116,10 @@ var assertVirtualAttributesClosed = function() {
 };
 
 /**
-  * Makes sure that tags are correctly nested.
-  * @param {string} nodeName
-  * @param {string} tag
-  */
+ * Makes sure that tags are correctly nested.
+ * @param {string} nodeName
+ * @param {string} tag
+ */
 var assertCloseMatchesOpenTag = function(nodeName, tag) {
     if (nodeName !== tag) {
         throw new Error(

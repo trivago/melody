@@ -114,7 +114,328 @@ describe('AsyncComponent', () => {
 
         expect(unmounted).toEqual(false);
     });
+
+    it('should render a promised component conditionally', async function() {
+        const [ComponentA, resolveA] = createPromise();
+        const [ComponentB, resolveB] = createPromise();
+        const template = data => {
+            elementOpen('div');
+            if (data.treatment === 'A') {
+                component(AsyncComponent, 'test', {
+                    promisedComponent: () => ComponentA,
+                    whileLoading: () => {
+                        elementOpen('b');
+                        text('Loading A...');
+                        elementClose('b');
+                    },
+                    onError: error => {
+                        elementOpen('strong');
+                        text(error);
+                        elementClose('strong');
+                    },
+                    data,
+                });
+            } else if (data.treatment === 'B') {
+                component(AsyncComponent, 'test_2', {
+                    promisedComponent: () => ComponentB,
+                    whileLoading: () => {
+                        elementOpen('b');
+                        text('Loading B...');
+                        elementClose('b');
+                    },
+                    onError: error => {
+                        elementOpen('strong');
+                        text(error);
+                        elementClose('strong');
+                    },
+                    data,
+                });
+            } else {
+                elementOpen('span', 'static');
+                text('No magic component');
+                elementClose('span');
+            }
+            elementClose('div');
+        };
+        patch(el, template, { text: 'Hello', treatment: 'A' });
+        expect(el.innerHTML).toEqual(
+            '<div><m-placeholder></m-placeholder></div>'
+        );
+        run(2);
+        expect(el.innerHTML).toEqual('<div><b>Loading A...</b></div>');
+        resolveA({ default: Component });
+        await Promise.resolve();
+        run(2);
+        expect(el.innerHTML).toEqual('<div><div>Hello</div></div>');
+
+        patch(el, template, { text: 'Foo', treatment: 'A' });
+        run();
+        expect(el.innerHTML).toEqual('<div><div>Foo</div></div>');
+
+        expect(unmounted).toEqual(false);
+    });
+
+    it('should render the correct async component when changed during loading', async function() {
+        const [ComponentA, resolveA] = createPromise();
+        const [ComponentB, resolveB] = createPromise();
+        const template = data => {
+            elementOpen('div');
+            if (data.treatment === 'A') {
+                component(AsyncComponent, 'test', {
+                    promisedComponent: () => ComponentA,
+                    whileLoading: () => {
+                        elementOpen('b');
+                        text('Loading A...');
+                        elementClose('b');
+                    },
+                    onError: error => {
+                        elementOpen('strong');
+                        text(error);
+                        elementClose('strong');
+                    },
+                    data,
+                });
+            } else if (data.treatment === 'B') {
+                component(AsyncComponent, 'test_2', {
+                    promisedComponent: () => ComponentB,
+                    whileLoading: () => {
+                        elementOpen('b');
+                        text('Loading B...');
+                        elementClose('b');
+                    },
+                    onError: error => {
+                        elementOpen('strong');
+                        text(error);
+                        elementClose('strong');
+                    },
+                    data,
+                });
+            } else {
+                elementOpen('span', 'static');
+                text('No magic component');
+                elementClose('span');
+            }
+            elementClose('div');
+        };
+
+        patch(el, template, { text: 'Hello', treatment: 'A' });
+        expect(el.innerHTML).toEqual(
+            '<div><m-placeholder></m-placeholder></div>'
+        );
+        run(2);
+        expect(el.innerHTML).toEqual('<div><b>Loading A...</b></div>');
+
+        patch(el, template, { text: 'Foo', treatment: 'C' });
+        resolveA({ default: Component });
+        await Promise.resolve();
+        run(2);
+        expect(el.innerHTML).toEqual(
+            '<div><span>No magic component</span></div>'
+        );
+
+        expect(unmounted).toEqual(false);
+    });
+
+    it('should unmount the async component', async function() {
+        const [ComponentA, resolveA] = createPromise();
+        const [ComponentB, resolveB] = createPromise();
+        const template = data => {
+            elementOpen('div');
+            if (data.treatment === 'A') {
+                component(AsyncComponent, 'test', {
+                    promisedComponent: () => ComponentA,
+                    whileLoading: () => {
+                        elementOpen('b');
+                        text('Loading A...');
+                        elementClose('b');
+                    },
+                    onError: error => {
+                        elementOpen('strong');
+                        text(error);
+                        elementClose('strong');
+                    },
+                    data,
+                });
+            } else if (data.treatment === 'B') {
+                component(AsyncComponent, 'test_2', {
+                    promisedComponent: () => ComponentB,
+                    whileLoading: () => {
+                        elementOpen('b');
+                        text('Loading B...');
+                        elementClose('b');
+                    },
+                    onError: error => {
+                        elementOpen('strong');
+                        text(error);
+                        elementClose('strong');
+                    },
+                    data,
+                });
+            } else {
+                elementOpen('span', 'static');
+                text('No magic component');
+                elementClose('span');
+            }
+            elementClose('div');
+        };
+
+        patch(el, template, { text: 'Hello', treatment: 'A' });
+        expect(el.innerHTML).toEqual(
+            '<div><m-placeholder></m-placeholder></div>'
+        );
+        run(2);
+        expect(el.innerHTML).toEqual('<div><b>Loading A...</b></div>');
+        resolveA({ default: Component });
+        await Promise.resolve();
+        run(2);
+
+        patch(el, template, { text: 'Foo', treatment: 'C' });
+        run(2);
+        expect(el.innerHTML).toEqual(
+            '<div><span>No magic component</span></div>'
+        );
+
+        expect(unmounted).toEqual(true);
+    });
+
+    it('should change components during loading', async function() {
+        const [ComponentA, resolveA] = createPromise();
+        const [ComponentB, resolveB] = createPromise();
+        const template = data => {
+            elementOpen('div');
+            if (data.treatment === 'A') {
+                component(AsyncComponent, 'test', {
+                    promisedComponent: () => ComponentA,
+                    whileLoading: () => {
+                        elementOpen('b');
+                        text('Loading A...');
+                        elementClose('b');
+                    },
+                    onError: error => {
+                        elementOpen('strong');
+                        text(error);
+                        elementClose('strong');
+                    },
+                    data,
+                });
+            } else if (data.treatment === 'B') {
+                component(AsyncComponent, 'test_2', {
+                    promisedComponent: () => ComponentB,
+                    whileLoading: () => {
+                        elementOpen('b');
+                        text('Loading B...');
+                        elementClose('b');
+                    },
+                    onError: error => {
+                        elementOpen('strong');
+                        text(error);
+                        elementClose('strong');
+                    },
+                    data,
+                });
+            } else {
+                elementOpen('span', 'static');
+                text('No magic component');
+                elementClose('span');
+            }
+            elementClose('div');
+        };
+        patch(el, template, { text: 'Hello', treatment: 'A' });
+        expect(el.innerHTML).toEqual(
+            '<div><m-placeholder></m-placeholder></div>'
+        );
+        run(2);
+        expect(el.innerHTML).toEqual('<div><b>Loading A...</b></div>');
+
+        patch(el, template, { text: 'Foo', treatment: 'B' });
+        resolveA({ default: Component });
+        await Promise.resolve();
+        run(2);
+        expect(el.innerHTML).toEqual('<div><b>Loading B...</b></div>');
+
+        resolveB({ default: Component });
+        await Promise.resolve();
+        run(2);
+        expect(el.innerHTML).toEqual('<div><div>Foo</div></div>');
+
+        expect(unmounted).toEqual(false);
+    });
+
+    it('should switch components after loading', async function() {
+        const [ComponentA, resolveA] = createPromise();
+        const [ComponentB, resolveB] = createPromise();
+        const template = data => {
+            elementOpen('div');
+            if (data.treatment === 'A') {
+                component(AsyncComponent, 'test', {
+                    promisedComponent: () => ComponentA,
+                    whileLoading: () => {
+                        elementOpen('b');
+                        text('Loading A...');
+                        elementClose('b');
+                    },
+                    onError: error => {
+                        elementOpen('strong');
+                        text(error);
+                        elementClose('strong');
+                    },
+                    data,
+                });
+            } else if (data.treatment === 'B') {
+                component(AsyncComponent, 'test_2', {
+                    promisedComponent: () => ComponentB,
+                    whileLoading: () => {
+                        elementOpen('b');
+                        text('Loading B...');
+                        elementClose('b');
+                    },
+                    onError: error => {
+                        elementOpen('strong');
+                        text(error);
+                        elementClose('strong');
+                    },
+                    data,
+                });
+            } else {
+                elementOpen('span', 'static');
+                text('No magic component');
+                elementClose('span');
+            }
+            elementClose('div');
+        };
+        patch(el, template, { text: 'Hello', treatment: 'A' });
+        expect(el.innerHTML).toEqual(
+            '<div><m-placeholder></m-placeholder></div>'
+        );
+        run(2);
+        expect(el.innerHTML).toEqual('<div><b>Loading A...</b></div>');
+
+        resolveA({ default: Component });
+        await Promise.resolve();
+        run(2);
+        expect(el.innerHTML).toEqual('<div><div>Hello</div></div>');
+
+        patch(el, template, { text: 'Foo', treatment: 'B' });
+        run(2);
+        expect(el.innerHTML).toEqual('<div><b>Loading B...</b></div>');
+
+        resolveB({ default: Component });
+        await Promise.resolve();
+        run(2);
+        expect(el.innerHTML).toEqual('<div><div>Foo</div></div>');
+
+        expect(unmounted).toEqual(true);
+    });
 });
+
+function createPromise() {
+    let resolve, reject;
+    const p = new Promise((res, rej) => {
+        resolve = res;
+        reject = rej;
+    });
+    return [p, resolve, reject];
+}
 
 function run(rounds = 1) {
     for (var i = 0; i < rounds; i++) {

@@ -2229,10 +2229,14 @@ http://twig.sensiolabs.org/doc/filters/index.html"
 exports[`Compiler should fail transforming wrong import.template 1`] = `"Import must be used in macro, block or template"`;
 
 exports[`Compiler should fail transforming wrong include.template 1`] = `
-"Expected a StringLiteral
+"Dynamic includes are not supported
+  1 | <div>
+> 2 |   {% include \\"./path/#{template}\\" %}
+    |      ^
+  3 | </div>
+  4 | 
 
-
-Include statement expected StringLiteral but gotBinaryExpression"
+The Include Statement expected a StringLiteral but got a BinaryExpression. Includes only support static strings as argument."
 `;
 
 exports[`Compiler should transform templates with warnings mount without as.template 1`] = `

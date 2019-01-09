@@ -249,10 +249,11 @@ export default {
             const sourceType = path.node.source.type;
             if (sourceType !== 'StringLiteral') {
                 this.error(
-                    'Expected a StringLiteral',
-                    0,
-                    'Include statement expected StringLiteral but got' +
-                        sourceType
+                    'Dynamic includes are not supported',
+                    path.node.loc.start,
+                    'The Include Statement expected a StringLiteral but got a ' +
+                        sourceType +
+                        '. Includes only support static strings as argument.'
                 );
             }
             const includeName = this.addDefaultImportFrom(

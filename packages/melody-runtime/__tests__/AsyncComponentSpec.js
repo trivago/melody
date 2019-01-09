@@ -426,6 +426,73 @@ describe('AsyncComponent', () => {
 
         expect(unmounted).toEqual(true);
     });
+
+    it('should ignore unnecessary async component', async function() {
+        const [ComponentA, resolveA] = createPromise();
+        const [ComponentB, resolveB] = createPromise();
+        const template = data => {
+            elementOpen('div');
+            if (data.treatment === 'A') {
+                component(AsyncComponent, 'test', {
+                    promisedComponent: () => ComponentA,
+                    whileLoading: () => {
+                        elementOpen('b');
+                        text('Loading A...');
+                        elementClose('b');
+                    },
+                    onError: error => {
+                        elementOpen('strong');
+                        text(error);
+                        elementClose('strong');
+                    },
+                    data,
+                });
+            } else if (data.treatment === 'B') {
+                component(AsyncComponent, 'test_2', {
+                    promisedComponent: () => ComponentB,
+                    whileLoading: () => {
+                        elementOpen('b');
+                        text('Loading B...');
+                        elementClose('b');
+                    },
+                    onError: error => {
+                        elementOpen('strong');
+                        text(error);
+                        elementClose('strong');
+                    },
+                    data,
+                });
+            } else {
+                elementOpen('span', 'static');
+                text('No magic component');
+                elementClose('span');
+            }
+            elementClose('div');
+        };
+
+        patch(el, template, { text: 'Hello', treatment: 'A' });
+        expect(el.innerHTML).toEqual(
+            '<div><m-placeholder></m-placeholder></div>'
+        );
+        run(2);
+        expect(el.innerHTML).toEqual('<div><b>Loading A...</b></div>');
+
+        patch(el, template, { text: 'Foo', treatment: 'C' });
+        run(2);
+        expect(el.innerHTML).toEqual(
+            '<div><span>No magic component</span></div>'
+        );
+
+        resolveA({ default: Component });
+        await Promise.resolve();
+        run(2);
+        expect(el.innerHTML).toEqual(
+            '<div><span>No magic component</span></div>'
+        );
+
+        expect(notified).toEqual(false);
+        expect(unmounted).toEqual(false);
+    });
 });
 
 function createPromise() {

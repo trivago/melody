@@ -611,7 +611,8 @@ describe('component', () => {
 
         const root = document.createElement('div');
         const MyComponent = createComponent(props => {
-            return { value: props.value };
+            if (!props) throw new Error('Foo');
+            return props;
         }, template);
         assert.throws(() => {
             render(root, MyComponent);

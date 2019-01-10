@@ -293,6 +293,11 @@ Object.assign(Component.prototype, {
         // `setState` is called inside the component function
         this.isRunningComponentFn = true;
 
+        // When a component function throws an error we store
+        // it in this variable, break the loop, clean up and
+        // finally throw the error.
+        let error;
+
         // tracks if we at least run the component function once
         let updated = false;
 
@@ -322,7 +327,14 @@ Object.assign(Component.prototype, {
             // Reset the hooks pointer
             this.hooksPointer = -1;
             // Run the component functions
-            this.data = this.componentFn(this.props) || {};
+
+            try {
+                const dataNext = this.componentFn(this.props) || {};
+                this.data = dataNext;
+            } catch (err) {
+                error = err;
+                break;
+            }
 
             // Mark that we have already collected the hooks
             // This only may happen once.
@@ -339,6 +351,13 @@ Object.assign(Component.prototype, {
         // We are done with running the hooks and we
         // remove the reference to our instance
         unsetCurrentComponent();
+
+        // If we catched an error during the component function loop,
+        // we now can throw it. At this point the loop is cleaned
+        // up properly.
+        if (error) {
+            throw error;
+        }
 
         // When we have seen an update and we have an element
         // we send the component to the rendering queue.

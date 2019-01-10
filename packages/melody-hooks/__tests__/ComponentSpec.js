@@ -443,7 +443,7 @@ describe('component', () => {
         assert.equal(mounted, 0);
     });
     it('should trigger unmount callback for deep nested child components when a Component is removed', () => {
-        let mounted = { inner: 0, middle: 0, outer: 0 };
+        const mounted = { inner: 0, middle: 0, outer: 0 };
         const root = document.createElement('div');
         const CountInstances = name => props => {
             useEffectOnce(() => {
@@ -501,7 +501,7 @@ describe('component', () => {
         assert.equal(mounted.outer, 0);
     });
     it('should trigger unmount callback for deep nested child components when a Component is removed', () => {
-        let mounted = { innermost: 0, inner: 0, middle: 0, outer: 0 };
+        const mounted = { innermost: 0, inner: 0, middle: 0, outer: 0 };
         const root = document.createElement('div');
         const CountInstances = name => props => {
             useEffectOnce(() => {
@@ -599,5 +599,26 @@ describe('component', () => {
         render(root, MyParentComponent, { childProps: { text: 'test' } });
         assert.equal(root.outerHTML, '<div><div>test</div></div>');
         assert.equal(mounted, 1);
+    });
+    it('should recover from errors in the component function', () => {
+        const template = {
+            render(_context) {
+                elementOpen('div', null, null);
+                text(_context.value);
+                elementClose('div');
+            },
+        };
+
+        const root = document.createElement('div');
+        const MyComponent = createComponent(props => {
+            return { value: props.value };
+        }, template);
+        assert.throws(() => {
+            render(root, MyComponent);
+        });
+        assert.equal(root.outerHTML, '<div></div>');
+        render(root, MyComponent, { value: 'foo' });
+        flush();
+        assert.equal(root.outerHTML, '<div>foo</div>');
     });
 });

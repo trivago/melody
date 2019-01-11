@@ -10,7 +10,7 @@ export const useAtom = initialState => {
     const s = useRef(null);
     // the accessor function can be memoized and will always return the
     // the value from the ref
-    const getValue = useCallback(() => s.current);
+    const getValue = useCallback(() => s.current, []);
     // link the value stored within the ref to the current value in
     // the state hook to ensure its always the latest
     s.current = value;

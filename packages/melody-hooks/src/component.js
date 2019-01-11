@@ -283,21 +283,6 @@ Object.assign(Component.prototype, {
      * see any more state changes
      */
     enqueueComponent() {
-        // Mark this component as `currentComponent`, so hooks
-        // can access the instance
-        setCurrentComponent(this);
-
-        // Let the component know that we are now running
-        // the component functions. This is needed in order
-        // to not directly enque the component again when
-        // `setState` is called inside the component function
-        this.isRunningComponentFn = true;
-
-        // When a component function throws an error we store
-        // it in this variable, break the loop, clean up and
-        // finally throw the error.
-        let error;
-
         // tracks if we at least run the component function once
         let updated = false;
 
@@ -305,30 +290,41 @@ Object.assign(Component.prototype, {
         // due to calls to `setState` in the component function.
         let i = 0;
 
-        try {
-            while (
-                // The state has changed
-                this.flushState() ||
-                // We received new props
-                this.isPropsDirty ||
-                // The component function was never invoked
-                this.isCollectingHooks
-            ) {
-                if (i++ > RENDER_LIMIT) {
-                    throw new Error(
-                        'Too many re-renders. Melody limits the number of renders to prevent ' +
-                            'an infinite loop.'
-                    );
-                }
+        while (
+            // The state has changed
+            this.flushState() ||
+            // We received new props
+            this.isPropsDirty ||
+            // The component function was never invoked
+            this.isCollectingHooks
+        ) {
+            if (i++ > RENDER_LIMIT) {
+                throw new Error(
+                    'Too many re-renders. Melody limits the number of renders to prevent ' +
+                        'an infinite loop.'
+                );
+            }
+            try {
+                // Mark this component as `currentComponent`, so hooks
+                // can access the instance
+                setCurrentComponent(this);
+
+                // Let the component know that we are now running
+                // the component functions. This is needed in order
+                // to not directly enque the component again when
+                // `setState` is called inside the component function
+                this.isRunningComponentFn = true;
+
                 // the state is now not considered dirty anymore
                 this.isStateDirty = false;
+
                 // the props is now not considered dirty anymore
                 this.isPropsDirty = false;
 
                 // Reset the hooks pointer
                 this.hooksPointer = -1;
-                // Run the component functions
 
+                // Run the component functions
                 this.data = this.componentFn(this.props) || {};
 
                 // Mark that we have already collected the hooks
@@ -337,26 +333,15 @@ Object.assign(Component.prototype, {
 
                 // mark that we have run the component function at least once
                 updated = true;
+            } finally {
+                // Let the component know that we are not running
+                // the component function anymore
+                this.isRunningComponentFn = false;
+
+                // We are done with running the hooks and we
+                // remove the reference to our instance
+                unsetCurrentComponent();
             }
-        } catch (err) {
-            // If we catch an error, store it until the `finally`
-            // block is done, then we can safely throw it.
-            error = err;
-        } finally {
-            // Let the component know that we are not running
-            // the component function anymore
-            this.isRunningComponentFn = false;
-
-            // We are done with running the hooks and we
-            // remove the reference to our instance
-            unsetCurrentComponent();
-        }
-
-        // If we catched an error during the component function loop,
-        // we now can throw it. At this point the loop is cleaned
-        // up properly.
-        if (error) {
-            throw error;
         }
 
         // When we have seen an update and we have an element

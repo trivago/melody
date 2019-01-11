@@ -23,7 +23,7 @@ import {
     component,
     patchOuter,
 } from 'melody-idom';
-import { createComponent, useEffect, useEffectOnce } from '../src';
+import { createComponent, useEffect, useEffectOnce, useState } from '../src';
 import { flush } from './util/flush';
 
 const template = {
@@ -612,14 +612,22 @@ describe('component', () => {
         const root = document.createElement('div');
         const MyComponent = createComponent(props => {
             if (!props) throw new Error('Foo');
-            return props;
+            const [foo] = useState(1337);
+            const [bar] = useState(1337);
+            return {
+                ...props,
+                foo,
+                bar,
+            };
         }, template);
+
+        render(root, MyComponent, { value: 'foo' });
+        assert.equal(root.outerHTML, '<div>foo</div>');
         assert.throws(() => {
             render(root, MyComponent);
         });
-        assert.equal(root.outerHTML, '<div></div>');
+        assert.equal(root.outerHTML, '<div>foo</div>');
         render(root, MyComponent, { value: 'foo' });
-        flush();
         assert.equal(root.outerHTML, '<div>foo</div>');
     });
 });

@@ -33,13 +33,9 @@ export default function({ rawLines, lineNumber, colNumber, length }) {
             }
 
             if (colNumber) {
-                params.line += `\n${params.before}${repeat(
-                    ' ',
-                    params.width
-                )}${params.after}${repeat(' ', colNumber)}${repeat(
-                    '^',
-                    length
-                )}`;
+                params.line += `\n${params.before}${repeat(' ', params.width)}${
+                    params.after
+                }${repeat(' ', colNumber)}${repeat('^', length)}`;
             }
 
             params.before = params.before.replace(/^./, '>');

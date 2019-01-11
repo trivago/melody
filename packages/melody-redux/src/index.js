@@ -35,7 +35,9 @@ const findNextStore = comp => {
         }
     }
     if (process.env.NODE_ENV !== 'production') {
-        throw new Error('Could not find store. Did you forget to provide a store?');
+        throw new Error(
+            'Could not find store. Did you forget to provide a store?'
+        );
     }
     return null;
 };

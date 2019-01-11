@@ -120,8 +120,8 @@ var elementOpen = function(tag, key, statics, var_args) {
         }
 
         /**
-     * Actually perform the attribute update.
-     */
+         * Actually perform the attribute update.
+         */
         for (i = 0; i < attrsArr.length; i += 2) {
             newAttrs[attrsArr[i]] = attrsArr[i + 1];
         }

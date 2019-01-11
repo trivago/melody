@@ -35,7 +35,9 @@ export default {
             path.state.error(
                 'Invalid range call',
                 path.node.pos,
-                `The range function accepts 1 to 3 arguments but you have specified ${args.length} arguments instead.`
+                `The range function accepts 1 to 3 arguments but you have specified ${
+                    args.length
+                } arguments instead.`
             );
         }
 

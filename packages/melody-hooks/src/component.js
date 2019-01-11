@@ -283,16 +283,6 @@ Object.assign(Component.prototype, {
      * see any more state changes
      */
     enqueueComponent() {
-        // Mark this component as `currentComponent`, so hooks
-        // can access the instance
-        setCurrentComponent(this);
-
-        // Let the component know that we are now running
-        // the component functions. This is needed in order
-        // to not directly enque the component again when
-        // `setState` is called inside the component function
-        this.isRunningComponentFn = true;
-
         // tracks if we at least run the component function once
         let updated = false;
 
@@ -314,31 +304,45 @@ Object.assign(Component.prototype, {
                         'an infinite loop.'
                 );
             }
-            // the state is now not considered dirty anymore
-            this.isStateDirty = false;
-            // the props is now not considered dirty anymore
-            this.isPropsDirty = false;
+            try {
+                // Mark this component as `currentComponent`, so hooks
+                // can access the instance
+                setCurrentComponent(this);
 
-            // Reset the hooks pointer
-            this.hooksPointer = -1;
-            // Run the component functions
-            this.data = this.componentFn(this.props) || {};
+                // Let the component know that we are now running
+                // the component functions. This is needed in order
+                // to not directly enque the component again when
+                // `setState` is called inside the component function
+                this.isRunningComponentFn = true;
 
-            // Mark that we have already collected the hooks
-            // This only may happen once.
-            this.isCollectingHooks = false;
+                // the state is now not considered dirty anymore
+                this.isStateDirty = false;
 
-            // mark that we have run the component function at least once
-            updated = true;
+                // the props is now not considered dirty anymore
+                this.isPropsDirty = false;
+
+                // Reset the hooks pointer
+                this.hooksPointer = -1;
+
+                // Run the component functions
+                this.data = this.componentFn(this.props) || {};
+
+                // Mark that we have already collected the hooks
+                // This only may happen once.
+                this.isCollectingHooks = false;
+
+                // mark that we have run the component function at least once
+                updated = true;
+            } finally {
+                // Let the component know that we are not running
+                // the component function anymore
+                this.isRunningComponentFn = false;
+
+                // We are done with running the hooks and we
+                // remove the reference to our instance
+                unsetCurrentComponent();
+            }
         }
-
-        // Let the component know that we are not running
-        // the component function anymore
-        this.isRunningComponentFn = false;
-
-        // We are done with running the hooks and we
-        // remove the reference to our instance
-        unsetCurrentComponent();
 
         // When we have seen an update and we have an element
         // we send the component to the rendering queue.

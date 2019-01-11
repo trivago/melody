@@ -162,8 +162,9 @@ export default class Parser {
                 pos: elementStartToken.pos,
                 advice:
                     tokens.lat(0) === Types.SLASH
-                        ? `Unexpected closing "${tokens.la(1)
-                              .text}" tag. Seems like your DOM is out of control.`
+                        ? `Unexpected closing "${
+                              tokens.la(1).text
+                          }" tag. Seems like your DOM is out of control.`
                         : 'Expected an element to start',
             });
         }

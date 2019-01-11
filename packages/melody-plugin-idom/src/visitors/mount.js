@@ -34,11 +34,31 @@ function parentIsForStatement(path) {
 }
 
 export default {
+    analyse: {
+        MountStatement: {
+            enter(path) {
+                if (path.node.errorVariableName) {
+                    path.get('otherwise').scope.registerBinding(
+                        path.node.errorVariableName.name,
+                        path.get('errorVariableName'),
+                        'var'
+                    );
+                }
+            },
+        },
+    },
     convert: {
         MountStatement: {
             exit(path) {
                 const args = [];
-                if (path.node.source) {
+                const isAsync = path.node.async;
+                if (isAsync) {
+                    const localName = this.addImportFrom(
+                        'melody-runtime',
+                        'AsyncComponent'
+                    );
+                    args.push(t.identifier(localName));
+                } else if (path.node.source) {
                     const source = path.node.source.value;
                     let localName;
                     if (path.node.name) {
@@ -58,6 +78,7 @@ export default {
                 } else {
                     args.push(path.node.name);
                 }
+
                 if (path.node.key === null) {
                     const message = 'mount is missing a key.';
                     const advice =
@@ -85,8 +106,86 @@ export default {
                 } else {
                     args.push(t.nullLiteral());
                 }
-                if (path.node.argument) {
-                    args.push(path.node.argument);
+
+                if (isAsync) {
+                    /* webpackPrefetch: true */
+                    const source = path.node.source;
+
+                    source.leadingComments = [
+                        {
+                            type: 'CommentBlock',
+                            value: ` ${[
+                                path.get('key').is('StringLiteral')
+                                    ? `webpackChunkName: "${
+                                          args[args.length - 1].value
+                                      }"`
+                                    : '',
+                                'webpackPrefetch: true',
+                            ]
+                                .filter(Boolean)
+                                .join(', ')} `,
+                        },
+                    ];
+                    const argument = [
+                        t.objectProperty(
+                            t.identifier('promisedComponent'),
+                            t.arrowFunctionExpression(
+                                [],
+                                t.callExpression(t.identifier('import'), [
+                                    source,
+                                ])
+                            )
+                        ),
+                        t.objectProperty(
+                            t.identifier('delayLoadingAnimation'),
+                            t.numericLiteral(path.node.delayBy)
+                        ),
+                    ];
+                    if (path.node.body.body.length === 0) {
+                        // message, pos, advice, length = 1
+                        this.error(
+                            `Asynchronously mounted components must have a placeholder`,
+                            path.node.loc.start,
+                            `When using an async component you must provide a placeholder that can be rendered while your component is being loaded.
+Example:
+{% mount async 'my-component' as 'mycomp' %}
+This is the placeholder content that will be shown to your users while the async component is being loaded.`,
+                            path.node.loc.start.line === path.node.loc.end.line
+                                ? path.node.loc.end.column -
+                                  path.node.loc.start.column
+                                : 'mount async'.length
+                        );
+                    }
+                    argument.push(
+                        t.objectProperty(
+                            t.identifier('whileLoading'),
+                            t.arrowFunctionExpression([], path.node.body)
+                        )
+                    );
+                    if (path.node.otherwise) {
+                        argument.push(
+                            t.objectProperty(
+                                t.identifier('onError'),
+                                t.arrowFunctionExpression(
+                                    [path.node.errorVariableName],
+                                    path.node.otherwise
+                                )
+                            )
+                        );
+                    }
+                    if (path.node.argument) {
+                        argument.push(
+                            t.objectProperty(
+                                t.identifier('data'),
+                                path.node.argument
+                            )
+                        );
+                    }
+                    args.push(t.objectExpression(argument));
+                } else {
+                    if (path.node.argument) {
+                        args.push(path.node.argument);
+                    }
                 }
 
                 path.replaceWithJS(

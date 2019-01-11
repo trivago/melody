@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 /**
-  * Accepts a function that maps owner props to a new collection of props that are passed to the base component.
-  */
+ * Accepts a function that maps owner props to a new collection of props that are passed to the base component.
+ */
 const mapProps = mapper => Component =>
     Component(({ apply }) => ({
         apply(props) {

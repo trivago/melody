@@ -30,7 +30,18 @@ export const MountParser = {
         let name = null,
             source = null,
             key = null,
+            async = false,
+            delayBy = 0,
             argument = null;
+
+        if (tokens.test(Types.SYMBOL, 'async')) {
+            // we might be looking at an async mount
+            const nextToken = tokens.la(1);
+            if (nextToken.type === Types.STRING_START) {
+                async = true;
+                tokens.next();
+            }
+        }
 
         if (tokens.test(Types.STRING_START)) {
             source = parser.matchStringExpression();
@@ -50,7 +61,58 @@ export const MountParser = {
             argument = parser.matchExpression();
         }
 
-        const mountStatement = new MountStatement(name, source, key, argument);
+        if (async) {
+            if (tokens.nextIf(Types.SYMBOL, 'delay')) {
+                tokens.expect(Types.SYMBOL, 'placeholder');
+                tokens.expect(Types.SYMBOL, 'by');
+                delayBy = Number.parseInt(tokens.expect(Types.NUMBER).text, 10);
+                if (tokens.nextIf(Types.SYMBOL, 's')) {
+                    delayBy *= 1000;
+                } else {
+                    tokens.expect(Types.SYMBOL, 'ms');
+                }
+            }
+        }
+
+        const mountStatement = new MountStatement(
+            name,
+            source,
+            key,
+            argument,
+            async,
+            delayBy
+        );
+
+        if (async) {
+            tokens.expect(Types.TAG_END);
+
+            mountStatement.body = parser.parse((tokenText, token, tokens) => {
+                return (
+                    token.type === Types.TAG_START &&
+                    (tokens.test(Types.SYMBOL, 'catch') ||
+                        tokens.test(Types.SYMBOL, 'endmount'))
+                );
+            });
+
+            if (tokens.nextIf(Types.SYMBOL, 'catch')) {
+                const errorVariableName = tokens.expect(Types.SYMBOL);
+                mountStatement.errorVariableName = createNode(
+                    Identifier,
+                    errorVariableName,
+                    errorVariableName.text
+                );
+                tokens.expect(Types.TAG_END);
+                mountStatement.otherwise = parser.parse(
+                    (tokenText, token, tokens) => {
+                        return (
+                            token.type === Types.TAG_START &&
+                            tokens.test(Types.SYMBOL, 'endmount')
+                        );
+                    }
+                );
+            }
+            tokens.expect(Types.SYMBOL, 'endmount');
+        }
 
         setStartFromToken(mountStatement, token);
         setEndFromToken(mountStatement, tokens.expect(Types.TAG_END));

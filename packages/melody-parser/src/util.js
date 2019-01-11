@@ -23,7 +23,14 @@ export function setEndFromToken(node, { pos: { line, column }, end }) {
     return node;
 }
 
-export function copyStart(node, { loc: { start: { line, column, index } } }) {
+export function copyStart(
+    node,
+    {
+        loc: {
+            start: { line, column, index },
+        },
+    }
+) {
     node.loc.start.line = line;
     node.loc.start.column = column;
     node.loc.start.index = index;

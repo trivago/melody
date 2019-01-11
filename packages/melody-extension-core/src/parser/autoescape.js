@@ -33,8 +33,10 @@ export const AutoescapeParser = {
                         'autoescape type declaration must be a simple string',
                     pos: tokens.la(0).pos,
                     advice: `The type declaration for autoescape must be a simple string such as 'html' or 'js'.
-I expected the current string to end with a ${stringStartToken.text} but instead found ${Types
-                        .ERROR_TABLE[tokens.lat(0)] || tokens.lat(0)}.`,
+I expected the current string to end with a ${
+                        stringStartToken.text
+                    } but instead found ${Types.ERROR_TABLE[tokens.lat(0)] ||
+                        tokens.lat(0)}.`,
                 });
             }
         } else if (tokens.nextIf(Types.FALSE)) {
@@ -45,9 +47,9 @@ I expected the current string to end with a ${stringStartToken.text} but instead
             parser.error({
                 title: 'Invalid autoescape type declaration',
                 pos: tokens.la(0).pos,
-                advice: `Expected type of autoescape to be a string, boolean or not specified. Found ${tokens.la(
-                    0
-                ).type} instead.`,
+                advice: `Expected type of autoescape to be a string, boolean or not specified. Found ${
+                    tokens.la(0).type
+                } instead.`,
             });
         }
 

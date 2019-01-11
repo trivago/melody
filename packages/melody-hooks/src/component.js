@@ -305,52 +305,52 @@ Object.assign(Component.prototype, {
         // due to calls to `setState` in the component function.
         let i = 0;
 
-        while (
-            // The state has changed
-            this.flushState() ||
-            // We received new props
-            this.isPropsDirty ||
-            // The component function was never invoked
-            this.isCollectingHooks
-        ) {
-            if (i++ > RENDER_LIMIT) {
-                throw new Error(
-                    'Too many re-renders. Melody limits the number of renders to prevent ' +
-                        'an infinite loop.'
-                );
+        try {
+            while (
+                // The state has changed
+                this.flushState() ||
+                // We received new props
+                this.isPropsDirty ||
+                // The component function was never invoked
+                this.isCollectingHooks
+            ) {
+                if (i++ > RENDER_LIMIT) {
+                    throw new Error(
+                        'Too many re-renders. Melody limits the number of renders to prevent ' +
+                            'an infinite loop.'
+                    );
+                }
+                // the state is now not considered dirty anymore
+                this.isStateDirty = false;
+                // the props is now not considered dirty anymore
+                this.isPropsDirty = false;
+
+                // Reset the hooks pointer
+                this.hooksPointer = -1;
+                // Run the component functions
+
+                this.data = this.componentFn(this.props) || {};
+
+                // Mark that we have already collected the hooks
+                // This only may happen once.
+                this.isCollectingHooks = false;
+
+                // mark that we have run the component function at least once
+                updated = true;
             }
-            // the state is now not considered dirty anymore
-            this.isStateDirty = false;
-            // the props is now not considered dirty anymore
-            this.isPropsDirty = false;
+        } catch (err) {
+            // If we catch an error, store it until the `finally`
+            // block is done, then we can safely throw it.
+            error = err;
+        } finally {
+            // Let the component know that we are not running
+            // the component function anymore
+            this.isRunningComponentFn = false;
 
-            // Reset the hooks pointer
-            this.hooksPointer = -1;
-            // Run the component functions
-
-            try {
-                const dataNext = this.componentFn(this.props) || {};
-                this.data = dataNext;
-            } catch (err) {
-                error = err;
-                break;
-            }
-
-            // Mark that we have already collected the hooks
-            // This only may happen once.
-            this.isCollectingHooks = false;
-
-            // mark that we have run the component function at least once
-            updated = true;
+            // We are done with running the hooks and we
+            // remove the reference to our instance
+            unsetCurrentComponent();
         }
-
-        // Let the component know that we are not running
-        // the component function anymore
-        this.isRunningComponentFn = false;
-
-        // We are done with running the hooks and we
-        // remove the reference to our instance
-        unsetCurrentComponent();
 
         // If we catched an error during the component function loop,
         // we now can throw it. At this point the loop is cleaned

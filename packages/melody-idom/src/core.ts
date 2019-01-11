@@ -628,6 +628,10 @@ var raw = function(html: string): void {
     return currentNode;
 };
 
+var setCurrentComponent = function(comp: RenderableComponent): void {
+    currentComponent = comp;
+};
+
 /** */
 export {
     elementOpen,
@@ -643,6 +647,7 @@ export {
     mount,
     component,
     getCurrentComponent as currentComponent,
+    setCurrentComponent,
     updateComponent,
     enqueueComponent,
 };

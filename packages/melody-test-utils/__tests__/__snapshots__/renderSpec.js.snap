@@ -1,0 +1,229 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Full rendering should allow dispatching actions 1`] = `
+FullWrapper {
+  "elements": Array [
+    <li>
+      <h2>
+        Foo
+      </h2>
+    </li>,
+    <li>
+      <h2>
+        Bar
+      </h2>
+    </li>,
+  ],
+}
+`;
+
+exports[`Full rendering should allow querying using CSS selectors 1`] = `
+FullWrapper {
+  "elements": Array [
+    <h2>
+      Foo
+    </h2>,
+    <h2>
+      Bar
+    </h2>,
+  ],
+}
+`;
+
+exports[`Full rendering should allow setting props and rerender 1`] = `
+FullWrapper {
+  "elements": Array [
+    <div>
+      <ul>
+        <li>
+          <h2>
+            Foo
+          </h2>
+        </li>
+        <li>
+          <h2>
+            Bar
+          </h2>
+        </li>
+      </ul>
+      <section>
+        <span>
+          This is awesome!
+        </span>
+      </section>
+    </div>,
+  ],
+}
+`;
+
+exports[`Full rendering should allow setting props and rerender 2`] = `
+FullWrapper {
+  "elements": Array [
+    <div>
+      <ul>
+        <li>
+          <h2>
+            Foo
+          </h2>
+        </li>
+        <li>
+          <h2>
+            Bar
+          </h2>
+        </li>
+        <li>
+          <h2>
+            Baz
+          </h2>
+        </li>
+      </ul>
+      <section>
+        <span>
+          This is awesome!
+        </span>
+      </section>
+    </div>,
+  ],
+}
+`;
+
+exports[`Full rendering should allow simulating events 1`] = `
+FullWrapper {
+  "elements": Array [
+    <div>
+      <ul>
+        <li>
+          <h2>
+            Foo
+          </h2>
+          <div
+            class="message"
+          >
+            I have been clicked!
+          </div>
+        </li>
+        <li>
+          <h2>
+            Bar
+          </h2>
+        </li>
+      </ul>
+      <section>
+        <span>
+          This is awesome!
+        </span>
+      </section>
+    </div>,
+  ],
+}
+`;
+
+exports[`Full rendering should allow simulating events 2`] = `"<li><h2>Foo</h2><div class=\\"message\\">I have been clicked!</div></li><li><h2>Bar</h2></li>"`;
+
+exports[`Full rendering should find the child Components 1`] = `
+FullWrapper {
+  "elements": Array [
+    <li>
+      <h2>
+        Foo
+      </h2>
+    </li>,
+    <li>
+      <h2>
+        Bar
+      </h2>
+    </li>,
+  ],
+}
+`;
+
+exports[`Full rendering should get the props of a single component 1`] = `
+Object {
+  "clickRef": [Function],
+  "id": 1,
+  "name": "Foo",
+}
+`;
+
+exports[`Full rendering should get the state of a single component 1`] = `
+Object {
+  "clickRef": [Function],
+  "clicked": false,
+  "id": 1,
+  "name": "Foo",
+}
+`;
+
+exports[`Full rendering should render child components when their props are set 1`] = `
+FullWrapper {
+  "elements": Array [
+    <div>
+      <ul>
+        <li>
+          <h2>
+            Foo
+          </h2>
+        </li>
+        <li>
+          <h2>
+            Hello World
+          </h2>
+        </li>
+      </ul>
+      <section>
+        <span>
+          This is awesome!
+        </span>
+      </section>
+    </div>,
+  ],
+}
+`;
+
+exports[`Full rendering should render the entire component 1`] = `
+FullWrapper {
+  "elements": Array [
+    <div>
+      <ul>
+        <li>
+          <h2>
+            Foo
+          </h2>
+        </li>
+        <li>
+          <h2>
+            Bar
+          </h2>
+        </li>
+      </ul>
+      <section>
+        <span>
+          This is awesome!
+        </span>
+      </section>
+    </div>,
+  ],
+}
+`;
+
+exports[`Full rendering should return serialized object from debug 1`] = `
+"<div>
+  <ul>
+    <li>
+      <h2>
+        Foo
+      </h2>
+    </li>
+    <li>
+      <h2>
+        Bar
+      </h2>
+    </li>
+  </ul>
+  <section>
+    <span>
+      This is awesome!
+    </span>
+  </section>
+</div>"
+`;

@@ -1,0 +1,189 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Shallow rendering should allow dispatching actions 1`] = `
+ShallowWrapper {
+  "elements": Array [
+    <m-placeholder />,
+    <m-placeholder />,
+    <m-placeholder />,
+  ],
+}
+`;
+
+exports[`Shallow rendering should allow filtering with a selector function 1`] = `
+ShallowWrapper {
+  "elements": Array [
+    ShallowWrapper {
+      "elements": Array [
+        <m-placeholder />,
+      ],
+    },
+  ],
+}
+`;
+
+exports[`Shallow rendering should allow filtering wrappers 1`] = `
+ShallowWrapper {
+  "elements": Array [
+    ShallowWrapper {
+      "elements": Array [
+        <m-placeholder />,
+        <m-placeholder />,
+      ],
+    },
+  ],
+}
+`;
+
+exports[`Shallow rendering should allow finding with a predicate function 1`] = `
+ShallowWrapper {
+  "elements": Array [
+    <m-placeholder />,
+    <m-placeholder />,
+    <m-placeholder />,
+  ],
+}
+`;
+
+exports[`Shallow rendering should allow setting props and rerender shallowly 1`] = `
+ShallowWrapper {
+  "elements": Array [
+    <div>
+      <ul>
+        <m-placeholder />
+        <m-placeholder />
+        <m-placeholder />
+      </ul>
+      <m-placeholder />
+    </div>,
+  ],
+}
+`;
+
+exports[`Shallow rendering should allow unfolding shallowly rendered children 1`] = `
+ShallowWrapper {
+  "elements": Array [
+    <div>
+      <ul>
+        <m-placeholder />
+        <li>
+          <h2>
+            Bar
+          </h2>
+        </li>
+      </ul>
+      <m-placeholder />
+    </div>,
+  ],
+}
+`;
+
+exports[`Shallow rendering should allow unfolding shallowly rendered children completely 1`] = `
+ShallowWrapper {
+  "elements": Array [
+    <div>
+      <ul>
+        <m-placeholder />
+        <m-placeholder />
+      </ul>
+      <section>
+        <span>
+          This is awesome!
+        </span>
+      </section>
+    </div>,
+  ],
+}
+`;
+
+exports[`Shallow rendering should allow unfolding shallowly rendered children shallowly 1`] = `
+ShallowWrapper {
+  "elements": Array [
+    <div>
+      <ul>
+        <m-placeholder />
+        <m-placeholder />
+      </ul>
+      <section>
+        <m-placeholder />
+      </section>
+    </div>,
+  ],
+}
+`;
+
+exports[`Shallow rendering should find the child Components 1`] = `
+ShallowWrapper {
+  "elements": Array [
+    <m-placeholder />,
+    <m-placeholder />,
+  ],
+}
+`;
+
+exports[`Shallow rendering should get the props of a single component 1`] = `
+Object {
+  "clickRef": [Function],
+  "id": 1,
+  "name": "Foo",
+}
+`;
+
+exports[`Shallow rendering should get the state of a single component 1`] = `
+Object {
+  "clickRef": [Function],
+  "clicked": false,
+  "id": 1,
+  "name": "Foo",
+}
+`;
+
+exports[`Shallow rendering should only render the top-level component 1`] = `
+ShallowWrapper {
+  "elements": Array [
+    <div>
+      <ul>
+        <m-placeholder />
+        <m-placeholder />
+      </ul>
+      <m-placeholder />
+    </div>,
+  ],
+}
+`;
+
+exports[`Shallow rendering should return serialized object from debug 1`] = `
+"<div>
+  <ul>
+    <Item
+      id=1
+      name=\\"Foo\\"
+      clickRef=[Function]
+/>
+    <Item
+      id=2
+      name=\\"Bar\\"
+      clickRef=[Function]
+/>
+  </ul>
+  <Child />
+</div>"
+`;
+
+exports[`Shallow rendering should unfold child components when their props are set 1`] = `
+ShallowWrapper {
+  "elements": Array [
+    <div>
+      <ul>
+        <m-placeholder />
+        <li>
+          <h2>
+            Hello World
+          </h2>
+        </li>
+      </ul>
+      <m-placeholder />
+    </div>,
+  ],
+}
+`;

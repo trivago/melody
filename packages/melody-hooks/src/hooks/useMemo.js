@@ -22,23 +22,25 @@ export const useMemo = (getter, inputs) => {
     const currentComponent = enterHook(HOOK_TYPE_USE_MEMO);
     const { hooksPointer, hooks } = currentComponent;
 
+    const inputsNext =
+        inputs !== undefined && inputs !== null ? inputs : [getter];
+
     if (currentComponent.isCollectingHooks) {
         const value = getter();
-        hooks.push([HOOK_TYPE_USE_MEMO, value, inputs]);
+        hooks.push([HOOK_TYPE_USE_MEMO, value, inputsNext]);
         return value;
     }
 
     const hook = hooks[hooksPointer];
     const valuePrev = hook[1];
     const inputsPrev = hook[2];
-    const dirty =
-        inputs && inputs.length && !shallowEqualsArray(inputsPrev, inputs);
+    const dirty = !shallowEqualsArray(inputsPrev, inputsNext);
 
     if (!dirty) return valuePrev;
 
     // Update value
-    const value = getter();
-    hook[1] = value;
-    hook[2] = inputs;
-    return value;
+    const valueNext = getter();
+    hook[1] = valueNext;
+    hook[2] = inputsNext;
+    return valueNext;
 };

@@ -29,51 +29,80 @@ const template = {
 };
 
 describe('useMemo', () => {
-    it('should memoize the value', () => {
-        const root = document.createElement('div');
-        const values = [];
-        let setter;
-        const MyComponent = createComponent(() => {
-            const [value, setValue] = useState(false);
-            setter = setValue;
+    describe('without inputs being specified', () => {
+        it('should call the getter on every update', () => {
+            const root = document.createElement('div');
+            const values = [];
+            let setter;
+            const MyComponent = createComponent(() => {
+                const [value, setValue] = useState(false);
+                setter = setValue;
 
-            // always return a new array from getter
-            const memoized = useMemo(() => []);
-            values.push(memoized);
+                // always return a new array from getter
+                const memoized = useMemo(() => []);
+                values.push(memoized);
 
-            return { value };
-        }, template);
-        render(root, MyComponent);
-        setter(true);
-        flush();
-        setter(false);
-        flush();
-        assert.equal(values[0] === values[1] && values[1] === values[2], true);
+                return { value };
+            }, template);
+            render(root, MyComponent);
+            setter(true);
+            flush();
+            setter(false);
+            flush();
+            assert.equal(values[0] !== values[1], true);
+            assert.equal(values[1] !== values[2], true);
+        });
     });
-    it('should update the value when inputs change', () => {
-        const root = document.createElement('div');
-        const values = [];
-        let setter;
-        const MyComponent = createComponent(() => {
-            const [value, setValue] = useState(false);
-            setter = setValue;
+    describe('with inputs being specified', () => {
+        it('should call the getter when inputs change', () => {
+            const root = document.createElement('div');
+            const values = [];
+            let setter;
+            let setter2;
+            const MyComponent = createComponent(() => {
+                const [value, setValue] = useState(false);
+                const [, setValue2] = useState(false);
+                setter = setValue;
+                setter2 = setValue2;
 
-            // always return a new array from getter
-            const memoized = useMemo(() => [], [value]);
-            values.push(memoized);
+                // always return a new array from getter
+                const memoized = useMemo(() => [], [value]);
+                values.push(memoized);
 
-            return { value };
-        }, template);
-        render(root, MyComponent);
-        setter(true);
-        flush();
-        setter(false);
-        flush();
-        assert.equal(
-            values[0] !== values[1] &&
-                values[1] !== values[2] &&
-                values[2] !== values[0],
-            true
-        );
+                return { value };
+            }, template);
+            render(root, MyComponent);
+            setter2(true);
+            flush();
+            setter(true);
+            flush();
+            assert.equal(values[0] === values[1], true);
+            assert.equal(values[1] !== values[2], true);
+        });
+        it('should not call the getter when inputs are empty', () => {
+            const root = document.createElement('div');
+            const values = [];
+            let setter;
+            let setter2;
+            const MyComponent = createComponent(() => {
+                const [value, setValue] = useState(false);
+                const [, setValue2] = useState(false);
+                setter = setValue;
+                setter2 = setValue2;
+
+                // always return a new array from getter
+                const memoized = useMemo(() => [], []);
+                values.push(memoized);
+
+                return { value };
+            }, template);
+            render(root, MyComponent);
+            setter2(true);
+            flush();
+            setter(true);
+            flush();
+            assert.equal(values[0] === values[1], true);
+            assert.equal(values[1] === values[2], true);
+        });
     });
 });

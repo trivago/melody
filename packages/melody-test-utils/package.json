@@ -1,0 +1,22 @@
+{
+  "name": "melody-test-utils",
+  "version": "1.2.0-0",
+  "description": "",
+  "main": "./lib/index.js",
+  "jsnext:main": "./lib/index.esm.js",
+  "scripts": {
+    "build": "mkdir lib; rollup -c ../../rollup.config.js -i src/index.js"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "pretty-format": "21.2.1"
+  },
+  "peerDependencies": {
+    "melody-idom": "^1.2.0",
+    "melody-snapshot-serializer": "^1.2.0"
+  },
+  "devDependencies": {
+    "rollup-plugin-babel": "^2.6.1"
+  }
+}

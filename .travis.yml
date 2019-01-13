@@ -18,6 +18,9 @@ script:
 after_script:
     - npm run posttest
 
+after_failure:
+    - git status
+
 jobs:
     include:
         - stage: npm release

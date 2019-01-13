@@ -38,8 +38,8 @@ then
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
         echo "UPDATING"
-        yarn install && \
-            yarn test && \
+        npm install && \
+            npm test && \
             ./node_modules/.bin/lerna publish --exact --force-publish=*
     else
         echo "PLEASE RUN 'yarn update-peers' AND COMMIT YOUR CHANGES BEFORE PROCEEDING"
@@ -48,7 +48,7 @@ then
 
 else
     echo "UPDATING"
-    yarn install && \
-        yarn test && \
+    npm install && \
+        npm test && \
         ./node_modules/.bin/lerna publish --exact --force-publish=*
 fi

@@ -22,6 +22,13 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
+"@babel/runtime@^7.1.5":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.2.0.tgz#b03e42eeddf5898e00646e4c840fa07ba8dcad7f"
+  integrity sha512-oouEibCbHMVdZSDlJBO6bZmID/zA/G/Qx3H1d3rSNPTD+L8UNKvCat7aKWSJ74zYbm5zWGh0GQN0hKj8zYFTCg==
+  dependencies:
+    regenerator-runtime "^0.12.0"
+
 "@babel/types@^7.0.0", "@babel/types@^7.0.0-beta.49":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.0.0.tgz#6e191793d3c854d19c6749989e3bc55f0e962118"
@@ -29,6 +36,11 @@
     esutils "^2.0.2"
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
+
+"@sheerun/mutationobserver-shim@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.2.tgz#8013f2af54a2b7d735f71560ff360d3a8176a87b"
+  integrity sha512-vTCdPp/T/Q3oSqwHmZ5Kpa9oI7iLtGl3RQaA/NyLHikvcrPxACkkKVr/XzkSPJWXHRhKGzVvb0urJsbMlRxi1Q==
 
 "@types/estree@0.0.39":
   version "0.0.39"
@@ -2008,6 +2020,16 @@ doctrine@^2.0.0:
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-2.1.0.tgz#5cd01fc101621b42c4cd7f5d1a66243716d3f39d"
   dependencies:
     esutils "^2.0.2"
+
+dom-testing-library@^3.16.3:
+  version "3.16.3"
+  resolved "https://registry.yarnpkg.com/dom-testing-library/-/dom-testing-library-3.16.3.tgz#9dbf88d0a0c12f653248ad8f2a5aa17cc66f85e9"
+  integrity sha512-AZJJ/lmw+/yZxUVWoua5BofYK9EAQ/7Ai2wldUb6mSjE1XZy2H/+IrhG57lp3GqYN5WK7c2HzBLu8lW3c6/bXQ==
+  dependencies:
+    "@babel/runtime" "^7.1.5"
+    "@sheerun/mutationobserver-shim" "^0.3.2"
+    pretty-format "^23.6.0"
+    wait-for-expect "^1.1.0"
 
 domain-browser@^1.1.1:
   version "1.2.0"
@@ -4525,7 +4547,7 @@ micromatch@^3.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
 
-"micromatch@github:jonschlinkert/micromatch#2.2.0":
+micromatch@jonschlinkert/micromatch#2.2.0:
   version "2.2.0"
   resolved "https://codeload.github.com/jonschlinkert/micromatch/tar.gz/5017fd78202e04c684cc31d3c2fb1f469ea222ff"
   dependencies:
@@ -5236,6 +5258,14 @@ pretty-format@^22.4.0, pretty-format@^22.4.3:
     ansi-regex "^3.0.0"
     ansi-styles "^3.2.0"
 
+pretty-format@^23.6.0:
+  version "23.6.0"
+  resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-23.6.0.tgz#5eaac8eeb6b33b987b7fe6097ea6a8a146ab5760"
+  integrity sha512-zf9NV1NSlDLDjycnwm6hpFATCGl/K1lt0R/GdkAK2O5LN/rwJoB+Mh93gGJjut4YbmecbfgLWVGSTCr0Ewvvbw==
+  dependencies:
+    ansi-regex "^3.0.0"
+    ansi-styles "^3.2.0"
+
 prettycli@^1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/prettycli/-/prettycli-1.4.3.tgz#b28ec2aad9de07ae1fd75ef294fb54cbdee07ed5"
@@ -5465,6 +5495,11 @@ regenerator-runtime@^0.10.0, regenerator-runtime@^0.10.5:
 regenerator-runtime@^0.11.0:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
+
+regenerator-runtime@^0.12.0:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.12.1.tgz#fa1a71544764c036f8c49b13a08b2594c9f8a0de"
+  integrity sha512-odxIc1/vDlo4iZcfXqRYFj0vpXFNoGdKMAUieAlFYO6m/nl5e9KR/beGf41z4a1FI+aQgtjhuaSlDxQ0hmkrHg==
 
 regenerator-transform@^0.10.0:
   version "0.10.1"
@@ -6548,6 +6583,11 @@ w3c-hr-time@^1.0.1:
   resolved "https://registry.yarnpkg.com/w3c-hr-time/-/w3c-hr-time-1.0.1.tgz#82ac2bff63d950ea9e3189a58a65625fedf19045"
   dependencies:
     browser-process-hrtime "^0.1.2"
+
+wait-for-expect@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/wait-for-expect/-/wait-for-expect-1.1.0.tgz#6607375c3f79d32add35cd2c87ce13f351a3d453"
+  integrity sha512-vQDokqxyMyknfX3luCDn16bSaRcOyH6gGuUXMIbxBLeTo6nWuEWYqMTT9a+44FmW8c2m6TRWBdNvBBjA1hwEKg==
 
 walker@~1.0.5:
   version "1.0.7"

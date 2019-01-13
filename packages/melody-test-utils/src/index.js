@@ -14,6 +14,8 @@ import { print, test } from 'melody-snapshot-serializer';
 
 import prettyFormat from 'pretty-format';
 
+import { fireEvent } from 'dom-testing-library';
+
 const flatten = nestedArray =>
     nestedArray.reduce((acc, cur) => acc.concat(cur), []);
 const map = transform => data => data.map(transform);
@@ -284,8 +286,13 @@ export class Wrapper {
     }
 
     simulate(type, options = { bubbles: true }) {
-        const event = new Event(type, options);
-        this.forEach(el => el.dispatchEvent(event));
+        const dispatchEvent = fireEvent[type];
+
+        if (!dispatchEvent) {
+            throw new TypeError(`No event found of type: "${type}"`);
+        }
+
+        this.forEach(el => dispatchEvent(el, options));
         drainQueue();
         return this;
     }

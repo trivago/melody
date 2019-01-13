@@ -6,7 +6,11 @@ node_js:
     - "8"
 
 install:
-    - npm install
+    - npm ci
+
+cache:
+  directories:
+  - "$HOME/.npm"
 
 before_script:
     - npm run pretest

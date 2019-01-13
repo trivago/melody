@@ -17,7 +17,6 @@
         "coveralls": "cat ./coverage/lcov.info | coveralls",
         "prebundlesize": "cross-env NODE_ENV=production lerna run build",
         "bundlesize": "bundlesize",
-        "precommit": "lint-staged",
         "fix-lint": "eslint --fix ./packages/*/src",
         "lerna": "lerna",
         "lint": "eslint ./packages/*/src",
@@ -108,5 +107,10 @@
             "path": "./packages/melody-redux/lib/index.js",
             "maxSize": "1.35 kB"
         }
-    ]
+    ],
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    }
 }

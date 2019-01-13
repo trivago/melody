@@ -6,6 +6,8 @@ jobs:
     steps:
       - checkout
       - run: npm install
+      - run: npm run bootstrap
+      - run: npm run build
       - run: npm run pretest
       - run: npm run test-ci
       - run: npm run posttest

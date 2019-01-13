@@ -6,23 +6,23 @@ node_js:
     - "6"
 
 install:
-    - yarn
+    - npm install
 
 before_script:
-    - yarn run pretest
+    - npm run pretest
 
 script:
-    - travis_retry yarn test-travis
-    - travis_retry yarn bundlesize
+    - travis_retry npm run test-travis
+    - travis_retry npm run bundlesize
 
 after_script:
-    - yarn run posttest
+    - npm run posttest
 
 jobs:
     include:
         - stage: npm release
           node_js: "8"
-          script: yarn release-travis
+          script: npm run release-travis
 
 env:
     global:

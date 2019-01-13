@@ -16,7 +16,6 @@
     "melody-idom": "^1.1.0"
   },
   "devDependencies": {
-    "redux": "^3.6.0",
-    "rollup-plugin-babel": "^2.6.1"
+    "redux": "^3.6.0"
   }
 }

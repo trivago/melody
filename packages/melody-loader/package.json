@@ -25,7 +25,6 @@
     "mkdirp": "^0.5.1",
     "mz": "^2.6.0",
     "rimraf": "^2.6.1",
-    "rollup-plugin-babel": "^2.6.1",
     "webpack": "^3.5.5"
   }
 }

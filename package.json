@@ -71,7 +71,7 @@
         "inquirer": "^6.2.0",
         "jest": "^22.0.6",
         "json": "^9.0.6",
-        "lerna": "^2.0.0-rc.4",
+        "lerna": "^3.10.5",
         "lint-staged": "^4.0.2",
         "node-libs-browser": "^2.0.0",
         "prettier": "^1.5.3",

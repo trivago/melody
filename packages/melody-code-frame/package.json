@@ -11,8 +11,5 @@
   "license": "Apache-2.0",
   "dependencies": {
     "lodash": "^4.15.0"
-  },
-  "devDependencies": {
-    "rollup-plugin-babel": "^2.6.1"
   }
 }

@@ -20,8 +20,6 @@ jobs:
           keys:
           - v2-web-npm-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
       - run: npm ci
-      - run: npm run bootstrap
-      - run: npm run build
       - run: npm run pretest
       - run: npm run test-ci
       - run: npm run posttest

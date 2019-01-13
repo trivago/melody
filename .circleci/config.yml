@@ -5,28 +5,55 @@ jobs:
       - image: circleci/node:6
     steps:
       - checkout
-      - run: yarn
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: yarn install --frozen-lockfile
       - run: yarn run pretest
       - run: yarn run test-ci
       - run: yarn run posttest
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
   build-node-8:
     docker:
       - image: circleci/node:8
     steps:
       - checkout
-      - run: yarn
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: yarn install --frozen-lockfile
       - run: yarn run pretest
       - run: yarn run test-ci
       - run: yarn run posttest
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
   build-node-10:
     docker:
       - image: circleci/node:10
     steps:
       - checkout
-      - run: yarn
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: yarn install --frozen-lockfile
       - run: yarn run pretest
       - run: yarn run test-ci
       - run: yarn run posttest
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
 workflows:
   version: 2
   build:

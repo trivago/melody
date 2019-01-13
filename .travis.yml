@@ -8,6 +8,11 @@ node_js:
 install:
     - yarn
 
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
 before_script:
     - yarn run pretest
 

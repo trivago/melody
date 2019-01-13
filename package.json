@@ -10,7 +10,7 @@
         "url": "git://github.com/trivago/melody.git"
     },
     "scripts": {
-        "bootstrap": "npm run lerna bootstrap",
+        "bootstrap": "npm run lerna bootstrap --no-ci",
         "build": "lerna run build",
         "build:release": "cross-env NODE_ENV=release lerna run build",
         "clean": "rm -rf packages/*/lib && npm run lerna clean -- --yes",

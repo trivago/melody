@@ -18,7 +18,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v2-web-npm-deps-{{ .Branch }}-{{ checksum "/root/project/web/package-lock.json" }}
+          - v2-web-npm-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
       - run: npm ci
       - run: npm run bootstrap
       - run: npm run build
@@ -26,7 +26,7 @@ jobs:
       - run: npm run test-ci
       - run: npm run posttest
       - save_cache:
-          key: v2-web-npm-deps-{{ .Branch }}-{{ checksum "/root/project/web/package-lock.json" }}
+          key: v2-web-npm-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
           paths:
             - /root/.npm
   build-node-10:
@@ -36,13 +36,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v2-web-npm-deps-{{ .Branch }}-{{ checksum "/root/project/web/package-lock.json" }}
+          - v2-web-npm-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
       - run: npm ci
       - run: npm run pretest
       - run: npm run test-ci
       - run: npm run posttest
       - save_cache:
-          key: v2-web-npm-deps-{{ .Branch }}-{{ checksum "/root/project/web/package-lock.json" }}
+          key: v2-web-npm-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
           paths:
             - /root/.npm
 workflows:

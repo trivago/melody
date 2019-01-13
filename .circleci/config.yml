@@ -16,21 +16,35 @@ jobs:
       - image: circleci/node:8
     steps:
       - checkout
-      - run: npm install
+      - restore_cache:
+          keys:
+          - v2-web-npm-deps-{{ .Branch }}-{{ checksum "/root/project/web/package-lock.json" }}
+      - run: npm ci
       - run: npm run bootstrap
       - run: npm run build
       - run: npm run pretest
       - run: npm run test-ci
       - run: npm run posttest
+      - save_cache:
+          key: v2-web-npm-deps-{{ .Branch }}-{{ checksum "/root/project/web/package-lock.json" }}
+          paths:
+            - /root/.npm
   build-node-10:
     docker:
       - image: circleci/node:10
     steps:
       - checkout
-      - run: npm install
+      - restore_cache:
+          keys:
+          - v2-web-npm-deps-{{ .Branch }}-{{ checksum "/root/project/web/package-lock.json" }}
+      - run: npm ci
       - run: npm run pretest
       - run: npm run test-ci
       - run: npm run posttest
+      - save_cache:
+          key: v2-web-npm-deps-{{ .Branch }}-{{ checksum "/root/project/web/package-lock.json" }}
+          paths:
+            - /root/.npm
 workflows:
   version: 2
   build:

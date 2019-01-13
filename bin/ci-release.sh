@@ -19,12 +19,12 @@ fi
 if [ "$TRAVIS_BRANCH" = "master" ]; then
   # RELEASE AS @NEXT
   npm install && \
-    npm run lerna publish --skip-git --exact --force-publish=* --canary=commit --yes --npm-tag=next --registry https://registry.npmjs.org
+    npm run lerna publish --skip-git --no-git-tag-version --exact --force-publish=* --canary=commit --yes --npm-tag=next --registry https://registry.npmjs.org
   exit 0
 else
   # CANARY RELEASE WITH COMMIT NAME
   # @commit
   npm install && \
-    npm run lerna publish --skip-git --exact --force-publish=*  --canary=commit --yes --registry https://registry.npmjs.org
+    npm run lerna publish --skip-git --no-git-tag-version --exact --force-publish=*  --canary=commit --yes --registry https://registry.npmjs.org
   exit 0
 fi

@@ -48,9 +48,11 @@ export const BlockParser = {
                         pos: unexpectedToken.pos,
                         advice:
                             unexpectedToken.type == Types.SYMBOL
-                                ? `Expected end of block ${nameToken.text} but instead found end of block ${tokens.la(
-                                      0
-                                  ).text}.`
+                                ? `Expected end of block ${
+                                      nameToken.text
+                                  } but instead found end of block ${
+                                      tokens.la(0).text
+                                  }.`
                                 : `endblock must be followed by either '%}' or the name of the open block. Found a token of type ${Types
                                       .ERROR_TABLE[unexpectedToken.type] ||
                                       unexpectedToken.type} instead.`,

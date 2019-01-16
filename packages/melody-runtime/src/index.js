@@ -33,3 +33,6 @@ export {
 } from './filters';
 export { random, min, max, cycle, attribute } from './functions';
 export { isEmpty, inheritBlocks } from './helpers';
+
+import AsyncComponent from './async';
+export { AsyncComponent };

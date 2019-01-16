@@ -22,3 +22,4 @@ export { useCallback } from './hooks/useCallback';
 export { useMemo } from './hooks/useMemo';
 export { useReducer } from './hooks/useReducer';
 export { usePrevious } from './hooks/usePrevious';
+export { useAtom } from './hooks/useAtom';

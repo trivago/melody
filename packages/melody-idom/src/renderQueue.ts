@@ -45,13 +45,16 @@ type WhatWGAddEventListener = (
 
 let supportsPassiveListeners = false;
 /* istanbul ignore next */
-(document.createElement('div')
-    .addEventListener as WhatWGAddEventListener)('test', function() {}, {
-    get passive() {
-        supportsPassiveListeners = true;
-        return false;
-    },
-});
+(document.createElement('div').addEventListener as WhatWGAddEventListener)(
+    'test',
+    function() {},
+    {
+        get passive() {
+            supportsPassiveListeners = true;
+            return false;
+        },
+    }
+);
 
 const BUSY_FRAME_LENGTH = 3;
 const IDLE_FRAME_LENGTH = 30;

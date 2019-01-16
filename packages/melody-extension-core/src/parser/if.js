@@ -40,7 +40,8 @@ export const IfParser = {
                 test = parser.matchExpression();
                 tokens.expect(Types.TAG_END);
                 const consequent = parser.parse(matchConsequent).expressions;
-                alternate = (alternate || ifStatement
+                alternate = (
+                    alternate || ifStatement
                 ).alternate = new IfStatement(test, consequent);
             }
 

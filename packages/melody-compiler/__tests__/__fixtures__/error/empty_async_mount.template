@@ -1,0 +1,2 @@
+{% mount async './parts/#{ part }.twig' as 'bar' with {foo: 'bar'} delay placeholder by 1s %}
+{% endmount %}

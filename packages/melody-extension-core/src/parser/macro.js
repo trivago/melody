@@ -58,7 +58,9 @@ export const MacroParser = {
             var nameEndToken = tokens.next();
             if (nameToken.text !== nameEndToken.text) {
                 parser.error({
-                    title: `Macro name mismatch, expected "${nameToken.text}" but found "${nameEndToken.text}"`,
+                    title: `Macro name mismatch, expected "${
+                        nameToken.text
+                    }" but found "${nameEndToken.text}"`,
                     pos: nameEndToken.pos,
                 });
             }

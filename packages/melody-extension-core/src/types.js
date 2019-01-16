@@ -61,18 +61,33 @@ export class MountStatement extends Node {
         name?: Identifier,
         source?: String,
         key?: Node,
-        argument?: Node
+        argument?: Node,
+        async?: Boolean,
+        delayBy?: Number
     ) {
         super();
         this.name = name;
         this.source = source;
         this.key = key;
         this.argument = argument;
+        this.async = async;
+        this.delayBy = delayBy;
+        this.errorVariableName = null;
+        this.body = null;
+        this.otherwise = null;
     }
 }
 type(MountStatement, 'MountStatement');
-alias(MountStatement, 'Statement');
-visitor(MountStatement, 'name', 'source', 'key', 'argument');
+alias(MountStatement, 'Statement', 'Scope');
+visitor(
+    MountStatement,
+    'name',
+    'source',
+    'key',
+    'argument',
+    'body',
+    'otherwise'
+);
 
 export class DoStatement extends Node {
     constructor(expression: Node) {

@@ -485,7 +485,7 @@ export function format(...a) {
             case 'd':
                 number = +value || 0;
                 // Plain Math.round doesn't just truncate
-                number = Math.round(number - number % 1);
+                number = Math.round(number - (number % 1));
                 prefix = number < 0 ? '-' : positivePrefix;
                 value =
                     prefix +

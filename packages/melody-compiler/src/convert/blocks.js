@@ -251,9 +251,16 @@ export default {
                 this.error(
                     'Dynamic includes are not supported',
                     path.node.loc.start,
-                    'The Include Statement expected a StringLiteral but got a ' +
-                        sourceType +
-                        '. Includes only support static strings as argument.'
+                    `The Include Statement expected a StringLiteral but got a ${sourceType}.
+Includes only support static strings as argument.
+
+To include a template asynchronously you can use the "mount async" statement:
+
+{% mount async './#{ partial }.twig' as 'bar-#{ partial }' with _context %}
+    {{ err }}
+{% catch err %}
+    Failed to load with {{ err }}
+{% endmounts %}`
                 );
             }
             const includeName = this.addDefaultImportFrom(

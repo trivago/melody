@@ -2236,7 +2236,16 @@ exports[`Compiler should fail transforming wrong include.template 1`] = `
   3 | </div>
   4 | 
 
-The Include Statement expected a StringLiteral but got a BinaryExpression. Includes only support static strings as argument."
+The Include Statement expected a StringLiteral but got a BinaryExpression.
+Includes only support static strings as argument.
+
+To include a template asynchronously you can use the \\"mount async\\" statement:
+
+{% mount async './#{ partial }.twig' as 'bar-#{ partial }' with _context %}
+    {{ err }}
+{% catch err %}
+    Failed to load with {{ err }}
+{% endmounts %}"
 `;
 
 exports[`Compiler should transform templates with warnings mount without as.template 1`] = `

@@ -91,7 +91,7 @@ Object.assign(Component.prototype, {
      * @param {*} props new properties
      */
     apply(props) {
-        // On the first call to apply `this.props` is null, thus
+        // On the first call to apply `this.props` is `undefined`, thus
         // `isPropsDirty` will be true.
         const propsNext = props || {};
         this.isPropsDirty = !shallowEquals(propsNext, this.props);

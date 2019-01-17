@@ -88,6 +88,37 @@ describe('component', () => {
         render(root, MyComponent, { value: 'foo' });
         assert.equal(called, 1);
     });
+    it("should not rerender children when props haven't changed", () => {
+        const childTemplate = {
+            render(_context) {
+                elementOpen('div', null, null);
+                text('Hello');
+                elementClose('div');
+            },
+        };
+
+        let childCalled = 0;
+        const MyComponent = createComponent(props => {
+            childCalled++;
+        }, childTemplate);
+
+        const parentTemplate = {
+            render(_context) {
+                elementOpen('div', null, null);
+                component(MyComponent, '4');
+                elementClose('div');
+            },
+        };
+        const MyParentComponent = createComponent(
+            props => props,
+            parentTemplate
+        );
+
+        const root = document.createElement('div');
+        render(root, MyParentComponent);
+        render(root, MyParentComponent);
+        expect(childCalled).toEqual(1);
+    });
     it('should replace components', () => {
         const template = {
             render(_context) {
@@ -611,7 +642,7 @@ describe('component', () => {
 
         const root = document.createElement('div');
         const MyComponent = createComponent(props => {
-            if (!props) throw new Error('Foo');
+            if (!props.value) throw new Error('Foo');
             const [foo] = useState(1337);
             const [bar] = useState(1337);
             return {

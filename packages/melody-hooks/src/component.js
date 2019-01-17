@@ -59,8 +59,8 @@ function Component(element, componentFn) {
     // tracks which hook is currently running
     this.hooksPointer = -1;
 
-    // the props the we receive from the parent
-    // this.props = null;
+    // `this.props` need to be initialized with `undefined`
+    // for first shallowEqual check in `apply`
     this.props = undefined;
     // receiving new props marks the props as dirty
     this.isPropsDirty = false;

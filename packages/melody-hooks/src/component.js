@@ -60,7 +60,8 @@ function Component(element, componentFn) {
     this.hooksPointer = -1;
 
     // the props the we receive from the parent
-    this.props = null;
+    // this.props = null;
+    this.props = undefined;
     // receiving new props marks the props as dirty
     this.isPropsDirty = false;
 
@@ -90,11 +91,11 @@ Object.assign(Component.prototype, {
      * @param {*} props new properties
      */
     apply(props) {
-        if (shallowEquals(props, this.props)) {
-            return;
-        }
-        this.props = props || null;
-        this.isPropsDirty = true;
+        // On the first call to apply `this.props` is null, thus
+        // `isPropsDirty` will be true.
+        const propsNext = props || {};
+        this.isPropsDirty = !shallowEquals(propsNext, this.props);
+        this.props = propsNext;
         this.enqueueComponent();
     },
 

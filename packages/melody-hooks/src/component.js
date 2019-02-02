@@ -15,7 +15,7 @@
  */
 
 import { enqueueComponent, options } from 'melody-idom';
-import { shallowEquals, shallowEqualsScalar } from './util/shallowEquals';
+import { shallowEqual } from './util/shallowEqual';
 import { setCurrentComponent, unsetCurrentComponent } from './util/hooks';
 import {
     HOOK_TYPE_USE_EFFECT,
@@ -97,7 +97,7 @@ Object.assign(Component.prototype, {
         // On the first call to apply `this.props` is `undefined`, thus
         // `isPropsDirty` will be true.
         const propsNext = props || {};
-        this.isPropsDirty = !shallowEquals(propsNext, this.props);
+        this.isPropsDirty = !shallowEqual(propsNext, this.props);
         this.props = propsNext;
         this.enqueueComponent();
     },
@@ -266,7 +266,7 @@ Object.assign(Component.prototype, {
 
             // Shallow equal check if the value at
             // this slot has changed.
-            if (!shallowEqualsScalar(value, valueNext)) {
+            if (!shallowEqual(value, valueNext)) {
                 // The state has changed, update the slot
                 state[hookIndex] = valueNext;
                 changed = true;

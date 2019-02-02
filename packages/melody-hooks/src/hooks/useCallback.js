@@ -16,7 +16,7 @@
 
 import { HOOK_TYPE_USE_CALLBACK } from '../constants';
 import { enterHook } from '../util/hooks';
-import { shallowEqualsArray } from '../util/shallowEquals';
+import { shallowEqual } from '../util/shallowEqual';
 
 export const useCallback = (callback, inputs) => {
     const currentComponent = enterHook(HOOK_TYPE_USE_CALLBACK);
@@ -34,7 +34,7 @@ export const useCallback = (callback, inputs) => {
     const callbackPrev = hook[1];
     const inputsPrev = hook[2];
 
-    const dirty = !shallowEqualsArray(inputsPrev, inputsNext);
+    const dirty = !shallowEqual(inputsPrev, inputsNext);
 
     if (!dirty) return callbackPrev;
 

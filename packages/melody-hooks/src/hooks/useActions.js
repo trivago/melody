@@ -16,7 +16,7 @@
 
 import { useRef } from './useRef';
 import { usePrevious } from './usePrevious';
-import { shallowEqualsScalar } from '../util/shallowEquals';
+import { shallowEqual } from '../util/shallowEqual';
 import { isStore } from '../util/isStore';
 
 const bindActionCreator = (actionCreator, dispatch) =>
@@ -82,7 +82,7 @@ export const useActions = (store, actionCreators) => {
 
     if (
         !actionCreatorsPrev ||
-        !shallowEqualsScalar(actionCreators, actionCreatorsPrev)
+        !shallowEqual(actionCreators, actionCreatorsPrev)
     ) {
         boundActionCreatorsRef.current = bindActionCreators(
             actionCreators,

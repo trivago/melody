@@ -18,7 +18,7 @@ import { useCallback } from './useCallback';
 import { useState } from './useState';
 import { useEffect } from './useEffect';
 import { useRef } from './useRef';
-import { shallowEqualsScalar } from '../util/shallowEquals';
+import { shallowEqual } from '../util/shallowEqual';
 import { isStore } from '../util/isStore';
 
 // We use a lot of selectors that access props when used with `melody-redux` e.g:
@@ -64,7 +64,7 @@ const selectState = (state, selector, store) => {
         }
     }
 
-    if (shallowEqualsScalar(state, stateNext)) {
+    if (shallowEqual(state, stateNext)) {
         return state;
     }
     return stateNext;

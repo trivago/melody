@@ -82,6 +82,9 @@ function Component(element, componentFn) {
     // tracks whether this component is mounted and
     // attached to the DOM
     this.isMounted = false;
+
+    // Tracks whether this component was enqued but never renderd
+    this.needsRender = false;
 }
 
 Object.assign(Component.prototype, {
@@ -345,9 +348,13 @@ Object.assign(Component.prototype, {
             }
         }
 
-        // When we have seen an update and we have an element
+        const shouldEnqueue = this.needsRender || updated;
+
+        // When we have an element and we have seen an update or this
+        // component was not rendered yet (even thought an update came in),
         // we send the component to the rendering queue.
-        if (updated && this.el) {
+        if (this.el && shouldEnqueue) {
+            this.needsRender = true;
             enqueueComponent(this);
         }
     },
@@ -356,6 +363,7 @@ Object.assign(Component.prototype, {
      * Invoked when a component should render itself.
      */
     render() {
+        this.needsRender = false;
         this.renderTemplate();
         // Run mutation effects immediately
         // after touching the DOM

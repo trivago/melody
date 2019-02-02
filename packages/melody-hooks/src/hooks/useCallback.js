@@ -22,8 +22,7 @@ export const useCallback = (callback, inputs) => {
     const currentComponent = enterHook(HOOK_TYPE_USE_CALLBACK);
     const { hooksPointer, hooks } = currentComponent;
 
-    const inputsNext =
-        inputs !== undefined && inputs !== null ? inputs : [callback];
+    const inputsNext = inputs === undefined ? null : inputs;
 
     if (currentComponent.isCollectingHooks) {
         hooks.push([HOOK_TYPE_USE_CALLBACK, callback, inputsNext]);
@@ -34,7 +33,7 @@ export const useCallback = (callback, inputs) => {
     const callbackPrev = hook[1];
     const inputsPrev = hook[2];
 
-    const dirty = !shallowEqual(inputsPrev, inputsNext);
+    const dirty = inputsNext === null || !shallowEqual(inputsPrev, inputsNext);
 
     if (!dirty) return callbackPrev;
 

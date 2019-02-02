@@ -24,3 +24,4 @@ export { useReducer } from './hooks/useReducer';
 export { usePrevious } from './hooks/usePrevious';
 export { useAtom } from './hooks/useAtom';
 export { useStore } from './hooks/useStore';
+export { useActions } from './hooks/useActions';

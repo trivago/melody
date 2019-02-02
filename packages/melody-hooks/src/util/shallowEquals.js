@@ -45,7 +45,12 @@ export const shallowEqualsScalar = (a, b) => {
     const at = typeof a;
     const bt = typeof b;
     if (at !== bt) return false;
-    if (at === 'boolean' || at === 'string' || at === 'number') {
+    if (
+        at === 'boolean' ||
+        at === 'string' ||
+        at === 'number' ||
+        at === 'function'
+    ) {
         return a === b;
     }
     return shallowEquals(a, b);

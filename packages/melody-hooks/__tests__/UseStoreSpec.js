@@ -31,6 +31,32 @@ describe('useStore', () => {
             const state = useStore(store, selector);
             return state;
         };
+        it('should throw when no store was passed', () => {
+            const componentFn = () => {
+                const state = useStore();
+                return {
+                    state,
+                };
+            };
+            const tester = createTestComponent(componentFn);
+            expect(() => tester.render()).toThrow(
+                'useStore: expected first argument to be a redux store, instead received undefined'
+            );
+            tester.unmount();
+        });
+        it('should throw when no selector function was passed', () => {
+            const componentFn = () => {
+                const state = useStore(store, null);
+                return {
+                    state,
+                };
+            };
+            const tester = createTestComponent(componentFn);
+            expect(() => tester.render()).toThrow(
+                'useStore: expected second argument to be a selector function, instead received object'
+            );
+            tester.unmount();
+        });
         it('should render the initial state', () => {
             const tester = createTestComponent(componentFn);
 

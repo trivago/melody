@@ -19,6 +19,7 @@ import { useState } from './useState';
 import { useEffect } from './useEffect';
 import { useRef } from './useRef';
 import { shallowEqualsScalar } from '../util/shallowEquals';
+import { isStore } from '../util/isStore';
 
 // We use a lot of selectors that access props when used with `melody-redux` e.g:
 // const selector = (state, props) => state[props.id]
@@ -96,10 +97,27 @@ const defaultSelector = state => state;
 
 /**
  * A melody hook for subscribing to a redux store.
- * @param {*} store A redux store instance
- * @param {*} selector A selector function
+ *
+ * @param {Store} store A redux store instance
+ * @param {Function} selector A selector function
  */
 export const useStore = (store, selector = defaultSelector) => {
+    if (process.env.NODE_ENV !== 'production') {
+        if (!isStore(store)) {
+            throw new Error(
+                'useStore: expected first argument to be a redux store, ' +
+                    'instead received ' +
+                    typeof store
+            );
+        }
+        if (typeof selector !== 'function') {
+            throw new Error(
+                'useStore: expected second argument to be a selector function, ' +
+                    'instead received ' +
+                    typeof selector
+            );
+        }
+    }
     // Holds the current selected state
     const stateRef = useRef();
 

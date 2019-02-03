@@ -21,4 +21,13 @@ export const HOOK_TYPE_USE_REF = 4;
 export const HOOK_TYPE_USE_CALLBACK = 5;
 export const HOOK_TYPE_USE_MEMO = 6;
 
+export const HOOK_LABEL_BY_TYPE = {
+    1: 'useState',
+    2: 'useEffect',
+    3: 'useMutationEffect',
+    4: 'useRef',
+    5: 'useCallback',
+    6: 'useMemo',
+};
+
 export const RENDER_LIMIT = 50;

@@ -17,11 +17,13 @@
 import { enqueueComponent, options } from 'melody-idom';
 import { shallowEqual } from './util/shallowEqual';
 import { setCurrentComponent, unsetCurrentComponent } from './util/hooks';
+import { markStart, markEnd } from './util/performance';
 import {
     HOOK_TYPE_USE_EFFECT,
     HOOK_TYPE_USE_REF,
     RENDER_LIMIT,
     HOOK_TYPE_USE_MUTATION_EFFECT,
+    HOOK_LABEL_BY_TYPE,
 } from './constants';
 
 const { afterUpdate, afterMount } = options;
@@ -155,7 +157,14 @@ Object.assign(Component.prototype, {
 
             // Call the effect and store a potential
             // `unsubscribe` function for later use
+            if (process.env.NODE_ENV !== 'production') {
+                markStart(this, `${HOOK_LABEL_BY_TYPE[hookType]} (${i})`);
+            }
             const unsubscribeNext = callback() || null;
+            if (process.env.NODE_ENV !== 'production') {
+                markEnd(this, `${HOOK_LABEL_BY_TYPE[hookType]} (${i})`);
+            }
+
             hook[4] = unsubscribeNext;
         }
     },
@@ -329,7 +338,13 @@ Object.assign(Component.prototype, {
                 this.hooksPointer = -1;
 
                 // Run the component functions
+                if (process.env.NODE_ENV !== 'production') {
+                    markStart(this, `componentFn (${i})`);
+                }
                 this.data = this.componentFn(this.props) || {};
+                if (process.env.NODE_ENV !== 'production') {
+                    markEnd(this, `componentFn (${i})`);
+                }
 
                 // Mark that we have already collected the hooks
                 // This only may happen once.
@@ -364,7 +379,15 @@ Object.assign(Component.prototype, {
      */
     render() {
         this.needsRender = false;
+
+        if (process.env.NODE_ENV !== 'production') {
+            markStart(this, 'render');
+        }
         this.renderTemplate();
+        if (process.env.NODE_ENV !== 'production') {
+            markEnd(this, 'render');
+        }
+
         // Run mutation effects immediately
         // after touching the DOM
         this.runMutationEffects();
@@ -380,6 +403,10 @@ Object.assign(Component.prototype, {
      */
     componentWillUnmount() {
         const hooks = this.hooks;
+
+        if (process.env.NODE_ENV !== 'production') {
+            markStart(this, 'unmount');
+        }
 
         // Run through hooks that need clean up logic
         for (let i = 0, l = hooks.length; i < l; i++) {
@@ -403,6 +430,9 @@ Object.assign(Component.prototype, {
                     continue;
                 }
             }
+        }
+        if (process.env.NODE_ENV !== 'production') {
+            markEnd(this, 'unmount');
         }
         // Unset hooks
         this.hooks = undefined;

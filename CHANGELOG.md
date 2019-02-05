@@ -7,6 +7,7 @@
 - Introduce `melody-hooks` API [#74](https://github.com/trivago/melody/pull/74)
 - `[melody-compiler]` warns on `mount` statement without `as` key [#48](https://github.com/trivago/melody/pull/48)
 - Introduce `useAtom` hook [#79](https://github.com/trivago/melody/pulls/79)
+- Introduce `useStore` hook and performance marks for hooks [#98](https://github.com/trivago/melody/pulls/98)
 - Added async mounting of components [#82](https://github.com/trivago/melody/pull/82)
 
 ### Fixes

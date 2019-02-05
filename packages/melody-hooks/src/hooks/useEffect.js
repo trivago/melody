@@ -19,14 +19,13 @@ import {
     HOOK_TYPE_USE_MUTATION_EFFECT,
 } from '../constants';
 import { enterHook } from '../util/hooks';
-import { shallowEqualsArray } from '../util/shallowEquals';
+import { shallowEqual } from '../util/shallowEqual';
 
 const createEffectHook = type => (callback, inputs) => {
     const currentComponent = enterHook(type);
     const { hooksPointer, hooks } = currentComponent;
 
-    const inputsNext =
-        inputs !== undefined && inputs !== null ? inputs : [callback];
+    const inputsNext = inputs === undefined ? null : inputs;
 
     if (currentComponent.isCollectingHooks) {
         const dirty = true;
@@ -37,7 +36,7 @@ const createEffectHook = type => (callback, inputs) => {
 
     const hook = hooks[hooksPointer];
     const inputsPrev = hook[2];
-    const dirty = !shallowEqualsArray(inputsPrev, inputsNext);
+    const dirty = inputsNext === null || !shallowEqual(inputsPrev, inputsNext);
 
     if (dirty) {
         hook[1] = callback;

@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-import { flush as _flush } from 'melody-idom';
-
-export const flush = () =>
-    _flush({
-        didTimeout: false,
-        timeRemaining() {
-            return 10;
-        },
-    });
+/**
+ * Checks if `maybe` is a store with a `dispatch` and `getState` function.
+ * @param maybe {any} asd
+ */
+export const isStore = maybe =>
+    maybe &&
+    typeof maybe.dispatch === 'function' &&
+    typeof maybe.getState === 'function';

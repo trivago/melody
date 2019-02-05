@@ -16,14 +16,13 @@
 
 import { HOOK_TYPE_USE_MEMO } from '../constants';
 import { enterHook } from '../util/hooks';
-import { shallowEqualsArray } from '../util/shallowEquals';
+import { shallowEqual } from '../util/shallowEqual';
 
 export const useMemo = (getter, inputs) => {
     const currentComponent = enterHook(HOOK_TYPE_USE_MEMO);
     const { hooksPointer, hooks } = currentComponent;
 
-    const inputsNext =
-        inputs !== undefined && inputs !== null ? inputs : [getter];
+    const inputsNext = inputs === undefined ? null : inputs;
 
     if (currentComponent.isCollectingHooks) {
         const value = getter();
@@ -34,7 +33,7 @@ export const useMemo = (getter, inputs) => {
     const hook = hooks[hooksPointer];
     const valuePrev = hook[1];
     const inputsPrev = hook[2];
-    const dirty = !shallowEqualsArray(inputsPrev, inputsNext);
+    const dirty = inputsNext === null || !shallowEqual(inputsPrev, inputsNext);
 
     if (!dirty) return valuePrev;
 

@@ -14,12 +14,22 @@
  * limitations under the License.
  */
 
-import { flush as _flush } from 'melody-idom';
+import { createStore } from 'redux';
 
-export const flush = () =>
-    _flush({
-        didTimeout: false,
-        timeRemaining() {
-            return 10;
-        },
-    });
+const defaultInitialState = {
+    foo: 'bar',
+};
+
+export const createMockStore = (initialState = defaultInitialState) => {
+    const reducer = (state = initialState, action) => {
+        if (action.type === 'SET') {
+            return {
+                ...state,
+                foo: action.payload,
+            };
+        }
+        return state;
+    };
+
+    return createStore(reducer);
+};

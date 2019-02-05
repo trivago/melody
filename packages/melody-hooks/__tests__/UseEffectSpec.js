@@ -103,6 +103,14 @@ describe('useEffect', () => {
             assert.equal(root.outerHTML, '<div>1</div>');
             assert.equal(called, 2);
         });
+        it('should ignore unsubscribe if it is not a function', () => {
+            const root = document.createElement('div');
+            const MyComponent = createComponent(() => {
+                useEffect(() => 'not a function');
+            }, template);
+            render(root, MyComponent);
+            unmountComponentAtNode(root);
+        });
     });
     describe('with unsubscribe', () => {
         it('should call effect on mount and every update and unsubscribe after every update and on unmount', () => {

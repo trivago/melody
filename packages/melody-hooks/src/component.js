@@ -423,7 +423,9 @@ Object.assign(Component.prototype, {
                 case HOOK_TYPE_USE_EFFECT:
                 case HOOK_TYPE_USE_MUTATION_EFFECT: {
                     const unsubscribe = hook[4];
-                    if (unsubscribe) unsubscribe();
+                    if (typeof unsubscribe === 'function') {
+                        unsubscribe();
+                    }
                     break;
                 }
                 // Unset references to DOM elements

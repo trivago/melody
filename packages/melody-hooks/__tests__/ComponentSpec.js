@@ -15,7 +15,7 @@
  */
 import { assert } from 'chai';
 
-import { render } from 'melody-component';
+import { render, unmountComponentAtNode } from 'melody-component';
 import {
     elementOpen,
     elementClose,
@@ -630,6 +630,16 @@ describe('component', () => {
         render(root, MyParentComponent, { childProps: { text: 'test' } });
         assert.equal(root.outerHTML, '<div><div>test</div></div>');
         assert.equal(mounted, 1);
+    });
+    it('should not throw when calling setState after the component has been unmounted', () => {
+        const root = document.createElement('div');
+        let rerender;
+        const MyComponent = createComponent(() => {
+            rerender = useState()[1];
+        }, template);
+        render(root, MyComponent);
+        unmountComponentAtNode(root);
+        rerender('foo');
     });
     it('should recover from errors in the component function', () => {
         const template = {

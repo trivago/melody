@@ -84,6 +84,7 @@ function Component(element, componentFn) {
     // tracks whether this component is mounted and
     // attached to the DOM
     this.isMounted = false;
+    this.isUnmounted = false;
 
     // Tracks whether this component was enqued but never renderd
     this.needsRender = false;
@@ -213,11 +214,16 @@ Object.assign(Component.prototype, {
      */
     setState(hookIndex, valueNext) {
         const {
+            isUnmounted,
             state,
             stateQueue,
             hasQueuedState,
             isRunningMutationEffects,
         } = this;
+
+        if (isUnmounted) {
+            return;
+        }
 
         if (isRunningMutationEffects) {
             throw new Error(
@@ -435,6 +441,7 @@ Object.assign(Component.prototype, {
             markEnd(this, 'unmount');
         }
         // Unset hooks
+        this.isUnmounted = true;
         this.hooks = undefined;
     },
 });

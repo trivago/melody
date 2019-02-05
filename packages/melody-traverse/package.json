@@ -1,6 +1,6 @@
 {
   "name": "melody-traverse",
-  "version": "1.2.0-0",
+  "version": "1.2.0-1",
   "description": "",
   "main": "./lib/index.js",
   "jsnext:main": "./lib/index.esm.js",

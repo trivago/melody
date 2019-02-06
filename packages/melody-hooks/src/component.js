@@ -226,6 +226,14 @@ Object.assign(Component.prototype, {
         } = this;
 
         if (isUnmounted) {
+            if (process.env.NODE_ENV !== 'production') {
+                // eslint-disable-next-line no-console
+                console.warn(
+                    'useState: a `setState` handler has been called even though the component ' +
+                        'was already unmounted. This is probably due to a missing `unsubscribe` ' +
+                        'callback of a `useEffect` or `useMutationEffect` hook.'
+                );
+            }
             return;
         }
 

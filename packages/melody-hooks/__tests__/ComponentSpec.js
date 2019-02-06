@@ -639,7 +639,15 @@ describe('component', () => {
         }, template);
         render(root, MyComponent);
         unmountComponentAtNode(root);
+        /* eslint-disable no-console */
+        const temp = console.warn;
+        console.warn = jest.fn();
         rerender('foo');
+        expect(console.warn).toHaveBeenCalledWith(
+            'useState: a `setState` handler has been called even though the component was already unmounted. This is probably due to a missing `unsubscribe` callback of a `useEffect` or `useMutationEffect` hook.'
+        );
+        console.warn = temp;
+        /* eslint-enable no-console */
     });
     it('should recover from errors in the component function', () => {
         const template = {

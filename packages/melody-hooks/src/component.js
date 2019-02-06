@@ -84,6 +84,7 @@ function Component(element, componentFn) {
     // tracks whether this component is mounted and
     // attached to the DOM
     this.isMounted = false;
+    this.isUnmounted = false;
 
     // Tracks whether this component was enqued but never renderd
     this.needsRender = false;
@@ -165,7 +166,11 @@ Object.assign(Component.prototype, {
                 markEnd(this, `${HOOK_LABEL_BY_TYPE[hookType]} (${i})`);
             }
 
+            // store new unsubscribe callback
             hook[4] = unsubscribeNext;
+
+            // effect is not dirty anymore
+            hook[3] = false;
         }
     },
 
@@ -213,11 +218,24 @@ Object.assign(Component.prototype, {
      */
     setState(hookIndex, valueNext) {
         const {
+            isUnmounted,
             state,
             stateQueue,
             hasQueuedState,
             isRunningMutationEffects,
         } = this;
+
+        if (isUnmounted) {
+            if (process.env.NODE_ENV !== 'production') {
+                // eslint-disable-next-line no-console
+                console.warn(
+                    'useState: a `setState` handler has been called even though the component ' +
+                        'was already unmounted. This is probably due to a missing `unsubscribe` ' +
+                        'callback of a `useEffect` or `useMutationEffect` hook.'
+                );
+            }
+            return;
+        }
 
         if (isRunningMutationEffects) {
             throw new Error(
@@ -417,7 +435,20 @@ Object.assign(Component.prototype, {
                 case HOOK_TYPE_USE_EFFECT:
                 case HOOK_TYPE_USE_MUTATION_EFFECT: {
                     const unsubscribe = hook[4];
-                    if (unsubscribe) unsubscribe();
+                    if (typeof unsubscribe === 'function') {
+                        unsubscribe();
+                    } else {
+                        if (process.env.NODE_ENV !== 'production') {
+                            if (unsubscribe !== undefined) {
+                                const hookLabel = HOOK_LABEL_BY_TYPE[type];
+                                // eslint-disable-next-line no-console
+                                console.warn(
+                                    `${hookLabel}: expected the unsubscribe callback to be ` +
+                                        `a function or undefined. Instead received ${typeof unsubscribe}.`
+                                );
+                            }
+                        }
+                    }
                     break;
                 }
                 // Unset references to DOM elements
@@ -435,6 +466,7 @@ Object.assign(Component.prototype, {
             markEnd(this, 'unmount');
         }
         // Unset hooks
+        this.isUnmounted = true;
         this.hooks = undefined;
     },
 });

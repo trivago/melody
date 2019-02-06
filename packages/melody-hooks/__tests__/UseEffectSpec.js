@@ -103,6 +103,38 @@ describe('useEffect', () => {
             assert.equal(root.outerHTML, '<div>1</div>');
             assert.equal(called, 2);
         });
+        it('should not reset `dirty` when multiple updates come in', () => {
+            const root = document.createElement('div');
+            let called = 0;
+            let setValue;
+            const MyComponent = createComponent(() => {
+                const state = useState([]);
+                const value = state[0];
+                setValue = state[1];
+                useEffect(
+                    () => {
+                        called++;
+                    },
+                    // note: we are using derived data (value.length) here
+                    [value.length]
+                );
+                return {
+                    value,
+                };
+            }, template);
+            render(root, MyComponent);
+            assert.equal(called, 1);
+            setValue(['a']);
+            flush();
+            assert.equal(called, 2);
+            setValue(['a', 'b']);
+            // the second call to setValue should not reset the hook's internal `dirty` property,
+            // value.length will be 2 for both times `setValue` is called.
+            // here we test that once dirty is true, it will not be resetted
+            setValue(['a', 'c']);
+            flush();
+            assert.equal(called, 3);
+        });
         it('should ignore unsubscribe if it is not a function', () => {
             const root = document.createElement('div');
             const MyComponent = createComponent(() => {

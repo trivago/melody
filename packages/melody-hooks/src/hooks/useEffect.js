@@ -42,7 +42,7 @@ const createEffectHook = type => (callback, inputs) => {
         hook[1] = callback;
     }
     hook[2] = inputsNext;
-    hook[3] = dirty;
+    hook[3] = hook[3] || dirty;
 };
 
 export const useEffect = createEffectHook(HOOK_TYPE_USE_EFFECT);

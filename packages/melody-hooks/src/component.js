@@ -166,7 +166,11 @@ Object.assign(Component.prototype, {
                 markEnd(this, `${HOOK_LABEL_BY_TYPE[hookType]} (${i})`);
             }
 
+            // store new unsubscribe callback
             hook[4] = unsubscribeNext;
+
+            // effect is not dirty anymore
+            hook[3] = false;
         }
     },
 

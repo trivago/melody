@@ -141,7 +141,17 @@ describe('useEffect', () => {
                 useEffect(() => 'not a function');
             }, template);
             render(root, MyComponent);
+
+            /* eslint-disable no-console */
+            const temp = console.warn;
+            console.warn = jest.fn();
             unmountComponentAtNode(root);
+
+            expect(console.warn).toHaveBeenCalledWith(
+                'useEffect: expected the unsubscribe callback to be a function or undefined. Instead received string.'
+            );
+            console.warn = temp;
+            /* eslint-enable no-console */
         });
     });
     describe('with unsubscribe', () => {

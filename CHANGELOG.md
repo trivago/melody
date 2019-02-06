@@ -1,5 +1,7 @@
 ## master
 
+## 1.2.0-2 (beta)
+
 ### Features
 
 - Filter `trim`: add support for advanced features [#64](https://github.com/trivago/melody/pull/64)

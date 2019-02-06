@@ -42,6 +42,8 @@ const createEffectHook = type => (callback, inputs) => {
         hook[1] = callback;
     }
     hook[2] = inputsNext;
+
+    // Do not reset `dirty` when it is already `true`
     hook[3] = hook[3] || dirty;
 };
 

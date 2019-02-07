@@ -1,6 +1,6 @@
 {
   "name": "melody-redux",
-  "version": "1.2.0-2",
+  "version": "1.2.0-3",
   "description": "",
   "main": "./lib/index.js",
   "jsnext:main": "./lib/index.esm.js",
@@ -10,7 +10,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "melody-component": "1.2.0-2"
+    "melody-component": "1.2.0-3"
   },
   "peerDependencies": {
     "melody-idom": "^1.1.0"

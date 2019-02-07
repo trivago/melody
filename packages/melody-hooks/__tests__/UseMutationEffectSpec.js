@@ -43,8 +43,12 @@ describe('useMutationEffect', () => {
             const root = document.createElement('div');
             const log = [];
             const MyComponent = createComponent(() => {
-                useEffect(() => log.push('effect'));
-                useMutationEffect(() => log.push('mutation'));
+                useEffect(() => {
+                    log.push('effect');
+                });
+                useMutationEffect(() => {
+                    log.push('mutation');
+                });
             }, template);
             render(root, MyComponent);
             assert.deepEqual(log, ['mutation', 'effect']);

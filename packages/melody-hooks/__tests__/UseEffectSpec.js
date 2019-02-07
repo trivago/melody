@@ -140,12 +140,11 @@ describe('useEffect', () => {
             const MyComponent = createComponent(() => {
                 useEffect(() => 'not a function');
             }, template);
-            render(root, MyComponent);
 
             /* eslint-disable no-console */
             const temp = console.warn;
             console.warn = jest.fn();
-            unmountComponentAtNode(root);
+            render(root, MyComponent);
 
             expect(console.warn).toHaveBeenCalledWith(
                 'useEffect: expected the unsubscribe callback to be a function or undefined. Instead received string.'

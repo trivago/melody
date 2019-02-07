@@ -161,9 +161,23 @@ Object.assign(Component.prototype, {
             if (process.env.NODE_ENV !== 'production') {
                 markStart(this, `${HOOK_LABEL_BY_TYPE[hookType]} (${i})`);
             }
-            const unsubscribeNext = callback() || null;
+            const unsubscribeNext = callback();
             if (process.env.NODE_ENV !== 'production') {
                 markEnd(this, `${HOOK_LABEL_BY_TYPE[hookType]} (${i})`);
+            }
+
+            if (process.env.NODE_ENV !== 'production') {
+                if (
+                    unsubscribeNext !== undefined &&
+                    typeof unsubscribeNext !== 'function'
+                ) {
+                    const hookLabel = HOOK_LABEL_BY_TYPE[type];
+                    // eslint-disable-next-line no-console
+                    console.warn(
+                        `${hookLabel}: expected the unsubscribe callback to be ` +
+                            `a function or undefined. Instead received ${typeof unsubscribeNext}.`
+                    );
+                }
             }
 
             // store new unsubscribe callback
@@ -437,17 +451,6 @@ Object.assign(Component.prototype, {
                     const unsubscribe = hook[4];
                     if (typeof unsubscribe === 'function') {
                         unsubscribe();
-                    } else {
-                        if (process.env.NODE_ENV !== 'production') {
-                            if (unsubscribe !== undefined) {
-                                const hookLabel = HOOK_LABEL_BY_TYPE[type];
-                                // eslint-disable-next-line no-console
-                                console.warn(
-                                    `${hookLabel}: expected the unsubscribe callback to be ` +
-                                        `a function or undefined. Instead received ${typeof unsubscribe}.`
-                                );
-                            }
-                        }
                     }
                     break;
                 }

@@ -1,0 +1,21 @@
+{
+    "name": "melody-streams",
+    "version": "1.2.0-3",
+    "description": "",
+    "main": "./lib/index.js",
+    "jsnext:main": "./lib/index.esm.js",
+    "scripts": {
+        "build": "mkdir lib; rollup -c ../../rollup.config.js -i src/index.js",
+        "coverage": "nyc npm run test"
+    },
+    "author": "",
+    "license": "Apache-2.0",
+    "peerDependencies": {
+        "melody-idom": "^1.1.0",
+        "rxjs": "^6.4.0",
+        "lodash": "^4.17.11"
+    },
+    "devDependencies": {
+        "rollup-plugin-babel": "^2.6.1"
+    }
+}

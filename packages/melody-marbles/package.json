@@ -1,5 +1,5 @@
 {
-    "name": "melody-streams",
+    "name": "melody-marbles",
     "version": "1.2.0-3",
     "description": "",
     "main": "./lib/index.js",
@@ -11,13 +11,10 @@
     "author": "",
     "license": "Apache-2.0",
     "peerDependencies": {
-        "melody-idom": "^1.1.0",
-        "melody-marbles": "^1.2.0-3"
-      },
-      "devDependencies": {
-        "jest-marbles": "^2.3.0",
-        "rxjs": "^6.4.0",
-        "lodash": "^4.17.11",
+    },
+    "devDependencies": {
+      "jest-marbles": "^2.3.0",
+      "rxjs": "^6.4.0",
         "rollup-plugin-babel": "^2.6.1"
     }
 }

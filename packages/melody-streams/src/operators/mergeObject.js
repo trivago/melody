@@ -17,7 +17,7 @@
 import { isObservable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { toPairs } from 'lodash';
-import { mergeIntoObject } from './mergeObject';
+import { mergeIntoObject } from './mergeIntoObject';
 
 export const mergeObject = spec => {
     const pairs = toPairs(spec);

@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`withElement should return a refHandler and subject that connects the refstream to the return subject 1`] = `"[\\"foo\\",\\"bar\\"]"`;

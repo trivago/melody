@@ -85,12 +85,10 @@ export const createComponent = (transform, templateFnOrObj) => {
         : templateFnOrObj;
     const ChildComponent = createComponentConstructor(Component);
     ChildComponent.prototype.displayName =
-        template.name || template.displayName || 'Unknown';
+        transform.name || template.name || template.displayName || 'Unknown';
     ChildComponent.prototype.render = function() {
         return template(this.state);
     };
-    ChildComponent.prototype.getTransform = function(spec) {
-        return transform(spec);
-    };
+    ChildComponent.prototype.getTransform = transform;
     return ChildComponent;
 };

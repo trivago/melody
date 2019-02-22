@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { expect } from 'chai';
 
 import { createSubContext } from '../src';
 
@@ -32,18 +31,18 @@ describe('createSubContext', function() {
 
     it('returns a new sub context', function() {
         const subContext = createSubContext(context);
-        expect(subContext === context).to.be.false;
+        expect(subContext === context).toBeFalsy();
     });
 
     it('provides access to the parent context properties', function() {
         const subContext = createSubContext(context);
-        expect(subContext.b).to.equal(42);
+        expect(subContext.b).toEqual(42);
     });
 
     it('enhances the child context with new properties', function() {
         const subContext = createSubContext(context, { c: 1 });
-        expect(subContext.b).to.equal(42);
-        expect(subContext.c).to.equal(1);
-        expect(context.c).to.be.undefined;
+        expect(subContext.b).toEqual(42);
+        expect(subContext.c).toEqual(1);
+        expect(context.c).toBeUndefined();
     });
 });

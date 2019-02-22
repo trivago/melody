@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { expect } from 'chai';
 
 import { createComponent, render } from 'melody-component';
 import { elementOpen, elementClose } from 'melody-idom';
@@ -40,7 +39,7 @@ describe('DefaultProps', function() {
         const EnhancedComponent = enhance(MyComponent);
 
         render(root, EnhancedComponent, { foo: 'baz' });
-        expect(loggedProps).to.deep.equal({ qux: 'qax', foo: 'baz' });
+        expect(loggedProps).toEqual({ qux: 'qax', foo: 'baz' });
     });
     it('should fill undefined properties', function() {
         const root = document.createElement('div');
@@ -55,7 +54,7 @@ describe('DefaultProps', function() {
         const EnhancedComponent = enhance(MyComponent);
 
         render(root, EnhancedComponent, { foo: 'baz', qux: undefined });
-        expect(loggedProps).to.deep.equal({ qux: 'qax', foo: 'baz' });
+        expect(loggedProps).toEqual({ qux: 'qax', foo: 'baz' });
     });
     it('should not fill null properties', function() {
         const root = document.createElement('div');
@@ -70,7 +69,7 @@ describe('DefaultProps', function() {
         const EnhancedComponent = enhance(MyComponent);
 
         render(root, EnhancedComponent, { foo: 'baz', qux: null });
-        expect(loggedProps).to.deep.equal({ qux: null, foo: 'baz' });
+        expect(loggedProps).toEqual({ qux: null, foo: 'baz' });
     });
     it('should fill missing properties on update', function() {
         const root = document.createElement('div');
@@ -86,6 +85,6 @@ describe('DefaultProps', function() {
 
         render(root, EnhancedComponent, { foo: 'baz' });
         render(root, EnhancedComponent, {});
-        expect(loggedProps).to.deep.equal({ foo: 'bar', qux: 'qax' });
+        expect(loggedProps).toEqual({ foo: 'bar', qux: 'qax' });
     });
 });

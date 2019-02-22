@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { expect } from 'chai';
 
 import { createComponent, render } from 'melody-component';
 import {
@@ -21,10 +20,9 @@ import {
     elementOpen,
     elementClose,
     component,
-    ref,
     flush,
 } from 'melody-idom';
-import { bindEvents, lifecycle, compose } from '../src';
+import { bindEvents, compose } from '../src';
 
 const template = {
     render(_context) {
@@ -58,9 +56,9 @@ describe('BindEvents', function() {
 
         render(root, EnhancedComponent, {});
         dispatchClick(root);
-        expect(clicked).to.equal(true);
-        expect(context).to.be.a('object');
-        expect(context.props).to.be.a('object');
+        expect(clicked).toBeTruthy();
+        expect(context).toBeInstanceOf(Object);
+        expect(context.props).toBeInstanceOf(Object);
     });
     it('should unbind event handlers when unmounted', function() {
         const root = document.createElement('div');
@@ -73,7 +71,7 @@ describe('BindEvents', function() {
                         clickedCount++;
                     },
                 },
-            }),
+            })
         );
 
         const MyComponent = createComponent(template);
@@ -98,6 +96,6 @@ describe('BindEvents', function() {
         dispatchClick(croot);
         patchOuter(root, renderTemplate, { comp: false });
         dispatchClick(croot);
-        expect(clickedCount).to.equal(1);
+        expect(clickedCount).toEqual(1);
     });
 });

@@ -17,12 +17,9 @@
 
 import { patch, elementVoid, elementOpen, elementClose } from '../src';
 import { importNode } from '../built/node_data';
-import sinon from 'sinon';
-import { expect } from 'chai';
 
 describe('importing element', () => {
     let container;
-    let sandbox = sinon.sandbox.create();
 
     beforeEach(() => {
         container = document.createElement('div');
@@ -30,7 +27,6 @@ describe('importing element', () => {
     });
 
     afterEach(() => {
-        sandbox.restore();
         document.body.removeChild(container);
     });
 
@@ -41,7 +37,7 @@ describe('importing element', () => {
 
             const el = container.firstChild;
             patch(container, () => elementVoid('div'));
-            expect(container.firstChild).to.equal(el);
+            expect(container.firstChild).toEqual(el);
         });
 
         it('handles odd nodeName capitalization', () => {
@@ -50,7 +46,7 @@ describe('importing element', () => {
 
             const el = container.firstChild;
             patch(container, () => elementVoid('div'));
-            expect(container.firstChild).to.equal(el);
+            expect(container.firstChild).toEqual(el);
         });
     });
 
@@ -65,7 +61,7 @@ describe('importing element', () => {
                 elementVoid('foreignObject');
                 elementClose('svg');
             });
-            expect(container.firstChild.firstChild).to.equal(foreign);
+            expect(container.firstChild.firstChild).toEqual(foreign);
         });
 
         it('handles odd nodeName capitalization', () => {
@@ -78,7 +74,7 @@ describe('importing element', () => {
                 elementVoid('foreignObject');
                 elementClose('svg');
             });
-            expect(container.firstChild.firstChild).to.equal(foreign);
+            expect(container.firstChild.firstChild).toEqual(foreign);
         });
     });
 });

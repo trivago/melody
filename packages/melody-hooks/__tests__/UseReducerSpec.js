@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { assert } from 'chai';
-
 import { render } from 'melody-component';
 import { elementOpen, elementClose, text } from 'melody-idom';
 import { createComponent, useReducer } from '../src';
@@ -53,7 +51,7 @@ describe('useReducer', () => {
             return { value: JSON.stringify(value) };
         }, template);
         render(root, MyComponent);
-        assert.equal(root.outerHTML, '<div>{"foo":"bar","bar":"foo"}</div>');
+        expect(root.outerHTML).toEqual('<div>{"foo":"bar","bar":"foo"}</div>');
     });
     it('should update when an action is dispatched', () => {
         const root = document.createElement('div');
@@ -64,10 +62,10 @@ describe('useReducer', () => {
             return { value: JSON.stringify(state) };
         }, template);
         render(root, MyComponent);
-        assert.equal(root.outerHTML, '<div>{"foo":"bar","bar":"foo"}</div>');
+        expect(root.outerHTML).toEqual('<div>{"foo":"bar","bar":"foo"}</div>');
         setter({ type: 'FOO_CHANGED', payload: 'qux' });
         flush();
-        assert.equal(root.outerHTML, '<div>{"foo":"qux","bar":"foo"}</div>');
+        expect(root.outerHTML).toEqual('<div>{"foo":"qux","bar":"foo"}</div>');
     });
     it('should not update when an unhandled action is dispatched', () => {
         const root = document.createElement('div');
@@ -80,11 +78,11 @@ describe('useReducer', () => {
             return { value: JSON.stringify(state) };
         }, template);
         render(root, MyComponent);
-        assert.equal(root.outerHTML, '<div>{"foo":"bar","bar":"foo"}</div>');
+        expect(root.outerHTML).toEqual('<div>{"foo":"bar","bar":"foo"}</div>');
         setter({ type: 'UNHANDLED', payload: 42 });
         flush();
-        assert.equal(root.outerHTML, '<div>{"foo":"bar","bar":"foo"}</div>');
-        assert.equal(called, 1);
+        expect(root.outerHTML).toEqual('<div>{"foo":"bar","bar":"foo"}</div>');
+        expect(called).toEqual(1);
     });
     it('should throw when no reducer function was passed', () => {
         const root = document.createElement('div');
@@ -92,8 +90,11 @@ describe('useReducer', () => {
             const [value] = useReducer();
             return { value: JSON.stringify(value) };
         }, template);
-        assert.throws(() => {
+        const error = new Error(
+            '`useReducer` expects a reducer function as first argument'
+        );
+        expect(() => {
             render(root, MyComponent);
-        }, '`useReducer` expects a reducer function as first argument');
+        }).toThrow(error);
     });
 });

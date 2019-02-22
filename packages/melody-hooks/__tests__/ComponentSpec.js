@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { assert } from 'chai';
-
 import { render, unmountComponentAtNode } from 'melody-component';
 import {
     elementOpen,
@@ -75,7 +73,7 @@ describe('component', () => {
         }, template);
         render(root, MyComponent, { value: 'foo' });
         render(root, MyComponent, { value: 'bar' });
-        assert.equal(called, 2);
+        expect(called).toEqual(2);
     });
     it("should not rerender when props haven't changed", () => {
         const root = document.createElement('div');
@@ -86,7 +84,7 @@ describe('component', () => {
         }, template);
         render(root, MyComponent, { value: 'foo' });
         render(root, MyComponent, { value: 'foo' });
-        assert.equal(called, 1);
+        expect(called).toEqual(1);
     });
     it("should not rerender children when props haven't changed", () => {
         const childTemplate = {
@@ -132,10 +130,10 @@ describe('component', () => {
         const MyOtherComponent = createComponent(props => props, template);
 
         render(root, MyComponent, { text: 'hello' });
-        assert.equal(root.outerHTML, '<div>hello</div>');
+        expect(root.outerHTML).toEqual('<div>hello</div>');
 
         render(root, MyOtherComponent, { text: 'test' });
-        assert.equal(root.outerHTML, '<div>test</div>');
+        expect(root.outerHTML).toEqual('<div>test</div>');
     });
     it('should unmount replaced components', () => {
         const template = {
@@ -156,11 +154,11 @@ describe('component', () => {
         const MyOtherComponent = createComponent(props => props, template);
 
         render(root, MyComponent, { text: 'hello' });
-        assert.equal(root.outerHTML, '<div>hello</div>');
+        expect(root.outerHTML).toEqual('<div>hello</div>');
 
         render(root, MyOtherComponent, { text: 'test' });
-        assert.equal(root.outerHTML, '<div>test</div>');
-        assert.equal(unmounted, 1);
+        expect(root.outerHTML).toEqual('<div>test</div>');
+        expect(unmounted).toEqual(1);
     });
     it('should render components into an existing DOM', () => {
         const childTemplate = {
@@ -196,10 +194,10 @@ describe('component', () => {
 
         const root = document.createElement('div');
         root.innerHTML = '<div>test</div>';
-        assert.equal(root.outerHTML, '<div><div>test</div></div>');
+        expect(root.outerHTML).toEqual('<div><div>test</div></div>');
         render(root, MyParentComponent, { childProps: { text: 'hello' } });
-        assert.equal(root.outerHTML, '<div><div>hello</div></div>');
-        assert.equal(mounted, 1);
+        expect(root.outerHTML).toEqual('<div><div>hello</div></div>');
+        expect(mounted).toEqual(1);
     });
     it('should render components into an existing DOM', () => {
         const childTemplate = {
@@ -235,16 +233,14 @@ describe('component', () => {
 
         const root = document.createElement('div');
         root.innerHTML = '<div key="test">test</div>';
-        assert.equal(root.outerHTML, '<div><div key="test">test</div></div>');
+        expect(root.outerHTML).toEqual('<div><div key="test">test</div></div>');
         const oldChild = root.children[0];
         render(root, MyParentComponent, { childProps: { text: 'hello' } });
-        assert.equal(root.outerHTML, '<div><div>hello</div></div>');
-        assert.equal(mounted, 1);
-        assert.notEqual(oldChild, root.children[0]);
-        assert(
-            oldChild.parentNode == null,
-            'Previous child no longer has a parent'
-        );
+        expect(root.outerHTML).toEqual('<div><div>hello</div></div>');
+        expect(mounted).toEqual(1);
+        expect(oldChild).not.toEqual(root.children[0]);
+        // 'Previous child no longer has a parent'
+        expect(oldChild.parentNode).toBeNull();
     });
     it('should reuse moved child components', () => {
         const childTemplate = {
@@ -290,23 +286,21 @@ describe('component', () => {
         });
         const firstCompEl = root.childNodes[0];
         const secondCompEl = root.childNodes[1];
-        assert.equal(
-            root.outerHTML,
+        expect(root.outerHTML).toEqual(
             '<div><div>hello</div><div>world</div></div>'
         );
-        assert.equal(mounted, 2);
+        expect(mounted).toEqual(2);
 
         render(root, MyParentComponent, {
             flip: true,
             childProps: [{ text: 'hello' }, { text: 'world' }],
         });
-        assert.equal(
-            root.outerHTML,
+        expect(root.outerHTML).toEqual(
             '<div><div>world</div><div>hello</div></div>'
         );
-        assert.equal(firstCompEl, root.childNodes[1]);
-        assert.equal(secondCompEl, root.childNodes[0]);
-        assert.equal(mounted, 2);
+        expect(firstCompEl).toEqual(root.childNodes[1]);
+        expect(secondCompEl).toEqual(root.childNodes[0]);
+        expect(mounted).toEqual(2);
     });
     it('should render existing components into an existing DOM', () => {
         const childTemplate = {
@@ -339,16 +333,14 @@ describe('component', () => {
 
         const root = document.createElement('div');
         root.innerHTML = '<div key="test">test</div>';
-        assert.equal(root.outerHTML, '<div><div key="test">test</div></div>');
+        expect(root.outerHTML).toEqual('<div><div key="test">test</div></div>');
         const oldChild = root.children[0];
         render(root, MyParentComponent, { childProps: { text: 'hello' } });
-        assert.equal(root.outerHTML, '<div><div>hello</div></div>');
-        assert.equal(mounted, 1);
-        assert.notEqual(oldChild, root.children[0]);
-        assert(
-            oldChild.parentNode == null,
-            'Previous child no longer has a parent'
-        );
+        expect(root.outerHTML).toEqual('<div><div>hello</div></div>');
+        expect(mounted).toEqual(1);
+        expect(oldChild).not.toEqual(root.children[0]);
+        // 'Previous child no longer has a parent'
+        expect(oldChild.parentNode).toBeNull();
     });
     it('should trigger unmount callback when a Component is removed', () => {
         const template = {
@@ -382,13 +374,15 @@ describe('component', () => {
 
         patchOuter(root, renderTemplate, { comp: true });
         flush();
-        assert.equal(root.innerHTML, '<div><p>hello</p><span>foo</span></div>');
-        assert.equal(unmounted, 0);
+        expect(root.innerHTML).toEqual(
+            '<div><p>hello</p><span>foo</span></div>'
+        );
+        expect(unmounted).toEqual(0);
 
         patchOuter(root, renderTemplate, { comp: false });
         flush();
-        assert.equal(root.innerHTML, '');
-        assert.equal(unmounted, 1);
+        expect(root.innerHTML).toEqual('');
+        expect(unmounted).toEqual(1);
     });
 
     it('should trigger unmount callback when a Component is removed within an element', () => {
@@ -420,13 +414,13 @@ describe('component', () => {
 
         patchOuter(root, renderTemplate, { comp: true });
         flush();
-        assert.equal(root.innerHTML, '<div><div>hello</div></div>');
-        assert.equal(unmounted, 0);
+        expect(root.innerHTML).toEqual('<div><div>hello</div></div>');
+        expect(unmounted).toEqual(0);
 
         patchOuter(root, renderTemplate, { comp: false });
         flush();
-        assert.equal(root.innerHTML, '');
-        assert.equal(unmounted, 1);
+        expect(root.innerHTML).toEqual('');
+        expect(unmounted).toEqual(1);
     });
     it('should trigger unmount callback for child components when a Component is removed', () => {
         let MyComponent;
@@ -465,13 +459,13 @@ describe('component', () => {
 
         patchOuter(root, renderTemplate, { comp: true });
         flush();
-        assert.equal(root.innerHTML, '<div>hello<div>world</div></div>');
-        assert.equal(mounted, 2);
+        expect(root.innerHTML).toEqual('<div>hello<div>world</div></div>');
+        expect(mounted).toEqual(2);
 
         patchOuter(root, renderTemplate, { comp: false });
         flush();
-        assert.equal(root.innerHTML, '');
-        assert.equal(mounted, 0);
+        expect(root.innerHTML).toEqual('');
+        expect(mounted).toEqual(0);
     });
     it('should trigger unmount callback for deep nested child components when a Component is removed', () => {
         const mounted = { inner: 0, middle: 0, outer: 0 };
@@ -519,17 +513,17 @@ describe('component', () => {
 
         patchOuter(root, renderTemplate, { comp: true });
         flush();
-        assert.equal(root.innerHTML, '<div><div><div></div></div></div>');
-        assert.equal(mounted.inner, 1);
-        assert.equal(mounted.middle, 1);
-        assert.equal(mounted.outer, 1);
+        expect(root.innerHTML).toEqual('<div><div><div></div></div></div>');
+        expect(mounted.inner).toEqual(1);
+        expect(mounted.middle).toEqual(1);
+        expect(mounted.outer).toEqual(1);
 
         patchOuter(root, renderTemplate, { comp: false });
         flush();
-        assert.equal(root.innerHTML, '');
-        assert.equal(mounted.inner, 0);
-        assert.equal(mounted.middle, 0);
-        assert.equal(mounted.outer, 0);
+        expect(root.innerHTML).toEqual('');
+        expect(mounted.inner).toEqual(0);
+        expect(mounted.middle).toEqual(0);
+        expect(mounted.outer).toEqual(0);
     });
     it('should trigger unmount callback for deep nested child components when a Component is removed', () => {
         const mounted = { innermost: 0, inner: 0, middle: 0, outer: 0 };
@@ -581,16 +575,16 @@ describe('component', () => {
         });
 
         render(root, OuterComponent, { comp: true });
-        assert.equal(root.innerHTML, '<div><div><div></div></div></div>');
-        assert.equal(mounted.inner, 1);
-        assert.equal(mounted.middle, 1);
-        assert.equal(mounted.outer, 1);
+        expect(root.innerHTML).toEqual('<div><div><div></div></div></div>');
+        expect(mounted.inner).toEqual(1);
+        expect(mounted.middle).toEqual(1);
+        expect(mounted.outer).toEqual(1);
 
         render(root, OuterComponent, { comp: false });
-        assert.equal(root.innerHTML, '');
-        assert.equal(mounted.inner, 0);
-        assert.equal(mounted.middle, 0);
-        assert.equal(mounted.outer, 1);
+        expect(root.innerHTML).toEqual('');
+        expect(mounted.inner).toEqual(0);
+        expect(mounted.middle).toEqual(0);
+        expect(mounted.outer).toEqual(1);
     });
 
     it('should trigger mount callback once even for nested components', () => {
@@ -624,12 +618,12 @@ describe('component', () => {
 
         const root = document.createElement('div');
         render(root, MyParentComponent, { childProps: { text: 'hello' } });
-        assert.equal(root.outerHTML, '<div><div>hello</div></div>');
-        assert.equal(mounted, 1);
+        expect(root.outerHTML).toEqual('<div><div>hello</div></div>');
+        expect(mounted).toEqual(1);
 
         render(root, MyParentComponent, { childProps: { text: 'test' } });
-        assert.equal(root.outerHTML, '<div><div>test</div></div>');
-        assert.equal(mounted, 1);
+        expect(root.outerHTML).toEqual('<div><div>test</div></div>');
+        expect(mounted).toEqual(1);
     });
     it('should not throw when calling setState after the component has been unmounted', () => {
         const root = document.createElement('div');
@@ -671,12 +665,12 @@ describe('component', () => {
         }, template);
 
         render(root, MyComponent, { value: 'foo' });
-        assert.equal(root.outerHTML, '<div>foo</div>');
-        assert.throws(() => {
+        expect(root.outerHTML).toEqual('<div>foo</div>');
+        expect(() => {
             render(root, MyComponent);
-        });
-        assert.equal(root.outerHTML, '<div>foo</div>');
+        }).toThrow();
+        expect(root.outerHTML).toEqual('<div>foo</div>');
         render(root, MyComponent, { value: 'foo' });
-        assert.equal(root.outerHTML, '<div>foo</div>');
+        expect(root.outerHTML).toEqual('<div>foo</div>');
     });
 });

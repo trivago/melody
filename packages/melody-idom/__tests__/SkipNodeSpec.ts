@@ -16,7 +16,6 @@
  */
 
 import { patch, elementVoid, skipNode } from '../src';
-import { expect } from 'chai';
 
 describe('skip', () => {
     let container;
@@ -43,8 +42,8 @@ describe('skip', () => {
             elementVoid('span');
         });
 
-        expect(container.firstChild).to.equal(firstChild);
-        expect(container.lastChild).to.equal(lastChild);
+        expect(container.firstChild).toEqual(firstChild);
+        expect(container.lastChild).toEqual(lastChild);
     });
 
     it('should keep nodes that were skipped', () => {
@@ -53,6 +52,6 @@ describe('skip', () => {
             skipNode();
         });
 
-        expect(container.lastChild).to.equal(lastChild);
+        expect(container.lastChild).toEqual(lastChild);
     });
 });

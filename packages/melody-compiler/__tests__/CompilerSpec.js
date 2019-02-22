@@ -192,7 +192,7 @@ describe('Compiler', function() {
                 'foo',
                 '_template',
             ]);
-            expect(testScope === fooScope).toEqual(true);
+            expect(testScope === fooScope).toBeTruthy();
         });
     });
 

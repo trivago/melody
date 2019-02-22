@@ -16,7 +16,6 @@
  */
 
 import { patch, elementOpen, elementClose, elementVoid } from '../src';
-import { expect } from 'chai';
 
 describe('conditional rendering', () => {
     let container;
@@ -55,11 +54,11 @@ describe('conditional rendering', () => {
             patch(container, () => render(false));
             const outer = container.childNodes[0];
 
-            expect(outer.childNodes).to.have.length(2);
-            expect(outer.childNodes[0].id).to.equal('one');
-            expect(outer.childNodes[0].tagName).to.equal('DIV');
-            expect(outer.childNodes[1].id).to.equal('two');
-            expect(outer.childNodes[1].tagName).to.equal('SPAN');
+            expect(outer.childNodes).toHaveLength(2);
+            expect(outer.childNodes[0].id).toEqual('one');
+            expect(outer.childNodes[0].tagName).toEqual('DIV');
+            expect(outer.childNodes[1].id).toEqual('two');
+            expect(outer.childNodes[1].tagName).toEqual('SPAN');
         });
 
         it('should render when the condition becomes true', () => {
@@ -67,15 +66,15 @@ describe('conditional rendering', () => {
             patch(container, () => render(true));
             const outer = container.childNodes[0];
 
-            expect(outer.childNodes).to.have.length(4);
-            expect(outer.childNodes[0].id).to.equal('one');
-            expect(outer.childNodes[0].tagName).to.equal('DIV');
-            expect(outer.childNodes[1].id).to.equal('conditional-one');
-            expect(outer.childNodes[1].tagName).to.equal('DIV');
-            expect(outer.childNodes[2].id).to.equal('conditional-two');
-            expect(outer.childNodes[2].tagName).to.equal('DIV');
-            expect(outer.childNodes[3].id).to.equal('two');
-            expect(outer.childNodes[3].tagName).to.equal('SPAN');
+            expect(outer.childNodes).toHaveLength(4);
+            expect(outer.childNodes[0].id).toEqual('one');
+            expect(outer.childNodes[0].tagName).toEqual('DIV');
+            expect(outer.childNodes[1].id).toEqual('conditional-one');
+            expect(outer.childNodes[1].tagName).toEqual('DIV');
+            expect(outer.childNodes[2].id).toEqual('conditional-two');
+            expect(outer.childNodes[2].tagName).toEqual('DIV');
+            expect(outer.childNodes[3].id).toEqual('two');
+            expect(outer.childNodes[3].tagName).toEqual('SPAN');
         });
     });
 
@@ -102,7 +101,7 @@ describe('conditional rendering', () => {
             patch(container, () => render(false));
             const outer = container.childNodes[0];
 
-            expect(outer.childNodes).to.have.length(0);
+            expect(outer.childNodes).toHaveLength(0);
         });
     });
 
@@ -134,12 +133,12 @@ describe('conditional rendering', () => {
             patch(container, () => render(false));
             const outer = container.childNodes[0];
 
-            expect(outer.childNodes).to.have.length(2);
-            expect(outer.childNodes[0].id).to.equal('one');
-            expect(outer.childNodes[0].tagName).to.equal('DIV');
-            expect(outer.childNodes[1].id).to.equal('two');
-            expect(outer.childNodes[1].tagName).to.equal('SPAN');
-            expect(outer.childNodes[1].children.length).to.equal(0);
+            expect(outer.childNodes).toHaveLength(2);
+            expect(outer.childNodes[0].id).toEqual('one');
+            expect(outer.childNodes[0].tagName).toEqual('DIV');
+            expect(outer.childNodes[1].id).toEqual('two');
+            expect(outer.childNodes[1].tagName).toEqual('SPAN');
+            expect(outer.childNodes[1].children.length).toEqual(0);
         });
 
         it('should strip attributes when a conflicting node is re-used', () => {
@@ -147,7 +146,7 @@ describe('conditional rendering', () => {
             patch(container, () => render(false));
             const outer = container.childNodes[0];
 
-            expect(outer.childNodes[1].getAttribute('data-foo')).to.be.null;
+            expect(outer.childNodes[1].getAttribute('data-foo')).toBeNull();
         });
     });
 });

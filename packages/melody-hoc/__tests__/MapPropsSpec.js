@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { expect } from 'chai';
 
 import { createComponent, render } from 'melody-component';
 import { elementOpen, elementClose } from 'melody-idom';
@@ -40,7 +39,7 @@ describe('MapProps', function() {
         const EnhancedComponent = enhance(MyComponent);
 
         render(root, EnhancedComponent, { foo: 'bar' });
-        expect(loggedProps).to.deep.equal({ qux: 'qax', foo: 'bar' });
+        expect(loggedProps).toEqual({ qux: 'qax', foo: 'bar' });
     });
     it('should map properties on update', function() {
         const root = document.createElement('div');
@@ -56,7 +55,7 @@ describe('MapProps', function() {
 
         render(root, EnhancedComponent, { foo: 'bar' });
         render(root, EnhancedComponent, { fux: 'bax' });
-        expect(loggedProps).to.deep.equal({ qux: 'qax', fux: 'bax' });
+        expect(loggedProps).toEqual({ qux: 'qax', fux: 'bax' });
     });
     it('should be possible to use multiple mapProps hoc', () => {
         const root = document.createElement('div');
@@ -73,7 +72,7 @@ describe('MapProps', function() {
 
         render(root, EnhancedComponent, { foo: 'bar' });
         render(root, EnhancedComponent, { fux: 'bax' });
-        expect(loggedProps).to.deep.equal({
+        expect(loggedProps).toEqual({
             qux: 'qax',
             fux: 'bax',
             bux: 'bax',

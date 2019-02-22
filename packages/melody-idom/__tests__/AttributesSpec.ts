@@ -25,7 +25,6 @@ import {
     elementVoid,
 } from '../src';
 import { importNode } from '../src/node_data';
-import { expect } from 'chai';
 
 describe('attribute updates', () => {
     let container;
@@ -57,7 +56,7 @@ describe('attribute updates', () => {
             );
             const el = container.childNodes[0];
 
-            expect(el.getAttribute('data-expanded')).to.equal('hello');
+            expect(el.getAttribute('data-expanded')).toEqual('hello');
         });
 
         it('should be present when falsy', () => {
@@ -68,7 +67,7 @@ describe('attribute updates', () => {
             );
             const el = container.childNodes[0];
 
-            expect(el.getAttribute('data-expanded')).to.equal('false');
+            expect(el.getAttribute('data-expanded')).toEqual('false');
         });
 
         it('should be not present when undefined', () => {
@@ -81,9 +80,9 @@ describe('attribute updates', () => {
             );
             const el = container.childNodes[0];
 
-            expect(el.getAttribute('data-expanded')).to.equal(null);
-            expect(el.getAttribute('id')).to.equal(null);
-            expect(el.getAttribute('tabindex')).to.equal(null);
+            expect(el.getAttribute('data-expanded')).toBeNull();
+            expect(el.getAttribute('id')).toBeNull();
+            expect(el.getAttribute('tabindex')).toBeNull();
         });
 
         it('should update the DOM when they change', () => {
@@ -99,7 +98,7 @@ describe('attribute updates', () => {
             );
             const el = container.childNodes[0];
 
-            expect(el.getAttribute('data-expanded')).to.equal('bar');
+            expect(el.getAttribute('data-expanded')).toEqual('bar');
         });
 
         it('should update different attribute in same position', () => {
@@ -115,8 +114,8 @@ describe('attribute updates', () => {
             );
             const el = container.childNodes[0];
 
-            expect(el.getAttribute('data-bar')).to.equal('foo');
-            expect(el.getAttribute('data-foo')).to.equal(null);
+            expect(el.getAttribute('data-bar')).toEqual('foo');
+            expect(el.getAttribute('data-foo')).toBeNull();
         });
 
         describe('for attributes in different position', () => {
@@ -134,8 +133,8 @@ describe('attribute updates', () => {
                 );
                 const el = container.childNodes[0];
 
-                expect(el.getAttribute('data-foo')).to.equal(null);
-                expect(el.getAttribute('data-bar')).to.equal('bar');
+                expect(el.getAttribute('data-foo')).toBeNull();
+                expect(el.getAttribute('data-bar')).toEqual('bar');
             });
 
             it('should keep attribute that is moved back', () => {
@@ -152,8 +151,8 @@ describe('attribute updates', () => {
                 );
                 const el = container.childNodes[0];
 
-                expect(el.getAttribute('data-foo')).to.equal('foo');
-                expect(el.getAttribute('data-bar')).to.equal('bar');
+                expect(el.getAttribute('data-foo')).toEqual('foo');
+                expect(el.getAttribute('data-bar')).toEqual('bar');
             });
 
             it('should keep attribute that is moved up then kept', () => {
@@ -172,18 +171,18 @@ describe('attribute updates', () => {
                 );
                 const el = container.childNodes[0];
 
-                expect(el.getAttribute('data-foo')).to.equal(null);
-                expect(el.getAttribute('data-bar')).to.equal('bar');
-                expect(el.getAttribute('data-baz')).to.equal('baz');
+                expect(el.getAttribute('data-foo')).toBeNull();
+                expect(el.getAttribute('data-bar')).toEqual('bar');
+                expect(el.getAttribute('data-baz')).toEqual('baz');
 
                 patch(container, () =>
                     render({
                         'data-bar': 'bar',
                     })
                 );
-                expect(el.getAttribute('data-foo')).to.equal(null);
-                expect(el.getAttribute('data-bar')).to.equal('bar');
-                expect(el.getAttribute('data-baz')).to.equal(null);
+                expect(el.getAttribute('data-foo')).toBeNull();
+                expect(el.getAttribute('data-bar')).toEqual('bar');
+                expect(el.getAttribute('data-baz')).toBeNull();
             });
 
             it('should keep attribute that is backwards up then kept', () => {
@@ -202,9 +201,9 @@ describe('attribute updates', () => {
                 );
                 const el = container.childNodes[0];
 
-                expect(el.getAttribute('data-foo')).to.equal('foo');
-                expect(el.getAttribute('data-bar')).to.equal('bar');
-                expect(el.getAttribute('data-baz')).to.equal('baz');
+                expect(el.getAttribute('data-foo')).toEqual('foo');
+                expect(el.getAttribute('data-bar')).toEqual('bar');
+                expect(el.getAttribute('data-baz')).toEqual('baz');
 
                 patch(container, () =>
                     render({
@@ -212,9 +211,9 @@ describe('attribute updates', () => {
                         'data-bar': 'bar',
                     })
                 );
-                expect(el.getAttribute('data-foo')).to.equal('foo');
-                expect(el.getAttribute('data-bar')).to.equal('bar');
-                expect(el.getAttribute('data-baz')).to.equal(null);
+                expect(el.getAttribute('data-foo')).toEqual('foo');
+                expect(el.getAttribute('data-bar')).toEqual('bar');
+                expect(el.getAttribute('data-baz')).toBeNull();
             });
         });
 
@@ -228,8 +227,8 @@ describe('attribute updates', () => {
             patch(container, () => render({}));
             const el = container.childNodes[0];
 
-            expect(el.getAttribute('data-foo')).to.equal(null);
-            expect(el.getAttribute('data-bar')).to.equal(null);
+            expect(el.getAttribute('data-foo')).toBeNull();
+            expect(el.getAttribute('data-bar')).toBeNull();
         });
     });
 
@@ -254,7 +253,7 @@ describe('attribute updates', () => {
             {}
         );
         el.click();
-        expect(count).to.equal(1);
+        expect(count).toEqual(1);
         window.handler = old;
     });
 
@@ -266,7 +265,7 @@ describe('attribute updates', () => {
             });
             const el = container.childNodes[0];
 
-            expect(el.hasAttribute('fn')).to.be.false;
+            expect(el.hasAttribute('fn')).toBeFalsy();
         });
 
         it('should be set on the node', () => {
@@ -276,7 +275,7 @@ describe('attribute updates', () => {
             });
             const el = container.childNodes[0];
 
-            expect(el.fn).to.equal(fn);
+            expect(el.fn).toEqual(fn);
         });
 
         it('should remove event listeners', () => {
@@ -299,7 +298,7 @@ describe('attribute updates', () => {
                 {}
             );
             el.click();
-            expect(count).to.equal(1);
+            expect(count).toEqual(1);
         });
     });
 
@@ -311,7 +310,7 @@ describe('attribute updates', () => {
             });
             const el = container.childNodes[0];
 
-            expect(el.hasAttribute('obj')).to.be.false;
+            expect(el.hasAttribute('obj')).toBeFalsy();
         });
 
         it('should be set on the node', () => {
@@ -321,7 +320,7 @@ describe('attribute updates', () => {
             });
             const el = container.childNodes[0];
 
-            expect(el.obj).to.equal(obj);
+            expect(el.obj).toEqual(obj);
         });
     });
 
@@ -332,7 +331,7 @@ describe('attribute updates', () => {
             });
             const el = container.childNodes[0];
 
-            expect(el.getAttribute('class')).to.equal('foo');
+            expect(el.getAttribute('class')).toEqual('foo');
         });
 
         it('should apply the correct namespace for namespaced SVG attributes', () => {
@@ -344,7 +343,7 @@ describe('attribute updates', () => {
             const el = container.childNodes[0].childNodes[0];
             expect(
                 el.getAttributeNS('http://www.w3.org/1999/xlink', 'href')
-            ).to.equal('#foo');
+            ).toEqual('#foo');
         });
 
         it('should remove namespaced SVG attributes', () => {
@@ -359,8 +358,9 @@ describe('attribute updates', () => {
                 elementClose('svg');
             });
             const el = container.childNodes[0].childNodes[0];
-            expect(el.hasAttributeNS('http://www.w3.org/1999/xlink', 'href')).to
-                .be.false;
+            expect(
+                el.hasAttributeNS('http://www.w3.org/1999/xlink', 'href')
+            ).toBeFalsy();
         });
     });
 
@@ -375,7 +375,7 @@ describe('attribute updates', () => {
             el.setAttribute('data-foo', 'bar');
             patch(container, render);
 
-            expect(el.getAttribute('data-foo')).to.equal('bar');
+            expect(el.getAttribute('data-foo')).toEqual('bar');
         });
 
         it('should be preserved when importing DOM', () => {
@@ -386,7 +386,7 @@ describe('attribute updates', () => {
             el.setAttribute('data-foo', 'bar');
             patch(container, render);
 
-            expect(el.getAttribute('data-foo')).to.equal('bar');
+            expect(el.getAttribute('data-foo')).toEqual('bar');
         });
     });
 
@@ -408,14 +408,14 @@ describe('attribute updates', () => {
             patch(container, render);
             let child = container.childNodes[0];
 
-            expect(child.getAttribute('tabindex')).to.equal('0');
-            expect(child.getAttribute('class')).to.equal('bar');
+            expect(child.getAttribute('tabindex')).toEqual('0');
+            expect(child.getAttribute('class')).toEqual('bar');
 
             patch(container, render);
             child = container.childNodes[0];
 
-            expect(child.getAttribute('tabindex')).to.equal('0');
-            expect(child.getAttribute('class')).to.equal('bar');
+            expect(child.getAttribute('tabindex')).toEqual('0');
+            expect(child.getAttribute('class')).toEqual('bar');
         });
 
         it('should remove attributes', () => {
@@ -425,14 +425,14 @@ describe('attribute updates', () => {
             patch(container, render, { attr: 'data-foo' });
             const child = container.childNodes[0];
 
-            expect(child.hasAttribute('tabindex')).to.false;
-            expect(child.hasAttribute('class')).to.true;
-            expect(child.getAttribute('data-foo')).to.equal('bar');
+            expect(child.hasAttribute('tabindex')).toBeFalsy();
+            expect(child.hasAttribute('class')).toBeTruthy();
+            expect(child.getAttribute('data-foo')).toEqual('bar');
 
             patch(container, render, { attr: 'data-bar' });
-            expect(child.hasAttribute('tabindex')).to.false;
-            expect(child.hasAttribute('data-foo')).to.false;
-            expect(child.getAttribute('data-bar')).to.equal('bar');
+            expect(child.hasAttribute('tabindex')).toBeFalsy();
+            expect(child.hasAttribute('data-foo')).toBeFalsy();
+            expect(child.getAttribute('data-bar')).toEqual('bar');
         });
 
         it('should persist statics', () => {
@@ -443,10 +443,10 @@ describe('attribute updates', () => {
             patch(container, render, 'bar');
             const child = container.childNodes[0];
 
-            expect(child.getAttribute('data-foo')).to.equal('bar');
+            expect(child.getAttribute('data-foo')).toEqual('bar');
 
             patch(container, render, 'baz');
-            expect(child.getAttribute('data-foo')).to.equal('bar');
+            expect(child.getAttribute('data-foo')).toEqual('bar');
         });
 
         it('should persist statics when patching a parent', () => {
@@ -463,12 +463,12 @@ describe('attribute updates', () => {
             patch(child, render, 'bar');
             const grandChild = child.childNodes[0];
 
-            expect(grandChild.getAttribute('data-foo')).to.equal('bar');
+            expect(grandChild.getAttribute('data-foo')).toEqual('bar');
 
             patch(container, renderParent, 'baz');
 
-            expect(child.hasAttribute('tabindex')).to.false;
-            expect(grandChild.getAttribute('data-foo')).to.equal('bar');
+            expect(child.hasAttribute('tabindex')).toBeFalsy();
+            expect(grandChild.getAttribute('data-foo')).toEqual('bar');
         });
     });
 });

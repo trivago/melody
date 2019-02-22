@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`attachEvent should subscribe to nested observables and turn into stream 1`] = `"[{\\"foo\\":\\"bar\\",\\"biz\\":\\"baz\\",\\"arr\\":[1,2,3,4],\\"subj\\":20,\\"subj2\\":\\"foo\\"},{\\"foo\\":\\"bar\\",\\"biz\\":\\"baz\\",\\"arr\\":[1,2,3,4],\\"subj\\":20,\\"subj2\\":\\"bar\\"}]"`;
+
+exports[`attachEvent should take simple objects and turn into stream 1`] = `"[{\\"foo\\":\\"bar\\",\\"biz\\":\\"baz\\",\\"arr\\":[1,2,3,4]}]"`;

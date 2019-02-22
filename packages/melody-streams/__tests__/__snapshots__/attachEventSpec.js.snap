@@ -1,5 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`attachEvent should attach a click handler 1`] = `"[{\\"type\\":\\"MouseClick\\"},{\\"type\\":\\"MouseClick\\"},{\\"type\\":\\"MouseClick\\"}]"`;
+exports[`attachEvent should attach a click handler 1`] = `"[{\\"type\\":\\"click\\"},{\\"type\\":\\"click\\"},{\\"type\\":\\"click\\"}]"`;
 
-exports[`attachEvent should attach multiple handlers 1`] = `"[{\\"type\\":\\"MouseClick\\"},{\\"type\\":\\"MouseClick\\"},{\\"type\\":\\"MouseClick\\"},{\\"type\\":\\"MouseEnter\\"},{\\"type\\":\\"MouseEnter\\"},{\\"type\\":\\"MouseEnter\\"}]"`;
+exports[`attachEvent should attach multiple handlers 1`] = `"[{\\"type\\":\\"click\\"},{\\"type\\":\\"click\\"},{\\"type\\":\\"click\\"},{\\"type\\":\\"mouseenter\\"},{\\"type\\":\\"mouseenter\\"},{\\"type\\":\\"mouseenter\\"}]"`;

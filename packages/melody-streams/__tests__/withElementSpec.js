@@ -15,7 +15,7 @@
  */
 
 import { withElement } from '../src';
-import { testWith } from './util/testWith';
+import { testWith, next } from './util/testHelpers';
 import { Subject } from 'rxjs';
 
 describe('withElement', () => {
@@ -23,6 +23,6 @@ describe('withElement', () => {
         const sink = el => new Subject();
         const [refHandler, subj] = withElement(sink);
         const exec = refHandler();
-        testWith(subj, exec.next.bind(exec), ['foo', 'bar']);
+        testWith(subj, next(exec), ['foo', 'bar']);
     });
 });

@@ -15,15 +15,11 @@
  */
 
 import { attachEvent } from '../src';
-import { testWith } from './util/testWith';
+import { testWith } from './util/testHelpers';
+import { createMouseEvent } from './util/mouseEvent';
 
-const clickEvent = new MouseEvent('click');
-const mouseEnterEvent = new MouseEvent('mouseenter');
-
-clickEvent.toJSON = () => ({ type: 'MouseClick' });
-mouseEnterEvent.toJSON = () => ({ type: 'MouseEnter' });
-const dispatchClick = el => () => el.dispatchEvent(clickEvent);
-const dispatchMouseEnter = el => () => el.dispatchEvent(mouseEnterEvent);
+const dispatchClick = createMouseEvent('click');
+const dispatchMouseEnter = createMouseEvent('mouseenter');
 
 describe('attachEvent', () => {
     it('should attach a click handler', async () => {

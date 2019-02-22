@@ -15,7 +15,7 @@
  */
 
 import { createState } from '../src';
-import { testWith } from './util/testWith';
+import { testWith } from './util/testHelpers';
 
 describe('createState', () => {
     it('should create an Observable from initial data', () => {

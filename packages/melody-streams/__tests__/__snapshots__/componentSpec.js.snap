@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component should not rerender children when props haven't changed 1`] = `"[null]"`;
+
+exports[`component should not rerender when props have not changed 1`] = `"[null]"`;
+
+exports[`component should render when props have changed 1`] = `"[null,null]"`;
+
+exports[`component should unmount replaced components 1`] = `"[null]"`;

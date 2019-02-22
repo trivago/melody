@@ -59,7 +59,7 @@ Object.assign(Component.prototype, {
         this.updates.next();
     },
 
-    componenWillUnmount() {
+    componentWillUnmount() {
         this.props.complete();
         this.updates.complete();
         this.subscriptions.forEach(sub => sub.unsubscribe());
@@ -79,7 +79,7 @@ const createComponentConstructor = Parent => {
     return ChildComponent;
 };
 
-export const createComponent = (transform, templateFnOrObj) => {
+export const baseCreateComponent = (transform, templateFnOrObj) => {
     const template = templateFnOrObj.render
         ? props => templateFnOrObj.render(props)
         : templateFnOrObj;
@@ -91,4 +91,11 @@ export const createComponent = (transform, templateFnOrObj) => {
     };
     ChildComponent.prototype.getTransform = transform;
     return ChildComponent;
+};
+
+export const createComponent = (...args) => {
+    if (args.length >= baseCreateComponent.length) {
+        return baseCreateComponent.apply(null, args);
+    }
+    return (...args2) => createComponent.apply(null, args.concat(args2));
 };

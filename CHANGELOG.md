@@ -1,5 +1,8 @@
 ## master
 
+### Chore & Maintenance
+- Removes `Chai` and `Sinon` support, Migrates tests to use `Jest`'s matchers. [#103](https://github.com/trivago/melody/pull/103)
+
 ## 1.2.0-4 (beta)
 
 ### Features

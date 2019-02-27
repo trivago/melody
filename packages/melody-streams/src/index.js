@@ -16,8 +16,6 @@
 
 export { createComponent } from './component';
 export { createState } from './operators/createState';
-export { mergeObject } from './operators/mergeObject';
-export { mergeIntoObject } from './operators/mergeIntoObject';
 export { attachEvent } from './operators/attachEvent';
 export { withElement } from './operators/withElement';
 export { combine } from './operators/combine';

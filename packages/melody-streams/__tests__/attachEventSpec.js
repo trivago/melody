@@ -15,7 +15,7 @@
  */
 
 import { attachEvent } from '../src';
-import { testWith } from './util/testHelpers';
+import { applyGradualyAndComplete } from './util/testHelpers';
 import { createMouseEvent } from './util/mouseEvent';
 
 const dispatchClick = createMouseEvent('click');
@@ -26,17 +26,21 @@ describe('attachEvent', () => {
         const el = document.createElement('div');
         const [refHandler, subj] = attachEvent('click');
         refHandler(el);
-        testWith(subj, dispatchClick(el), [undefined, undefined, undefined]);
+        applyGradualyAndComplete(subj, dispatchClick(el), [
+            undefined,
+            undefined,
+            undefined,
+        ]).then(handlers => expect(JSON.stringify(handlers)).toMatchSnapshot());
     });
 
     it('should attach multiple handlers', async () => {
         const el = document.createElement('div');
         const [refHandler, subj] = attachEvent('click', 'mouseenter');
         refHandler(el);
-        testWith(
+        applyGradualyAndComplete(
             subj,
             [dispatchClick(el), dispatchMouseEnter(el)],
             [undefined, undefined, undefined]
-        );
+        ).then(handlers => expect(JSON.stringify(handlers)).toMatchSnapshot());
     });
 });

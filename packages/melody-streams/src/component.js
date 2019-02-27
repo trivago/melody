@@ -16,14 +16,33 @@
 
 import { enqueueComponent } from 'melody-idom';
 import { shallowEqual } from './util/shallowEqual';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { BehaviorSubject, Subject, timer, merge } from 'rxjs';
+import {
+    distinctUntilChanged,
+    tap,
+    take,
+    catchError,
+    takeUntil,
+    ignoreElements,
+} from 'rxjs/operators';
+import { of } from 'rxjs';
+
+const warningTimer = timer(500).pipe(
+    tap(() => {
+        console.warn(
+            'Warning: Your Component did not emit any state updates for at least 500ms.'
+        );
+    }),
+    take(1),
+    ignoreElements()
+);
 
 function Component(element) {
     // part of the public API
     this.el = element;
     this.refs = {};
-    this.props = new BehaviorSubject({});
+    this.props = {};
+    this.propsStream = new BehaviorSubject({});
     this.updates = new Subject();
     this.subscriptions = [];
     this.state = {};
@@ -31,26 +50,39 @@ function Component(element) {
 
 Object.assign(Component.prototype, {
     apply(props) {
-        this.props.next(props);
+        this.propsStream.next(props);
         if (this.subscriptions.length === 0) {
             const t = this.getTransform({
-                dispatch(eventName, detail, options = {}) {
+                dispatchCustomEvent(eventName, detail, options = {}) {
                     const event = new CustomEvent(eventName, {
                         ...options,
                         detail,
                     });
                     this.el.dispatchEvent(event);
                 },
-                props: this.props,
+                props: this.propsStream,
                 updates: this.updates,
                 subscribe: obs => this.subscriptions.push(obs.subscribe()),
             });
+            const warningSubscription = warningTimer.subscribe();
             const s = t
-                .pipe(distinctUntilChanged(shallowEqual))
-                .subscribe(state => {
-                    this.state = state;
-                    enqueueComponent(this);
-                });
+                .pipe(
+                    distinctUntilChanged(shallowEqual),
+                    catchError(err => of(err))
+                )
+                .subscribe(
+                    state => {
+                        if (!warningSubscription.closed)
+                            warningSubscription.unsubscribe();
+                        this.state = state;
+                        enqueueComponent(this);
+                    },
+                    err => {
+                        if (process.env.NODE_ENV !== 'production')
+                            console.error('Error: ', err);
+                    }
+                );
+
             this.subscriptions.push(s);
         }
     },
@@ -60,7 +92,7 @@ Object.assign(Component.prototype, {
     },
 
     componentWillUnmount() {
-        this.props.complete();
+        this.propsStream.complete();
         this.updates.complete();
         this.subscriptions.forEach(sub => sub.unsubscribe());
         this.subscriptions.length = 0;

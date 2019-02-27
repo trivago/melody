@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`attachEvent should connect to several streams and emit object by combineLatest 1`] = `"[{\\"0\\":\\"f\\",\\"1\\":\\"o\\",\\"2\\":\\"o\\"},{\\"0\\":\\"b\\",\\"1\\":\\"a\\",\\"2\\":\\"r\\"},{\\"0\\":\\"b\\",\\"1\\":\\"a\\",\\"2\\":\\"z\\"}]"`;
-
-exports[`attachEvent should connect to stream and emit to object 1`] = `"[{\\"0\\":\\"1\\"},{\\"0\\":\\"2\\"},{\\"0\\":\\"3\\"}]"`;

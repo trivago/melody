@@ -11,11 +11,10 @@
     "author": "",
     "license": "Apache-2.0",
     "peerDependencies": {
-        "melody-idom": "^1.1.0",
-        "melody-marbles": "^1.2.0-3"
+        "melody-idom": "^1.1.0"
       },
       "devDependencies": {
-        "jest-marbles": "^2.3.0",
+        "rxjs-marbles":"^5.0.0",
         "rxjs": "^6.4.0",
         "lodash": "^4.17.11",
         "rollup-plugin-babel": "^2.6.1"

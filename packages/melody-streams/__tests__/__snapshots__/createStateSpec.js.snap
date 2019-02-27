@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`createState should get correct state by using getter 1`] = `"[0,33,2,3]"`;
-
-exports[`createState should mutate state by using setter 1`] = `"[0,1,2,3]"`;

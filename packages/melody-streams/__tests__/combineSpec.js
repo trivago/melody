@@ -15,10 +15,15 @@
  */
 
 import { combine } from '../src';
-import { testWith, createSubjects, next, complete } from './util/testHelpers';
+import {
+    applyGradualyAndComplete,
+    createSubjects,
+    next,
+    complete,
+} from './util/testHelpers';
 
 describe('attachEvent', () => {
-    it('should combine streams and objects', async () => {
+    it('should combine streams and objects and emit over time', async () => {
         const subjects = createSubjects(3);
         const obj1 = {
             foo: 'bar',
@@ -29,11 +34,43 @@ describe('attachEvent', () => {
             12: 22,
         };
         const combined = combine(...subjects, obj1, obj2);
-        testWith(combined, next(...subjects), [
-            ['fooSubj1', 'barSubj1'],
-            ['fooSubj2', 'barSubj2'],
-            ['fooSubj3', 'barSubj3'],
+        expect(
+            applyGradualyAndComplete(combined, next(...subjects), [
+                ['fooSubj1', 'barSubj1'],
+                ['fooSubj2', 'barSubj2'],
+                ['fooSubj3', 'barSubj3'],
+            ])
+        ).resolves.toEqual([
+            {
+                '0': 'f',
+                '1': 'o',
+                '12': 22,
+                '2': 'o',
+                '3': 'S',
+                '4': 'u',
+                '5': 'b',
+                '6': 'j',
+                '7': '3',
+                arr: [1, 2, 3],
+                biz: 'baz',
+                foo: 'bar',
+            },
+            {
+                '0': 'b',
+                '1': 'a',
+                '12': 22,
+                '2': 'r',
+                '3': 'S',
+                '4': 'u',
+                '5': 'b',
+                '6': 'j',
+                '7': '3',
+                arr: [1, 2, 3],
+                biz: 'baz',
+                foo: 'bar',
+            },
         ]);
+        // We need to indivually complete all the subjecs, otherwise combined will not complete itself.
         complete(...subjects);
     });
 });

@@ -14,8 +14,14 @@
  * limitations under the License.
  */
 
-import { mergeObject } from '../src';
-import { testWith, next, complete, createSubjects } from './util/testHelpers';
+import { mergeObject } from '../src/operators/mergeObject';
+import {
+    applyGradualyAndComplete,
+    next,
+    complete,
+    createSubjects,
+} from './util/testHelpers';
+import { isObservable } from 'rxjs';
 
 describe('attachEvent', () => {
     it('should take simple objects and turn into stream', async () => {
@@ -24,7 +30,13 @@ describe('attachEvent', () => {
             biz: 'baz',
             arr: [1, 2, 3, 4],
         };
-        testWith(mergeObject(spec), () => {}, []);
+        const stream = mergeObject(spec);
+        applyGradualyAndComplete(stream, () => {}, []).then(result => {
+            expect(isObservable(stream)).toBe(true);
+            expect(result).toEqual([
+                { arr: [1, 2, 3, 4], biz: 'baz', foo: 'bar' },
+            ]);
+        });
     });
 
     it('should subscribe to nested observables and turn into stream', async () => {
@@ -36,11 +48,30 @@ describe('attachEvent', () => {
             subj,
             subj2,
         };
-
-        testWith(mergeObject(spec), next(subj, subj2), [
+        const stream = mergeObject(spec);
+        applyGradualyAndComplete(mergeObject(spec), next(subj, subj2), [
             [10, 20],
             ['foo', 'bar'],
-        ]);
+        ]).then(result => {
+            expect(isObservable(stream)).toBe(true);
+            expect(result).toEqual([
+                {
+                    arr: [1, 2, 3, 4],
+                    biz: 'baz',
+                    foo: 'bar',
+                    subj: 20,
+                    subj2: 'foo',
+                },
+                {
+                    arr: [1, 2, 3, 4],
+                    biz: 'baz',
+                    foo: 'bar',
+                    subj: 20,
+                    subj2: 'bar',
+                },
+            ]);
+        });
+        // We need to indivually complete all the subjecs, otherwise combined will not complete itself.
         complete(subj, subj2);
     });
 });

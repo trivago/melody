@@ -15,7 +15,7 @@
  */
 
 import { createState } from '../src';
-import { testWith } from './util/testHelpers';
+import { applyGradualyAndComplete } from './util/testHelpers';
 
 describe('createState', () => {
     it('should create an Observable from initial data', () => {
@@ -27,13 +27,17 @@ describe('createState', () => {
 
     it('should mutate state by using setter', async () => {
         const [count, setCount] = createState(0);
-        testWith(count, setCount, [1, 2, 3]);
+        expect(
+            applyGradualyAndComplete(count, setCount, [1, 2, 3])
+        ).resolves.toEqual([0, 1, 2, 3]);
     });
 
     it('should get correct state by using getter', () => {
         const [count, setCount, getCount] = createState(0);
         expect(getCount()).toBe(0);
-        testWith(count, setCount, [33, 2, 3]);
+        expect(
+            applyGradualyAndComplete(count, setCount, [33, 2, 3])
+        ).resolves.toEqual([0, 33, 2, 3]);
         expect(getCount()).toBe(3);
     });
 });

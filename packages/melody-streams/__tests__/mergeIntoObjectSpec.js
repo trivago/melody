@@ -14,26 +14,61 @@
  * limitations under the License.
  */
 
-import { mergeIntoObject } from '../src';
-import { testWith, createSubjects, next, complete } from './util/testHelpers';
+import { mergeIntoObject } from '../src/operators/mergeIntoObject';
+import {
+    applyGradualyAndComplete,
+    createSubjects,
+    next,
+    complete,
+} from './util/testHelpers';
 
 describe('attachEvent', () => {
     it('should connect to stream and emit to object', async () => {
         const [subj1] = createSubjects(1);
         const stream = mergeIntoObject(subj1);
-        testWith(stream, next(subj1), ['1', '2', '3']);
-        // Let mergeIntoObject complete by completing it streams
+        expect(
+            applyGradualyAndComplete(stream, next(subj1), ['1', '2', '3'])
+        ).resolves.toEqual([
+            {
+                '0': '1',
+            },
+            {
+                '0': '2',
+            },
+            {
+                '0': '3',
+            },
+        ]);
+        // We need to indivually complete all the subjecs, otherwise combined will not complete itself.
         complete(subj1);
     });
 
     it('should connect to several streams and emit object by combineLatest', () => {
         const subjects = createSubjects(2);
         const stream = mergeIntoObject(...subjects);
-        testWith(stream, next(...subjects), [
-            ['1', '2', '3'],
-            ['foo', 'bar', 'baz'],
+        expect(
+            applyGradualyAndComplete(stream, next(...subjects), [
+                ['1', '2', '3'],
+                ['foo', 'bar', 'baz'],
+            ])
+        ).resolves.toEqual([
+            {
+                '0': 'f',
+                '1': 'o',
+                '2': 'o',
+            },
+            {
+                '0': 'b',
+                '1': 'a',
+                '2': 'r',
+            },
+            {
+                '0': 'b',
+                '1': 'a',
+                '2': 'z',
+            },
         ]);
-        // Let mergeIntoObject complete by completing it streams
+        // We need to indivually complete all the subjecs, otherwise combined will not complete itself.
         complete(...subjects);
     });
 });

@@ -15,14 +15,18 @@
  */
 
 import { withElement } from '../src';
-import { testWith, next } from './util/testHelpers';
-import { Subject } from 'rxjs';
+import { applyGradualyAndComplete, next } from './util/testHelpers';
+import { Subject, isObservable } from 'rxjs';
 
 describe('withElement', () => {
     it('should return a refHandler and subject that connects the refstream to the return subject', async () => {
         const sink = el => new Subject();
         const [refHandler, subj] = withElement(sink);
         const exec = refHandler();
-        testWith(subj, next(exec), ['foo', 'bar']);
+        expect(typeof refHandler).toBe('function');
+        expect(isObservable(subj)).toBe(true);
+        expect(
+            applyGradualyAndComplete(subj, next(exec), ['foo', 'bar'])
+        ).resolves.toEqual(['foo', 'bar']);
     });
 });

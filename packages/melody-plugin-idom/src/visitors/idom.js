@@ -199,7 +199,7 @@ function addStaticAttribute(attributes, attr) {
             attr.value || t.booleanLiteral(true)
         );
     } else {
-        attributes.push(attr.name, attr.value || t.nullLiteral());
+        attributes.push(attr.name, attr.value || t.booleanLiteral(true));
     }
 }
 

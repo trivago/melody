@@ -211,6 +211,28 @@ export default function EmbedNested(props) {
 "
 `;
 
+exports[`Compiler should correctly transform empty attribute.template 1`] = `
+"
+import { text, elementOpen, elementClose } from \\"melody-idom\\";
+export const _template = {};
+const _statics = [\\"itemtype\\", \\"http://schema.org/Hotel\\"];
+
+_template.render = function (_context) {
+    elementOpen(\\"div\\", \\"p'/xJC{\\", _statics, \\"itemscope\\", true);
+    text(\\" test\\\\n\\");
+    elementClose(\\"div\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"EmptyAttribute\\";
+}
+
+export default function EmptyAttribute(props) {
+    return _template.render(props);
+}
+"
+`;
+
 exports[`Compiler should correctly transform expressions.template 1`] = `
 "
 import { isEmpty, trim } from \\"melody-runtime\\";

@@ -21,7 +21,7 @@ import { Subject } from 'rxjs';
 const wrappedWithElement = obs => withElement(el => obs);
 
 describe('attachEvent', () => {
-    it('should combine streams and objects and emit over time', async () => {
+    it('should combine refs and attach them to el', async () => {
         const sink = new Subject();
         const el = document.createElement('div');
         const [refHandler1, subj1] = wrappedWithElement(sink);

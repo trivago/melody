@@ -9,6 +9,7 @@
 - Introduce `useAtom` hook [#79](https://github.com/trivago/melody/pulls/79)
 - Introduce `useStore` hook and performance marks for hooks [#98](https://github.com/trivago/melody/pulls/98)
 - Added async mounting of components [#82](https://github.com/trivago/melody/pull/82)
+- Introduce `melody-streams` API [#102](https://github.com/trivago/melody/pull/102)
 
 ### Fixes
 

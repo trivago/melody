@@ -20,8 +20,22 @@ import { Subject } from 'rxjs';
 
 const wrappedWithElement = obs => withElement(el => obs);
 
-describe('attachEvent', () => {
-    it('should combine refs and attach them to el', async () => {
+describe('combineRefs', () => {
+    it('should not update subjects when combinedRefs was not executed after being attached to el', async () => {
+        const sink = new Subject();
+        const [refHandler1, subj1] = wrappedWithElement(sink);
+        const [refHandler2, subj2] = wrappedWithElement(sink);
+        const combinedRefs = combineRefs(refHandler1, refHandler2);
+        expect(typeof combinedRefs).toBe('function');
+        applyGradualyAndComplete([subj1, subj2], next(sink), [
+            'foo',
+            'bar',
+        ]).then(([stream1, stream2]) => {
+            expect(stream1).toEqual([]);
+            expect(stream2).toEqual([]);
+        });
+    });
+    it('should combine refs and attach them to el bound to same stream while subjects should have same values', async () => {
         const sink = new Subject();
         const el = document.createElement('div');
         const [refHandler1, subj1] = wrappedWithElement(sink);
@@ -38,6 +52,27 @@ describe('attachEvent', () => {
         ]).then(([stream1, stream2]) => {
             expect(stream1).toEqual(['foo', 'bar']);
             expect(stream2).toEqual(['foo', 'bar']);
+        });
+    });
+    it('should combine refs and attach them to el bound to different strem while subjects should have different values', async () => {
+        const sink1 = new Subject();
+        const sink2 = new Subject();
+        const el = document.createElement('div');
+        const [refHandler1, subj1] = wrappedWithElement(sink1);
+        const [refHandler2, subj2] = wrappedWithElement(sink2);
+        const combinedRefs = combineRefs(refHandler1, refHandler2);
+        expect(typeof combinedRefs).toBe('function');
+        const combinedRefHandlers = combinedRefs(el);
+        expect(typeof combinedRefHandlers).toBe('object');
+        expect(combinedRefHandlers).toHaveProperty('unsubscribe');
+
+        applyGradualyAndComplete(
+            [subj1, subj2],
+            [...next(sink1), ...next(sink2)],
+            [['foo', 'bar'], ['biz', 'baz']]
+        ).then(([stream1, stream2]) => {
+            expect(stream1).toEqual(['foo', 'bar']);
+            expect(stream2).toEqual(['biz', 'baz']);
         });
     });
 });

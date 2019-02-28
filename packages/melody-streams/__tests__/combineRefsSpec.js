@@ -21,7 +21,7 @@ import { Subject } from 'rxjs';
 const wrappedWithElement = obs => withElement(el => obs);
 
 describe('combineRefs', () => {
-    it('should not update subjects when combinedRefs was not executed after being attached to el', async () => {
+    it('should not update subjects when combinedRefs was not executed after being attached to handlers', async () => {
         const sink = new Subject();
         const [refHandler1, subj1] = wrappedWithElement(sink);
         const [refHandler2, subj2] = wrappedWithElement(sink);

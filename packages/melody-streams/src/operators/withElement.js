@@ -15,9 +15,12 @@
  */
 
 import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
-export const withElement = handler => {
-    const subj = new Subject();
+export const withElement = (handler, initialValue) => {
+    const subj = initialValue
+        ? new BehaviorSubject(initialValue)
+        : new Subject();
     const refHandler = el => handler(el).subscribe(next => subj.next(next));
     return [refHandler, subj];
 };

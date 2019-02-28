@@ -16,22 +16,23 @@
 
 import { enqueueComponent } from 'melody-idom';
 import { shallowEqual } from './util/shallowEqual';
-import { BehaviorSubject, Subject, timer, merge } from 'rxjs';
+import { BehaviorSubject, Subject, timer } from 'rxjs';
 import {
     distinctUntilChanged,
     tap,
     take,
     catchError,
-    takeUntil,
     ignoreElements,
 } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 const warningTimer = timer(500).pipe(
     tap(() => {
+        /* eslint-disable no-console */
         console.warn(
             'Warning: Your Component did not emit any state updates for at least 500ms.'
         );
+        /* eslint-enable no-console */
     }),
     take(1),
     ignoreElements()
@@ -78,8 +79,11 @@ Object.assign(Component.prototype, {
                         enqueueComponent(this);
                     },
                     err => {
-                        if (process.env.NODE_ENV !== 'production')
+                        if (process.env.NODE_ENV !== 'production') {
+                            /* eslint-disable no-console */
                             console.error('Error: ', err);
+                            /* eslint-enable no-console */
+                        }
                     }
                 );
 

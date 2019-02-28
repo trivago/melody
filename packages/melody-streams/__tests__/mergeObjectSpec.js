@@ -71,7 +71,7 @@ describe('attachEvent', () => {
                 },
             ]);
         });
-        // We need to indivually complete all the subjecs, otherwise combined will not complete itself.
+        // We need to individually complete all the subjecs, otherwise combined will not complete itself.
         complete(subj, subj2);
     });
 });

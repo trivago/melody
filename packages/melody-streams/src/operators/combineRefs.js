@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 trivago N.V.
+ * Copyright 2019 trivago N.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-export { createComponent } from './component';
-export { createState } from './operators/createState';
-export { attachEvent } from './operators/attachEvent';
-export { withElement } from './operators/withElement';
-export { combine } from './operators/combine';
-export { combineRefs } from './operators/combineRefs';
+export const combineRefs = (...handlers) => el => {
+    const subscriptions = handlers.map(fn => fn(el));
+    return {
+        unsubscribe() {
+            subscriptions.forEach(fn => fn && fn());
+            subscriptions.length = 0;
+        },
+    };
+};

@@ -19,7 +19,7 @@ import { applyGradualyAndComplete, next } from './util/testHelpers';
 import { Subject, isObservable } from 'rxjs';
 
 describe('withElement', () => {
-    it('should return a refHandler and subject that connects the refstream to the return subject', async () => {
+    it('should return a refHandler and subject that connects the refstream to the return subject', () => {
         const sink = el => new Subject();
         const [refHandler, subj] = withElement(sink);
         const exec = refHandler();
@@ -28,5 +28,21 @@ describe('withElement', () => {
         expect(
             applyGradualyAndComplete(subj, next(exec), ['foo', 'bar'])
         ).resolves.toEqual(['foo', 'bar']);
+    });
+    it('should return an empty subject as a stream if no initial value has been given', () => {
+        const sink = el => new Subject();
+        const subj = withElement(sink)[1];
+        expect(isObservable(subj)).toBe(true);
+        expect(applyGradualyAndComplete(subj, () => {}, [])).resolves.toEqual(
+            []
+        );
+    });
+    it('should return an non empty subject (BehaviorSubject) as a stream if initial value has been given', () => {
+        const sink = el => new Subject();
+        const subj = withElement(sink, 'foo')[1];
+        expect(isObservable(subj)).toBe(true);
+        expect(applyGradualyAndComplete(subj, () => {}, [])).resolves.toEqual([
+            'foo',
+        ]);
     });
 });

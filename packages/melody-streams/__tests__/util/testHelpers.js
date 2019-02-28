@@ -15,10 +15,11 @@ const applyAsGroup = (actions = [], args = []) => {
 };
 
 const test = iterator => async (obs, actions = [], args = []) => {
-    const result = toArray()(obs).toPromise();
+    const obsArray = [].concat(obs);
+    const results = obsArray.map(o => toArray()(o).toPromise());
     iterator(actions, args);
-    obs.complete && obs.complete();
-    return result;
+    obsArray.forEach(obs => obs.complete && obs.complete());
+    return results.length === 1 ? results[0] : Promise.all(results);
 };
 
 export const applyGradualyAndComplete = test(applyGradualy);

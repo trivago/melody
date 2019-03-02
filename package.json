@@ -65,6 +65,7 @@
         "eslint-config-idiomatic": "^3.1.0",
         "eslint-config-prettier": "^2.3.0",
         "eslint-plugin-prettier": "^2.1.2",
+        "esm": "^3.2.9",
         "fs-extra": "^7.0.0",
         "glob-fs": "^0.1.7",
         "husky": "^0.14.3",
@@ -81,7 +82,6 @@
         "rollup": "^0.63.5",
         "rollup-plugin-babel": "^3.0.7",
         "rollup-plugin-json": "^3.0.0",
-        "rollup-plugin-uglify": "^4.0.0",
         "semver": "^5.5.1",
         "sinon": "^1.17.7",
         "sinon-chai": "^2.8.0",
@@ -98,19 +98,19 @@
     "bundlesize": [
         {
             "path": "./packages/melody-component/lib/index.js",
-            "maxSize": "1.10 kB"
+            "maxSize": "5 kB"
         },
         {
             "path": "./packages/melody-idom/lib/index.js",
-            "maxSize": "4.66 kB"
+            "maxSize": "12 kB"
         },
         {
             "path": "./packages/melody-hoc/lib/index.js",
-            "maxSize": "1.73 kB"
+            "maxSize": "5 kB"
         },
         {
             "path": "./packages/melody-redux/lib/index.js",
-            "maxSize": "1.35 kB"
+            "maxSize": "5 kB"
         }
     ]
 }

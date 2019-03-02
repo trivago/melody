@@ -34,7 +34,7 @@ module.exports = function loader(content) {
         for (const pluginName of loaderOptions.plugins) {
             if (isString(pluginName)) {
                 try {
-                    args.push(require('melody-plugin-' + pluginName));
+                    args.push(require('melody-plugin-' + pluginName).default);
                 } catch (e) {
                     this.emitWarning(
                         'Could not find plugin ' +

@@ -5,7 +5,7 @@
     "main": "./lib/index.js",
     "jsnext:main": "./lib/index.esm.js",
     "scripts": {
-        "build": "mkdir lib; SUPPORT_CJS=true rollup -c ../../rollup.config.js -i src/index.js"
+        "build": "mkdir lib; rollup -c ../../rollup.config.js -i src/index.js"
     },
     "author": "",
     "license": "Apache-2.0",

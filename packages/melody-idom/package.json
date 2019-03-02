@@ -3,7 +3,6 @@
   "version": "1.2.0-3",
   "description": "",
   "main": "./lib/index.js",
-  "jsnext:main": "./lib/index.esm.js",
   "types": "./built/index.d.ts",
   "scripts": {
     "prebuild": "tsc",

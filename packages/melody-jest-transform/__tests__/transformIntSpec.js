@@ -36,9 +36,9 @@ import './__fixtures__/svg.twig';
 describe('Transform', () => {
     it('should successfully transform compiler templates', () => {
         /*
-     * If this starts it means your twig templates are compiled correctly
-     * by melody-jest-transform since it is preprocessed by jest
-     */
+         * If this starts it means your twig templates are compiled correctly
+         * by melody-jest-transform since it is preprocessed by jest
+         */
 
         expect(true).toBe(true);
     });

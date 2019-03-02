@@ -49,4 +49,5 @@ export {
     copyLoc,
     createNode,
     Types,
+    Types as TokenTypes,
 };

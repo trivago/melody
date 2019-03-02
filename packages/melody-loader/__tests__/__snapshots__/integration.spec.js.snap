@@ -21,16 +21,15 @@ Object(__WEBPACK_IMPORTED_MODULE_0__template_melody_twig__[\\"a\\" /* default */
 \\"use strict\\";
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony export (immutable) */ __webpack_exports__[\\"a\\"] = Template;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_melody_idom__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_melody_idom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_melody_idom__);
 
 const _template = {};
 /* unused harmony export _template */
 
 
 _template.render = function (_context) {
-  Object(__WEBPACK_IMPORTED_MODULE_0_melody_idom__[\\"elementOpen\\"])(\\"div\\", null, null);
-  Object(__WEBPACK_IMPORTED_MODULE_0_melody_idom__[\\"text\\"])(\\"Hello world\\");
-  Object(__WEBPACK_IMPORTED_MODULE_0_melody_idom__[\\"elementClose\\"])(\\"div\\");
+  Object(__WEBPACK_IMPORTED_MODULE_0_melody_idom__[\\"b\\" /* elementOpen */])(\\"div\\", null, null);
+  Object(__WEBPACK_IMPORTED_MODULE_0_melody_idom__[\\"c\\" /* text */])(\\"Hello world\\");
+  Object(__WEBPACK_IMPORTED_MODULE_0_melody_idom__[\\"a\\" /* elementClose */])(\\"div\\");
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {

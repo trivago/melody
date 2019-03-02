@@ -1,5 +1,9 @@
 ## master
 
+### Features
+
+- Export only ECMA Script modules (ESM) 
+
 ## 1.2.0-2 (beta)
 
 ### Features

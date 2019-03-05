@@ -15,6 +15,7 @@
  */
 
 export { createComponent } from './component';
+export { render } from './render';
 export { createState } from './operators/createState';
 export { attachEvent } from './operators/attachEvent';
 export { withElement } from './operators/withElement';

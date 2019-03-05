@@ -16,6 +16,7 @@
 
 import { enqueueComponent } from 'melody-idom';
 import { shallowEqual } from './util/shallowEqual';
+import { combine } from './operators/combine';
 import { BehaviorSubject, Subject, timer } from 'rxjs';
 import {
     distinctUntilChanged,
@@ -125,7 +126,7 @@ export const baseCreateComponent = (transform, templateFnOrObj) => {
     ChildComponent.prototype.render = function() {
         return template(this.state);
     };
-    ChildComponent.prototype.getTransform = transform;
+    ChildComponent.prototype.getTransform = api => combine(transform(api));
     return ChildComponent;
 };
 

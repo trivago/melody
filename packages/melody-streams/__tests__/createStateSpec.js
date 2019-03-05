@@ -20,9 +20,7 @@ import { applyGradualyAndComplete } from './util/testHelpers';
 describe('createState', () => {
     it('should create an Observable from initial data', () => {
         const [count] = createState(0);
-        count.subscribe(x => {
-            expect(x).toBe(0);
-        });
+        expect(applyGradualyAndComplete(count)).resolves.toEqual([0]);
     });
 
     it('should mutate state by using setter', async () => {

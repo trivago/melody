@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import { render } from 'melody-component';
 import { fakeSchedulers } from 'rxjs-marbles/jest';
 import {
     elementOpen,
@@ -23,7 +22,7 @@ import {
     component,
     patchOuter,
 } from 'melody-idom';
-import { createComponent } from '../src';
+import { createComponent, render } from '../src';
 import { flush } from './util/flush';
 import {
     createSubjects,

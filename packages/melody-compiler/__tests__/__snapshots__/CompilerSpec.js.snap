@@ -2326,6 +2326,26 @@ http://twig.sensiolabs.org/doc/filters/index.html"
 
 exports[`Compiler should fail transforming wrong import.template 1`] = `"Import must be used in macro, block or template"`;
 
+exports[`Compiler should fail transforming wrong include.template 1`] = `
+"Dynamic includes are not supported
+  1 | <div>
+> 2 |   {% include \\"./path/#{template}\\" %}
+    |      ^
+  3 | </div>
+  4 | 
+
+The Include Statement expected a StringLiteral but got a BinaryExpression.
+Includes only support static strings as argument.
+
+To include a template asynchronously you can use the \\"mount async\\" statement:
+
+{% mount async './#{ partial }.twig' as 'bar-#{ partial }' with _context %}
+    {{ err }}
+{% catch err %}
+    Failed to load with {{ err }}
+{% endmounts %}"
+`;
+
 exports[`Compiler should transform templates with warnings mount without as.template 1`] = `
 "
 import Footwig from \\"foo.twig\\";

@@ -3,6 +3,7 @@ node_modules
 .DS_STORE
 .idea
 .vscode
+.history
 *-debug.log
 /build
 /.nyc_output

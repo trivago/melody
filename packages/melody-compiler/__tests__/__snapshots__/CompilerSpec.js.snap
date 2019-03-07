@@ -2278,7 +2278,7 @@ This is the placeholder content that will be shown to your users while the async
 `;
 
 exports[`Compiler should fail transforming nonbreakable space.template 1`] = `
-"ERROR: Unsupported character: Non-breaking space
+"ERROR: Unsupported token: Non-breaking space
 > 1 | {{ 'success_msg' | sort }}
     |                   ^
   2 | "

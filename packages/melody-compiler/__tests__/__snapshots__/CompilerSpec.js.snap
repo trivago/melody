@@ -2277,6 +2277,13 @@ Example:
 This is the placeholder content that will be shown to your users while the async component is being loaded."
 `;
 
+exports[`Compiler should fail transforming nonbreakable space.template 1`] = `
+"ERROR: Unsupported character: Non-breaking space
+> 1 | {{ 'success_msg' | sort }}
+    |                   ^
+  2 | "
+`;
+
 exports[`Compiler should fail transforming unknown filter.template 1`] = `
 "Unknown filter \\"unknown\\"
 > 1 | {{ test | unknown }}

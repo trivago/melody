@@ -1,6 +1,6 @@
 {
     "name": "melody-streams",
-    "version": "1.2.0-4",
+    "version": "1.2.0-5",
     "description": "",
     "main": "./lib/index.js",
     "jsnext:main": "./lib/index.esm.js",
@@ -12,11 +12,11 @@
     "license": "Apache-2.0",
     "peerDependencies": {
         "melody-idom": "^1.1.0"
-      },
-      "devDependencies": {
-        "rxjs-marbles":"^5.0.0",
-        "rxjs": "^6.4.0",
+    },
+    "devDependencies": {
         "lodash": "^4.17.11",
-        "rollup-plugin-babel": "^2.6.1"
+        "rollup-plugin-babel": "^2.6.1",
+        "rxjs": "^6.4.0",
+        "rxjs-marbles": "^5.0.0"
     }
 }

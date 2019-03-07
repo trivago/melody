@@ -1,6 +1,6 @@
 {
   "name": "melody-loader",
-  "version": "1.2.0-3",
+  "version": "1.2.0-4",
   "description": "",
   "main": "./lib/index.js",
   "jsnext:main": "./lib/index.esm.js",
@@ -12,16 +12,16 @@
   "dependencies": {
     "loader-utils": "^1.1.0",
     "lodash": "^4.12.0",
-    "melody-compiler": "1.2.0-3",
-    "melody-extension-core": "1.2.0-3",
-    "melody-runtime": "1.2.0-3"
+    "melody-compiler": "1.2.0-4",
+    "melody-extension-core": "1.2.0-4",
+    "melody-runtime": "1.2.0-4"
   },
   "peerDependencies": {
     "melody-idom": "1.1.0"
   },
   "devDependencies": {
-    "melody-idom": "1.2.0-3",
-    "melody-plugin-idom": "1.2.0-3",
+    "melody-idom": "1.2.0-4",
+    "melody-plugin-idom": "1.2.0-4",
     "mkdirp": "^0.5.1",
     "mz": "^2.6.0",
     "rimraf": "^2.6.1",

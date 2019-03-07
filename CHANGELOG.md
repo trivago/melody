@@ -1,6 +1,6 @@
 ## master
 
-## 1.2.0-2 (beta)
+## 1.2.0-4 (beta)
 
 ### Features
 

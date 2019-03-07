@@ -3,7 +3,7 @@
 ## 1.2.0-3 (beta)
 - Introduce `melody-streams` API [#102](https://github.com/trivago/melody/pull/102)
 
-## 1.2.0-2 (beta)
+## 1.2.0-4 (beta)
 
 ### Features
 

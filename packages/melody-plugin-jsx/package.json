@@ -1,6 +1,6 @@
 {
   "name": "melody-plugin-jsx",
-  "version": "1.2.0-5",
+  "version": "1.2.0-1.2.0-10.0",
   "description": "",
   "main": "./lib/index.js",
   "jsnext:main": "./lib/index.esm.js",
@@ -20,8 +20,8 @@
     "melody-types": "^1.1.0"
   },
   "devDependencies": {
-    "melody-compiler": "1.2.0-5",
-    "melody-extension-core": "1.2.0-5",
+    "melody-compiler": "1.2.0-1.2.0-10.0",
+    "melody-extension-core": "1.2.0-1.2.0-10.0",
     "rollup-plugin-babel": "^2.6.1"
   }
 }

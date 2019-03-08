@@ -20,7 +20,16 @@ const createWrapperComponent = Component =>
         constructor() {
             this.refs = Object.create(null);
             this.props = null;
-            this.childInstance = new Component();
+
+            const wrappedInstance = this;
+            class EnhancedComponent extends Component {
+                componentWillUnmount() {
+                    Component.prototype.componentWillUnmount.call(this);
+                    wrappedInstance.componentWillUnmount();
+                }
+            }
+
+            this.childInstance = new EnhancedComponent();
             link(this, this.childInstance);
         }
 
@@ -32,6 +41,8 @@ const createWrapperComponent = Component =>
         get el() {
             return this.childInstance.el;
         }
+
+        componentWillUnmount() {}
     };
 
 export { createWrapperComponent };

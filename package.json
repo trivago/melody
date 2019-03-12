@@ -93,7 +93,8 @@
         "*.[jt]s": [
             "prettier",
             "git add"
-        ]
+        ],
+        "ignore": ["./.history"]
     },
     "bundlesize": [
         {

@@ -13,7 +13,7 @@
         "build": "lerna run build",
         "build:release": "cross-env NODE_ENV=release lerna run build",
         "clean": "rm -rf packages/*/lib && lerna clean -- --yes",
-        "coveralls": "cat ./coverage/lcov.info | coveralls",
+        "coverage": "cat ./coverage/lcov.info | coveralls",
         "prebundlesize": "cross-env NODE_ENV=production lerna run build",
         "bundlesize": "bundlesize",
         "fix-lint": "eslint --fix ./packages/*/src",
@@ -23,10 +23,9 @@
         "prettier": "prettier --write \"./packages/melody-*/src/**/*.[tj]s\"",
         "update-peers": "./bin/updatePeerDependencies.js",
         "release": "./bin/release.sh",
-        "release-travis": "./bin/ci-release.sh",
-        "test": "TZ=Europe/London jest",
+        "release-ci": "./bin/ci-release.sh",
+        "test": "TZ=Europe/London jest --coverage",
         "test-ci": "TZ=Europe/London jest --coverage --runInBand --no-cache && cat ./coverage/lcov.info | coveralls",
-        "test-travis": "TZ=Europe/London jest --maxWorkers=4",
         "test-debug": "TZ=Europe/London node --inspect-brk ./node_modules/jest/bin/jest.js -i"
     },
     "devDependencies": {

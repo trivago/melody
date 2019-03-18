@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import { patch, raw, text, rawString, elementOpen, elementClose } from '../src';
-import { expect } from 'chai';
 
 describe('raw text nodes', () => {
     let container;
@@ -35,7 +34,7 @@ describe('raw text nodes', () => {
             });
             const node = container.childNodes[0];
 
-            expect(node.outerHTML).to.equal('<span>hello</span>');
+            expect(node.outerHTML).toEqual('<span>hello</span>');
         });
     });
 
@@ -46,7 +45,7 @@ describe('raw text nodes', () => {
             });
             const node = container.childNodes[0];
 
-            expect(node.outerHTML).to.equal('<span>hello</span>');
+            expect(node.outerHTML).toEqual('<span>hello</span>');
         });
     });
 
@@ -60,7 +59,7 @@ describe('raw text nodes', () => {
             patch(container, () => render('<span>Hello World!</span>'));
             const node = container.childNodes[0];
 
-            expect(node.outerHTML).to.equal('<span>Hello World!</span>');
+            expect(node.outerHTML).toEqual('<span>Hello World!</span>');
         });
 
         it('should skip the DOM when the text is unchanged', () => {
@@ -68,8 +67,8 @@ describe('raw text nodes', () => {
             const oldNode = container.childNodes[0];
             patch(container, () => render('<span>Hello</span>'));
             const node = container.childNodes[0];
-            expect(node).to.equal(oldNode);
-            expect(node.outerHTML).to.equal('<span>Hello</span>');
+            expect(node).toEqual(oldNode);
+            expect(node.outerHTML).toEqual('<span>Hello</span>');
         });
     });
 
@@ -80,35 +79,35 @@ describe('raw text nodes', () => {
 
         it('should remove unnecessary elements', () => {
             patch(container, () =>
-                render('<span>Hello</span><div>World</div>'),
+                render('<span>Hello</span><div>World</div>')
             );
-            expect(container.outerHTML).to.equal(
-                '<div><span>Hello</span><div>World</div></div>',
+            expect(container.outerHTML).toEqual(
+                '<div><span>Hello</span><div>World</div></div>'
             );
 
             patch(container, () => render('<span>Hello World!</span>'));
-            expect(container.outerHTML).to.equal(
-                '<div><span>Hello World!</span></div>',
+            expect(container.outerHTML).toEqual(
+                '<div><span>Hello World!</span></div>'
             );
         });
 
         it('should not replace elements if data is unchanged', () => {
             patch(container, () =>
-                render('<span>Hello</span><div>World</div>'),
+                render('<span>Hello</span><div>World</div>')
             );
             const firstChild = container.children[0];
             const secondChild = container.children[1];
-            expect(container.outerHTML).to.equal(
-                '<div><span>Hello</span><div>World</div></div>',
+            expect(container.outerHTML).toEqual(
+                '<div><span>Hello</span><div>World</div></div>'
             );
 
             patch(container, () =>
-                render('<span>Hello</span><div>World</div>'),
+                render('<span>Hello</span><div>World</div>')
             );
-            expect(firstChild).to.equal(container.children[0]);
-            expect(secondChild).to.equal(container.children[1]);
-            expect(container.outerHTML).to.equal(
-                '<div><span>Hello</span><div>World</div></div>',
+            expect(firstChild).toEqual(container.children[0]);
+            expect(secondChild).toEqual(container.children[1]);
+            expect(container.outerHTML).toEqual(
+                '<div><span>Hello</span><div>World</div></div>'
             );
         });
     });
@@ -120,27 +119,23 @@ describe('raw text nodes', () => {
 
         it('should not render anything', function() {
             patch(container, () => render(''));
-            expect(container.outerHTML).to.equal('<div></div>');
+            expect(container.outerHTML).toEqual('<div></div>');
         });
 
         it('should override the previous raw text', function() {
             patch(container, () => render('<span>Test</span>'));
-            expect(container.outerHTML).to.equal(
-                '<div><span>Test</span></div>',
-            );
+            expect(container.outerHTML).toEqual('<div><span>Test</span></div>');
 
             patch(container, () => render(''));
-            expect(container.outerHTML).to.equal('<div></div>');
+            expect(container.outerHTML).toEqual('<div></div>');
         });
 
         it('should override the previously empty raw text', function() {
             patch(container, () => render(''));
-            expect(container.outerHTML).to.equal('<div></div>');
+            expect(container.outerHTML).toEqual('<div></div>');
 
             patch(container, () => render('<span>Test</span>'));
-            expect(container.outerHTML).to.equal(
-                '<div><span>Test</span></div>',
-            );
+            expect(container.outerHTML).toEqual('<div><span>Test</span></div>');
         });
     });
 });

@@ -23,7 +23,6 @@ import {
     skip,
     text,
 } from '../src';
-import { expect } from 'chai';
 
 describe('skip', () => {
     let container;
@@ -52,51 +51,51 @@ describe('skip', () => {
         patch(container, render, { skip: false });
         patch(container, render, { skip: true });
 
-        expect(container.textContent).to.equal('some text');
+        expect(container.textContent).toEqual('some text');
     });
 
     it('should throw if an element is declared after skipping', () => {
+        const error =
+            'elementOpen() may not be called inside an element that has called skip().';
         expect(() => {
             patch(container, () => {
                 skip();
                 elementOpen('div');
                 elementClose('div');
             });
-        }).to.throw(
-            'elementOpen() may not be called inside an element that has called skip().',
-        );
+        }).toThrowError(new Error(error));
     });
 
     it('should throw if a text is declared after skipping', () => {
+        const error =
+            'text() may not be called inside an element that has called skip().';
         expect(() => {
             patch(container, () => {
                 skip();
                 text('text');
             });
-        }).to.throw(
-            'text() may not be called inside an element that has called skip().',
-        );
+        }).toThrowError(new Error(error));
     });
 
     it('should throw skip is called after declaring an element', () => {
+        const error =
+            'skip() must come before any child declarations inside the current element.';
         expect(() => {
             patch(container, () => {
                 elementVoid('div');
                 skip();
             });
-        }).to.throw(
-            'skip() must come before any child declarations inside the current element.',
-        );
+        }).toThrowError(new Error(error));
     });
 
     it('should throw skip is called after declaring a text', () => {
+        const error =
+            'skip() must come before any child declarations inside the current element.';
         expect(() => {
             patch(container, () => {
                 text('text');
                 skip();
             });
-        }).to.throw(
-            'skip() must come before any child declarations inside the current element.',
-        );
+        }).toThrowError(new Error(error));
     });
 });

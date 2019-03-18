@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { assert } from 'chai';
-
 import { render, unmountComponentAtNode } from 'melody-component';
 import { elementOpen, elementClose, text } from 'melody-idom';
 import {
@@ -51,7 +49,7 @@ describe('useMutationEffect', () => {
                 });
             }, template);
             render(root, MyComponent);
-            assert.deepEqual(log, ['mutation', 'effect']);
+            expect(log).toEqual(['mutation', 'effect']);
         });
     });
     describe('setState', () => {
@@ -63,9 +61,11 @@ describe('useMutationEffect', () => {
                     setValue(1);
                 });
             }, template);
-            assert.throws(() => {
+            const error =
+                'Melody does not allow using `setState` in `useMutationEffect` since this would harm rendering performance. This hook is meant for manually mutating the DOM';
+            expect(() => {
                 render(root, MyComponent);
-            }, 'Melody does not allow using `setState` in `useMutationEffect` since this would harm rendering performance. This hook is meant for manually mutating the DOM');
+            }).toThrow(error);
         });
     });
     describe('refs', () => {
@@ -87,7 +87,7 @@ describe('useMutationEffect', () => {
                 return { myref };
             }, template);
             render(root, MyComponent);
-            assert.instanceOf(ref, HTMLDivElement);
+            expect(ref).toBeInstanceOf(HTMLDivElement);
         });
     });
     describe('without unsubscribe', () => {
@@ -102,13 +102,13 @@ describe('useMutationEffect', () => {
                 });
             }, template);
             render(root, MyComponent);
-            assert.equal(called, 1);
+            expect(called).toEqual(1);
             rerender(unique());
             flush();
-            assert.equal(called, 2);
+            expect(called).toEqual(2);
             rerender(unique());
             flush();
-            assert.equal(called, 3);
+            expect(called).toEqual(3);
         });
         it('should call mutation effect on mount', () => {
             const root = document.createElement('div');
@@ -121,10 +121,10 @@ describe('useMutationEffect', () => {
                 }, []);
             }, template);
             render(root, MyComponent);
-            assert.equal(called, 1);
+            expect(called).toEqual(1);
             rerender(unique());
             flush();
-            assert.equal(called, 1);
+            expect(called).toEqual(1);
         });
         it('should call mutation effect on mount and when a value changes', () => {
             const root = document.createElement('div');
@@ -147,19 +147,19 @@ describe('useMutationEffect', () => {
                 };
             }, template);
             render(root, MyComponent);
-            assert.equal(root.outerHTML, '<div>0</div>');
-            assert.equal(called, 1);
+            expect(root.outerHTML).toEqual('<div>0</div>');
+            expect(called).toEqual(1);
             rerender(unique());
             flush();
-            assert.equal(called, 1);
+            expect(called).toEqual(1);
             setValue(1);
             flush();
-            assert.equal(root.outerHTML, '<div>1</div>');
-            assert.equal(called, 2);
+            expect(root.outerHTML).toEqual('<div>1</div>');
+            expect(called).toEqual(2);
             rerender(unique());
             flush();
-            assert.equal(root.outerHTML, '<div>1</div>');
-            assert.equal(called, 2);
+            expect(root.outerHTML).toEqual('<div>1</div>');
+            expect(called).toEqual(2);
         });
     });
     describe('with unsubscribe', () => {
@@ -178,18 +178,18 @@ describe('useMutationEffect', () => {
                 });
             }, template);
             render(root, MyComponent);
-            assert.equal(called, 1);
-            assert.equal(calledUnsubscribe, 0);
+            expect(called).toEqual(1);
+            expect(calledUnsubscribe).toEqual(0);
             rerender(unique());
             flush();
-            assert.equal(called, 2);
-            assert.equal(calledUnsubscribe, 1);
+            expect(called).toEqual(2);
+            expect(calledUnsubscribe).toEqual(1);
             rerender(unique());
             flush();
-            assert.equal(called, 3);
-            assert.equal(calledUnsubscribe, 2);
+            expect(called).toEqual(3);
+            expect(calledUnsubscribe).toEqual(2);
             unmountComponentAtNode(root);
-            assert.equal(calledUnsubscribe, 3);
+            expect(calledUnsubscribe).toEqual(3);
         });
         it('should call mutation effect on mount and unsubscribe on unmount', () => {
             const root = document.createElement('div');
@@ -206,14 +206,14 @@ describe('useMutationEffect', () => {
                 }, []);
             }, template);
             render(root, MyComponent);
-            assert.equal(called, 1);
-            assert.equal(calledUnsubscribe, 0);
+            expect(called).toEqual(1);
+            expect(calledUnsubscribe).toEqual(0);
             rerender(unique());
             flush();
-            assert.equal(called, 1);
-            assert.equal(calledUnsubscribe, 0);
+            expect(called).toEqual(1);
+            expect(calledUnsubscribe).toEqual(0);
             unmountComponentAtNode(root);
-            assert.equal(calledUnsubscribe, 1);
+            expect(calledUnsubscribe).toEqual(1);
         });
         it('should call mutation effect on mount and when a value changes', () => {
             const root = document.createElement('div');
@@ -240,24 +240,24 @@ describe('useMutationEffect', () => {
                 };
             }, template);
             render(root, MyComponent);
-            assert.equal(root.outerHTML, '<div>0</div>');
-            assert.equal(called, 1);
-            assert.equal(calledUnsubscribe, 0);
+            expect(root.outerHTML).toEqual('<div>0</div>');
+            expect(called).toEqual(1);
+            expect(calledUnsubscribe).toEqual(0);
             rerender(unique());
             flush();
-            assert.equal(called, 1);
-            assert.equal(calledUnsubscribe, 0);
+            expect(called).toEqual(1);
+            expect(calledUnsubscribe).toEqual(0);
             setValue(1);
             flush();
-            assert.equal(root.outerHTML, '<div>1</div>');
-            assert.equal(called, 2);
-            assert.equal(calledUnsubscribe, 1);
+            expect(root.outerHTML).toEqual('<div>1</div>');
+            expect(called).toEqual(2);
+            expect(calledUnsubscribe).toEqual(1);
             rerender(unique());
             flush();
-            assert.equal(root.outerHTML, '<div>1</div>');
-            assert.equal(called, 2);
+            expect(root.outerHTML).toEqual('<div>1</div>');
+            expect(called).toEqual(2);
             unmountComponentAtNode(root);
-            assert.equal(calledUnsubscribe, 2);
+            expect(calledUnsubscribe).toEqual(2);
         });
     });
 });

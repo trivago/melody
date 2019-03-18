@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { assert } from 'chai';
 import { createStore } from 'redux';
 import { createComponent, render } from 'melody-component';
 import { component, elementOpen, elementClose, text, flush } from 'melody-idom';
@@ -76,10 +75,10 @@ it('should work when connected component is not rendered through typical render 
     const root = document.createElement('ol');
 
     render(root, ProvidedApp);
-    assert.equal(root.outerHTML, '<ol><li><span>child</span></li></ol>');
+    expect(root.outerHTML).toEqual('<ol><li><span>child</span></li></ol>');
     store.dispatch({ type: 'REFRESH' });
     // setTimeout(() => {
-    assert.equal(root.outerHTML, '<ol><li><span>child</span></li></ol>');
+    expect(root.outerHTML).toEqual('<ol><li><span>child</span></li></ol>');
     done();
     // }, 500);
 });
@@ -128,7 +127,7 @@ it('should not delete child component if child did not need rendering', done => 
     const root = document.createElement('li');
 
     render(root, ProvidedApp, { children: store.getState() });
-    assert.equal(root.outerHTML, '<li><span>1</span></li>');
+    expect(root.outerHTML).toEqual('<li><span>1</span></li>');
 
     // trigger dispatch on ConnectedChild
     // ParentComponent does not receive a dispatch
@@ -144,6 +143,6 @@ it('should not delete child component if child did not need rendering', done => 
             return 10;
         },
     });
-    assert.equal(root.outerHTML, '<li><span>1</span></li>');
+    expect(root.outerHTML).toEqual('<li><span>1</span></li>');
     done();
 });

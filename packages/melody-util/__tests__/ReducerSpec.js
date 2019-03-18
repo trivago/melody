@@ -13,12 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { assert } from 'chai';
+
 import { RECEIVE_PROPS } from 'melody-component';
-
 import { createActionReducer, dispatchToState, exposeToState } from '../src';
-
-import sinon from 'sinon';
 
 describe('Reducer utils', function() {
     describe('createActionReducer', function() {
@@ -37,16 +34,29 @@ describe('Reducer utils', function() {
                     },
                     noop(state, action) {},
                 },
-                { count: 5 },
+                { count: 5 }
             );
-            assert.equal(reducer({ count: 1 }, { type: 'inc' }).count, 2);
-            assert.equal(reducer({ count: 2 }, { type: 'inc' }).count, 3);
-            assert.equal(reducer({ count: 2 }, { type: 'dec' }).count, 1);
-            assert.equal(reducer({ count: 2 }, { type: 'noop' }).count, 2);
-            assert.equal(reducer({ count: 2 }, { type: 'unknown' }).count, 2);
-            assert.equal(reducer(undefined, { type: 'unknown' }).count, 5);
-            assert.equal(reducer(undefined, { type: 'inc' }).count, 6);
-            assert.equal(reducer(undefined, { type: 'noop' }).count, 5);
+
+            expect(reducer({ count: 1 }, { type: 'inc' })).toEqual({
+                count: 2,
+            });
+            expect(reducer({ count: 2 }, { type: 'inc' })).toEqual({
+                count: 3,
+            });
+            expect(reducer({ count: 2 }, { type: 'dec' })).toEqual({
+                count: 1,
+            });
+            expect(reducer({ count: 2 }, { type: 'noop' })).toEqual({
+                count: 2,
+            });
+            expect(reducer({ count: 2 }, { type: 'unknown' })).toEqual({
+                count: 2,
+            });
+            expect(reducer(undefined, { type: 'unknown' })).toEqual({
+                count: 5,
+            });
+            expect(reducer(undefined, { type: 'inc' })).toEqual({ count: 6 });
+            expect(reducer(undefined, { type: 'noop' })).toEqual({ count: 5 });
         });
     });
 
@@ -57,33 +67,33 @@ describe('Reducer utils', function() {
                     dispatch({ type: 'test' });
                 },
             }));
-            const dispatch = sinon.spy();
+            const dispatch = jest.fn();
 
             const state = reducer(
                 {},
                 {
                     type: 'MELODY/RECEIVE_PROPS',
                     meta: { dispatch },
-                },
+                }
             );
-            assert(typeof state.test === 'function', 'test is a function');
+            expect(typeof state.test).toEqual('function');
             state.test();
-            assert(dispatch.calledOnce);
-            assert(dispatch.calledWith({ type: 'test' }));
+            expect(dispatch).toHaveBeenCalledTimes(1);
+            expect(dispatch).toHaveBeenLastCalledWith({ type: 'test' });
         });
 
         it('should invoke the dispatch mapper only once', function() {
-            const test = sinon.spy();
-            const dispatchMapper = sinon.stub().returns({ test });
+            const test = jest.fn();
+            const dispatchMapper = jest.fn(() => ({ test }));
             const reducer = dispatchToState(dispatchMapper);
-            const dispatch = sinon.spy();
+            const dispatch = jest.fn();
 
             let state = reducer(
                 {},
                 {
                     type: 'MELODY/RECEIVE_PROPS',
                     meta: { dispatch },
-                },
+                }
             );
             state = reducer(state, {
                 type: 'MELODY/RECEIVE_PROPS',
@@ -93,17 +103,15 @@ describe('Reducer utils', function() {
                 type: 'fun',
                 meta: { dispatch },
             });
-            assert(
-                dispatchMapper.calledOnce,
-                'dispatch mapper invoked exactly once',
-            );
-            assert(typeof state.test === 'function', 'test is a function');
+
+            expect(dispatchMapper).toHaveBeenCalledTimes(1);
+            expect(typeof state.test).toEqual('function');
         });
     });
 
     describe('dispatchToState when given an object', function() {
         it('should use the objects methods as action creators', function() {
-            const dispatch = sinon.spy();
+            const dispatch = jest.fn();
             const reducer = dispatchToState({
                 test(payload) {
                     return {
@@ -118,19 +126,20 @@ describe('Reducer utils', function() {
                 {
                     type: 'MELODY/RECEIVE_PROPS',
                     meta: { dispatch },
-                },
+                }
             );
 
             state.test('hello world');
-            assert(dispatch.calledOnce, 'dispatch was invoked once');
-            assert(
-                dispatch.calledWith({ type: 'FOO', payload: 'hello world' }),
-                'dispatch was invoked with correct action',
-            );
+
+            expect(dispatch).toHaveBeenCalledTimes(1);
+            expect(dispatch).toHaveBeenCalledWith({
+                type: 'FOO',
+                payload: 'hello world',
+            });
         });
 
         it('should ignore non-function properties', function() {
-            const dispatch = sinon.spy();
+            const dispatch = jest.fn();
             const reducer = dispatchToState({
                 hello: 'foo',
                 test(payload) {
@@ -146,14 +155,12 @@ describe('Reducer utils', function() {
                 {
                     type: 'MELODY/RECEIVE_PROPS',
                     meta: { dispatch },
-                },
+                }
             );
 
             state.test('hello world');
-            assert(
-                typeof state.hello === 'undefined',
-                'hello should not be copied over',
-            );
+
+            expect(typeof state.hello).toEqual('undefined');
         });
     });
 
@@ -169,7 +176,7 @@ describe('Reducer utils', function() {
                 };
             };
             const reducer = dispatchToState(dispatchMapper);
-            const dispatch = sinon.spy();
+            const dispatch = jest.fn();
 
             let state = reducer(
                 {},
@@ -177,46 +184,39 @@ describe('Reducer utils', function() {
                     type: 'MELODY/RECEIVE_PROPS',
                     meta: { dispatch },
                     payload: { val: 21 },
-                },
+                }
             );
-            assert.equal(counter, 1, 'dispatchMapper called once');
+            expect(counter).toEqual(1);
             state.test();
-            assert(
-                dispatch.calledWith({
-                    type: 'test',
-                    payload: 21,
-                }),
-                'dispatch called with a payload of 21',
-            );
+            expect(dispatch).toHaveBeenCalledWith({
+                type: 'test',
+                payload: 21,
+            });
 
             state = reducer(state, {
                 type: 'MELODY/RECEIVE_PROPS',
                 meta: { dispatch },
                 payload: { val: 42 },
             });
-            assert.equal(counter, 2, 'dispatchMapper called twice');
+
+            expect(counter).toEqual(2);
             state.test();
-            assert(
-                dispatch.calledWith({
-                    type: 'test',
-                    payload: 42,
-                }),
-                'dispatch called with a payload of 21',
-            );
+            expect(dispatch).toHaveBeenCalledWith({
+                type: 'test',
+                payload: 42,
+            });
 
             state = reducer(state, {
                 type: 'fun',
                 payload: { val: 42 },
             });
-            assert.equal(counter, 2, 'dispatchMapper called twice');
+
+            expect(counter).toEqual(2);
             state.test();
-            assert(
-                dispatch.calledWith({
-                    type: 'test',
-                    payload: 42,
-                }),
-                'dispatch called with a payload of 21',
-            );
+            expect(dispatch).toHaveBeenCalledWith({
+                type: 'test',
+                payload: 42,
+            });
         });
     });
     describe('exposeToState', function() {
@@ -252,25 +252,15 @@ describe('Reducer utils', function() {
                     payload: {
                         qux: 'bar',
                     },
-                },
+                }
             );
 
-            assert(state.qux === 'bar', 'passes props to state');
-            assert(
-                typeof state.handleToggle === 'function',
-                'handleToggle is a function',
-            );
-            assert(
-                typeof state.doNotExpose === 'undefined',
-                'only expose given functions',
-            );
+            expect(state.qux).toEqual('bar');
+            expect(typeof state.handleToggle === 'function').toBeTruthy();
+            expect(state.doNotExpose).toBeUndefined();
 
             state.handleToggle();
-            assert.deepEqual(
-                log,
-                [component],
-                'handleToggle is bound to the component',
-            );
+            expect(log).toEqual([component]);
 
             const state2 = finalReducer(state, {
                 type: RECEIVE_PROPS,
@@ -279,11 +269,10 @@ describe('Reducer utils', function() {
                     qux: 'bar',
                 },
             });
-            assert(
-                state.handleToggle === state2.handleToggle,
-                'bound functions get memoized',
-            );
+
+            expect(state.handleToggle).toEqual(state2.handleToggle);
         });
+
         it('should take a default reducer if no reducer was given', function() {
             const finalReducer = exposeToState(['handleToggle']);
             const state = finalReducer(
@@ -294,14 +283,12 @@ describe('Reducer utils', function() {
                     payload: {
                         qux: 'bar',
                     },
-                },
+                }
             );
-            assert(state.qux === 'bar', 'passes props to state');
-            assert(
-                typeof state.handleToggle === 'function',
-                'handleToggle is a function',
-            );
+            expect(state.qux).toEqual('bar');
+            expect(typeof state.handleToggle === 'function').toBeTruthy();
         });
+
         it('should take a ignore actions not known by the default reducer', function() {
             const finalReducer = exposeToState(['handleToggle']);
             const givenState = {};
@@ -312,8 +299,9 @@ describe('Reducer utils', function() {
                     qux: 'bar',
                 },
             });
-            assert.equal(state, givenState);
+            expect(state).toEqual(givenState);
         });
+
         it('should be able to deal with an undefined state in the default reducer even if it does not know the action type', function() {
             const finalReducer = exposeToState(['handleToggle']);
             const state = finalReducer(undefined, {
@@ -325,6 +313,7 @@ describe('Reducer utils', function() {
             });
             expect(state).toEqual({});
         });
+
         it('should be able to deal with an undefined state in the default reducer', function() {
             const finalReducer = exposeToState(['handleToggle']);
             const state = finalReducer(undefined, {
@@ -334,33 +323,34 @@ describe('Reducer utils', function() {
                     qux: 'bar',
                 },
             });
-            assert(state.qux === 'bar', 'passes props to state');
-            assert(
-                typeof state.handleToggle === 'function',
-                'handleToggle is a function',
-            );
+            expect(state.qux).toEqual('bar');
+            expect(typeof state.handleToggle === 'function').toBeTruthy();
         });
+
         it('should throw if given property is not a function', function() {
             const finalReducer = exposeToState(['notAFunction'], reducer);
-            assert.throws(
-                () =>
-                    finalReducer(
-                        {},
-                        { type: RECEIVE_PROPS, meta: component, payload: {} },
-                    ),
-                'Property `notAFunction` is not a function. Only functions can be exposed to the state.',
+            const error = new Error(
+                'Property `notAFunction` is not a function. Only functions can be exposed to the state.'
             );
+            expect(() =>
+                finalReducer(
+                    {},
+                    { type: RECEIVE_PROPS, meta: component, payload: {} }
+                )
+            ).toThrowError(error);
         });
+
         it('should throw if given property is was not found', function() {
             const finalReducer = exposeToState(['notFound'], reducer);
-            assert.throws(
-                () =>
-                    finalReducer(
-                        {},
-                        { type: RECEIVE_PROPS, meta: component, payload: {} },
-                    ),
-                'Property `notFound` was not found on the component.',
+            const error = new Error(
+                'Property `notFound` was not found on the component.'
             );
+            expect(() =>
+                finalReducer(
+                    {},
+                    { type: RECEIVE_PROPS, meta: component, payload: {} }
+                )
+            ).toThrowError(error);
         });
     });
 });

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { expect } from 'chai';
 
 import { createComponent, render } from 'melody-component';
 import { elementOpen, elementClose } from 'melody-idom';
@@ -40,7 +39,7 @@ describe('DefaultProps', function() {
         const EnhancedComponent = enhance(MyComponent);
 
         render(root, EnhancedComponent, { foo: 'baz' });
-        expect(loggedProps).to.deep.equal({ foo: 'bar', qux: 'qax' });
+        expect(loggedProps).toEqual({ foo: 'bar', qux: 'qax' });
     });
     it('should add properties on update', function() {
         const root = document.createElement('div');
@@ -56,7 +55,7 @@ describe('DefaultProps', function() {
 
         render(root, EnhancedComponent, { foo: 'baz' });
         render(root, EnhancedComponent, { doo: 'woo' });
-        expect(loggedProps).to.deep.equal({
+        expect(loggedProps).toEqual({
             foo: 'bar',
             qux: 'qax',
             doo: 'woo',

@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { assert } from 'chai';
-
 import { createComponent, RECEIVE_PROPS, render } from 'melody-component';
 import {
     component,
@@ -73,11 +71,11 @@ describe('Connect', function() {
             const ConnectedComponent = enhance(Component);
 
             const dom = renderWithProvide(ConnectedComponent);
-            assert.equal(dom.outerHTML, '<div><div>foo!</div></div>');
+            expect(dom.outerHTML).toEqual('<div><div>foo!</div></div>');
             store.dispatch({ type: 'SET', payload: 'bar' });
 
             finishRendering();
-            assert.equal(dom.outerHTML, '<div><div>bar!</div></div>');
+            expect(dom.outerHTML).toEqual('<div><div>bar!</div></div>');
             done();
         });
 
@@ -88,11 +86,11 @@ describe('Connect', function() {
 
             const dom = renderWithProvide(ConnectedComponent);
 
-            assert.equal(dom.outerHTML, '<div><div>foo!</div></div>');
+            expect(dom.outerHTML).toEqual('<div><div>foo!</div></div>');
             store.dispatch({ type: 'SET', payload: 'bar' });
 
             finishRendering();
-            assert.equal(dom.outerHTML, '<div><div>bar!</div></div>');
+            expect(dom.outerHTML).toEqual('<div><div>bar!</div></div>');
             done();
         });
 
@@ -105,11 +103,11 @@ describe('Connect', function() {
 
             const dom = renderWithProvide(ConnectedComponent);
 
-            assert.equal(dom.outerHTML, '<div><div>foo?!</div></div>');
+            expect(dom.outerHTML).toEqual('<div><div>foo?!</div></div>');
             store.dispatch({ type: 'SET', payload: 'bar' });
 
             finishRendering();
-            assert.equal(dom.outerHTML, '<div><div>bar?!</div></div>');
+            expect(dom.outerHTML).toEqual('<div><div>bar?!</div></div>');
             done();
         });
 
@@ -145,7 +143,7 @@ describe('Connect', function() {
             const ConnectedComponent = enhance(Component);
 
             const dom = renderWithProvide(ConnectedComponent, { value: 'bar' });
-            assert.equal(dom.outerHTML, '<div><div>bar</div></div>');
+            expect(dom.outerHTML).toEqual('<div><div>bar</div></div>');
         });
 
         it('should have higher priority for stateToProps than component props', () => {
@@ -153,7 +151,7 @@ describe('Connect', function() {
             const ConnectedComponent = enhance(Component);
 
             const dom = renderWithProvide(ConnectedComponent, { value: 'bar' });
-            assert.equal(dom.outerHTML, '<div><div>foo!</div></div>');
+            expect(dom.outerHTML).toEqual('<div><div>foo!</div></div>');
         });
 
         it('should map dispatchable action to props', done => {
@@ -165,7 +163,7 @@ describe('Connect', function() {
                     setValue: val => {
                         return { type: 'SET', payload: val };
                     },
-                },
+                }
             );
             let dom;
             const Component = createComponent(
@@ -178,14 +176,13 @@ describe('Connect', function() {
                         setTimeout(() => {
                             this.getState().setValue('bar');
                             finishRendering();
-                            assert.equal(
-                                dom.outerHTML,
-                                '<div><div>bar</div></div>',
+                            expect(dom.outerHTML).toEqual(
+                                '<div><div>bar</div></div>'
                             );
                             done();
                         }, 1);
                     },
-                }),
+                })
             );
             const ConnectedComponent = enhance(Component);
             dom = renderWithProvide(ConnectedComponent);
@@ -205,7 +202,7 @@ describe('Connect', function() {
                             });
                         },
                     };
-                },
+                }
             );
             let dom;
             const Component = createComponent(
@@ -218,14 +215,13 @@ describe('Connect', function() {
                         setTimeout(() => {
                             this.getState().setValue('bar');
                             finishRendering();
-                            assert.equal(
-                                dom.outerHTML,
-                                '<div><div>bar_melody</div></div>',
+                            expect(dom.outerHTML).toEqual(
+                                '<div><div>bar_melody</div></div>'
                             );
                             done();
                         }, 1);
                     },
-                }),
+                })
             );
             const ConnectedComponent = enhance(Component);
             dom = renderWithProvide(ConnectedComponent, { suffix: 'melody' });
@@ -240,7 +236,7 @@ describe('Connect', function() {
                     setValue: val => {
                         return { type: 'SET', payload: val };
                     },
-                },
+                }
             );
             const Component = createComponent(
                 template,
@@ -248,13 +244,13 @@ describe('Connect', function() {
                 ({ componentDidMount }) => ({
                     componentDidMount() {
                         componentDidMount.call(this);
-                        assert.equal(this.el.outerHTML, '<div>foo</div>');
+                        expect(this.el.outerHTML).toEqual('<div>foo</div>');
                         this.getState().setValue('bar');
                         finishRendering();
-                        assert.equal(this.el.outerHTML, '<div>bar</div>');
+                        expect(this.el.outerHTML).toEqual('<div>bar</div>');
                         done();
                     },
-                }),
+                })
             );
             const ConnectedComponent = enhance(Component);
             renderWithProvide(ConnectedComponent);
@@ -300,7 +296,7 @@ describe('Connect', function() {
             Component = createComponent(
                 template,
                 internalReducer,
-                instanceMixin,
+                instanceMixin
             );
         });
 
@@ -309,10 +305,10 @@ describe('Connect', function() {
             const ConnectedComponent = enhance(Component);
 
             const dom = renderWithProvide(ConnectedComponent);
-            assert.equal(dom.outerHTML, '<div><div>foo! foo</div></div>');
+            expect(dom.outerHTML).toEqual('<div><div>foo! foo</div></div>');
             instance.dispatch({ type: 'SET_INTERNAL', payload: 'bar' });
             finishRendering();
-            assert.equal(dom.outerHTML, '<div><div>foo! bar</div></div>');
+            expect(dom.outerHTML).toEqual('<div><div>foo! bar</div></div>');
             done();
         });
 
@@ -325,7 +321,7 @@ describe('Connect', function() {
             store.dispatch({ type: 'SET', payload: 'qux' });
             finishRendering();
 
-            assert.equal(dom.outerHTML, '<div><div>qux! bar</div></div>');
+            expect(dom.outerHTML).toEqual('<div><div>qux! bar</div></div>');
             done();
         });
 
@@ -338,7 +334,7 @@ describe('Connect', function() {
                         text(_context.value);
                         elementClose('div');
                     },
-                }),
+                })
             );
 
             const template = {
@@ -370,12 +366,11 @@ describe('Connect', function() {
 
             const Component = createComponent(template, reducer, instanceMixin);
             const dom = renderWithProvide(Component);
-            assert.equal(dom.outerHTML, '<div><div></div></div>');
+            expect(dom.outerHTML).toEqual('<div><div></div></div>');
             instance.dispatch({ type: 'SHOW' });
             finishRendering();
-            assert.equal(
-                dom.outerHTML,
-                '<div><div><div>foo!</div></div></div>',
+            expect(dom.outerHTML).toEqual(
+                '<div><div><div>foo!</div></div></div>'
             );
             done();
         });
@@ -423,7 +418,7 @@ describe('Connect', function() {
                             componentDidUpdate.call(this, ...args);
                         },
                     };
-                },
+                }
             );
             const enhance = connect(createMapStateToProps);
             const Container = enhance(ContainerDumb);
@@ -441,9 +436,9 @@ describe('Connect', function() {
             finishRendering();
             store.dispatch({ type: 'SET', payload: 'foo' });
             finishRendering();
-            assert.equal(updatedCount, 0);
-            assert.equal(memoizedReturnCount, 2);
-            assert.equal(factoryCallCount, 2);
+            expect(updatedCount).toEqual(0);
+            expect(memoizedReturnCount).toEqual(2);
+            expect(factoryCallCount).toEqual(2);
         });
 
         it('should allow providing a factory function to mapDispatchToProps', () => {
@@ -473,7 +468,7 @@ describe('Connect', function() {
             function mergeParentDispatch(
                 stateProps,
                 dispatchProps,
-                parentProps,
+                parentProps
             ) {
                 return {
                     ...stateProps,
@@ -498,12 +493,12 @@ describe('Connect', function() {
                         updatedCount++;
                         componentDidUpdate.call(this, ...args);
                     },
-                }),
+                })
             );
             const enhance = connect(
                 mapStateToProps,
                 createMapDispatchToProps,
-                mergeParentDispatch,
+                mergeParentDispatch
             );
             const Container = enhance(ContainerDumb);
 
@@ -531,15 +526,15 @@ describe('Connect', function() {
                         componentDidMount.call(this);
                         this.dispatch({ type: 'TOGGLE' });
                     },
-                }),
+                })
             );
             renderWithProvide(App);
             finishRendering();
             store.dispatch({ type: 'SET', payload: 'bar' });
             finishRendering();
-            assert.equal(updatedCount, 2);
-            assert.equal(memoizedReturnCount, 2);
-            assert.equal(factoryCallCount, 2);
+            expect(updatedCount).toEqual(2);
+            expect(memoizedReturnCount).toEqual(2);
+            expect(factoryCallCount).toEqual(2);
         });
     });
 
@@ -565,7 +560,7 @@ describe('Connect', function() {
 
         const dom = renderWithProvide(Component);
 
-        assert.equal(dom.outerHTML, '<div><div><div>foo</div></div></div>');
+        expect(dom.outerHTML).toEqual('<div><div><div>foo</div></div></div>');
         done();
     });
 });

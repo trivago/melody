@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { assert } from 'chai';
 import { createComponent, render, unmountComponentAtNode } from '../src';
 import { component, elementOpen, elementClose, text } from 'melody-idom';
 
@@ -49,12 +48,12 @@ describe('Unmount', function() {
 
             const root = document.createElement('div');
             render(root, MyComponent);
-            assert.equal(unmounted, 0);
-            assert.equal(innerUnmounted, 0);
+            expect(unmounted).toEqual(0);
+            expect(innerUnmounted).toEqual(0);
 
             unmountComponentAtNode(root);
-            assert.equal(unmounted, 1);
-            assert.equal(innerUnmounted, 1);
+            expect(unmounted).toEqual(1);
+            expect(innerUnmounted).toEqual(1);
         });
 
         it('should remove node data', function() {
@@ -69,10 +68,10 @@ describe('Unmount', function() {
 
             const root = document.createElement('div');
             render(root, MyComponent);
-            assert(!!root['__incrementalDOMData']);
+            expect(!!root['__incrementalDOMData']).toBeTruthy();
 
             unmountComponentAtNode(root);
-            assert(!root['__incrementalDOMData']);
+            expect(!root['__incrementalDOMData']).toBeTruthy();
         });
     });
 });

@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { assert } from 'chai';
-
 import { createComponent, render, RECEIVE_PROPS } from '../src';
 import { elementOpen, elementClose, component, text } from 'melody-idom';
 
@@ -41,7 +39,7 @@ it('should not try to render an already unmounted child', done => {
     const ChildComponent = createComponent(
         childTemplate,
         state => ({}),
-        instanceAccessor(i => (childInstance = i)),
+        instanceAccessor(i => (childInstance = i))
     );
 
     const parentReducer = (state = { show: true }, action) => {
@@ -74,7 +72,7 @@ it('should not try to render an already unmounted child', done => {
     const ParentComponent = createComponent(
         parentTemplate,
         parentReducer,
-        instanceAccessor(i => (parentInstance = i)),
+        instanceAccessor(i => (parentInstance = i))
     );
 
     const root = document.createElement('div');

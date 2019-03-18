@@ -13,13 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import chai from 'chai';
-import chaiSubset from 'chai-subset';
-import { expect } from 'chai';
+
 import { CharStream, Parser, TokenStream, Lexer } from 'melody-parser';
 import { extension } from 'melody-extension-core';
-
-chai.use(chaiSubset);
 
 describe('autoescape', function() {
     describe('when parsing', function() {
@@ -27,9 +23,9 @@ describe('autoescape', function() {
             const node = parse(
                 `{% autoescape 'html' %}
 Everything will be automatically escaped in this block using the {{ strategy }} strategy.
-{% endautoescape %}`,
+{% endautoescape %}`
             );
-            expect(node.expressions[0]).to.containSubset({
+            expect(node.expressions[0]).toMatchObject({
                 type: 'AutoescapeBlock',
                 escapeType: 'html',
                 expressions: [

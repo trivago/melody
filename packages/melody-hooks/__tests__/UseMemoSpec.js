@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { assert } from 'chai';
-
 import { render } from 'melody-component';
 import { elementOpen, elementClose, text } from 'melody-idom';
 import { createComponent, useState, useMemo } from '../src';
@@ -49,8 +47,8 @@ describe('useMemo', () => {
             flush();
             setter(false);
             flush();
-            assert.equal(values[0] !== values[1], true);
-            assert.equal(values[1] !== values[2], true);
+            expect(values[0] !== values[1]).toBeTruthy();
+            expect(values[1] !== values[2]).toBeTruthy();
         });
     });
     describe('with inputs being specified', () => {
@@ -76,8 +74,8 @@ describe('useMemo', () => {
             flush();
             setter(true);
             flush();
-            assert.equal(values[0] === values[1], true);
-            assert.equal(values[1] !== values[2], true);
+            expect(values[0] === values[1]).toBeTruthy();
+            expect(values[1] !== values[2]).toBeTruthy();
         });
         it('should not call the getter when inputs are empty', () => {
             const root = document.createElement('div');
@@ -101,8 +99,8 @@ describe('useMemo', () => {
             flush();
             setter(true);
             flush();
-            assert.equal(values[0] === values[1], true);
-            assert.equal(values[1] === values[2], true);
+            expect(values[0] === values[1]).toBeTruthy();
+            expect(values[1] === values[2]).toBeTruthy();
         });
     });
 });

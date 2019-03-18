@@ -86,7 +86,7 @@ describe('component', function() {
         expect(el.innerHTML).toEqual('<m-placeholder></m-placeholder>');
         run();
         expect(el.innerHTML).toEqual('<div>Hello</div>');
-        expect(unmounted).toEqual(false);
+        expect(unmounted).toBeFalsy();
     });
 
     it('should mount the component', function() {
@@ -110,7 +110,7 @@ describe('component', function() {
             { text: 'Hello' }
         );
         run();
-        expect(notified).toEqual(true);
+        expect(notified).toBeTruthy();
     });
 
     it('should invoke componentWillUnmount when the component is removed', function() {
@@ -130,7 +130,7 @@ describe('component', function() {
             },
             { text: 'Hello' }
         );
-        expect(unmounted).toEqual(true);
+        expect(unmounted).toBeTruthy();
     });
 
     it('should render in multiple stages', function() {

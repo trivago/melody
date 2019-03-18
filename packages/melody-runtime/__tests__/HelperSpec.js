@@ -13,33 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { assert } from 'chai';
 import { isEmpty, inheritBlocks } from '../src/helpers';
 
 describe('Runtime/Helpers', function() {
     describe('isEmpty', function() {
         it('should return true for an empty array', function() {
-            assert.equal(isEmpty([]), true);
+            expect(isEmpty([])).toBeTruthy();
         });
 
         it('should return false for a non-empty array', function() {
-            assert.equal(isEmpty([42]), false);
+            expect(isEmpty([42])).toBeFalsy();
         });
 
         it('should return true for null', function() {
-            assert.equal(isEmpty(null), true);
+            expect(isEmpty(null)).toBeTruthy();
         });
 
         it('should return true for undefined', function() {
-            assert.equal(isEmpty(undefined), true);
+            expect(isEmpty(undefined)).toBeTruthy();
         });
 
         it('should return false for an empty object', function() {
-            assert.equal(isEmpty({}), false);
+            expect(isEmpty({})).toBeFalsy();
         });
 
         it('should return false for 0', function() {
-            assert.equal(isEmpty(0), false);
+            expect(isEmpty(0)).toBeFalsy();
         });
     });
 
@@ -48,8 +47,8 @@ describe('Runtime/Helpers', function() {
             const template = { render: 1 };
             const used = { renderFoo: 2, render: 3 };
             inheritBlocks(template, used);
-            assert.equal(template.renderFoo, 2);
-            assert.equal(template.render, 1);
+            expect(template.renderFoo).toEqual(2);
+            expect(template.render).toEqual(1);
         });
 
         it('copies block rendering methods with mappings', function() {
@@ -57,10 +56,10 @@ describe('Runtime/Helpers', function() {
             const used = { renderFoo: 2, render: 3, renderFoobar: 4 };
             const mapping = { renderFoo: 'renderBar' };
             inheritBlocks(template, used, mapping);
-            assert.equal(template.renderFoo, undefined);
-            assert.equal(template.renderFoobar, undefined);
-            assert.equal(template.renderBar, 2);
-            assert.equal(template.render, 1);
+            expect(template.renderFoo).toBeUndefined();
+            expect(template.renderFoobar).toBeUndefined();
+            expect(template.renderBar).toEqual(2);
+            expect(template.render).toEqual(1);
         });
 
         it('ignores prototype methods', function() {
@@ -71,8 +70,8 @@ describe('Runtime/Helpers', function() {
             const used = { renderFoo: 2, render: 3 };
             inheritBlocks(template, used);
 
-            assert.equal(template.renderFoo, 2);
-            assert.equal(template.fooBar, undefined);
+            expect(template.renderFoo).toEqual(2);
+            expect(template.fooBar).toBeUndefined();
 
             Object.prototype.fooBar = bak;
         });

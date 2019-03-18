@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { assert } from 'chai';
-
 import { createComponent } from 'melody-component';
 import { applyMiddleware } from '../src';
 import thunkMiddleware from 'redux-thunk';
@@ -45,10 +43,10 @@ describe('Middleware', function() {
         const el = document.createElement('div');
         const Component = createComponent(tpl, reducer);
         const comp = new Component(el);
-        assert(!comp.getState(), 'Component does not have state');
+        expect(!comp.getState()).toBeTruthy();
         comp.dispatch({ type: 'count', payload: { msg: 'hello' } });
-        assert(!!comp.getState(), 'Component has state');
-        assert.equal(comp.getState().msg, 'hello');
+        expect(!!comp.getState()).toBeTruthy();
+        expect(comp.getState().msg).toEqual('hello');
     });
 
     it('can call dispatch as often as it wants to', function() {
@@ -72,12 +70,12 @@ describe('Middleware', function() {
         const Component = createComponent(
             tpl,
             reducer,
-            applyMiddleware(doubleDispatch),
+            applyMiddleware(doubleDispatch)
         );
         const comp = new Component(el);
         comp.dispatch({ type: 'count' });
-        assert.equal(reducerCalled, 2, 'Reducer was called twice');
-        assert.equal(2, comp.getState().count, 'Action is reduced twice');
+        expect(reducerCalled).toEqual(2);
+        expect(2).toEqual(comp.getState().count);
     });
 
     it('can filter dispatch calls', function() {
@@ -91,14 +89,14 @@ describe('Middleware', function() {
         const Component = createComponent(
             tpl,
             countingReducer,
-            applyMiddleware(filterType('inc')),
+            applyMiddleware(filterType('inc'))
         );
         const comp = new Component(el);
         comp.dispatch({ type: 'inc' });
         comp.dispatch({ type: 'inc' });
         comp.dispatch({ type: 'dec' });
         comp.dispatch({ type: 'inc' });
-        assert.equal(3, comp.getState().count);
+        expect(3).toEqual(comp.getState().count);
     });
 
     describe('thunk middleware', function() {
@@ -107,7 +105,7 @@ describe('Middleware', function() {
             const Component = createComponent(
                 tpl,
                 countingReducer,
-                applyMiddleware(thunkMiddleware, null, undefined, false),
+                applyMiddleware(thunkMiddleware, null, undefined, false)
             );
             const comp = new Component(el);
             comp.dispatch(dispatch => {
@@ -115,7 +113,7 @@ describe('Middleware', function() {
                 dispatch({ type: 'dec' });
                 dispatch({ type: 'inc' });
             });
-            assert.equal(1, comp.getState().count);
+            expect(1).toEqual(comp.getState().count);
         });
 
         it('passes getState to the actor', function() {
@@ -123,18 +121,18 @@ describe('Middleware', function() {
             const Component = createComponent(
                 tpl,
                 countingReducer,
-                applyMiddleware(thunkMiddleware),
+                applyMiddleware(thunkMiddleware)
             );
             const comp = new Component(el);
             comp.dispatch((dispatch, getState) => {
                 dispatch({ type: 'inc' });
-                assert.equal(1, getState().count, 'After first increment');
+                expect(1).toEqual(getState().count);
                 dispatch({ type: 'dec' });
-                assert.equal(0, getState().count, 'After decrement');
+                expect(0).toEqual(getState().count);
                 dispatch({ type: 'inc' });
-                assert.equal(1, getState().count, 'After last increment');
+                expect(1).toEqual(getState().count);
             });
-            assert.equal(1, comp.getState().count);
+            expect(1).toEqual(comp.getState().count);
         });
 
         it('can be async', function(done) {
@@ -142,36 +140,23 @@ describe('Middleware', function() {
             const Component = createComponent(
                 tpl,
                 countingReducer,
-                applyMiddleware(thunkMiddleware),
+                applyMiddleware(thunkMiddleware)
             );
             const comp = new Component(el);
-            comp
-                .dispatch(
-                    (dispatch, getState) =>
-                        new Promise((resolve, reject) => {
-                            dispatch({ type: 'inc' });
-                            assert.equal(
-                                1,
-                                getState().count,
-                                'After first increment',
-                            );
-                            dispatch({ type: 'dec' });
-                            assert.equal(
-                                0,
-                                getState().count,
-                                'After decrement',
-                            );
-                            dispatch({ type: 'inc' });
-                            assert.equal(
-                                1,
-                                getState().count,
-                                'After last increment',
-                            );
-                            resolve();
-                        }),
-                )
+            comp.dispatch(
+                (dispatch, getState) =>
+                    new Promise((resolve, reject) => {
+                        dispatch({ type: 'inc' });
+                        expect(1).toEqual(getState().count);
+                        dispatch({ type: 'dec' });
+                        expect(0).toEqual(getState().count);
+                        dispatch({ type: 'inc' });
+                        expect(1).toEqual(getState().count);
+                        resolve();
+                    })
+            )
                 .then(() => {
-                    assert.equal(1, comp.getState().count);
+                    expect(1).toEqual(comp.getState().count);
                 })
                 .then(done, done);
         });
@@ -186,14 +171,14 @@ describe('Middleware', function() {
             const Component = createComponent(
                 tpl,
                 countingReducer,
-                applyMiddleware(thunkMiddleware, loggerMiddleware),
+                applyMiddleware(thunkMiddleware, loggerMiddleware)
             );
             const comp = new Component(el);
             comp.dispatch(dispatch => dispatch({ type: 'inc' }));
             expect(JSON.stringify(log)).toEqual(
-                JSON.stringify([{ type: 'inc' }]),
+                JSON.stringify([{ type: 'inc' }])
             );
-            assert.equal(1, log.length, 'should have logged once');
+            expect(1).toEqual(log.length);
         });
     });
 
@@ -203,20 +188,19 @@ describe('Middleware', function() {
             const Component = createComponent(
                 tpl,
                 countingReducer,
-                applyMiddleware(promiseMiddleware),
+                applyMiddleware(promiseMiddleware)
             );
             const comp = new Component(el);
-            comp
-                .dispatch(
-                    new Promise(resolve => {
-                        resolve({ type: 'inc' });
-                    }),
-                )
+            comp.dispatch(
+                new Promise(resolve => {
+                    resolve({ type: 'inc' });
+                })
+            )
                 .then(() => {
-                    assert.equal(1, comp.getState().count);
+                    expect(1).toEqual(comp.getState().count);
                 })
                 .then(done, done);
-            assert.equal(0, comp.getState().count);
+            expect(0).toEqual(comp.getState().count);
         });
 
         it('ignores rejected promises', function(done) {
@@ -224,23 +208,22 @@ describe('Middleware', function() {
             const Component = createComponent(
                 tpl,
                 countingReducer,
-                applyMiddleware(promiseMiddleware),
+                applyMiddleware(promiseMiddleware)
             );
             const comp = new Component(el);
-            comp
-                .dispatch(
-                    new Promise((resolve, reject) => {
-                        reject({ reason: 'just testing' });
-                    }),
-                )
+            comp.dispatch(
+                new Promise((resolve, reject) => {
+                    reject({ reason: 'just testing' });
+                })
+            )
                 .then(() => {
-                    assert.equal(1, comp.getState().count);
+                    expect(1).toEqual(comp.getState().count);
                 })
                 .catch(err => {
-                    assert.equal(err.reason, 'just testing');
+                    expect(err.reason).toEqual('just testing');
                 })
                 .then(done, done);
-            assert.equal(0, comp.getState().count);
+            expect(0).toEqual(comp.getState().count);
         });
     });
 
@@ -250,20 +233,19 @@ describe('Middleware', function() {
             const Component = createComponent(
                 tpl,
                 countingReducer,
-                applyMiddleware(promiseMiddleware, thunkMiddleware),
+                applyMiddleware(promiseMiddleware, thunkMiddleware)
             );
             const comp = new Component(el);
-            comp
-                .dispatch(
-                    new Promise(resolve => {
-                        resolve({ type: 'inc' });
-                    }),
-                )
+            comp.dispatch(
+                new Promise(resolve => {
+                    resolve({ type: 'inc' });
+                })
+            )
                 .then(() => {
-                    assert.equal(1, comp.getState().count);
+                    expect(1).toEqual(comp.getState().count);
                 })
                 .then(done, done);
-            assert.equal(0, comp.getState().count);
+            expect(0).toEqual(comp.getState().count);
         });
 
         it('ignores rejected promises', function(done) {
@@ -271,23 +253,22 @@ describe('Middleware', function() {
             const Component = createComponent(
                 tpl,
                 countingReducer,
-                applyMiddleware(promiseMiddleware, thunkMiddleware),
+                applyMiddleware(promiseMiddleware, thunkMiddleware)
             );
             const comp = new Component(el);
-            comp
-                .dispatch(
-                    new Promise((resolve, reject) => {
-                        reject({ reason: 'just testing' });
-                    }),
-                )
+            comp.dispatch(
+                new Promise((resolve, reject) => {
+                    reject({ reason: 'just testing' });
+                })
+            )
                 .then(() => {
-                    assert.equal(1, comp.getState().count);
+                    expect(1).toEqual(comp.getState().count);
                 })
                 .catch(err => {
-                    assert.equal(err.reason, 'just testing');
+                    expect(err.reason).toEqual('just testing');
                 })
                 .then(done, done);
-            assert.equal(0, comp.getState().count);
+            expect(0).toEqual(comp.getState().count);
         });
 
         it('accepts a function', function() {
@@ -295,7 +276,7 @@ describe('Middleware', function() {
             const Component = createComponent(
                 tpl,
                 countingReducer,
-                applyMiddleware(promiseMiddleware, thunkMiddleware),
+                applyMiddleware(promiseMiddleware, thunkMiddleware)
             );
             const comp = new Component(el);
             comp.dispatch(dispatch => {
@@ -303,7 +284,7 @@ describe('Middleware', function() {
                 dispatch({ type: 'dec' });
                 dispatch({ type: 'inc' });
             });
-            assert.equal(1, comp.getState().count);
+            expect(1).toEqual(comp.getState().count);
         });
 
         it('provides access to state', function() {
@@ -311,18 +292,18 @@ describe('Middleware', function() {
             const Component = createComponent(
                 tpl,
                 countingReducer,
-                applyMiddleware(promiseMiddleware, thunkMiddleware),
+                applyMiddleware(promiseMiddleware, thunkMiddleware)
             );
             const comp = new Component(el);
             comp.dispatch((dispatch, getState) => {
                 dispatch({ type: 'inc' });
-                assert.equal(1, getState().count, 'After first increment');
+                expect(1).toEqual(getState().count);
                 dispatch({ type: 'dec' });
-                assert.equal(0, getState().count, 'After decrement');
+                expect(0).toEqual(getState().count);
                 dispatch({ type: 'inc' });
-                assert.equal(1, getState().count, 'After last increment');
+                expect(1).toEqual(getState().count);
             });
-            assert.equal(1, comp.getState().count);
+            expect(1).toEqual(comp.getState().count);
         });
     });
 });

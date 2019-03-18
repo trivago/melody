@@ -22,7 +22,6 @@ import {
     elementVoid,
     text,
 } from '../src';
-import { expect } from 'chai';
 
 describe('patching an element', () => {
     let container;
@@ -43,7 +42,7 @@ describe('patching an element', () => {
 
         patchOuter(container, render);
 
-        expect(container.getAttribute('tabindex')).to.equal('0');
+        expect(container.getAttribute('tabindex')).toEqual('0');
     });
 
     it('should return the DOM node', () => {
@@ -53,7 +52,7 @@ describe('patching an element', () => {
 
         const result = patchOuter(container, render);
 
-        expect(result).to.equal(container);
+        expect(result).toEqual(container);
     });
 
     it('should update children', () => {
@@ -65,7 +64,7 @@ describe('patching an element', () => {
 
         patchOuter(container, render);
 
-        expect(container.firstChild.tagName).to.equal('SPAN');
+        expect(container.firstChild.tagName).toEqual('SPAN');
     });
 
     it('should be re-entrant', function() {
@@ -87,8 +86,8 @@ describe('patching an element', () => {
 
         patchOuter(containerOne, renderOne);
 
-        expect(containerOne.textContent).to.equal('hello');
-        expect(containerTwo.textContent).to.equal('foobar');
+        expect(containerOne.textContent).toEqual('hello');
+        expect(containerTwo.textContent).toEqual('foobar');
     });
 
     it('should pass third argument to render function', () => {
@@ -100,7 +99,7 @@ describe('patching an element', () => {
 
         patchOuter(container, render, 'foobar');
 
-        expect(container.textContent).to.equal('foobar');
+        expect(container.textContent).toEqual('foobar');
     });
 
     it('should patch a detached node', () => {
@@ -113,7 +112,7 @@ describe('patching an element', () => {
 
         patchOuter(container, render);
 
-        expect(container.firstChild.tagName).to.equal('SPAN');
+        expect(container.firstChild.tagName).toEqual('SPAN');
     });
 
     describe('with an empty patch', () => {
@@ -127,11 +126,11 @@ describe('patching an element', () => {
         });
 
         it('should remove the DOM node on an empty patch', () => {
-            expect(container.firstChild).to.be.null;
+            expect(container.firstChild).toBeNull();
         });
 
         it('should remove the DOM node on an empty patch', () => {
-            expect(result).to.be.null;
+            expect(result).toBeNull();
         });
     });
 
@@ -153,12 +152,12 @@ describe('patching an element', () => {
             });
 
             it('should replace the DOM node', () => {
-                expect(container.children).to.have.length(1);
-                expect(container.firstChild).to.equal(span);
+                expect(container.children).toHaveLength(1);
+                expect(container.firstChild).toEqual(span);
             });
 
             it('should return the new DOM node', () => {
-                expect(result).to.equal(span);
+                expect(result).toEqual(span);
             });
         });
 
@@ -177,22 +176,22 @@ describe('patching an element', () => {
             it('should replace the DOM node when a key changes', () => {
                 div.setAttribute('key', 'key0');
                 patchOuter(div, render, { tag: 'span', key: 'key1' });
-                expect(container.children).to.have.length(1);
-                expect(container.firstChild).to.equal(el);
+                expect(container.children).toHaveLength(1);
+                expect(container.firstChild).toEqual(el);
             });
 
             it('should replace the DOM node when a key is removed', () => {
                 div.setAttribute('key', 'key0');
                 patchOuter(div, render, { tag: 'span' });
-                expect(container.children).to.have.length(1);
-                expect(container.firstChild.tagName).to.equal('SPAN');
-                expect(container.firstChild).to.equal(el);
+                expect(container.children).toHaveLength(1);
+                expect(container.firstChild.tagName).toEqual('SPAN');
+                expect(container.firstChild).toEqual(el);
             });
 
             it('should replace the DOM node when a key is added', () => {
                 patchOuter(div, render, { tag: 'span', key: 'key2' });
-                expect(container.children).to.have.length(1);
-                expect(container.firstChild).to.equal(el);
+                expect(container.children).toHaveLength(1);
+                expect(container.firstChild).toEqual(el);
             });
         });
     });
@@ -209,8 +208,8 @@ describe('patching an element', () => {
         const divTwo = container.appendChild(document.createElement('div'));
         patchOuter(divTwo, render);
 
-        expect(container.children).to.have.length(1);
-        expect(container.firstChild).to.not.equal(el);
+        expect(container.children).toHaveLength(1);
+        expect(container.firstChild).not.toBe(el);
     });
 
     it('should throw an error when patching too many elements', () => {
@@ -219,20 +218,19 @@ describe('patching an element', () => {
             elementVoid('div');
             elementVoid('div');
         }
-
-        expect(() => patchOuter(div, render)).to.throw(
-            'There must be ' +
-                'exactly one top level call corresponding to the patched element.',
-        );
+        const error =
+            'There must be exactly one top level call corresponding to the patched element.';
+        expect(() => patchOuter(div, render)).toThrowError(new Error(error));
     });
 
     describe('that does not exist', function() {
         it('should throw an error', function() {
+            const error = 'Patch invoked without an element.';
             expect(() =>
                 patchOuter(null, function() {
-                    expect(false).to.be.true;
-                }),
-            ).to.throw('Patch invoked without an element');
+                    expect(false).toBeTruthy();
+                })
+            ).toThrow(new Error(error));
         });
     });
 });

@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { assert } from 'chai';
-
 import { render } from 'melody-component';
 import { elementOpen, elementClose, text } from 'melody-idom';
 import { createComponent, useState, useEffect } from '../src';
@@ -36,7 +34,7 @@ describe('useState', () => {
             return { value };
         }, template);
         render(root, MyComponent);
-        assert.equal(root.outerHTML, '<div>foo</div>');
+        expect(root.outerHTML).toEqual('<div>foo</div>');
     });
     it('should read multiple initial values from useState hooks', () => {
         const root = document.createElement('div');
@@ -46,7 +44,7 @@ describe('useState', () => {
             return { value: foo + bar };
         }, template);
         render(root, MyComponent);
-        assert.equal(root.outerHTML, '<div>foobar</div>');
+        expect(root.outerHTML).toEqual('<div>foobar</div>');
     });
     it('should update when state is changed', () => {
         const root = document.createElement('div');
@@ -58,10 +56,10 @@ describe('useState', () => {
             return { value: foo + bar };
         }, template);
         render(root, MyComponent);
-        assert.equal(root.outerHTML, '<div>foobar</div>');
+        expect(root.outerHTML).toEqual('<div>foobar</div>');
         setter('bar');
         flush();
-        assert.equal(root.outerHTML, '<div>barbar</div>');
+        expect(root.outerHTML).toEqual('<div>barbar</div>');
     });
     it('should update when state is changed 2', () => {
         const root = document.createElement('div');
@@ -73,10 +71,10 @@ describe('useState', () => {
             return { value: foo + bar };
         }, template);
         render(root, MyComponent);
-        assert.equal(root.outerHTML, '<div>foobar</div>');
+        expect(root.outerHTML).toEqual('<div>foobar</div>');
         setter('foo');
         flush();
-        assert.equal(root.outerHTML, '<div>foofoo</div>');
+        expect(root.outerHTML).toEqual('<div>foofoo</div>');
     });
     it("should not update when state hasn't changed", () => {
         const root = document.createElement('div');
@@ -91,7 +89,7 @@ describe('useState', () => {
         render(root, MyComponent);
         setter({ bar: 'foo', foo: 'bar' });
         flush();
-        assert.equal(called, 1);
+        expect(called).toEqual(1);
     });
     it('should be possible to pass a function to set the state', () => {
         const root = document.createElement('div');
@@ -108,10 +106,10 @@ describe('useState', () => {
             return { value: JSON.stringify(state) };
         }, template);
         render(root, MyComponent);
-        assert.equal(root.outerHTML, '<div>{"counter":1,"foo":"bar"}</div>');
+        expect(root.outerHTML).toEqual('<div>{"counter":1,"foo":"bar"}</div>');
         flush();
-        assert.equal(root.outerHTML, '<div>{"counter":2,"foo":"bar"}</div>');
-        assert.equal(called, 2);
+        expect(root.outerHTML).toEqual('<div>{"counter":2,"foo":"bar"}</div>');
+        expect(called).toEqual(2);
     });
     it('should have the correct value when called subsequently', () => {
         const root = document.createElement('div');
@@ -126,10 +124,10 @@ describe('useState', () => {
             return { value };
         }, template);
         render(root, MyComponent);
-        assert.equal(root.outerHTML, '<div>0</div>');
+        expect(root.outerHTML).toEqual('<div>0</div>');
         flush();
-        assert.equal(root.outerHTML, '<div>2</div>');
-        assert.equal(called, 2);
+        expect(root.outerHTML).toEqual('<div>2</div>');
+        expect(called).toEqual(2);
     });
     it('should have the correct value when called subsequently 2', () => {
         const root = document.createElement('div');
@@ -144,10 +142,10 @@ describe('useState', () => {
             return { value };
         }, template);
         render(root, MyComponent);
-        assert.equal(root.outerHTML, '<div>0</div>');
+        expect(root.outerHTML).toEqual('<div>0</div>');
         flush();
-        assert.equal(root.outerHTML, '<div>NaN</div>');
-        assert.equal(called, 2);
+        expect(root.outerHTML).toEqual('<div>NaN</div>');
+        expect(called).toEqual(2);
     });
     it('should be possible to pass a function as initialState', () => {
         const root = document.createElement('div');
@@ -156,7 +154,7 @@ describe('useState', () => {
             return { value };
         }, template);
         render(root, MyComponent);
-        assert.equal(root.outerHTML, '<div>foo</div>');
+        expect(root.outerHTML).toEqual('<div>foo</div>');
     });
     it('should update from an effect', () => {
         const root = document.createElement('div');
@@ -170,10 +168,10 @@ describe('useState', () => {
             return { value: foo };
         }, template);
         render(root, MyComponent);
-        assert.equal(root.outerHTML, '<div>foo</div>');
+        expect(root.outerHTML).toEqual('<div>foo</div>');
         flush();
-        assert.equal(root.outerHTML, '<div>bar</div>');
-        assert.equal(called, 2);
+        expect(root.outerHTML).toEqual('<div>bar</div>');
+        expect(called).toEqual(2);
     });
     it('should only update once from an effect', () => {
         const root = document.createElement('div');
@@ -189,10 +187,10 @@ describe('useState', () => {
             return { value: foo + bar };
         }, template);
         render(root, MyComponent);
-        assert.equal(root.outerHTML, '<div>foobar</div>');
+        expect(root.outerHTML).toEqual('<div>foobar</div>');
         flush();
-        assert.equal(root.outerHTML, '<div>barfoo</div>');
-        assert.equal(called, 2);
+        expect(root.outerHTML).toEqual('<div>barfoo</div>');
+        expect(called).toEqual(2);
     });
     it('should apply setState calls from the component function without rerendering', () => {
         const root = document.createElement('div');
@@ -210,9 +208,9 @@ describe('useState', () => {
             return { value: foo + bar };
         }, template);
         render(root, MyComponent);
-        assert.equal(root.outerHTML, '<div>foo2bar2</div>');
-        assert.equal(called, 2);
-        assert.deepEqual(values, ['foo', 'bar', 'foo2', 'bar2']);
+        expect(root.outerHTML).toEqual('<div>foo2bar2</div>');
+        expect(called).toEqual(2);
+        expect(values).toEqual(['foo', 'bar', 'foo2', 'bar2']);
     });
     it('should throw when component function leads to an infinite loop', () => {
         const root = document.createElement('div');
@@ -222,8 +220,8 @@ describe('useState', () => {
             return { value };
         }, template);
 
-        assert.throws(() => {
+        expect(() => {
             render(root, MyComponent);
-        }, 'Too many re-renders. Melody limits the number of renders to prevent an infinite loop.');
+        }).toThrow();
     });
 });

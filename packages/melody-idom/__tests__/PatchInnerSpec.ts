@@ -25,7 +25,6 @@ import {
     elementVoid,
     text,
 } from '../src';
-import { expect } from 'chai';
 
 describe("patching an element's children", () => {
     let container;
@@ -56,7 +55,7 @@ describe("patching an element's children", () => {
             patchInner(container, render);
             const child = container.childNodes[0];
 
-            expect(child).to.equal(div);
+            expect(child).toEqual(div);
         });
 
         describe('should return DOM node', () => {
@@ -68,7 +67,7 @@ describe("patching an element's children", () => {
                     elementClose('div');
                 });
 
-                expect(node).to.equal(div);
+                expect(node).toEqual(div);
             });
 
             it('from elementClose', () => {
@@ -77,7 +76,7 @@ describe("patching an element's children", () => {
                     node = elementClose('div');
                 });
 
-                expect(node).to.equal(div);
+                expect(node).toEqual(div);
             });
 
             it('from elementVoid', () => {
@@ -85,7 +84,7 @@ describe("patching an element's children", () => {
                     node = elementVoid('div');
                 });
 
-                expect(node).to.equal(div);
+                expect(node).toEqual(div);
             });
 
             it('from elementOpenEnd', () => {
@@ -95,7 +94,7 @@ describe("patching an element's children", () => {
                     elementClose('div');
                 });
 
-                expect(node).to.equal(div);
+                expect(node).toEqual(div);
             });
 
             it('from elementOpen when Node.prototype.contains not available', () => {
@@ -106,7 +105,7 @@ describe("patching an element's children", () => {
                     elementClose('div');
                 });
 
-                expect(node).to.equal(div);
+                expect(node).toEqual(div);
             });
         });
     });
@@ -128,8 +127,8 @@ describe("patching an element's children", () => {
 
         patchInner(containerOne, renderOne);
 
-        expect(containerOne.textContent).to.equal('hello');
-        expect(containerTwo.textContent).to.equal('foobar');
+        expect(containerOne.textContent).toEqual('hello');
+        expect(containerTwo.textContent).toEqual('foobar');
     });
 
     it('should pass third argument to render function', () => {
@@ -139,7 +138,7 @@ describe("patching an element's children", () => {
 
         patchInner(container, render, 'foobar');
 
-        expect(container.textContent).to.equal('foobar');
+        expect(container.textContent).toEqual('foobar');
     });
 
     it('should patch a detached node', () => {
@@ -150,15 +149,16 @@ describe("patching an element's children", () => {
 
         patchInner(container, render);
 
-        expect(container.firstChild.tagName).to.equal('SPAN');
+        expect(container.firstChild.tagName).toEqual('SPAN');
     });
 
     it('should throw when an element is unclosed', function() {
+        const error = 'One or more tags were not closed:\ndiv';
         expect(() => {
             patch(container, () => {
                 elementOpen('div');
             });
-        }).to.throw('One or more tags were not closed:\ndiv');
+        }).toThrowError(error);
     });
 });
 
@@ -171,22 +171,23 @@ describe('patching a documentFragment', function() {
             elementClose('div');
         });
 
-        expect(frag.childNodes[0].id).to.equal('aDiv');
+        expect(frag.childNodes[0].id).toEqual('aDiv');
     });
 });
 
 describe('when patching an non existing element', function() {
     it('should throw an error', function() {
+        const error = 'Patch invoked without an element';
         expect(() =>
             patchInner(null, function() {
-                expect(false).to.be.true;
+                expect(false).toBeTruthy();
             })
-        ).to.throw('Patch invoked without an element');
+        ).toThrowError(error);
     });
 });
 
 describe('patch', () => {
     it('should alias patchInner', () => {
-        expect(patch).to.equal(patchInner);
+        expect(patch).toEqual(patchInner);
     });
 });

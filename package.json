@@ -83,10 +83,12 @@
         "typescript-babel-jest": "^1.0.5"
     },
     "lint-staged": {
-        "*.[jt]s": [
-            "prettier",
-            "git add"
-        ],
+        "linters": {
+            "*.[jt]s": [
+                "prettier",
+                "git add"
+            ]
+        },
         "ignore": [
             "./.history"
         ]

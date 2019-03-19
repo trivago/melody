@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { assert } from 'chai';
-
 import { render } from 'melody-component';
 import { elementOpen, elementClose, text } from 'melody-idom';
 import { createComponent, useState, usePrevious } from '../src';
@@ -39,12 +37,12 @@ describe('usePrevious', () => {
             return { value: JSON.stringify({ value, prev }) };
         }, template);
         render(root, MyComponent);
-        assert.equal(root.outerHTML, '<div>{"value":0}</div>');
+        expect(root.outerHTML).toEqual('<div>{"value":0}</div>');
         setter(2);
         flush();
-        assert.equal(root.outerHTML, '<div>{"value":2,"prev":0}</div>');
+        expect(root.outerHTML).toEqual('<div>{"value":2,"prev":0}</div>');
         setter(1337);
         flush();
-        assert.equal(root.outerHTML, '<div>{"value":1337,"prev":2}</div>');
+        expect(root.outerHTML).toEqual('<div>{"value":1337,"prev":2}</div>');
     });
 });

@@ -112,7 +112,7 @@ describe('AsyncComponent', () => {
             '<div>Foo</div><strong>Network connection issue</strong>'
         );
 
-        expect(unmounted).toEqual(false);
+        expect(unmounted).toBeFalsy();
     });
 
     it('should render a promised component conditionally', async function() {
@@ -172,7 +172,7 @@ describe('AsyncComponent', () => {
         run();
         expect(el.innerHTML).toEqual('<div><div>Foo</div></div>');
 
-        expect(unmounted).toEqual(false);
+        expect(unmounted).toBeFalsy();
     });
 
     it('should render the correct async component when changed during loading', async function() {
@@ -233,7 +233,7 @@ describe('AsyncComponent', () => {
             '<div><span>No magic component</span></div>'
         );
 
-        expect(unmounted).toEqual(false);
+        expect(unmounted).toBeFalsy();
     });
 
     it('should unmount the async component', async function() {
@@ -295,7 +295,7 @@ describe('AsyncComponent', () => {
             '<div><span>No magic component</span></div>'
         );
 
-        expect(unmounted).toEqual(true);
+        expect(unmounted).toBeTruthy();
     });
 
     it('should change components during loading', async function() {
@@ -358,7 +358,7 @@ describe('AsyncComponent', () => {
         run(2);
         expect(el.innerHTML).toEqual('<div><div>Foo</div></div>');
 
-        expect(unmounted).toEqual(false);
+        expect(unmounted).toBeFalsy();
     });
 
     it('should switch components after loading', async function() {
@@ -424,7 +424,7 @@ describe('AsyncComponent', () => {
         run(2);
         expect(el.innerHTML).toEqual('<div><div>Foo</div></div>');
 
-        expect(unmounted).toEqual(true);
+        expect(unmounted).toBeTruthy();
     });
 
     it('should ignore unnecessary async component', async function() {
@@ -490,8 +490,8 @@ describe('AsyncComponent', () => {
             '<div><span>No magic component</span></div>'
         );
 
-        expect(notified).toEqual(false);
-        expect(unmounted).toEqual(false);
+        expect(notified).toBeFalsy();
+        expect(unmounted).toBeFalsy();
     });
 });
 

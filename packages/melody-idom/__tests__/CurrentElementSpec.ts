@@ -24,7 +24,6 @@ import {
     elementVoid,
     currentElement,
 } from '../src';
-import { expect } from 'chai';
 
 describe('currentElement', () => {
     let container;
@@ -46,7 +45,7 @@ describe('currentElement', () => {
             el = currentElement();
             elementClose('div');
         });
-        expect(el).to.equal(container.childNodes[0]);
+        expect(el).toEqual(container.childNodes[0]);
     });
 
     it('should return the element from elementOpenEnd', () => {
@@ -57,7 +56,7 @@ describe('currentElement', () => {
             elementClose('div');
         });
 
-        expect(el).to.equal(container.childNodes[0]);
+        expect(el).toEqual(container.childNodes[0]);
     });
 
     it('should return the parent after elementClose', () => {
@@ -67,7 +66,7 @@ describe('currentElement', () => {
             el = currentElement();
         });
 
-        expect(el).to.equal(container);
+        expect(el).toEqual(container);
     });
 
     it('should return the parent after elementVoid', () => {
@@ -76,16 +75,17 @@ describe('currentElement', () => {
             el = currentElement();
         });
 
-        expect(el).to.equal(container);
+        expect(el).toEqual(container);
     });
 
     it('should throw an error if not patching', () => {
-        expect(currentElement).to.throw(
-            'Cannot call currentElement() unless in patch',
-        );
+        const error = 'Cannot call currentElement() unless in patch';
+        expect(currentElement).toThrowError(new Error(error));
     });
 
     it('should throw an error if inside virtual attributes element', () => {
+        const error =
+            'currentElement() can not be called between elementOpenStart() and elementOpenEnd().';
         expect(() => {
             patch(container, () => {
                 elementOpenStart('div');
@@ -93,8 +93,6 @@ describe('currentElement', () => {
                 elementOpenEnd('div');
                 elementClose('div');
             });
-        }).to.throw(
-            'currentElement() can not be called between elementOpenStart() and elementOpenEnd().',
-        );
+        }).toThrowError(new Error(error));
     });
 });

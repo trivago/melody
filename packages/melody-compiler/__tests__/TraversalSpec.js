@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { expect } from 'chai';
 import { parse } from 'melody-parser';
 import { traverse, merge } from 'melody-traverse';
 import * as n from 'melody-types';
@@ -29,10 +28,10 @@ describe('Traversal', function() {
                 BinaryConcatExpression(path) {
                     switch (concats) {
                         case 0:
-                            expect(path.node.right.value).to.equal(' ');
+                            expect(path.node.right.value).toEqual(' ');
                             break;
                         case 1:
-                            expect(path.node.right.name).to.equal('bar');
+                            expect(path.node.right.name).toEqual('bar');
                             break;
                     }
                     concats++;
@@ -40,24 +39,24 @@ describe('Traversal', function() {
                 StringLiteral(path) {
                     switch (stringLiterals) {
                         case 0:
-                            expect(path.node.value).to.equal(' foo ');
+                            expect(path.node.value).toEqual(' foo ');
                             break;
                         case 1:
-                            expect(path.node.value).to.equal(' ');
+                            expect(path.node.value).toEqual(' ');
                             break;
                     }
                     stringLiterals++;
                 },
                 Identifier(path) {
                     if (identifiers === 0) {
-                        expect(path.node.name).to.equal('bar');
+                        expect(path.node.name).toEqual('bar');
                     }
                     identifiers++;
                 },
             });
-            expect(concats).to.equal(2);
-            expect(stringLiterals).to.equal(2);
-            expect(identifiers).to.equal(1);
+            expect(concats).toEqual(2);
+            expect(stringLiterals).toEqual(2);
+            expect(identifiers).toEqual(1);
         });
     });
 
@@ -71,10 +70,10 @@ describe('Traversal', function() {
                     }
                 },
             });
-            expect(node.expressions[0].value.left.left.right.name).to.equal(
-                'foo',
+            expect(node.expressions[0].value.left.left.right.name).toEqual(
+                'foo'
             );
-            expect(node.expressions[0].value.right.name).to.equal('baz');
+            expect(node.expressions[0].value.right.name).toEqual('baz');
         });
     });
 
@@ -96,13 +95,13 @@ describe('Traversal', function() {
             };
             const visitor = merge(counter, replacer);
             traverse(node, visitor);
-            expect(node.expressions[0].value.left.left.right.name).to.equal(
-                'foo',
+            expect(node.expressions[0].value.left.left.right.name).toEqual(
+                'foo'
             );
-            expect(node.expressions[0].value.right.name).to.equal('baz');
-            expect(count.bar).to.equal(1);
-            expect(count.baz).to.equal(1);
-            expect(count.foo).to.equal(1);
+            expect(node.expressions[0].value.right.name).toEqual('baz');
+            expect(count.bar).toEqual(1);
+            expect(count.baz).toEqual(1);
+            expect(count.foo).toEqual(1);
         });
     });
 });

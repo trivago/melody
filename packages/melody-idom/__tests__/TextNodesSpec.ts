@@ -16,7 +16,6 @@
  */
 
 import { patch, text, elementOpenStart } from '../src';
-import { expect } from 'chai';
 
 describe('text nodes', () => {
     let container;
@@ -37,8 +36,8 @@ describe('text nodes', () => {
             });
             const node = container.childNodes[0];
 
-            expect(node.textContent).to.equal('Hello world!');
-            expect(node).to.be.instanceof(Text);
+            expect(node.textContent).toEqual('Hello world!');
+            expect(node).toBeInstanceOf(Text);
         });
 
         it('should allow for multiple text nodes under one parent element', () => {
@@ -48,18 +47,18 @@ describe('text nodes', () => {
                 text('!');
             });
 
-            expect(container.textContent).to.equal('Hello World!');
+            expect(container.textContent).toEqual('Hello World!');
         });
 
         it('should throw when inside virtual attributes element', () => {
+            const error =
+                'text() can not be called between elementOpenStart() and elementOpenEnd().';
             expect(() => {
                 patch(container, () => {
                     elementOpenStart('div');
                     text('Hello');
                 });
-            }).to.throw(
-                'text() can not be called between elementOpenStart() and elementOpenEnd().',
-            );
+            }).toThrowError(new Error(error));
         });
     });
 
@@ -73,7 +72,7 @@ describe('text nodes', () => {
             patch(container, () => render('Hello World!'));
             const node = container.childNodes[0];
 
-            expect(node.textContent).to.equal('Hello World!');
+            expect(node.textContent).toEqual('Hello World!');
         });
     });
 });

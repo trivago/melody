@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { assert } from 'chai';
-
 import { render } from 'melody-component';
 import { elementOpen, elementClose, text } from 'melody-idom';
 import { createComponent, useState, useCallback } from '../src';
@@ -46,8 +44,8 @@ describe('useCallback', () => {
             flush();
             setter(false);
             flush();
-            assert.equal(callbacks[0] !== callbacks[1], true);
-            assert.equal(callbacks[1] !== callbacks[2], true);
+            expect(callbacks[0] !== callbacks[1]).toBeTruthy();
+            expect(callbacks[1] !== callbacks[2]).toBeTruthy();
         });
     });
     describe('with inputs being specified', () => {
@@ -70,8 +68,8 @@ describe('useCallback', () => {
             flush();
             setter(true);
             flush();
-            assert.equal(callbacks[0] === callbacks[1], true);
-            assert.equal(callbacks[1] !== callbacks[2], true);
+            expect(callbacks[0] === callbacks[1]).toBeTruthy();
+            expect(callbacks[1] !== callbacks[2]).toBeTruthy();
         });
         it('should return the same callback when inputs are empty', () => {
             const root = document.createElement('div');
@@ -92,8 +90,8 @@ describe('useCallback', () => {
             flush();
             setter(true);
             flush();
-            assert.equal(callbacks[0] === callbacks[1], true);
-            assert.equal(callbacks[1] === callbacks[2], true);
+            expect(callbacks[0] === callbacks[1]).toBeTruthy();
+            expect(callbacks[1] === callbacks[2]).toBeTruthy();
         });
     });
 });

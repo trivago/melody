@@ -69,11 +69,11 @@ var elementOpen = function(tag, key, statics, var_args) {
     var data = getData(node);
 
     /*
-   * Checks to see if one or more attributes have changed for a given Element.
-   * When no attributes have changed, this is much faster than checking each
-   * individual argument. When attributes have changed, the overhead of this is
-   * minimal.
-   */
+     * Checks to see if one or more attributes have changed for a given Element.
+     * When no attributes have changed, this is much faster than checking each
+     * individual argument. When attributes have changed, the overhead of this is
+     * minimal.
+     */
     const attrsArr = data.attrsArr;
     const newAttrs = data.newAttrs;
     const isNew = !attrsArr.length;
@@ -325,9 +325,9 @@ var text = function(value, var_args) {
         var formatted = value;
         for (var i = 1; i < arguments.length; i += 1) {
             /*
-       * Call the formatter function directly to prevent leaking arguments.
-       * https://github.com/google/incremental-dom/pull/204#issuecomment-178223574
-       */
+             * Call the formatter function directly to prevent leaking arguments.
+             * https://github.com/google/incremental-dom/pull/204#issuecomment-178223574
+             */
             var fn = arguments[i];
             formatted = fn(formatted);
         }

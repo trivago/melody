@@ -78,8 +78,6 @@
         "rollup-plugin-json": "^3.0.0",
         "rollup-plugin-uglify": "^4.0.0",
         "semver": "^5.5.1",
-        "sinon": "^1.17.7",
-        "sinon-chai": "^2.8.0",
         "source-map": "^0.5.6",
         "typescript": "^2.2.1",
         "typescript-babel-jest": "^1.0.5"
@@ -88,7 +86,8 @@
         "*.[jt]s": [
             "prettier",
             "git add"
-        ]
+        ],
+        "ignore": ["./.history"]
     },
     "bundlesize": [
         {

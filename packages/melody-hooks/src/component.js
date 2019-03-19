@@ -15,13 +15,15 @@
  */
 
 import { enqueueComponent, options } from 'melody-idom';
-import { shallowEquals, shallowEqualsScalar } from './util/shallowEquals';
+import { shallowEqual } from './util/shallowEqual';
 import { setCurrentComponent, unsetCurrentComponent } from './util/hooks';
+import { markStart, markEnd } from './util/performance';
 import {
     HOOK_TYPE_USE_EFFECT,
     HOOK_TYPE_USE_REF,
     RENDER_LIMIT,
     HOOK_TYPE_USE_MUTATION_EFFECT,
+    HOOK_LABEL_BY_TYPE,
 } from './constants';
 
 const { afterUpdate, afterMount } = options;
@@ -59,8 +61,9 @@ function Component(element, componentFn) {
     // tracks which hook is currently running
     this.hooksPointer = -1;
 
-    // the props the we receive from the parent
-    this.props = null;
+    // `this.props` need to be initialized with `undefined`
+    // for first shallowEqual check in `apply`
+    this.props = undefined;
     // receiving new props marks the props as dirty
     this.isPropsDirty = false;
 
@@ -81,6 +84,10 @@ function Component(element, componentFn) {
     // tracks whether this component is mounted and
     // attached to the DOM
     this.isMounted = false;
+    this.isUnmounted = false;
+
+    // Tracks whether this component was enqued but never renderd
+    this.needsRender = false;
 }
 
 Object.assign(Component.prototype, {
@@ -90,11 +97,11 @@ Object.assign(Component.prototype, {
      * @param {*} props new properties
      */
     apply(props) {
-        if (shallowEquals(props, this.props)) {
-            return;
-        }
-        this.props = props || null;
-        this.isPropsDirty = true;
+        // On the first call to apply `this.props` is `undefined`, thus
+        // `isPropsDirty` will be true.
+        const propsNext = props || {};
+        this.isPropsDirty = !shallowEqual(propsNext, this.props);
+        this.props = propsNext;
         this.enqueueComponent();
     },
 
@@ -151,8 +158,33 @@ Object.assign(Component.prototype, {
 
             // Call the effect and store a potential
             // `unsubscribe` function for later use
-            const unsubscribeNext = callback() || null;
+            if (process.env.NODE_ENV !== 'production') {
+                markStart(this, `${HOOK_LABEL_BY_TYPE[hookType]} (${i})`);
+            }
+            const unsubscribeNext = callback();
+            if (process.env.NODE_ENV !== 'production') {
+                markEnd(this, `${HOOK_LABEL_BY_TYPE[hookType]} (${i})`);
+            }
+
+            if (process.env.NODE_ENV !== 'production') {
+                if (
+                    unsubscribeNext !== undefined &&
+                    typeof unsubscribeNext !== 'function'
+                ) {
+                    const hookLabel = HOOK_LABEL_BY_TYPE[type];
+                    // eslint-disable-next-line no-console
+                    console.warn(
+                        `${hookLabel}: expected the unsubscribe callback to be ` +
+                            `a function or undefined. Instead received ${typeof unsubscribeNext}.`
+                    );
+                }
+            }
+
+            // store new unsubscribe callback
             hook[4] = unsubscribeNext;
+
+            // effect is not dirty anymore
+            hook[3] = false;
         }
     },
 
@@ -200,11 +232,24 @@ Object.assign(Component.prototype, {
      */
     setState(hookIndex, valueNext) {
         const {
+            isUnmounted,
             state,
             stateQueue,
             hasQueuedState,
             isRunningMutationEffects,
         } = this;
+
+        if (isUnmounted) {
+            if (process.env.NODE_ENV !== 'production') {
+                // eslint-disable-next-line no-console
+                console.warn(
+                    'useState: a `setState` handler has been called even though the component ' +
+                        'was already unmounted. This is probably due to a missing `unsubscribe` ' +
+                        'callback of a `useEffect` or `useMutationEffect` hook.'
+                );
+            }
+            return;
+        }
 
         if (isRunningMutationEffects) {
             throw new Error(
@@ -262,7 +307,7 @@ Object.assign(Component.prototype, {
 
             // Shallow equal check if the value at
             // this slot has changed.
-            if (!shallowEqualsScalar(value, valueNext)) {
+            if (!shallowEqual(value, valueNext)) {
                 // The state has changed, update the slot
                 state[hookIndex] = valueNext;
                 changed = true;
@@ -325,7 +370,13 @@ Object.assign(Component.prototype, {
                 this.hooksPointer = -1;
 
                 // Run the component functions
+                if (process.env.NODE_ENV !== 'production') {
+                    markStart(this, `componentFn (${i})`);
+                }
                 this.data = this.componentFn(this.props) || {};
+                if (process.env.NODE_ENV !== 'production') {
+                    markEnd(this, `componentFn (${i})`);
+                }
 
                 // Mark that we have already collected the hooks
                 // This only may happen once.
@@ -344,9 +395,13 @@ Object.assign(Component.prototype, {
             }
         }
 
-        // When we have seen an update and we have an element
+        const shouldEnqueue = this.needsRender || updated;
+
+        // When we have an element and we have seen an update or this
+        // component was not rendered yet (even thought an update came in),
         // we send the component to the rendering queue.
-        if (updated && this.el) {
+        if (this.el && shouldEnqueue) {
+            this.needsRender = true;
             enqueueComponent(this);
         }
     },
@@ -355,7 +410,16 @@ Object.assign(Component.prototype, {
      * Invoked when a component should render itself.
      */
     render() {
+        this.needsRender = false;
+
+        if (process.env.NODE_ENV !== 'production') {
+            markStart(this, 'render');
+        }
         this.renderTemplate();
+        if (process.env.NODE_ENV !== 'production') {
+            markEnd(this, 'render');
+        }
+
         // Run mutation effects immediately
         // after touching the DOM
         this.runMutationEffects();
@@ -372,6 +436,10 @@ Object.assign(Component.prototype, {
     componentWillUnmount() {
         const hooks = this.hooks;
 
+        if (process.env.NODE_ENV !== 'production') {
+            markStart(this, 'unmount');
+        }
+
         // Run through hooks that need clean up logic
         for (let i = 0, l = hooks.length; i < l; i++) {
             const hook = hooks[i];
@@ -381,7 +449,9 @@ Object.assign(Component.prototype, {
                 case HOOK_TYPE_USE_EFFECT:
                 case HOOK_TYPE_USE_MUTATION_EFFECT: {
                     const unsubscribe = hook[4];
-                    if (unsubscribe) unsubscribe();
+                    if (typeof unsubscribe === 'function') {
+                        unsubscribe();
+                    }
                     break;
                 }
                 // Unset references to DOM elements
@@ -395,7 +465,11 @@ Object.assign(Component.prototype, {
                 }
             }
         }
+        if (process.env.NODE_ENV !== 'production') {
+            markEnd(this, 'unmount');
+        }
         // Unset hooks
+        this.isUnmounted = true;
         this.hooks = undefined;
     },
 });

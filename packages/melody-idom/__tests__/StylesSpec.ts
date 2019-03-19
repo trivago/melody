@@ -16,7 +16,6 @@
  */
 
 import { patch, attributes, elementVoid } from '../src';
-import { expect } from 'chai';
 
 describe('style updates', () => {
     let container;
@@ -45,12 +44,12 @@ describe('style updates', () => {
             render({
                 color: 'white',
                 backgroundColor: 'red',
-            }),
+            })
         );
         const el = container.childNodes[0];
 
-        expect(el.style.color).to.equal('white');
-        expect(el.style.backgroundColor).to.equal('red');
+        expect(el.style.color).toEqual('white');
+        expect(el.style.backgroundColor).toEqual('red');
     });
 
     if (browserSupportsCssCustomProperties()) {
@@ -58,69 +57,69 @@ describe('style updates', () => {
             patch(container, () =>
                 render({
                     '--some-var': 'blue',
-                }),
+                })
             );
             const el = container.childNodes[0];
 
-            expect(el.style.getPropertyValue('--some-var')).to.equal('blue');
+            expect(el.style.getPropertyValue('--some-var')).toEqual('blue');
         });
     }
 
     it('should support setProperty', function() {
         const el = document.createElement('div');
         el.style.setProperty('background-color', 'red');
-        expect(el.style.backgroundColor).to.equal('red');
+        expect(el.style.backgroundColor).toEqual('red');
     });
 
     it('should handle dashes in property names', () => {
         patch(container, () =>
             render({
                 'background-color': 'red',
-            }),
+            })
         );
         const el = container.childNodes[0];
 
-        expect(el.style.backgroundColor).to.equal('red');
+        expect(el.style.backgroundColor).toEqual('red');
     });
 
     it('should update the correct style properties', () => {
         patch(container, () =>
             render({
                 color: 'white',
-            }),
+            })
         );
         patch(container, () =>
             render({
                 color: 'red',
-            }),
+            })
         );
         const el = container.childNodes[0];
 
-        expect(el.style.color).to.equal('red');
+        expect(el.style.color).toEqual('red');
     });
 
     it('should remove properties not present in the new object', () => {
         patch(container, () =>
             render({
                 color: 'white',
-            }),
+            })
         );
         patch(container, () =>
             render({
                 backgroundColor: 'red',
-            }),
+            })
         );
         const el = container.childNodes[0];
 
-        expect(el.style.color).to.equal('');
-        expect(el.style.backgroundColor).to.equal('red');
+        expect(el.style.color).toEqual('');
+        expect(el.style.backgroundColor).toEqual('red');
     });
 
     it('should render with the correct style properties for strings', () => {
         patch(container, () => render('color: white; background-color: red;'));
         const el = container.childNodes[0];
 
-        expect(el.style.color).to.equal('white');
-        expect(el.style.backgroundColor).to.equal('red');
+        expect(el.style.color).toEqual('white');
+        expect(el.style.backgroundColor).toEqual('red');
     });
 });

@@ -1,5 +1,16 @@
 ## master
 
+### Chore & Maintenance
+- Removes `Chai` and `Sinon` support, Migrates tests to use `Jest`'s matchers. [#103](https://github.com/trivago/melody/pull/103)
+
+## 1.2.0-5 (beta)
+
+### Features
+
+- Introduce `melody-streams` API [#102](https://github.com/trivago/melody/pull/102)
+
+## 1.2.0-4 (beta)
+
 ### Features
 
 - Filter `trim`: add support for advanced features [#64](https://github.com/trivago/melody/pull/64)
@@ -7,6 +18,7 @@
 - Introduce `melody-hooks` API [#74](https://github.com/trivago/melody/pull/74)
 - `[melody-compiler]` warns on `mount` statement without `as` key [#48](https://github.com/trivago/melody/pull/48)
 - Introduce `useAtom` hook [#79](https://github.com/trivago/melody/pulls/79)
+- Introduce `useStore` hook and performance marks for hooks [#98](https://github.com/trivago/melody/pulls/98)
 - Added async mounting of components [#82](https://github.com/trivago/melody/pull/82)
 
 ### Fixes

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { assert } from 'chai';
 
 import { createComponent, RECEIVE_PROPS, render } from '../src';
 import {
@@ -45,12 +44,12 @@ describe('Component', function() {
         });
 
         render(root, MyComponent, { text: 'hello' });
-        assert.equal(root.outerHTML, '<div>hello</div>');
-        assert.equal(mounted, 1);
+        expect(root.outerHTML).toEqual('<div>hello</div>');
+        expect(mounted).toEqual(1);
 
         render(root, MyComponent, { text: 'test' });
-        assert.equal(root.outerHTML, '<div>test</div>');
-        assert.equal(mounted, 1);
+        expect(root.outerHTML).toEqual('<div>test</div>');
+        expect(mounted).toEqual(1);
     });
 
     it('mixins can be applied with a curried function', function() {
@@ -70,12 +69,12 @@ describe('Component', function() {
         });
 
         render(root, MyComponent, { text: 'hello' });
-        assert.equal(root.outerHTML, '<div>hello</div>');
-        assert.equal(mounted, 1);
+        expect(root.outerHTML).toEqual('<div>hello</div>');
+        expect(mounted).toEqual(1);
 
         render(root, MyComponent, { text: 'test' });
-        assert.equal(root.outerHTML, '<div>test</div>');
-        assert.equal(mounted, 1);
+        expect(root.outerHTML).toEqual('<div>test</div>');
+        expect(mounted).toEqual(1);
     });
 
     it('mixins can be applied arbitrarily often with a curried function', function() {
@@ -97,20 +96,21 @@ describe('Component', function() {
         });
 
         const MyComponent = createComponent(template)(countMounting(0))(
-            countMounting(1),
+            countMounting(1)
         )(countMounting(2));
 
         render(root, MyComponent, { text: 'hello' });
-        assert.equal(root.outerHTML, '<div>hello</div>');
-        assert.equal(mounted[0], 1);
-        assert.equal(mounted[1], 1);
-        assert.equal(mounted[2], 1);
+
+        expect(root.outerHTML).toEqual('<div>hello</div>');
+        expect(mounted[0]).toEqual(1);
+        expect(mounted[1]).toEqual(1);
+        expect(mounted[2]).toEqual(1);
 
         render(root, MyComponent, { text: 'test' });
-        assert.equal(root.outerHTML, '<div>test</div>');
-        assert.equal(mounted[0], 1);
-        assert.equal(mounted[1], 1);
-        assert.equal(mounted[2], 1);
+        expect(root.outerHTML).toEqual('<div>test</div>');
+        expect(mounted[0]).toEqual(1);
+        expect(mounted[1]).toEqual(1);
+        expect(mounted[2]).toEqual(1);
     });
 
     it('should trigger componentWillUnmount when a Component is removed', function() {
@@ -149,8 +149,11 @@ describe('Component', function() {
                 return 10;
             },
         });
-        assert.equal(root.innerHTML, '<div><p>hello</p><span>foo</span></div>');
-        assert.equal(unmounted, 0);
+
+        expect(root.innerHTML).toEqual(
+            '<div><p>hello</p><span>foo</span></div>'
+        );
+        expect(unmounted).toEqual(0);
 
         patchOuter(root, renderTemplate, { comp: false });
         flush({
@@ -159,8 +162,9 @@ describe('Component', function() {
                 return 10;
             },
         });
-        assert.equal(root.innerHTML, '');
-        assert.equal(unmounted, 1);
+
+        expect(root.innerHTML).toEqual('');
+        expect(unmounted).toEqual(1);
     });
 
     it('should trigger componentWillUnmount when a Component is removed within an element', function() {
@@ -196,8 +200,9 @@ describe('Component', function() {
                 return 10;
             },
         });
-        assert.equal(root.innerHTML, '<div><div>hello</div></div>');
-        assert.equal(unmounted, 0);
+
+        expect(root.innerHTML).toEqual('<div><div>hello</div></div>');
+        expect(unmounted).toEqual(0);
 
         patchOuter(root, renderTemplate, { comp: false });
         flush({
@@ -206,12 +211,12 @@ describe('Component', function() {
                 return 10;
             },
         });
-        assert.equal(root.innerHTML, '');
-        assert.equal(unmounted, 1);
+
+        expect(root.innerHTML).toEqual('');
+        expect(unmounted).toEqual(1);
     });
 
     it('should trigger componentWillUnmount for child components when a Component is removed', function() {
-        let MyComponent;
         const template = {
             render(_context) {
                 elementOpen('div', null, null);
@@ -227,7 +232,7 @@ describe('Component', function() {
         };
         const root = document.createElement('div');
         let unmounted = 0;
-        MyComponent = createComponent(template)({
+        const MyComponent = createComponent(template)({
             componentDidMount() {
                 unmounted++;
             },
@@ -251,8 +256,9 @@ describe('Component', function() {
                 return 10;
             },
         });
-        assert.equal(root.innerHTML, '<div>hello<div>world</div></div>');
-        assert.equal(unmounted, 2);
+
+        expect(root.innerHTML).toEqual('<div>hello<div>world</div></div>');
+        expect(unmounted).toEqual(2);
 
         patchOuter(root, renderTemplate, { comp: false });
         flush({
@@ -261,8 +267,9 @@ describe('Component', function() {
                 return 10;
             },
         });
-        assert.equal(root.innerHTML, '');
-        assert.equal(unmounted, 0);
+
+        expect(root.innerHTML).toEqual('');
+        expect(unmounted).toEqual(0);
     });
 
     it('should trigger componentWillUnmount for deep nested child components when a Component is removed', function() {
@@ -315,10 +322,10 @@ describe('Component', function() {
                 return 10;
             },
         });
-        assert.equal(root.innerHTML, '<div><div><div></div></div></div>');
-        assert.equal(unmounted.inner, 1);
-        assert.equal(unmounted.middle, 1);
-        assert.equal(unmounted.outer, 1);
+        expect(root.innerHTML).toEqual('<div><div><div></div></div></div>');
+        expect(unmounted.inner).toEqual(1);
+        expect(unmounted.middle).toEqual(1);
+        expect(unmounted.outer).toEqual(1);
 
         patchOuter(root, renderTemplate, { comp: false });
         flush({
@@ -327,10 +334,10 @@ describe('Component', function() {
                 return 10;
             },
         });
-        assert.equal(root.innerHTML, '');
-        assert.equal(unmounted.inner, 0);
-        assert.equal(unmounted.middle, 0);
-        assert.equal(unmounted.outer, 0);
+        expect(root.innerHTML).toEqual('');
+        expect(unmounted.inner).toEqual(0);
+        expect(unmounted.middle).toEqual(0);
+        expect(unmounted.outer).toEqual(0);
     });
 
     it('should trigger componentWillUnmount for deep nested child components when a Component is removed', function() {
@@ -379,16 +386,16 @@ describe('Component', function() {
         })({ name: 'outer' }, CountInstances);
 
         render(root, OuterComponent, { comp: true });
-        assert.equal(root.innerHTML, '<div><div><div></div></div></div>');
-        assert.equal(unmounted.inner, 1);
-        assert.equal(unmounted.middle, 1);
-        assert.equal(unmounted.outer, 1);
+        expect(root.innerHTML).toEqual('<div><div><div></div></div></div>');
+        expect(unmounted.inner).toEqual(1);
+        expect(unmounted.middle).toEqual(1);
+        expect(unmounted.outer).toEqual(1);
 
         render(root, OuterComponent, { comp: false });
-        assert.equal(root.innerHTML, '');
-        assert.equal(unmounted.inner, 0);
-        assert.equal(unmounted.middle, 0);
-        assert.equal(unmounted.outer, 1);
+        expect(root.innerHTML).toEqual('');
+        expect(unmounted.inner).toEqual(0);
+        expect(unmounted.middle).toEqual(0);
+        expect(unmounted.outer).toEqual(1);
     });
 
     it('should register refs', function() {
@@ -403,27 +410,27 @@ describe('Component', function() {
         const root = document.createElement('div');
         const MyComponent = createComponent(template, undefined, {
             componentDidMount() {
-                assert(this.refs.fun != null, 'fun ref should exist');
+                expect(this.refs.fun).not.toBeNull();
                 this.refs.fun.innerHTML = 'test';
             },
 
             componentDidUpdate(prevProps, prevState) {
                 expect(this.el.outerHTML).toEqual('<div>world</div>');
                 this.refs.fun.innerHTML = 'fun!';
-                assert(prevState !== this.state);
+                expect(prevState).not.toEqual(this.state);
                 expect(prevProps).not.toEqual(this.props);
-                assert(prevState.text === 'hello');
-                assert(prevProps.text === 'hello');
-                assert.equal(this.state.text, 'world');
-                assert.equal(this.props.text, 'world');
+                expect(prevState.text).toEqual('hello');
+                expect(prevProps.text).toEqual('hello');
+                expect(this.state.text).toEqual('world');
+                expect(this.props.text).toEqual('world');
             },
         });
 
         render(root, MyComponent, { text: 'hello' });
-        assert.equal(root.outerHTML, '<div>test</div>');
+        expect(root.outerHTML).toEqual('<div>test</div>');
 
         render(root, MyComponent, { text: 'world' });
-        assert.equal(root.outerHTML, '<div>fun!</div>');
+        expect(root.outerHTML).toEqual('<div>fun!</div>');
     });
 
     it('should register refs for the current element', function() {
@@ -438,25 +445,26 @@ describe('Component', function() {
         const root = document.createElement('div');
         const MyComponent = createComponent(template, undefined, {
             componentDidMount() {
-                assert(this.refs.fun != null, 'fun ref should exist');
+                // 'fun ref should exist'
+                expect(this.refs.fun).not.toBeNull();
                 this.refs.fun.innerHTML = 'test';
             },
         });
 
         render(root, MyComponent, { text: 'hello' });
-        assert.equal(root.outerHTML, '<div>test</div>');
+        expect(root.outerHTML).toEqual('<div>test</div>');
     });
 
     it('should throw when registering a ref outside of a component', function() {
         const root = document.createElement('div');
         const statics = ['ref', ref('test')];
-        assert.throws(() => {
+        expect(() => {
             patch(root, () => {
                 elementOpen('div', null, statics);
                 text('test');
                 elementClose('div');
             });
-        }, 'ref() must be used within a component');
+        }).toThrowError(new Error('ref() must be used within a component'));
     });
 
     it('should trigger componentDidMount once even for nested components', function() {
@@ -472,7 +480,8 @@ describe('Component', function() {
         const MyComponent = createComponent(childTemplate, undefined, {
             componentDidMount() {
                 mounted++;
-                assert(this.el != null, 'Element should exists');
+                // 'Element should exists'
+                expect(this.el).not.toBeNull();
             },
         });
 
@@ -487,12 +496,12 @@ describe('Component', function() {
 
         const root = document.createElement('div');
         render(root, MyParentComponent, { childProps: { text: 'hello' } });
-        assert.equal(root.outerHTML, '<div><div>hello</div></div>');
-        assert.equal(mounted, 1);
+        expect(root.outerHTML).toEqual('<div><div>hello</div></div>');
+        expect(mounted).toEqual(1);
 
         render(root, MyParentComponent, { childProps: { text: 'test' } });
-        assert.equal(root.outerHTML, '<div><div>test</div></div>');
-        assert.equal(mounted, 1);
+        expect(root.outerHTML).toEqual('<div><div>test</div></div>');
+        expect(mounted).toEqual(1);
     });
 
     it('should have an element during componentDidMount', function() {
@@ -508,12 +517,12 @@ describe('Component', function() {
         const MyComponent = createComponent(template, undefined, {
             componentDidMount() {
                 mounted++;
-                assert.equal(this.el, root, 'Element should be set');
+                expect(this.el).toEqual(root);
             },
         });
 
         render(root, MyComponent, { text: 'hello' });
-        assert.equal(mounted, 1);
+        expect(mounted).toEqual(1);
     });
 
     it('should not render if data is unchanged', function() {
@@ -528,10 +537,10 @@ describe('Component', function() {
         const MyComponent = createComponent(template);
         const props = { text: 'hello' };
         render(root, MyComponent, props);
-        assert.equal(root.innerHTML, 'hello');
+        expect(root.innerHTML).toEqual('hello');
         props.text = 'world';
         render(root, MyComponent, props);
-        assert.equal(root.innerHTML, 'hello');
+        expect(root.innerHTML).toEqual('hello');
     });
 
     it('should mount onto an element without a key', function() {
@@ -546,10 +555,10 @@ describe('Component', function() {
         const MyComponent = createComponent(template);
 
         render(root, MyComponent, { text: 'hello' });
-        assert.equal(root.outerHTML, '<div>hello</div>');
+        expect(root.outerHTML).toEqual('<div>hello</div>');
 
         render(root, MyComponent, { text: 'test' });
-        assert.equal(root.outerHTML, '<div>test</div>');
+        expect(root.outerHTML).toEqual('<div>test</div>');
     });
 
     it('should replace components', function() {
@@ -565,10 +574,10 @@ describe('Component', function() {
         const MyOtherComponent = createComponent(template);
 
         render(root, MyComponent, { text: 'hello' });
-        assert.equal(root.outerHTML, '<div>hello</div>');
+        expect(root.outerHTML).toEqual('<div>hello</div>');
 
         render(root, MyOtherComponent, { text: 'test' });
-        assert.equal(root.outerHTML, '<div>test</div>');
+        expect(root.outerHTML).toEqual('<div>test</div>');
     });
 
     it('should unmount replaced components', function() {
@@ -589,11 +598,11 @@ describe('Component', function() {
         const MyOtherComponent = createComponent(template);
 
         render(root, MyComponent, { text: 'hello' });
-        assert.equal(root.outerHTML, '<div>hello</div>');
+        expect(root.outerHTML).toEqual('<div>hello</div>');
 
         render(root, MyOtherComponent, { text: 'test' });
-        assert.equal(root.outerHTML, '<div>test</div>');
-        assert.equal(unmounted, 1);
+        expect(root.outerHTML).toEqual('<div>test</div>');
+        expect(unmounted).toEqual(1);
     });
 
     it('should render components into an existing DOM', function() {
@@ -626,10 +635,10 @@ describe('Component', function() {
 
         const root = document.createElement('div');
         root.innerHTML = '<div>test</div>';
-        assert.equal(root.outerHTML, '<div><div>test</div></div>');
+        expect(root.outerHTML).toEqual('<div><div>test</div></div>');
         render(root, MyParentComponent, { childProps: { text: 'hello' } });
-        assert.equal(root.outerHTML, '<div><div>hello</div></div>');
-        assert.equal(mounted, 1);
+        expect(root.outerHTML).toEqual('<div><div>hello</div></div>');
+        expect(mounted).toEqual(1);
     });
 
     it('should render components into an existing DOM', function() {
@@ -662,16 +671,14 @@ describe('Component', function() {
 
         const root = document.createElement('div');
         root.innerHTML = '<div key="test">test</div>';
-        assert.equal(root.outerHTML, '<div><div key="test">test</div></div>');
+        expect(root.outerHTML).toEqual('<div><div key="test">test</div></div>');
         const oldChild = root.children[0];
         render(root, MyParentComponent, { childProps: { text: 'hello' } });
-        assert.equal(root.outerHTML, '<div><div>hello</div></div>');
-        assert.equal(mounted, 1);
-        assert.notEqual(oldChild, root.children[0]);
-        assert(
-            oldChild.parentNode == null,
-            'Previous child no longer has a parent',
-        );
+        expect(root.outerHTML).toEqual('<div><div>hello</div></div>');
+        expect(mounted).toEqual(1);
+        expect(oldChild).not.toEqual(root.children[0]);
+        // 'Previous child no longer has a parent'
+        expect(oldChild.parentNode).toBeNull();
     });
 
     it('should reuse moved child components', function() {
@@ -714,23 +721,21 @@ describe('Component', function() {
         });
         const firstCompEl = root.childNodes[0];
         const secondCompEl = root.childNodes[1];
-        assert.equal(
-            root.outerHTML,
-            '<div><div>hello</div><div>world</div></div>',
+        expect(root.outerHTML).toEqual(
+            '<div><div>hello</div><div>world</div></div>'
         );
-        assert.equal(mounted, 2);
+        expect(mounted).toEqual(2);
 
         render(root, MyParentComponent, {
             flip: true,
             childProps: [{ text: 'hello' }, { text: 'world' }],
         });
-        assert.equal(
-            root.outerHTML,
-            '<div><div>world</div><div>hello</div></div>',
+        expect(root.outerHTML).toEqual(
+            '<div><div>world</div><div>hello</div></div>'
         );
-        assert.equal(firstCompEl, root.childNodes[1]);
-        assert.equal(secondCompEl, root.childNodes[0]);
-        assert.equal(mounted, 2);
+        expect(firstCompEl).toEqual(root.childNodes[1]);
+        expect(secondCompEl).toEqual(root.childNodes[0]);
+        expect(mounted).toEqual(2);
     });
 
     it('should render existing components into an existing DOM', function() {
@@ -760,16 +765,14 @@ describe('Component', function() {
 
         const root = document.createElement('div');
         root.innerHTML = '<div key="test">test</div>';
-        assert.equal(root.outerHTML, '<div><div key="test">test</div></div>');
+        expect(root.outerHTML).toEqual('<div><div key="test">test</div></div>');
         const oldChild = root.children[0];
         render(root, MyParentComponent, { childProps: { text: 'hello' } });
-        assert.equal(root.outerHTML, '<div><div>hello</div></div>');
-        assert.equal(mounted, 1);
-        assert.notEqual(oldChild, root.children[0]);
-        assert(
-            oldChild.parentNode == null,
-            'Previous child no longer has a parent',
-        );
+        expect(root.outerHTML).toEqual('<div><div>hello</div></div>');
+        expect(mounted).toEqual(1);
+        expect(oldChild).not.toEqual(root.children[0]);
+        // 'Previous child no longer has a parent'
+        expect(oldChild.parentNode).toBeNull();
     });
 
     it('should update itself when its state changes', function(done) {
@@ -792,11 +795,11 @@ describe('Component', function() {
                     return { ...state, ...action.payload };
                 }
                 return state;
-            },
+            }
         );
 
         render(root, MyComponent, { text: 'hello' });
-        assert.equal(root.outerHTML, '<div>hello</div>');
+        expect(root.outerHTML).toEqual('<div>hello</div>');
         comp.dispatch({ type: 'setText', payload: 'world' });
         flush({
             didTimeout: false,
@@ -804,7 +807,7 @@ describe('Component', function() {
                 return 10;
             },
         });
-        assert.equal(root.outerHTML, '<div>world</div>');
+        expect(root.outerHTML).toEqual('<div>world</div>');
         done();
     });
 });

@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { assert } from 'chai';
-
 import { render } from 'melody-component';
 import { elementOpen, elementClose, text } from 'melody-idom';
 import { createComponent, useState, useEffect } from '../src';
@@ -29,9 +27,12 @@ const template = {
 
 describe('hooks', () => {
     it('should throw when calling hooks outside of a component functions', () => {
-        assert.throws(() => {
+        const error = new Error(
+            'Cannot use hooks outside of component functions'
+        );
+        expect(() => {
             useState(0);
-        }, 'Cannot use hooks outside of component functions');
+        }).toThrow(error);
     });
     it('should throw when hook slots differ', () => {
         const root = document.createElement('div');
@@ -46,9 +47,11 @@ describe('hooks', () => {
             }
         }, template);
         render(root, MyComponent);
-
-        assert.throws(() => {
+        const error = new Error(
+            'The order of hooks changed. This breaks the internals of the component. It is not allowed to call hooks inside loops, conditions, or nested functions'
+        );
+        expect(() => {
             setter(1);
-        }, 'The order of hooks changed. This breaks the internals of the component. It is not allowed to call hooks inside loops, conditions, or nested functions');
+        }).toThrow(error);
     });
 });

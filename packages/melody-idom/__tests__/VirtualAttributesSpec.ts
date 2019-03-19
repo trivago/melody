@@ -23,7 +23,6 @@ import {
     elementClose,
     attr,
 } from '../src';
-import { expect } from 'chai';
 
 describe('virtual attribute updates', () => {
     let container;
@@ -51,111 +50,111 @@ describe('virtual attribute updates', () => {
             patch(container, () =>
                 render({
                     key: 'hello',
-                }),
+                })
             );
             const el = container.childNodes[0];
 
-            expect(el.getAttribute('data-expanded')).to.equal('hello');
+            expect(el.getAttribute('data-expanded')).toEqual('hello');
         });
 
         it('should be not present when not specified', () => {
             patch(container, () =>
                 render({
                     key: false,
-                }),
+                })
             );
             const el = container.childNodes[0];
 
-            expect(el.getAttribute('data-expanded')).to.equal(null);
+            expect(el.getAttribute('data-expanded')).toBeNull();
         });
 
         it('should update the DOM when they change', () => {
             patch(container, () =>
                 render({
                     key: 'foo',
-                }),
+                })
             );
             patch(container, () =>
                 render({
                     key: 'bar',
-                }),
+                })
             );
             const el = container.childNodes[0];
 
-            expect(el.getAttribute('data-expanded')).to.equal('bar');
+            expect(el.getAttribute('data-expanded')).toEqual('bar');
         });
 
         it('should include static attributes', function() {
             patch(container, () =>
                 render({
                     key: false,
-                }),
+                })
             );
             const el = container.childNodes[0];
-            expect(el.getAttribute('data-static')).to.equal('world');
+            expect(el.getAttribute('data-static')).toEqual('world');
         });
 
         it('should throw when defined outside virtual attributes element', () => {
+            const error =
+                'attr() can only be called after calling elementOpenStart().';
             expect(() => {
                 patch(container, () => {
                     attr('data-expanded', true);
                 });
-            }).to.throw(
-                'attr() can only be called after calling elementOpenStart().',
-            );
+            }).toThrowError(new Error(error));
         });
     });
 
     it('should throw when a virtual attributes element is unclosed', () => {
+        const error =
+            'elementOpenEnd() must be called after calling elementOpenStart().';
         expect(() => {
             patch(container, () => {
                 elementOpenStart('div');
             });
-        }).to.throw(
-            'elementOpenEnd() must be called after calling elementOpenStart().',
-        );
+        }).toThrowError(new Error(error));
     });
 
     it('should throw when virtual attributes element is closed without being opened', () => {
+        const error =
+            'elementOpenEnd() can only be called after calling elementOpenStart().';
         expect(() => {
             patch(container, () => {
                 elementOpenEnd('div');
             });
-        }).to.throw(
-            'elementOpenEnd() can only be called after calling elementOpenStart().',
-        );
+        }).toThrowError(new Error(error));
     });
 
     it('should throw when opening an element inside a virtual attributes element', () => {
+        const error =
+            'elementOpen() can not be called between elementOpenStart() and elementOpenEnd().';
         expect(() => {
             patch(container, () => {
                 elementOpenStart('div');
                 elementOpen('div');
             });
-        }).to.throw(
-            'elementOpen() can not be called between elementOpenStart() and elementOpenEnd().',
-        );
+        }).toThrowError(new Error(error));
     });
 
     it('should throw when opening a virtual attributes element inside a virtual attributes element', () => {
+        const error =
+            'elementOpenStart() can not be called between elementOpenStart() and elementOpenEnd().';
         expect(() => {
             patch(container, () => {
                 elementOpenStart('div');
                 elementOpenStart('div');
             });
-        }).to.throw(
-            'elementOpenStart() can not be called between elementOpenStart() and elementOpenEnd().',
-        );
+        }).toThrowError(new Error(error));
     });
 
     it('should throw when closing an element inside a virtual attributes element', () => {
+        const error =
+            'elementClose() can not be called between elementOpenStart() and elementOpenEnd().';
         expect(() => {
             patch(container, () => {
                 elementOpenStart('div');
                 elementClose('div');
             });
-        }).to.throw(
-            'elementClose() can not be called between elementOpenStart() and elementOpenEnd().',
-        );
+        }).toThrowError(new Error(error));
     });
 });

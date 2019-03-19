@@ -87,7 +87,9 @@
             "prettier",
             "git add"
         ],
-        "ignore": ["./.history"]
+        "ignore": [
+            "./.history"
+        ]
     },
     "bundlesize": [
         {
@@ -111,5 +113,8 @@
         "hooks": {
             "pre-commit": "lint-staged"
         }
+    },
+    "dependencies": {
+        "is-builtin-module": "^3.0.0"
     }
 }

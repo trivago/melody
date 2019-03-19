@@ -122,5 +122,5 @@ function parseString(fileName: string, source: string, ...extensions) {
 }
 
 export function toString(jsAst, code) {
-    return generate(jsAst, null, code);
+    return generate(jsAst, {}, code);
 }

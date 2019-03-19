@@ -14,7 +14,7 @@
     "babel-template": "^6.8.0",
     "babel-types": "^6.8.1",
     "lodash": "^4.12.0",
-    "melody-code-frame": "1.2.0-21.0",
+    "melody-code-frame": "link:../melody-code-frame",
     "random-seed": "^0.3.0"
   },
   "peerDependencies": {
@@ -31,7 +31,7 @@
     "random-seed"
   ],
   "devDependencies": {
-    "melody-extension-core": "1.2.0-21.0",
-    "melody-plugin-idom": "1.2.0-21.0"
+    "melody-extension-core": "link:../melody-extension-core",
+    "melody-plugin-idom": "link:../melody-plugin-idom"
   }
 }

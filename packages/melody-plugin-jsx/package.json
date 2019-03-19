@@ -18,9 +18,5 @@
   "peerDependencies": {
     "melody-traverse": "^1.1.0",
     "melody-types": "^1.1.0"
-  },
-  "devDependencies": {
-    "melody-compiler": "1.2.0-21.0",
-    "melody-extension-core": "1.2.0-21.0"
   }
 }

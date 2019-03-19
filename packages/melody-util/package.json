@@ -10,9 +10,6 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "melody-component": "1.2.0-21.0"
-  },
-  "devDependencies": {
-    "melody-idom": "1.2.0-21.0"
+    "melody-component": "link:../melody-component"
   }
 }

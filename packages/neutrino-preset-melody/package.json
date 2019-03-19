@@ -10,10 +10,13 @@
     "babel-plugin-transform-es2015-classes": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "deepmerge": "^1.5.0",
-    "melody-loader": "1.2.0-21.0",
+    "melody-loader": "link:../melody-loader",
     "neutrino-middleware-compile-loader": "^6.1.4",
     "neutrino-middleware-loader-merge": "^6.1.4",
     "neutrino-preset-web": "^6.1.4"
+  },
+  "devDependencies": {
+    "neutrino": "^6.1.4"
   },
   "peerDependencies": {
     "neutrino": "^6.1.4"

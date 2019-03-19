@@ -13,15 +13,9 @@ cache:
   directories:
     - node_modules
 
-before_script:
-    - yarn run pretest
-
 script:
     - travis_retry yarn test-travis
     - travis_retry yarn bundlesize
-
-after_script:
-    - yarn run posttest
 
 jobs:
     include:

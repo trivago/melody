@@ -10,7 +10,6 @@
         "url": "git://github.com/trivago/melody.git"
     },
     "scripts": {
-        "bootstrap": "lerna bootstrap",
         "build": "lerna run build",
         "build:release": "cross-env NODE_ENV=release lerna run build",
         "clean": "rm -rf packages/*/lib && lerna clean -- --yes",
@@ -20,9 +19,7 @@
         "fix-lint": "eslint --fix ./packages/*/src",
         "lerna": "lerna",
         "lint": "eslint ./packages/*/src",
-        "prepare": "yarn bootstrap && yarn build:release",
-        "pretest": "./bin/pretest.sh",
-        "posttest": "./bin/posttest.sh",
+        "prepare": "yarn build:release",
         "prettier": "prettier --write \"./packages/melody-*/src/**/*.[tj]s\"",
         "update-peers": "./bin/updatePeerDependencies.js",
         "release": "./bin/release.sh",
@@ -68,19 +65,27 @@
         "json": "^9.0.6",
         "lerna": "^3.13.1",
         "lint-staged": "^8.1.0",
+        "lodash": "^4.17.11",
+        "mkdirp": "^0.5.1",
+        "mz": "^2.6.0",
+        "neutrino": "^6.2.1",
         "node-libs-browser": "^2.0.0",
         "prettier": "^1.5.3",
+        "redux": "^3.6.0",
         "redux-promise": "^0.5.3",
         "redux-thunk": "^2.2.0",
         "rimraf": "^2.6.1",
         "rollup": "^0.63.5",
-        "rollup-plugin-babel": "^3.0.7",
+        "rollup-plugin-babel": "^2.6.1",
         "rollup-plugin-json": "^3.0.0",
         "rollup-plugin-uglify": "^4.0.0",
+        "rxjs": "^6.4.0",
+        "rxjs-marbles": "^5.0.0",
         "semver": "^5.5.1",
         "source-map": "^0.5.6",
         "typescript": "^2.2.1",
-        "typescript-babel-jest": "^1.0.5"
+        "typescript-babel-jest": "^1.0.5",
+        "webpack": "^3.5.5"
     },
     "lint-staged": {
         "linters": {
@@ -117,7 +122,27 @@
         }
     },
     "dependencies": {
-        "is-builtin-module": "^3.0.0",
-        "redux": "^3.6.0"
+        "melody-code-frame": "link:packages/melody-code-frame",
+        "melody-compiler": "link:packages/melody-compiler",
+        "melody-component": "link:packages/melody-component",
+        "melody-devtools": "link:packages/melody-devtools",
+        "melody-extension-core": "link:packages/melody-extension-core",
+        "melody-hoc": "link:packages/melody-hoc",
+        "melody-hooks": "link:packages/melody-hooks",
+        "melody-idom": "link:packages/melody-idom",
+        "melody-jest-transform": "link:packages/melody-jest-transform",
+        "melody-loader": "link:packages/melody-loader",
+        "melody-parser": "link:packages/melody-parser",
+        "melody-plugin-idom": "link:packages/melody-plugin-idom",
+        "melody-plugin-jsx": "link:packages/melody-plugin-jsx",
+        "melody-plugin-load-functions": "link:packages/melody-plugin-load-functions",
+        "melody-plugin-skip-if": "link:packages/melody-plugin-skip-if",
+        "melody-redux": "link:packages/melody-redux",
+        "melody-runtime": "link:packages/melody-runtime",
+        "melody-streams": "link:packages/melody-streams",
+        "melody-traverse": "link:packages/melody-traverse",
+        "melody-types": "link:packages/melody-types",
+        "melody-util": "link:packages/melody-util",
+        "neutrino-preset-melody": "link:packages/neutrino-preset-melody"
     }
 }

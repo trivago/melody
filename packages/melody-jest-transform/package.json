@@ -11,11 +11,11 @@
   "dependencies": {
     "babel-core": "^6.18.0",
     "find-babel-config": "^1.0.1",
-    "melody-compiler": "1.2.0-21.0",
-    "melody-extension-core": "1.2.0-21.0"
+    "melody-compiler": "link:../melody-compiler",
+    "melody-extension-core": "link:../melody-extension-core"
   },
   "devDependencies": {
-    "melody-plugin-idom": "1.2.0-21.0"
+    "melody-plugin-idom": "link:../melody-plugin-idom"
   },
   "peerDependencies": {
     "melody-idom": "^1.1.0",

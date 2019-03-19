@@ -25,6 +25,6 @@ else
   # CANARY RELEASE WITH COMMIT NAME
   # @commit
   yarn install && \
-    yarn lerna publish --no-git-tag-version --no-push --no-git-reset --exact --force-publish=*  --canary --yes --dist-tag prerelease --registry https://registry.npmjs.org
+    yarn lerna publish --no-git-tag-version --no-push --no-git-reset --exact --force-publish=*  --canary --yes --dist-tag $TRAVIS_BRANCH --preid $TRAVIS_BRANCH --registry https://registry.npmjs.org
   exit 0
 fi

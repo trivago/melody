@@ -5,8 +5,6 @@ import {
     flush,
     clearQueue,
     getNodeData,
-    CallableComponent,
-    RenderableComponent,
     setCurrentComponent,
 } from 'melody-idom';
 
@@ -83,7 +81,7 @@ const getProp = key =>
     );
 
 const getComponentState = compose(
-    comp => comp && comp.getState && comp.getState(),
+    comp => comp && ((comp.getState && comp.getState()) || comp.state),
     getComponentAt
 );
 
@@ -113,7 +111,7 @@ export class Wrapper {
         return this.lift(this.elements.map(transform));
     }
 
-    reduce<R>(reducer, initial) {
+    reduce(reducer, initial) {
         return this.elements.reduce(reducer, initial);
     }
 

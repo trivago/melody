@@ -7,7 +7,8 @@ echo "//registry.npmjs.org/:_authToken=\${NPM_AUTH_TOKEN}" > .npmrc
 echo ""
 echo "CHECK AUTHENTICATED USER"
 npm whoami --registry https://registry.npmjs.org
-echo "BRANCH: \${TRAVIS_BRANCH}"
+echo "$TRAVIS_BRANCH"
+echo $TRAVIS_BRANCH
 
 if [ ! $? -eq 0 ]; then
     echo

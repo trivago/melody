@@ -11,6 +11,7 @@
     "author": "",
     "license": "Apache-2.0",
     "peerDependencies": {
-        "melody-idom": "^1.1.0"
+        "melody-idom": "^1.1.0",
+        "redux": "^3.6.0"
     }
 }

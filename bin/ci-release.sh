@@ -19,12 +19,12 @@ fi
 if [ "$TRAVIS_BRANCH" = "master" ]; then
   # RELEASE AS @NEXT
   yarn install && \
-    yarn lerna publish --no-git-tag-version --no-push --no-git-reset --exact --force-publish=* --canary=commit --yes --dist-tag=next --registry https://registry.npmjs.org
+    yarn lerna publish --no-git-tag-version --no-push --no-git-reset --exact --force-publish=* --canary --yes --dist-tag next --registry https://registry.npmjs.org
   exit 0
 else
   # CANARY RELEASE WITH COMMIT NAME
   # @commit
   yarn install && \
-    yarn lerna publish --no-git-tag-version --no-push --no-git-reset --exact --force-publish=*  --canary=commit --yes --registry https://registry.npmjs.org
+    yarn lerna publish --no-git-tag-version --no-push --no-git-reset --exact --force-publish=*  --canary --yes --dist-tag prerelease --registry https://registry.npmjs.org
   exit 0
 fi

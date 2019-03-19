@@ -10,6 +10,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
+    "dom-testing-library": "^3.16.3",
     "pretty-format": "21.2.1"
   },
   "peerDependencies": {

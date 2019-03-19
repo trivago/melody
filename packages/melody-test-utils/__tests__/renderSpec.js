@@ -1,5 +1,6 @@
 import List from './__fixtures__/list.js';
 import Item from './__fixtures__/item.js';
+import Input from './__fixtures__/input.js';
 import { render } from '../src';
 import { RECEIVE_PROPS } from 'melody-component';
 
@@ -104,6 +105,27 @@ describe('Full rendering', () => {
         ).toMatch(/I have been clicked!/);
         expect(result).toMatchSnapshot();
         expect(result.find(Item).html()).toMatchSnapshot();
+    });
+
+    it('should allow simulating input events', () => {
+        const result = render(Input, {});
+        result
+            .find('input')
+            .at(0)
+            .simulate('input', { target: { value: 'mocked_value' } });
+        expect(result.state().value).toMatch(/mocked_value/);
+        expect(result).toMatchSnapshot();
+        expect(result.find('input').html()).toMatchSnapshot();
+    });
+
+    it('should throw when simulating an event that does not exist', () => {
+        const result = render(Input, {});
+        expect(() =>
+            result
+                .find('input')
+                .at(0)
+                .simulate('foo', { target: { value: 'mocked_value' } })
+        ).toThrowError('No event found of type: "foo"');
     });
 
     it('should return whether an element has a class or not', () => {

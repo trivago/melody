@@ -120,6 +120,20 @@ FullWrapper {
 
 exports[`Full rendering should allow simulating events 2`] = `"<li><h2>Foo</h2><div class=\\"message\\">I have been clicked!</div></li><li><h2>Bar</h2></li>"`;
 
+exports[`Full rendering should allow simulating input events 1`] = `
+FullWrapper {
+  "elements": Array [
+    <div>
+      <input
+        type="text"
+      />
+    </div>,
+  ],
+}
+`;
+
+exports[`Full rendering should allow simulating input events 2`] = `"<input type=\\"text\\">"`;
+
 exports[`Full rendering should find the child Components 1`] = `
 FullWrapper {
   "elements": Array [

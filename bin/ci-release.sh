@@ -7,7 +7,7 @@ echo "//registry.npmjs.org/:_authToken=\${NPM_AUTH_TOKEN}" > .npmrc
 echo ""
 echo "CHECK AUTHENTICATED USER"
 npm whoami --registry https://registry.npmjs.org
-
+echo "BRANCH: \${TRAVIS_BRANCH}"
 
 if [ ! $? -eq 0 ]; then
     echo
@@ -19,7 +19,7 @@ fi
 if [ "$TRAVIS_BRANCH" = "master" ]; then
   # RELEASE AS @NEXT
   yarn install && \
-    yarn lerna publish --no-git-tag-version --no-push --no-git-reset --exact --force-publish=* --canary --yes --dist-tag next --registry https://registry.npmjs.org
+    yarn lerna publish --no-git-tag-version --no-push --no-git-reset --exact --force-publish=* --canary --yes --dist-tag prerelease --registry https://registry.npmjs.org
   exit 0
 else
   # CANARY RELEASE WITH COMMIT NAME

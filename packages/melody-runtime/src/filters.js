@@ -38,7 +38,10 @@ export function attrs(attrMap: Object) {
         const value = attrMap[attr];
         attrArray.push(
             attr,
-            value === false || value === null || value === 0 || value === ''
+            value === false ||
+                value === null ||
+                value === 0 ||
+                (value === '' && attr !== 'alt')
                 ? undefined
                 : value
         );

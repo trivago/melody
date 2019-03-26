@@ -81,6 +81,13 @@ describe('Twig filter runtime', function() {
             expect(actual).toEqual(expected);
         });
 
+        it('should keep empty string for alt', function() {
+            const input = { alt: '' };
+            const expected = ['alt', ''];
+            const actual = attrs(input);
+            expect(actual).toEqual(expected);
+        });
+
         it('should ignore inherited properties', function() {
             const input = Object.create({ a: 2 });
             input.b = 1;

@@ -1,5 +1,8 @@
 ## master
 
+### Fixes
+- Allow empty-string `alt` attribute [#111](https://github.com/trivago/melody/pull/111)
+
 ### Chore & Maintenance
 - Removes `Chai` and `Sinon` support, Migrates tests to use `Jest`'s matchers. [#103](https://github.com/trivago/melody/pull/103)
 

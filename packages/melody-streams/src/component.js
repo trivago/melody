@@ -51,6 +51,7 @@ function Component(element) {
 }
 
 Object.assign(Component.prototype, {
+    type: 'streaming',
     apply(props) {
         this.propsStream.next(props);
         if (this.subscriptions.length === 0) {

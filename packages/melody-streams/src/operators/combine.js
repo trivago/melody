@@ -20,7 +20,7 @@ import { isObservable } from 'rxjs';
 
 export const combine = (...streams) =>
     mergeIntoObject(
-        ...streams.map(
-            stream => (isObservable(stream) ? stream : mergeObject(stream))
+        ...streams.map(stream =>
+            isObservable(stream) ? stream : mergeObject(stream)
         )
     );

@@ -90,7 +90,9 @@
             "prettier",
             "git add"
         ],
-        "ignore": ["./.history"]
+        "ignore": [
+            "./.history"
+        ]
     },
     "bundlesize": [
         {
@@ -99,7 +101,7 @@
         },
         {
             "path": "./packages/melody-idom/lib/index.js",
-            "maxSize": "4.66 kB"
+            "maxSize": "4.67 kB"
         },
         {
             "path": "./packages/melody-hoc/lib/index.js",
@@ -108,6 +110,10 @@
         {
             "path": "./packages/melody-redux/lib/index.js",
             "maxSize": "1.35 kB"
+        },
+        {
+            "path": "./packages/melody-streams/lib/index.js",
+            "maxSize": "1.54 kB"
         }
     ]
 }

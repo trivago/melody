@@ -152,7 +152,7 @@ Example:
 This is the placeholder content that will be shown to your users while the async component is being loaded.`,
                             path.node.loc.start.line === path.node.loc.end.line
                                 ? path.node.loc.end.column -
-                                  path.node.loc.start.column
+                                      path.node.loc.start.column
                                 : 'mount async'.length
                         );
                     }

@@ -24,12 +24,6 @@
     "melody-traverse": "^1.1.0",
     "melody-types": "^1.1.0"
   },
-  "bundledDependencies": [
-    "babel-types",
-    "babel-generator",
-    "babel-template",
-    "random-seed"
-  ],
   "devDependencies": {
     "melody-extension-core": "1.2.0-21.1",
     "melody-plugin-idom": "1.2.0-21.1",

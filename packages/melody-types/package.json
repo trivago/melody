@@ -12,9 +12,6 @@
   "dependencies": {
     "babel-types": "^6.8.1"
   },
-  "bundledDependencies": [
-    "babel-types"
-  ],
   "devDependencies": {
     "rollup-plugin-babel": "^2.6.1"
   }

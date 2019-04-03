@@ -1,6 +1,6 @@
 {
     "name": "melody-plugin-load-functions",
-    "version": "1.2.0-21.0",
+    "version": "1.2.0-21.1",
     "description": "",
     "main": "./lib/index.js",
     "jsnext:main": "./lib/index.esm.js",
@@ -12,9 +12,6 @@
     "dependencies": {
         "babel-types": "^6.8.1"
     },
-    "bundledDependencies": [
-        "babel-types"
-    ],
     "peerDependencies": {
         "melody-types": "^1.1.0"
     },

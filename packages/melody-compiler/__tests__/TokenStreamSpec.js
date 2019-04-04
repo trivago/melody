@@ -13,25 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { expect } from 'chai';
-import { CharStream, EOF, Lexer, TokenStream, Types } from 'melody-parser';
+import { CharStream, Lexer, TokenStream, Types } from 'melody-parser';
 
 describe('TokenStream', function() {
     it('should parse an expression', function() {
         let stream = createTokenStream('Hello {{ "Patrick" }}');
-        expect(stream.test(Types.TEXT, 'Hello ')).to.be.true;
+        expect(stream.test(Types.TEXT, 'Hello ')).toBeTruthy();
         stream.next();
-        expect(stream.test(Types.EXPRESSION_START)).to.be.true;
+        expect(stream.test(Types.EXPRESSION_START)).toBeTruthy();
         stream.next();
-        expect(stream.test(Types.STRING_START)).to.be.true;
+        expect(stream.test(Types.STRING_START)).toBeTruthy();
         stream.next();
-        expect(stream.test(Types.STRING, 'Patrick')).to.be.true;
+        expect(stream.test(Types.STRING, 'Patrick')).toBeTruthy();
         stream.next();
-        expect(stream.test(Types.STRING_END)).to.be.true;
+        expect(stream.test(Types.STRING_END)).toBeTruthy();
         stream.next();
-        expect(stream.test(Types.EXPRESSION_END)).to.be.true;
+        expect(stream.test(Types.EXPRESSION_END)).toBeTruthy();
         stream.next();
-        expect(stream.test(Types.TEXT)).to.be.false;
+        expect(stream.test(Types.TEXT)).toBeFalsy();
         stream.next();
     });
 
@@ -39,21 +38,21 @@ describe('TokenStream', function() {
         var lexer = createTokenStream('{% extends "foo.html.twig" %}'),
             token;
         token = lexer.next();
-        expect(token.text).to.equal('{%');
-        expect(token.type).to.equal(Types.TAG_START);
+        expect(token.text).toEqual('{%');
+        expect(token.type).toEqual(Types.TAG_START);
         token = lexer.next();
-        expect(token.text).to.equal('extends');
-        expect(token.type).to.equal(Types.SYMBOL);
+        expect(token.text).toEqual('extends');
+        expect(token.type).toEqual(Types.SYMBOL);
         token = lexer.next();
-        expect(token.type).to.eql(Types.STRING_START);
+        expect(token.type).toEqual(Types.STRING_START);
         token = lexer.next();
-        expect(token.type).to.eql(Types.STRING);
-        expect(token.text).to.equal('foo.html.twig');
+        expect(token.type).toEqual(Types.STRING);
+        expect(token.text).toEqual('foo.html.twig');
         token = lexer.next();
-        expect(token.type).to.eql(Types.STRING_END);
+        expect(token.type).toEqual(Types.STRING_END);
         token = lexer.next();
-        expect(token.text).to.equal('%}');
-        expect(token.type).to.equal(Types.TAG_END);
+        expect(token.text).toEqual('%}');
+        expect(token.type).toEqual(Types.TAG_END);
     });
 });
 

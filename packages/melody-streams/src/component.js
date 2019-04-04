@@ -51,6 +51,7 @@ function Component(element) {
 }
 
 Object.assign(Component.prototype, {
+    type: 'streaming',
     apply(props) {
         this.propsStream.next(props);
         if (this.subscriptions.length === 0) {
@@ -67,26 +68,21 @@ Object.assign(Component.prototype, {
                 subscribe: obs => this.subscriptions.push(obs.subscribe()),
             });
             const warningSubscription = warningTimer.subscribe();
-            const s = t
-                .pipe(
-                    distinctUntilChanged(shallowEqual),
-                    catchError(err => of(err))
-                )
-                .subscribe(
-                    state => {
-                        if (!warningSubscription.closed)
-                            warningSubscription.unsubscribe();
-                        this.state = state;
-                        enqueueComponent(this);
-                    },
-                    err => {
-                        if (process.env.NODE_ENV !== 'production') {
-                            /* eslint-disable no-console */
-                            console.error('Error: ', err);
-                            /* eslint-enable no-console */
-                        }
+            const s = t.pipe(distinctUntilChanged(shallowEqual)).subscribe(
+                state => {
+                    if (!warningSubscription.closed)
+                        warningSubscription.unsubscribe();
+                    this.state = state;
+                    enqueueComponent(this);
+                },
+                err => {
+                    if (process.env.NODE_ENV !== 'production') {
+                        /* eslint-disable no-console */
+                        console.error('Error: ', err);
+                        /* eslint-enable no-console */
                     }
-                );
+                }
+            );
 
             this.subscriptions.push(s);
         }

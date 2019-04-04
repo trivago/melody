@@ -43,6 +43,7 @@ export interface RenderableComponent {
     refs: any;
     render(): void;
     notify(): void;
+    type: String;
 }
 
 /** @type {?Node} */

@@ -23,7 +23,6 @@ import {
     currentElement,
     skip,
 } from '../src';
-import { expect } from 'chai';
 
 const BROWSER_SUPPORTS_SHADOW_DOM = 'ShadowRoot' in window;
 const attachShadow = function(el) {
@@ -60,8 +59,8 @@ describe('rendering with keys', () => {
         items.unshift({ key: null });
         patch(container, () => render(items));
 
-        expect(container.childNodes).to.have.length(2);
-        expect(container.childNodes[0]).to.not.equal(keyedNode);
+        expect(container.childNodes).toHaveLength(2);
+        expect(container.childNodes[0]).not.toEqual(keyedNode);
     });
 
     it('should not modify DOM nodes with falsey keys', () => {
@@ -73,7 +72,7 @@ describe('rendering with keys', () => {
 
         patch(container, () => render(items));
 
-        expect(slice.call(container.childNodes)).to.deep.equal(nodes);
+        expect(slice.call(container.childNodes)).toEqual(nodes);
     });
 
     it('should not modify the DOM nodes when inserting', () => {
@@ -86,12 +85,12 @@ describe('rendering with keys', () => {
         items.splice(1, 0, { key: 'one-point-five' });
         patch(container, () => render(items));
 
-        expect(container.childNodes).to.have.length(3);
-        expect(container.childNodes[0]).to.equal(firstNode);
-        expect(container.childNodes[0].id).to.equal('one');
-        expect(container.childNodes[1].id).to.equal('one-point-five');
-        expect(container.childNodes[2]).to.equal(secondNode);
-        expect(container.childNodes[2].id).to.equal('two');
+        expect(container.childNodes).toHaveLength(3);
+        expect(container.childNodes[0]).toEqual(firstNode);
+        expect(container.childNodes[0].id).toEqual('one');
+        expect(container.childNodes[1].id).toEqual('one-point-five');
+        expect(container.childNodes[2]).toEqual(secondNode);
+        expect(container.childNodes[2].id).toEqual('two');
     });
 
     it('should not modify the DOM nodes when removing', () => {
@@ -104,11 +103,11 @@ describe('rendering with keys', () => {
         items.splice(1, 1);
         patch(container, () => render(items));
 
-        expect(container.childNodes).to.have.length(2);
-        expect(container.childNodes[0]).to.equal(firstNode);
-        expect(container.childNodes[0].id).to.equal('one');
-        expect(container.childNodes[1]).to.equal(thirdNode);
-        expect(container.childNodes[1].id).to.equal('three');
+        expect(container.childNodes).toHaveLength(2);
+        expect(container.childNodes[0]).toEqual(firstNode);
+        expect(container.childNodes[0].id).toEqual('one');
+        expect(container.childNodes[1]).toEqual(thirdNode);
+        expect(container.childNodes[1].id).toEqual('three');
     });
 
     it('should not modify the DOM nodes when re-ordering', () => {
@@ -123,20 +122,20 @@ describe('rendering with keys', () => {
         items.push({ key: 'two' });
         patch(container, () => render(items));
 
-        expect(container.childNodes).to.have.length(3);
-        expect(container.childNodes[0]).to.equal(firstNode);
-        expect(container.childNodes[0].id).to.equal('one');
-        expect(container.childNodes[1]).to.equal(thirdNode);
-        expect(container.childNodes[1].id).to.equal('three');
-        expect(container.childNodes[2]).to.equal(secondNode);
-        expect(container.childNodes[2].id).to.equal('two');
+        expect(container.childNodes).toHaveLength(3);
+        expect(container.childNodes[0]).toEqual(firstNode);
+        expect(container.childNodes[0].id).toEqual('one');
+        expect(container.childNodes[1]).toEqual(thirdNode);
+        expect(container.childNodes[1].id).toEqual('three');
+        expect(container.childNodes[2]).toEqual(secondNode);
+        expect(container.childNodes[2].id).toEqual('two');
     });
 
     it('should avoid collisions with Object.prototype', () => {
         const items = [{ key: 'hasOwnProperty' }];
 
         patch(container, () => render(items));
-        expect(container.childNodes).to.have.length(1);
+        expect(container.childNodes).toHaveLength(1);
     });
 
     it("should not reuse dom node when nodeName doesn't match", () => {
@@ -149,9 +148,9 @@ describe('rendering with keys', () => {
 
         patch(container, render, 'span');
         const newNode = container.childNodes[0];
-        expect(newNode).not.to.equal(firstNode);
-        expect(newNode.nodeName).to.equal('SPAN');
-        expect(firstNode.parentNode).to.equal(null);
+        expect(newNode).not.toEqual(firstNode);
+        expect(newNode.nodeName).toEqual('SPAN');
+        expect(firstNode.parentNode).toBeNull();
     });
 
     it('should preserve nodes already in the DOM', () => {
@@ -168,7 +167,7 @@ describe('rendering with keys', () => {
 
         patch(container, render);
 
-        expect(container.firstChild).to.equal(keyedDiv);
+        expect(container.firstChild).toEqual(keyedDiv);
     });
 
     it('should remove keyed nodes whose element type changes', () => {
@@ -184,7 +183,7 @@ describe('rendering with keys', () => {
 
         patch(container, render);
 
-        expect(container.innerHTML).to.equal('<div></div><div></div>');
+        expect(container.innerHTML).toEqual('<div></div><div></div>');
     });
 
     describe('an item with focus', () => {
@@ -207,7 +206,7 @@ describe('rendering with keys', () => {
             items.unshift({ key: 'zero' });
             patch(container, () => render(items));
 
-            expect(document.activeElement).to.equal(focusNode);
+            expect(document.activeElement).toEqual(focusNode);
         });
 
         it('should retain focus when moving up in DOM order', () => {
@@ -220,7 +219,7 @@ describe('rendering with keys', () => {
             items.unshift(items.pop());
             patch(container, () => render(items));
 
-            expect(document.activeElement).to.equal(focusNode);
+            expect(document.activeElement).toEqual(focusNode);
         });
 
         it('should retain focus when moving down in DOM order', () => {
@@ -233,7 +232,7 @@ describe('rendering with keys', () => {
             items.push(items.shift());
             patch(container, () => render(items));
 
-            expect(document.activeElement).to.equal(focusNode);
+            expect(document.activeElement).toEqual(focusNode);
         });
 
         it('should retain focus when doing a nested patch', () => {
@@ -260,7 +259,7 @@ describe('rendering with keys', () => {
             items.unshift(items.pop());
             patch(container, () => render(items));
 
-            expect(document.activeElement).to.equal(focusNode);
+            expect(document.activeElement).toEqual(focusNode);
         });
 
         if (BROWSER_SUPPORTS_SHADOW_DOM) {
@@ -275,8 +274,8 @@ describe('rendering with keys', () => {
                 items.unshift({ key: 'zero' });
                 patch(shadowRoot, () => render(items));
 
-                expect(shadowRoot.activeElement).to.equal(focusNode);
-                expect(document.activeElement).to.equal(container);
+                expect(shadowRoot.activeElement).toEqual(focusNode);
+                expect(document.activeElement).toEqual(container);
             });
 
             it('should retain focus when patching outside a ShadowRoot', () => {
@@ -284,7 +283,7 @@ describe('rendering with keys', () => {
 
                 const shadowRoot = attachShadow(container);
                 const shadowEl = shadowRoot.appendChild(
-                    document.createElement('div'),
+                    document.createElement('div')
                 );
                 shadowEl.tabIndex = -1;
                 shadowEl.focus();
@@ -292,7 +291,7 @@ describe('rendering with keys', () => {
                 items.unshift({ key: 'zero' });
                 patch(container, () => render(items));
 
-                expect(shadowRoot.activeElement).to.equal(shadowEl);
+                expect(shadowRoot.activeElement).toEqual(shadowEl);
             });
         }
     });

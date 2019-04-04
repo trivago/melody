@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { expect } from 'chai';
 
 import { random, min, max, cycle, attribute } from '../src/functions';
 
@@ -23,75 +22,75 @@ describe('Twig function runtime', function() {
             const input = 0;
             const expected = 0;
             const actual = random(input);
-            expect(actual).to.eql(expected);
+            expect(actual).toEqual(expected);
         });
 
         it('should select an element from an array', function() {
             const input = ['a', 'b'];
             const actual = random(input);
-            expect(actual).to.be.oneOf(input);
+            expect(input).toContain(actual);
         });
     });
 
     describe('min', function() {
         it('should accept varargs', function() {
             const actual = min(1, 2, 3, 4, 5, 6, 7);
-            expect(actual).to.equal(1);
+            expect(actual).toEqual(1);
         });
 
         it('should accept an array', function() {
             const input = [1, 2, 3, 4, 5, 6, 7];
             const actual = min(input);
-            expect(actual).to.equal(1);
+            expect(actual).toEqual(1);
         });
 
         it('should select the lowest value in an object', function() {
             const input = { a: 1, b: 2 };
             const actual = min(input);
-            expect(actual).to.equal(1);
+            expect(actual).toEqual(1);
         });
     });
 
     describe('max', function() {
         it('should accept varargs', function() {
             const actual = max(1, 2, 3, 4, 5, 6, 7);
-            expect(actual).to.equal(7);
+            expect(actual).toEqual(7);
         });
 
         it('should accept an array', function() {
             const input = [1, 2, 3, 4, 5, 6, 7];
             const actual = max(input);
-            expect(actual).to.equal(7);
+            expect(actual).toEqual(7);
         });
 
         it('should select the lowest value in an object', function() {
             const input = { a: 1, b: 2 };
             const actual = max(input);
-            expect(actual).to.equal(2);
+            expect(actual).toEqual(2);
         });
     });
 
     describe('cycle', function() {
         it('should return the element at the given index', function() {
             const input = ['a', 'b', 'c'];
-            expect(cycle(input, 0)).to.equal('a');
-            expect(cycle(input, 1)).to.equal('b');
-            expect(cycle(input, 2)).to.equal('c');
-            expect(cycle(input, 3)).to.equal('a');
-            expect(cycle(input, 4)).to.equal('b');
-            expect(cycle(input, 5)).to.equal('c');
-            expect(cycle(input, 6)).to.equal('a');
+            expect(cycle(input, 0)).toEqual('a');
+            expect(cycle(input, 1)).toEqual('b');
+            expect(cycle(input, 2)).toEqual('c');
+            expect(cycle(input, 3)).toEqual('a');
+            expect(cycle(input, 4)).toEqual('b');
+            expect(cycle(input, 5)).toEqual('c');
+            expect(cycle(input, 6)).toEqual('a');
         });
     });
 
     describe('attribute', function() {
         it('should return an array index', function() {
-            expect(attribute(['a', 'b', 'c'], 1)).to.equal('b');
+            expect(attribute(['a', 'b', 'c'], 1)).toEqual('b');
         });
 
         it('should return the value of a property', function() {
             const input = { a: 42 };
-            expect(attribute(input, 'a')).to.equal(42);
+            expect(attribute(input, 'a')).toEqual(42);
         });
 
         it('should evaluate a function, forwarding the arguments', function() {
@@ -100,7 +99,7 @@ describe('Twig function runtime', function() {
                     return b + c;
                 },
             };
-            expect(attribute(input, 'a', [2, 3])).to.equal(5);
+            expect(attribute(input, 'a', [2, 3])).toEqual(5);
         });
 
         it('should use a getter if available', function() {
@@ -109,7 +108,7 @@ describe('Twig function runtime', function() {
                     return 5;
                 },
             };
-            expect(attribute(input, 'aValue')).to.equal(5);
+            expect(attribute(input, 'aValue')).toEqual(5);
         });
 
         it('should use an is property if available', function() {
@@ -118,12 +117,12 @@ describe('Twig function runtime', function() {
                     return true;
                 },
             };
-            expect(attribute(input, 'aValue')).to.equal(true);
+            expect(attribute(input, 'aValue')).toBeTruthy();
         });
 
         it('should return undefined on mismatch', function() {
             const input = {};
-            expect(attribute(input, 'toString')).to.equal(undefined);
+            expect(attribute(input, 'toString')).toBeUndefined();
         });
     });
 });

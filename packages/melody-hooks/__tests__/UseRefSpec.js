@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { assert } from 'chai';
-
 import { render } from 'melody-component';
 import { component, elementOpen, elementClose, elementVoid } from 'melody-idom';
 import { createComponent, useState, useEffect, useRef } from '../src';
@@ -52,8 +50,8 @@ describe('useRef', () => {
             return { myref };
         }, template);
         render(root, MyComponent);
-        assert.equal(current, null);
-        assert.instanceOf(currentInEffect, HTMLDivElement);
+        expect(current).toBeNull();
+        expect(currentInEffect).toBeInstanceOf(HTMLDivElement);
     });
     it('should remove the reference when a component is unmounted', () => {
         const root = document.createElement('div');
@@ -74,10 +72,10 @@ describe('useRef', () => {
         );
         const Parent = createParentComponent(Child);
         render(root, Parent, { show: true });
-        assert.equal(getRefCounter(ref), 0);
+        expect(getRefCounter(ref)).toEqual(0);
         render(root, Parent, { show: false });
-        assert.equal(getRefCounter(ref), -1);
-        assert.equal(ref.current, undefined);
+        expect(getRefCounter(ref)).toEqual(-1);
+        expect(ref.current).toBeUndefined();
     });
     it('should move the reference to another element', () => {
         const template = {
@@ -120,18 +118,18 @@ describe('useRef', () => {
             return { myref, foo };
         }, template);
         render(root, MyComponent);
-        assert.equal(current, null);
-        assert.equal(currentInEffect.className, 'bar');
-        assert.equal(getRefCounter(ref), 0);
+        expect(current).toBeNull();
+        expect(currentInEffect.className).toEqual('bar');
+        expect(getRefCounter(ref)).toEqual(0);
         setter(true);
         flush();
-        assert.equal(current.className, 'bar');
-        assert.equal(currentInEffect.className, 'foo');
-        assert.equal(getRefCounter(ref), 0);
+        expect(current.className).toEqual('bar');
+        expect(currentInEffect.className).toEqual('foo');
+        expect(getRefCounter(ref)).toEqual(0);
         setter(false);
         flush();
-        assert.equal(current.className, 'foo');
-        assert.equal(getRefCounter(ref), 0);
+        expect(current.className).toEqual('foo');
+        expect(getRefCounter(ref)).toEqual(0);
     });
     it('should move the reference to another element 2', () => {
         const template = {
@@ -174,17 +172,17 @@ describe('useRef', () => {
             return { myref, foo };
         }, template);
         render(root, MyComponent);
-        assert.equal(current, null);
-        assert.equal(currentInEffect.className, 'foo');
-        assert.equal(getRefCounter(ref), 0);
+        expect(current).toBeNull();
+        expect(currentInEffect.className).toEqual('foo');
+        expect(getRefCounter(ref)).toEqual(0);
         setter(true);
         flush();
-        assert.equal(current.className, 'foo');
-        assert.equal(currentInEffect.className, 'bar');
-        assert.equal(getRefCounter(ref), 0);
+        expect(current.className).toEqual('foo');
+        expect(currentInEffect.className).toEqual('bar');
+        expect(getRefCounter(ref)).toEqual(0);
         setter(false);
         flush();
-        assert.equal(current.className, 'bar');
-        assert.equal(getRefCounter(ref), 0);
+        expect(current.className).toEqual('bar');
+        expect(getRefCounter(ref)).toEqual(0);
     });
 });

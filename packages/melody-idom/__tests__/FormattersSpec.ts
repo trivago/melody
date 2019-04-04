@@ -16,11 +16,6 @@
  */
 
 import { patch, text } from '../src';
-import sinon from 'sinon';
-import chai from 'chai';
-import sinonChai from 'sinon-chai';
-chai.use(sinonChai);
-import { expect } from 'chai';
 
 describe('formatters', () => {
     let container;
@@ -49,7 +44,7 @@ describe('formatters', () => {
             });
             const node = container.childNodes[0];
 
-            expect(node.textContent).to.equal("'ello world!");
+            expect(node.textContent).toEqual("'ello world!");
         });
     });
 
@@ -61,18 +56,21 @@ describe('formatters', () => {
         }
 
         beforeEach(() => {
-            stub = sinon.stub();
-            stub.onFirstCall().returns('stubValueOne');
-            stub.onSecondCall().returns('stubValueTwo');
+            stub = jest
+                .fn()
+                .mockReturnValue('default')
+                .mockReturnValueOnce('stubValueOne')
+                .mockReturnValueOnce('stubValueTwo');
         });
 
         it('should not call the formatter for unchanged values', () => {
             patch(container, () => render('hello'));
             patch(container, () => render('hello'));
+
             const node = container.childNodes[0];
 
-            expect(node.textContent).to.equal('stubValueOne');
-            expect(stub).to.have.been.calledOnce;
+            expect(node.textContent).toEqual('stubValueOne');
+            expect(stub).toHaveBeenCalledTimes(1);
         });
 
         it('should call the formatter when the value changes', () => {
@@ -80,15 +78,16 @@ describe('formatters', () => {
             patch(container, () => render('world'));
             const node = container.childNodes[0];
 
-            expect(node.textContent).to.equal('stubValueTwo');
-            expect(stub).to.have.been.calledTwice;
+            expect(node.textContent).toEqual('stubValueTwo');
+            expect(stub).toHaveBeenCalledTimes(2);
         });
     });
 
     it('should not leak the arguments object', () => {
-        const stub = sinon.stub().returns('value');
-        patch(container, () => text('value', stub));
+        const spy = jest.fn(() => 'value');
 
-        expect(stub).to.have.been.calledOn(undefined);
+        patch(container, () => text('value', spy));
+
+        expect(spy).toHaveBeenCalledWith('value');
     });
 });

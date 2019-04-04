@@ -23,12 +23,9 @@ import {
     elementClose,
     elementVoid,
 } from '../src';
-import sinon from 'sinon';
-import { expect } from 'chai';
 
 describe('element creation', () => {
     let container;
-    let sandbox = sinon.sandbox.create();
 
     beforeEach(() => {
         container = document.createElement('div');
@@ -36,7 +33,6 @@ describe('element creation', () => {
     });
 
     afterEach(() => {
-        sandbox.restore();
         document.body.removeChild(container);
     });
 
@@ -59,7 +55,7 @@ describe('element creation', () => {
                     'data-foo',
                     'Hello',
                     'data-bar',
-                    'World',
+                    'World'
                 );
             });
 
@@ -67,18 +63,18 @@ describe('element creation', () => {
         });
 
         it('should render with the specified tag', () => {
-            expect(el.tagName).to.equal('DIV');
+            expect(el.tagName).toEqual('DIV');
         });
 
         it('should render with static attributes', () => {
-            expect(el.id).to.equal('someId');
-            expect(el.className).to.equal('someClass');
-            expect(el.getAttribute('data-custom')).to.equal('custom');
+            expect(el.id).toEqual('someId');
+            expect(el.className).toEqual('someClass');
+            expect(el.getAttribute('data-custom')).toEqual('custom');
         });
 
         it('should render with dynamic attributes', () => {
-            expect(el.getAttribute('data-foo')).to.equal('Hello');
-            expect(el.getAttribute('data-bar')).to.equal('World');
+            expect(el.getAttribute('data-foo')).toEqual('Hello');
+            expect(el.getAttribute('data-bar')).toEqual('World');
         });
 
         describe('should return DOM node', () => {
@@ -92,7 +88,7 @@ describe('element creation', () => {
                     elementClose('div');
                 });
 
-                expect(el).to.equal(container.childNodes[0]);
+                expect(el).toEqual(container.childNodes[0]);
             });
 
             it('from elementClose', () => {
@@ -101,7 +97,7 @@ describe('element creation', () => {
                     el = elementClose('div');
                 });
 
-                expect(el).to.equal(container.childNodes[0]);
+                expect(el).toEqual(container.childNodes[0]);
             });
 
             it('from elementVoid', () => {
@@ -109,7 +105,7 @@ describe('element creation', () => {
                     el = elementVoid('div');
                 });
 
-                expect(el).to.equal(container.childNodes[0]);
+                expect(el).toEqual(container.childNodes[0]);
             });
 
             it('from elementOpenEnd', () => {
@@ -119,7 +115,7 @@ describe('element creation', () => {
                     elementClose('div');
                 });
 
-                expect(el).to.equal(container.childNodes[0]);
+                expect(el).toEqual(container.childNodes[0]);
             });
         });
     });
@@ -129,7 +125,7 @@ describe('element creation', () => {
             elementVoid('div', null, null, 'id', 'test');
         });
         const el = container.childNodes[0];
-        expect(el.id).to.equal('test');
+        expect(el.id).toEqual('test');
     });
 
     describe('for HTML elements', () => {
@@ -139,14 +135,15 @@ describe('element creation', () => {
             });
 
             const el = container.childNodes[0];
-            expect(el.namespaceURI).to.equal('http://www.w3.org/1999/xhtml');
+            expect(el.namespaceURI).toEqual('http://www.w3.org/1999/xhtml');
         });
 
         it('should use createElement if no namespace has been specified', () => {
             let doc = container.ownerDocument;
             let div = doc.createElement('div');
             let el;
-            sandbox.stub(doc, 'createElement').returns(div);
+
+            const spy = jest.spyOn(doc, 'createElement');
 
             patch(container, () => {
                 elementOpen('svg');
@@ -156,8 +153,8 @@ describe('element creation', () => {
                 elementClose('svg');
             });
 
-            expect(el.namespaceURI).to.equal('http://www.w3.org/1999/xhtml');
-            expect(doc.createElement).to.have.been.calledOnce;
+            expect(el.namespaceURI).toEqual('http://www.w3.org/1999/xhtml');
+            expect(spy).toHaveBeenCalledTimes(1);
         });
     });
 
@@ -178,27 +175,27 @@ describe('element creation', () => {
 
         it('should create svgs in the svg namespace', () => {
             const el = container.querySelector('svg');
-            expect(el.namespaceURI).to.equal('http://www.w3.org/2000/svg');
+            expect(el.namespaceURI).toEqual('http://www.w3.org/2000/svg');
         });
 
         it('should create descendants of svgs in the svg namespace', () => {
             const el = container.querySelector('circle');
-            expect(el.namespaceURI).to.equal('http://www.w3.org/2000/svg');
+            expect(el.namespaceURI).toEqual('http://www.w3.org/2000/svg');
         });
 
         it('should have the svg namespace for foreignObjects', () => {
             const el = container.querySelector('svg').childNodes[1];
-            expect(el.namespaceURI).to.equal('http://www.w3.org/2000/svg');
+            expect(el.namespaceURI).toEqual('http://www.w3.org/2000/svg');
         });
 
         it('should revert to the xhtml namespace when encounering a foreignObject', () => {
             const el = container.querySelector('p');
-            expect(el.namespaceURI).to.equal('http://www.w3.org/1999/xhtml');
+            expect(el.namespaceURI).toEqual('http://www.w3.org/1999/xhtml');
         });
 
         it('should reset to the previous namespace after exiting a forignObject', () => {
             const el = container.querySelector('path');
-            expect(el.namespaceURI).to.equal('http://www.w3.org/2000/svg');
+            expect(el.namespaceURI).toEqual('http://www.w3.org/2000/svg');
         });
 
         it('should create children in the svg namespace when patching an svg', () => {
@@ -208,7 +205,7 @@ describe('element creation', () => {
             });
 
             const el = svg.querySelector('rect');
-            expect(el.namespaceURI).to.equal('http://www.w3.org/2000/svg');
+            expect(el.namespaceURI).toEqual('http://www.w3.org/2000/svg');
         });
     });
 });

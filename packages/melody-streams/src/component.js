@@ -53,6 +53,7 @@ function Component(element) {
 Object.assign(Component.prototype, {
     type: 'streaming',
     apply(props) {
+        const _this = this;
         this.propsStream.next(props);
         if (this.subscriptions.length === 0) {
             const t = this.getTransform({
@@ -61,7 +62,7 @@ Object.assign(Component.prototype, {
                         ...options,
                         detail,
                     });
-                    this.el.dispatchEvent(event);
+                    _this.el.dispatchEvent(event);
                 },
                 props: this.propsStream,
                 updates: this.updates,

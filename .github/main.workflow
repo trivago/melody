@@ -2,15 +2,13 @@ workflow "pull request" {
   resolves = [
     "lint",
     "bundlesize",
-    "test",
     "canary release",
-    "filter PRs",
   ]
   on = "pull_request"
 }
 
 action "filter PRs" {
-  uses = "actions/bin/filter@d820d56839906464fb7a57d1b4e1741cf5183efa"
+  uses = "actions/bin/filter@master"
   args = "action 'opened|synchronize|reopened'"
 }
 
@@ -46,12 +44,12 @@ action "verdaccio" {
 
 action "canary release" {
   uses = "./actions/cli"
-  secrets = ["VERDACCIO_AUTH_TOKEN"]
   env = {
-    VERDACCIO_REGISTRY_URL = "registry.verdaccio.org"
+    REGISTRY_URL = "registry.npmjs.org"
   }
-  args = "n 8 && yarn lerna publish --no-git-tag-version --no-push --no-git-reset --exact --force-publish=* --canary --yes --dist-tag $(git rev-parse --abbrev-ref HEAD) --preid $(git rev-parse --abbrev-ref HEAD) --registry https://registry.verdaccio.org"
+  args = "n 8 && yarn lerna publish --no-git-tag-version --no-push --no-git-reset --exact --force-publish=* --canary --yes --dist-tag $(git rev-parse --abbrev-ref HEAD) --preid $(git rev-parse --short HEAD) --registry https://$REGISTRY_URL"
   needs = ["verdaccio"]
+  secrets = ["NPM_AUTH_TOKEN"]
 }
 
 workflow "node 6" {
@@ -109,12 +107,24 @@ action "node11:test" {
 }
 
 workflow "release" {
-  on = "release"
-  resolves = ["release:publish"]
+  on = "push"
+  resolves = ["release:push tag"]
+}
+
+action "release:filter branch" {
+  uses = "actions/bin/filter@master"
+  args = "branch master"
+}
+
+action "release:check commit message" {
+  needs = ["release:filter branch"]
+  uses = "./actions/cli"
+  args = "node bin/check-commit.js"
 }
 
 action "release:authorized users only" {
-  uses = "actions/bin/filter@d820d56839906464fb7a57d1b4e1741cf5183efa"
+  needs = ["release:check commit message"]
+  uses = "actions/bin/filter@master"
   args = ["actor", "ayusharma", "pago"]
 }
 
@@ -130,14 +140,27 @@ action "release:test" {
   args = "yarn test"
 }
 
-action "release:publish" {
+action "release:version" {
   uses = "./actions/cli"
   needs = ["release:test"]
-  secrets = ["VERDACCIO_AUTH_TOKEN"]
-  args = "yarn lerna publish --exact --force-publish=* --registry https://registry.verdaccio.org"
+  args = "yarn lerna version $CURRENT_COMMIT_TEXT --no-push  --yes --force-publish=*"
+}
+
+action "release:publish" {
+  uses = "./actions/cli"
+  needs = ["release:version"]
+  args = "yarn lerna publish from-git --force-publish=* --yes --registry https://$REGISTRY_URL"
   env = {
-    VERDACCIO_REGISTRY_URL = "registry.verdaccio.org"
+    REGISTRY_URL = "registry.npmjs.org"
   }
+  secrets = ["NPM_AUTH_TOKEN"]
+}
+
+action "release:push tag" {
+  needs = ["release:publish"]
+  uses = "trivago/melody/actions/cli@github-actions"
+  args = "git push https://$GITHUB_TOKEN@github.com/trivago/melody.git github-actions --follow-tags"
+  secrets = ["GITHUB_TOKEN"]
 }
 
 workflow "master branch only" {
@@ -146,7 +169,7 @@ workflow "master branch only" {
 }
 
 action "filter master branch" {
-  uses = "actions/bin/filter@d820d56839906464fb7a57d1b4e1741cf5183efa"
+  uses = "actions/bin/filter@master"
   args = "branch master"
 }
 
@@ -183,19 +206,22 @@ action "master:verdaccio" {
 action "master:release alpha" {
   uses = "./actions/cli"
   needs = ["master:verdaccio"]
-  args = "n 8 && yarn lerna publish --no-git-tag-version --no-push --no-git-reset --exact --force-publish=* --canary --yes --dist-tag prerelease --registry https://registry.verdaccio.org"
+  args = "n 8 && yarn lerna publish --no-git-tag-version --no-push --no-git-reset --exact --force-publish=* --canary --yes --dist-tag prerelease --registry https://$REGISTRY_URL"
+  env = {
+    REGISTRY_URL = "registry.npmjs.org"
+  }
+  secrets = ["NPM_AUTH_TOKEN"]
 }
 
 workflow "non-master branch" {
   on = "push"
   resolves = [
-    "non-master:build",
     "non-master:test",
   ]
 }
 
 action "filter non-master branch" {
-  uses = "actions/bin/filter@d820d56839906464fb7a57d1b4e1741cf5183efa"
+  uses = "actions/bin/filter@master"
   args = "not branch master"
 }
 
@@ -209,4 +235,26 @@ action "non-master:test" {
   uses = "docker://node:8"
   args = "yarn test"
   needs = ["non-master:build"]
+}
+
+workflow "pull request closed" {
+  on = "pull_request"
+  resolves = [
+    "remove dist-tag",
+  ]
+}
+
+action "filter PR closed" {
+  uses = "actions/bin/filter@master"
+  args = "action 'closed'"
+}
+
+action "remove dist-tag" {
+  uses = "./actions/cli"
+  needs = ["filter PR closed"]
+  args = "node bin/dist-tag-rm.js packages $(git rev-parse --abbrev-ref HEAD) https://$REGISTRY_URL"
+  env = {
+    REGISTRY_URL = "registry.npmjs.org"
+  }
+  secrets = ["NPM_AUTH_TOKEN"]
 }

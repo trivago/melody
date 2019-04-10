@@ -4,8 +4,7 @@ Test the integrity of a package publishing in [Verdaccio](https://verdaccio.org/
 
 ```
 action "Publish Verdaccio" {
-  uses = "verdaccio/github-actions/publish@master"
-  args = ["publish"]
+  uses = "./actions/verdaccio"
 }
 ```
 

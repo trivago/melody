@@ -21,7 +21,7 @@ jobs:
     include:
         - stage: npm release
           node_js: "8"
-          script: yarn release-travis
+          script: yarn release-ci
 
 env:
     global:

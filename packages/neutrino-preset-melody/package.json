@@ -1,6 +1,6 @@
 {
   "name": "neutrino-preset-melody",
-  "version": "1.2.0-21.0",
+  "version": "1.2.0-21.2",
   "description": "Neutrino preset for building melody web applications",
   "main": "index.js",
   "author": "Efe Gürkan YALAMAN <efe-gurkan.yalaman@trivago.com>",
@@ -10,7 +10,11 @@
     "babel-plugin-transform-es2015-classes": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "deepmerge": "^1.5.0",
+<<<<<<< HEAD
     "melody-loader": "link:../melody-loader",
+=======
+    "melody-loader": "1.2.0-21.2",
+>>>>>>> fa935f7108bf38504203022ec45ddac6caa0f20c
     "neutrino-middleware-compile-loader": "^6.1.4",
     "neutrino-middleware-loader-merge": "^6.1.4",
     "neutrino-preset-web": "^6.1.4"

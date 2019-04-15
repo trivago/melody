@@ -30,7 +30,7 @@ import {
     applyAsGroupAndComplete,
 } from './util/testHelpers';
 import { last, first } from 'rxjs/operators';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject, concat, throwError, of } from 'rxjs';
 
 const template = {
     render(_context) {
@@ -198,6 +198,21 @@ describe('component', () => {
             /* eslint-enable no-console */
         })
     );
+    it('should pass through an error message for non-production environments', () => {
+        const root = document.createElement('div');
+        const error = new Error('oops!');
+        const MyComponent = createComponent(
+            () => concat(of(7), throwError(error)),
+            template
+        );
+        /* eslint-disable no-console */
+        const temp = console.error;
+        console.error = jest.fn();
+        render(root, MyComponent);
+        expect(console.error).toHaveBeenCalledWith('Error: ', error);
+        console.error = temp;
+        /* eslint-enable no-console */
+    });
     it(
         'should not emit a warning message after if component emits state before 500ms if not state updates',
         fakeSchedulers(advance => {

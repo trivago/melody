@@ -1,6 +1,6 @@
 {
   "name": "melody-compiler",
-  "version": "1.2.0-21.0",
+  "version": "1.2.0-21.2",
   "description": "",
   "main": "./lib/index.js",
   "jsnext:main": "./lib/index.esm.js",
@@ -24,12 +24,6 @@
     "melody-traverse": "^1.1.0",
     "melody-types": "^1.1.0"
   },
-  "bundledDependencies": [
-    "babel-types",
-    "babel-generator",
-    "babel-template",
-    "random-seed"
-  ],
   "devDependencies": {
     "melody-extension-core": "link:../melody-extension-core",
     "melody-plugin-idom": "link:../melody-plugin-idom"

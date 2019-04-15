@@ -1,5 +1,10 @@
 ## master
 
+1.2.0-22
+
+### Bugfixes
+- Fix melody-stream not rerendering in some cases [#112](https://github.com/trivago/melody/pull/112)
+
 ### Chore & Maintenance
 - Removes `Chai` and `Sinon` support, Migrates tests to use `Jest`'s matchers. [#103](https://github.com/trivago/melody/pull/103)
 

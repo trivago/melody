@@ -355,7 +355,7 @@ export default class Lexer {
                 } else if (CHAR_TO_TOKEN.hasOwnProperty(c)) {
                     input.next();
                     return this.createToken(CHAR_TO_TOKEN[c], pos);
-                } else if (c === ' ') {
+                } else if (c === '\xa0') {
                     return this.error(
                         'Unsupported token: Non-breaking space',
                         pos

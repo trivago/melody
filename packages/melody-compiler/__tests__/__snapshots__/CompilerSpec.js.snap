@@ -2499,6 +2499,7 @@ export default function Test(props) {
   return _template.render(props);
 }",
   "map": null,
+  "rawMappings": null,
 }
 `;
 

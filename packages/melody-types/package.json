@@ -11,8 +11,5 @@
   "license": "Apache-2.0",
   "dependencies": {
     "babel-types": "^6.8.1"
-  },
-  "bundledDependencies": [
-    "babel-types"
-  ]
+  }
 }

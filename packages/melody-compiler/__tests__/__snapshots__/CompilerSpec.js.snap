@@ -2464,8 +2464,7 @@ export default function Test(props) {
 `;
 
 exports[`Compiler when converting expressions to JS 1`] = `
-Object {
-  "code": "import { text } from \\"melody-idom\\";
+"import { text } from \\"melody-idom\\";
 export const _template = {};
 export function item(name) {
   text(name != null && name !== '' ? name : \\"test\\");
@@ -2497,10 +2496,7 @@ if (process.env.NODE_ENV !== \\"production\\") {
 
 export default function Test(props) {
   return _template.render(props);
-}",
-  "map": null,
-  "rawMappings": null,
-}
+}"
 `;
 
 exports[`Compiler when converting should support dynamic attributes 1`] = `

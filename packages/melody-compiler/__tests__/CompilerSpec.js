@@ -81,7 +81,7 @@ describe('Compiler', function() {
                     },
                 }
             );
-            const jsCode = toString(jsTemplate, code);
+            const jsCode = toString(jsTemplate, code).code;
             expect(jsCode).toMatchSnapshot();
         });
 

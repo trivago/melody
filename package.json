@@ -117,7 +117,7 @@
         },
         {
             "path": "./packages/melody-streams/lib/index.js",
-            "maxSize": "1.52 kB"
+            "maxSize": "1.53 kB"
         }
     ],
     "husky": {

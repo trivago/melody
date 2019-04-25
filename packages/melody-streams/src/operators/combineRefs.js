@@ -18,7 +18,7 @@ export const combineRefs = (...handlers) => el => {
     const subscriptions = handlers.map(fn => fn(el));
     return {
         unsubscribe() {
-            subscriptions.forEach(fn => fn && fn());
+            subscriptions.forEach(fn => fn && fn.unsubscribe());
             subscriptions.length = 0;
         },
     };

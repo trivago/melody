@@ -1186,6 +1186,41 @@ Object {
 }
 `;
 
+exports[`Parser when parsing strings should match unicode characters 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "name": Object {
+            "name": "class",
+            "type": "Identifier",
+          },
+          "type": "Attribute",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "item__mini-icon fl-leading hide-text border-radius  icon-icn_smilie2_light ",
+          },
+        },
+      ],
+      "children": Array [
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "“Good”",
+          },
+        },
+      ],
+      "name": "em",
+      "selfClosing": false,
+      "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
 exports[`Parser when parsing tags should fail on unknown tags 1`] = `
 "ERROR: Unknown tag \\"unknown_tag\\"
 > 1 | {% unknown_tag %}

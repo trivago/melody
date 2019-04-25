@@ -182,6 +182,11 @@ describe('Parser', function() {
             const node = parse`{{ " foo #{bar} " }}`;
             expect(node).toMatchSnapshot();
         });
+
+        it('should match unicode characters', function() {
+            const node = parse`<em class="item__mini-icon fl-leading hide-text border-radius  icon-icn_smilie2_light ">“Good”</em>`;
+            expect(node).toMatchSnapshot();
+        });
     });
 
     describe('when parsing operators', function() {

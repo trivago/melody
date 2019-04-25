@@ -22,10 +22,8 @@ import {
     distinctUntilChanged,
     tap,
     take,
-    catchError,
     ignoreElements,
 } from 'rxjs/operators';
-import { of } from 'rxjs';
 
 const warningTimer = timer(500).pipe(
     tap(() => {

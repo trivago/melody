@@ -23,7 +23,7 @@ import State from './state/State.js';
 import finalizer from './finalizer/index.js';
 
 import * as t from 'babel-types';
-import generate from 'babel-generator';
+import { CodeGenerator } from 'babel-generator';
 
 // workaround for https://github.com/rollup/rollup/issues/430
 import { TokenTypes } from 'melody-parser';
@@ -122,5 +122,17 @@ function parseString(fileName: string, source: string, ...extensions) {
 }
 
 export function toString(jsAst, code) {
-    return generate(jsAst, null, code);
+    const g = new CodeGenerator(jsAst, {}, code);
+    // Babel sanitises strings to not contain complex characters
+    // however we need them in order to be able to render complex strings
+    g._generator.StringLiteral = function (node, parent) {
+        var raw = this.getPossibleRaw(node);
+        if (!this.format.minified && raw != null) {
+          this.token(raw);
+          return;
+        }
+      
+        return this.token(JSON.stringify(node.value));
+    };
+    return g.generate();
 }

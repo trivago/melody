@@ -12,12 +12,9 @@
   "dependencies": {
     "he": "^1.1.0",
     "lodash": "^4.12.0",
-    "melody-code-frame": "1.2.0-21.2"
+    "melody-code-frame": "link:../melody-code-frame"
   },
   "peerDependencies": {
     "melody-types": "^1.1.0"
-  },
-  "devDependencies": {
-    "rollup-plugin-babel": "^2.6.1"
   }
 }

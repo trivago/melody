@@ -9,6 +9,7 @@
 - Removes `Chai` and `Sinon` support, Migrates tests to use `Jest`'s matchers. [#103](https://github.com/trivago/melody/pull/103)
 - Drop `bundledDependencies` option in package.json's to avoid issues with yarn [#113](https://github.com/trivago/melody/pull/113)
 - Add Github Actions for automation [#109](https://github.com/trivago/melody/pull/109)
+- Update various dependencies (lerna, babel-generate, etc.) [#95](https://github.com/trivago/melody/pull/95)
 
 ## 1.2.0-21.2 (beta)
 

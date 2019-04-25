@@ -4,6 +4,7 @@
 - Fix melody-stream not rerendering in some cases [#112](https://github.com/trivago/melody/pull/112)
 - Warn about usage of non-breaking space [#107](https://github.com/trivago/melody/pull/107)
 - Fixed bindings of dispatchCustomEvent in `melody-streams` [#117](https://github.com/trivago/melody/pull/117)
+- Fixed `combineRefs` unsubscription in `melody-streams` [#120](https://github.com/trivago/melody/pull/120)
 
 ### Chore & Maintenance
 - Removes `Chai` and `Sinon` support, Migrates tests to use `Jest`'s matchers. [#103](https://github.com/trivago/melody/pull/103)

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import * as t from 'babel-types';
+import * as t from '@babel/types';
 
 export const TYPE_MAP = Object.create(null);
 export const ALIAS_TO_TYPE = Object.create(null);

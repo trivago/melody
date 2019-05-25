@@ -9,8 +9,8 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "babel-core": "^6.18.0",
-    "find-babel-config": "^1.0.1",
+    "@babel/core": "*",
+    "find-babel-config": "^1.2.0",
     "melody-compiler": "link:../melody-compiler",
     "melody-extension-core": "link:../melody-extension-core"
   },

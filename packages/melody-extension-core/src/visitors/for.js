@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { traverse } from 'melody-traverse';
-import * as t from 'babel-types';
+import * as t from '@babel/types';
 import babelTemplate from 'babel-template';
 
 // @param template

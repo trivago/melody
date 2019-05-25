@@ -22,8 +22,8 @@ import convert from './convert/index.js';
 import State from './state/State.js';
 import finalizer from './finalizer/index.js';
 
-import * as t from 'babel-types';
-import { CodeGenerator } from 'babel-generator';
+import * as t from '@babel/types';
+import { CodeGenerator } from '@babel/generator';
 
 // workaround for https://github.com/rollup/rollup/issues/430
 import { TokenTypes } from 'melody-parser';

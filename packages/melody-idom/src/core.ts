@@ -629,7 +629,6 @@ var raw = function(html: string): void {
     return currentNode;
 };
 
-/** */
 export {
     elementOpen,
     elementClose,

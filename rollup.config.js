@@ -22,7 +22,10 @@ const config = {
         json(),
         babel({
             exclude: 'node_modules/**',
-            plugins: ['external-helpers'],
+            plugins: [
+                '@babel/plugin-external-helpers',
+                '@babel/plugin-transform-flow-strip-types'
+            ],
         }),
     ],
     external: [

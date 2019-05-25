@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as t from 'babel-types';
+import * as t from '@babel/types';
 import mountVisitor from './visitors/mount.js';
 import idomVisitor from './visitors/idom.js';
 

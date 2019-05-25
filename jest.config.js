@@ -1,8 +1,13 @@
 module.exports = {
+    globals: {
+        'ts-jest': {
+          diagnostics: false
+        }
+    },
     testRegex: '/__tests__/.*[sS]pec\\.([jt]s)$',
     testURL: 'http://localhost/',
     transform: {
-        '^.+\\.(ts|tsx)$': 'typescript-babel-jest',
+        '^.+\\.(ts|tsx)$': 'ts-jest',
         '^.+\\.twig$': '<rootDir>/testsetup/melody-transform.js',
         '^.+\\.jsx?$': 'babel-jest',
     },

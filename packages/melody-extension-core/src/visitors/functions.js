@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as t from 'babel-types';
+import * as t from '@babel/types';
 
 function addOne(expr) {
     return t.binaryExpression('+', expr, t.numericLiteral(1));

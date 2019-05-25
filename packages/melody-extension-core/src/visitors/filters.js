@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as t from 'babel-types';
+import * as t from '@babel/types';
 import template from 'babel-template';
 
 // use default value if var is null, undefined or an empty string

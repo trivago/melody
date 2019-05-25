@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { Fragment } from 'melody-types';
-import * as t from 'babel-types';
+import * as t from '@babel/types';
 import { isString, isFunction } from 'lodash';
 
 var operatorMap = {

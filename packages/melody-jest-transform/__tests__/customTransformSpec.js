@@ -74,8 +74,6 @@ describe('Custom transformer', () => {
         ];
 
         const babel = {
-            env: {
-                test: {
                     presets: [
                         [
                             'env',
@@ -87,8 +85,6 @@ describe('Custom transformer', () => {
                         ],
                     ],
                     plugins: ['transform-inline-environment-variables'],
-                },
-            },
         };
 
         test('test.twig', { plugins, babel });

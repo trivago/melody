@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { compile, toString } from 'melody-compiler';
-import * as babel from 'babel-core';
+import * as babel from '@babel/core';
 import { extension as CoreExtension } from 'melody-extension-core';
 import idomPlugin from 'melody-plugin-idom';
 import * as p from 'process';
@@ -38,7 +38,6 @@ export function process(src, path) {
 export function transformer(src, path, options = {}) {
     const plugins = options.plugins || [CoreExtension, idomPlugin];
     const babelConfig = options.babel || getBabelConf();
-
     const compiledMelody = toString(compile(path, src, ...plugins), src).code;
     if (options.noBabel) {
         return compiledMelody;

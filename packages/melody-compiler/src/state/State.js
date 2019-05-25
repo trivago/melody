@@ -15,7 +15,7 @@
  */
 import type { File } from '../Template';
 import codeFrame from 'melody-code-frame';
-import * as t from 'babel-types';
+import * as t from '@babel/types';
 import { relative } from 'path';
 import * as random from 'random-seed';
 

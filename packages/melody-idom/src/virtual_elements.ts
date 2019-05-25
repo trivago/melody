@@ -313,7 +313,7 @@ var text = function(value, var_args) {
                 throw new Error("Can't call filters on a raw string.");
             }
         }
-        return raw(value.value);
+        return raw(value);
     }
 
     var node = coreText();

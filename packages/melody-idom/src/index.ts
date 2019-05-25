@@ -16,7 +16,7 @@
  */
 import options from './options';
 export { options };
-export { flush, Deadline, clear as clearQueue } from './renderQueue';
+export { flush, Deadline, clear as clearQueue, enqueueComponent } from './renderQueue';
 export { getParent, link } from './hierarchy';
 export {
     patchInner as patch,
@@ -27,7 +27,6 @@ export {
     skipNode,
     mount,
     component,
-    enqueueComponent,
     RenderableComponent,
     CallableComponent,
 } from './core';

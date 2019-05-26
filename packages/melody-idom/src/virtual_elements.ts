@@ -313,7 +313,8 @@ var text = function(value, var_args) {
                 throw new Error("Can't call filters on a raw string.");
             }
         }
-        return raw(value);
+        // @ts-ignore
+        return raw(value.value);
     }
 
     var node = coreText();

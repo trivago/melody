@@ -9,28 +9,28 @@ import _use from \\"foo.twig\\";
 export const _template = {};
 inheritBlocks(_template, _use);
 Object.assign(_template, {
-    renderBase_sidebar,
-    renderBase_title
+  renderBase_sidebar,
+  renderBase_title
 });
 
 _template.renderHello = function (_context) {
-    return <div key=\\"1\\" className=\\"test\\">{_context.message.toLowerCase().toUpperCase()}<span className=\\"\\">{_context.name.slice(1, _context.name.length)}</span>{this.renderTest(_context)}{_include.render()}{_include(_context)}</div>;
+  return <div key=\\"1\\" className=\\"test\\">{_context.message.toLowerCase().toUpperCase()}<span className=\\"\\">{_context.name.slice(1, _context.name.length)}</span>{this.renderTest(_context)}{_include.render()}{_include(_context)}</div>;
 };
 
 _template.renderBar = function (_context) {
-    return _context.foo;
+  return _context.foo;
 };
 
 _template.render = function (_context) {
-    return <section key=\\"0\\">{this.renderHello(_context)}{this.renderBar(_context)}{this.renderHello(_context)}</section>;
+  return <section key=\\"0\\">{this.renderHello(_context)}{this.renderBar(_context)}{this.renderHello(_context)}</section>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"Block\\";
+  _template.displayName = \\"Block\\";
 }
 
 export default function Block(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -40,15 +40,15 @@ exports[`Compiler should correctly transform dynamicAttribute.template 1`] = `
 export const _template = {};
 
 _template.render = function (_context) {
-    return <select title=\\"bug\\"><option value=\\"42\\" selected>Answer</option></select>;
+  return <select title=\\"bug\\"><option value=\\"42\\" selected>Answer</option></select>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"DynamicAttribute\\";
+  _template.displayName = \\"DynamicAttribute\\";
 }
 
 export default function DynamicAttribute(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -65,31 +65,31 @@ const _embed$1 = Object.create(_embed),
       _embed$3 = Object.create(_embed$2);
 
 _embed$3.renderHello = function (_context) {
-    return <div>{_context.fun}{_embed$1.render(_context)}</div>;
+  return <div>{_context.fun}{_embed$1.render(_context)}</div>;
 };
 
 _embed$1.renderHello = function (_context) {
-    return _context.message;
+  return _context.message;
 };
 
 _embed$1.renderTest = function (_context) {};
 
 _template.renderHello = function (_context) {
-    return <div className={\\"test-\\" + _context.foo + \\" bar\\"}>{_embed$3.render(createSubContext(_context, {
-            foo: \\"bar\\"
-        }))}</div>;
+  return <div className={\\"test-\\" + _context.foo + \\" bar\\"}>{_embed$3.render(createSubContext(_context, {
+      foo: \\"bar\\"
+    }))}</div>;
 };
 
 _template.render = function (_context) {
-    return _parent.render.call(_template, _context);
+  return _parent.render.call(_template, _context);
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"EmbedNested\\";
+  _template.displayName = \\"EmbedNested\\";
 }
 
 export default function EmbedNested(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -101,22 +101,22 @@ import { createSubContext } from \\"melody-runtime\\";
 export const _template = Object.create(_parent);
 
 _template.renderHello = function (_context) {
-    return <div key=\\"1\\" className=\\"test\\">{_context.message}</div>;
+  return <div key=\\"1\\" className=\\"test\\">{_context.message}</div>;
 };
 
 _template.render = function (_context) {
-    const _context$1 = createSubContext(_context);
+  const _context$1 = createSubContext(_context);
 
-    _context$1.foo = \\"bar\\";
-    return _parent.render.call(_template, _context$1);
+  _context$1.foo = \\"bar\\";
+  return _parent.render.call(_template, _context$1);
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"ExtendsWithContext\\";
+  _template.displayName = \\"ExtendsWithContext\\";
 }
 
 export default function ExtendsWithContext(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -131,23 +131,23 @@ import _include from \\"test.twig\\";
 export const _template = Object.create(_parent);
 
 _template.renderHello = function (_context) {
-    return <div ref=\\"hello\\" key=\\"1\\" className=\\"test\\" onClick={_context.foo}>{_context.message}&{_include({
-            foo: \\"bar\\"
-        })}{_include$1.render({
-            foo: \\"bar\\"
-        })}<_context.Item {..._context.item} key={\\"bar\\"} /><Item$1 {..._context.item} key={\\"bar\\"} /><Item$2 item={_context.item} key={\\"bar\\"} /></div>;
+  return <div ref=\\"hello\\" key=\\"1\\" className=\\"test\\" onClick={_context.foo}>{_context.message}&{_include({
+      foo: \\"bar\\"
+    })}{_include$1.render({
+      foo: \\"bar\\"
+    })}<_context.Item {..._context.item} key={\\"bar\\"} /><Item$1 {..._context.item} key={\\"bar\\"} /><Item$2 item={_context.item} key={\\"bar\\"} /></div>;
 };
 
 _template.render = function (_context) {
-    return _parent.render.call(_template, _context);
+  return _parent.render.call(_template, _context);
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"Extends\\";
+  _template.displayName = \\"Extends\\";
 }
 
 export default function Extends(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -160,30 +160,30 @@ import { batch, strtotime, escape, format, merge, nl2br, number_format, replace,
 export const _template = {};
 
 _template.render = function (_context) {
-    let myData, myArray;
-    myData = {
-        \\"test\\": \\"value\\",
-        \\"meaningOfLife\\": 42,
-        \\"True\\": false
-    };
-    myArray = [\\"This\\", \\"is\\", \\"an\\", \\"array\\"];
-    return <ul className=\\"filters\\"><li>{Math.abs(1.5)}</li><li>{batch(myArray, 2, \\"batch\\")}</li><li>{capitalize(\\"capitalise\\")}</li><li><span dangerouslySetInnerHTML={{
-                __html: \\"Test String\\"
-            }} /></li><li>{temp(strtotime(\\"+1 day\\", \\"2018-03-01\\"))(\\"Y-m-d\\")}</li><li>{_context.elephant != null && _context.elephant !== '' ? _context.elephant : \\"elephant\\"}</li><li>{escape(\\"<div>HTML</div>\\")}</li><li>{first(myArray)}</li><li>{format(\\"I like %s, it is %s\\", \\"Twig\\", \\"nice\\")}</li><li>{[1, 2, 3].join(\\"|\\")}</li><li><span dangerouslySetInnerHTML={{
-                __html: JSON.stringify(myData)
-            }} /></li><li>{keys(myData)}</li><li>{last(myArray)}</li><li>{myArray.length}</li><li>{\\"Lower\\".toLowerCase()}</li><li>{merge(myArray, [\\"Yes\\"]).length}</li><li><span dangerouslySetInnerHTML={{
-                __html: nl2br(\\"nThis is a new line\\\\\\\\nAnd this\\")
-            }} /></li><li>{number_format(9800.333, 2, \\".\\", \\",\\")}</li><li>{replace(\\"I like fish\\", {
-                \\"fish\\": \\"meat\\"
-            })}</li><li>{reverse(myArray)}</li><li>{round(42.55)}</li><li>{\\"12345\\".slice(1, 3)}</li><li>{myArray.sort()}</li><li>{\\"one, two, three, four, five\\".split(\\",\\", 3)}</li><li>{striptags(\\"<div>HTML</div>\\")}</li><li>{title(\\"Huzzah for twig!\\")}</li><li>{trim(\\"  I like Twig.  \\")}</li><li>{\\"Upper\\".toUpperCase()}</li><li>{url_encode(\\"path-seg*ment\\")}</li></ul>;
+  let myData, myArray;
+  myData = {
+    \\"test\\": \\"value\\",
+    \\"meaningOfLife\\": 42,
+    \\"True\\": false
+  };
+  myArray = [\\"This\\", \\"is\\", \\"an\\", \\"array\\"];
+  return <ul className=\\"filters\\"><li>{Math.abs(1.5)}</li><li>{batch(myArray, 2, \\"batch\\")}</li><li>{capitalize(\\"capitalise\\")}</li><li><span dangerouslySetInnerHTML={{
+        __html: \\"Test String\\"
+      }} /></li><li>{temp(strtotime(\\"+1 day\\", \\"2018-03-01\\"))(\\"Y-m-d\\")}</li><li>{_context.elephant != null && _context.elephant !== '' ? _context.elephant : \\"elephant\\"}</li><li>{escape(\\"<div>HTML</div>\\")}</li><li>{first(myArray)}</li><li>{format(\\"I like %s, it is %s\\", \\"Twig\\", \\"nice\\")}</li><li>{[1, 2, 3].join(\\"|\\")}</li><li><span dangerouslySetInnerHTML={{
+        __html: JSON.stringify(myData)
+      }} /></li><li>{keys(myData)}</li><li>{last(myArray)}</li><li>{myArray.length}</li><li>{\\"Lower\\".toLowerCase()}</li><li>{merge(myArray, [\\"Yes\\"]).length}</li><li><span dangerouslySetInnerHTML={{
+        __html: nl2br(\\"nThis is a new line\\\\\\\\nAnd this\\")
+      }} /></li><li>{number_format(9800.333, 2, \\".\\", \\",\\")}</li><li>{replace(\\"I like fish\\", {
+        \\"fish\\": \\"meat\\"
+      })}</li><li>{reverse(myArray)}</li><li>{round(42.55)}</li><li>{\\"12345\\".slice(1, 3)}</li><li>{myArray.sort()}</li><li>{\\"one, two, three, four, five\\".split(\\",\\", 3)}</li><li>{striptags(\\"<div>HTML</div>\\")}</li><li>{title(\\"Huzzah for twig!\\")}</li><li>{trim(\\"  I like Twig.  \\")}</li><li>{\\"Upper\\".toUpperCase()}</li><li>{url_encode(\\"path-seg*ment\\")}</li></ul>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"Filters\\";
+  _template.displayName = \\"Filters\\";
 }
 
 export default function Filters(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -194,64 +194,64 @@ import { isEmpty } from \\"melody-runtime\\";
 export const _template = {};
 
 _template.render = function (_context) {
-    let _child, _child$2;
+  let _child, _child$2;
 
-    let _child$1 = new Array();
+  let _child$1 = new Array();
 
-    let _uniterated = true;
-    {
-        let _sequence = _context.c.slice(3, _context.c.length),
-            a = 0,
-            _length = _sequence.length,
-            b = _sequence[0];
+  let _uniterated = true;
+  {
+    let _sequence = _context.c.slice(3, _context.c.length),
+        a = 0,
+        _length = _sequence.length,
+        b = _sequence[0];
 
-        for (; a < _length; a++, b = _sequence[_index]) {
-            if (!(b % 2)) {
-                _child$1[_child$1.length] = <li>{a} - {b}</li>;
-                _uniterated = false;
-            }
-        }
+    for (; a < _length; a++, b = _sequence[_index]) {
+      if (!(b % 2)) {
+        _child$1[_child$1.length] = <li>{a} - {b}</li>;
+        _uniterated = false;
+      }
     }
+  }
 
-    if (_uniterated) {
-        _child$1[_child$1.length] = <li>No results found</li>;
+  if (_uniterated) {
+    _child$1[_child$1.length] = <li>No results found</li>;
+  }
+
+  _child = <ul>{_child$1}</ul>;
+
+  let _child$3 = new Array();
+
+  let _uniterated$1 = true;
+  {
+    let _sequence = _context.c.slice(0, _context.c.length - 1),
+        a = 0,
+        _length = _sequence.length,
+        b = _sequence[0];
+
+    for (; a < _length; a++, b = _sequence[_index]) {
+      if (typeof b !== \\"undefined\\" && !!(b % 2)) {
+        _child$3[_child$3.length] = <li>{a} - {b}</li>;
+        _uniterated$1 = false;
+      }
     }
+  }
 
-    _child = <ul>{_child$1}</ul>;
-
-    let _child$3 = new Array();
-
-    let _uniterated$1 = true;
-    {
-        let _sequence = _context.c.slice(0, _context.c.length - 1),
-            a = 0,
-            _length = _sequence.length,
-            b = _sequence[0];
-
-        for (; a < _length; a++, b = _sequence[_index]) {
-            if (typeof b !== \\"undefined\\" && !!(b % 2)) {
-                _child$3[_child$3.length] = <li>{a} - {b}</li>;
-                _uniterated$1 = false;
-            }
-        }
+  if (_uniterated$1) {
+    if (isEmpty(_context.regionName)) {
+      _child$3[_child$3.length] = <li><span />No results found</li>;
     }
+  }
 
-    if (_uniterated$1) {
-        if (isEmpty(_context.regionName)) {
-            _child$3[_child$3.length] = <li><span />No results found</li>;
-        }
-    }
-
-    _child$2 = <ul>{_child$3}</ul>;
-    return <div>{_child}{_child$2}</div>;
+  _child$2 = <ul>{_child$3}</ul>;
+  return <div>{_child}{_child$2}</div>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"ForIfElse\\";
+  _template.displayName = \\"ForIfElse\\";
 }
 
 export default function ForIfElse(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -262,37 +262,37 @@ import { round } from \\"melody-runtime\\";
 export const _template = {};
 
 _template.render = function (_context) {
-    let _child = new Array();
+  let _child = new Array();
 
-    {
-        let _sequence = _context.items,
-            _index = 0,
-            _length = _sequence.length,
-            item = _sequence[0],
-            _index$1 = 1,
-            _revindex = _length,
-            _revindex$1 = _length - 1,
-            _first = true,
-            _last = 1 === _length;
+  {
+    let _sequence = _context.items,
+        _index = 0,
+        _length = _sequence.length,
+        item = _sequence[0],
+        _index$1 = 1,
+        _revindex = _length,
+        _revindex$1 = _length - 1,
+        _first = true,
+        _last = 1 === _length;
 
-        for (; _index < _length; _index++, item = _sequence[_index]) {
-            _child[_child.length] = <li className={_last ? \\"last\\" : \\"\\"}>{round((_index$1 - 1) / 2, 0, \\"floor\\")}{item.name}{_index$1}</li>;
-            _index$1++;
-            _revindex--;
-            _revindex$1--;
-            _first = false;
-            _last = _revindex$1 === 0;
-        }
+    for (; _index < _length; _index++, item = _sequence[_index]) {
+      _child[_child.length] = <li className={_last ? \\"last\\" : \\"\\"}>{round((_index$1 - 1) / 2, 0, \\"floor\\")}{item.name}{_index$1}</li>;
+      _index$1++;
+      _revindex--;
+      _revindex$1--;
+      _first = false;
+      _last = _revindex$1 === 0;
     }
-    return <ul>{_child}</ul>;
+  }
+  return <ul>{_child}</ul>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"ForLocal\\";
+  _template.displayName = \\"ForLocal\\";
 }
 
 export default function ForLocal(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -303,51 +303,51 @@ import { createSubContext } from \\"melody-runtime\\";
 export const _template = {};
 
 _template.renderItemContent = function (_context) {
-    return <span>{_context.i}{_context.loop.index0}{_context.item.name}{_context.loop.index}</span>;
+  return <span>{_context.i}{_context.loop.index0}{_context.item.name}{_context.loop.index}</span>;
 };
 
 _template.render = function (_context) {
-    let _child = new Array();
+  let _child = new Array();
 
-    {
-        let _sequence = _context.items,
-            i = 0,
-            _length = _sequence.length,
-            _context$1 = createSubContext(_context, {
-            item: _sequence[0],
-            loop: {
-                index: 1,
-                index0: 0,
-                length: _length,
-                revindex: _length,
-                revindex0: _length - 1,
-                first: true,
-                last: 1 === _length
-            },
-            i: i
-        });
+  {
+    let _sequence = _context.items,
+        i = 0,
+        _length = _sequence.length,
+        _context$1 = createSubContext(_context, {
+      item: _sequence[0],
+      loop: {
+        index: 1,
+        index0: 0,
+        length: _length,
+        revindex: _length,
+        revindex0: _length - 1,
+        first: true,
+        last: 1 === _length
+      },
+      i: i
+    });
 
-        for (; i < _length; i++) {
-            _child[_child.length] = <li className={_context$1.loop.last ? \\"last\\" : \\"\\"}>{this.renderItemContent(_context$1)}</li>;
-            _context$1.loop.index0++;
-            _context$1.loop.index++;
-            _context$1.loop.revindex--;
-            _context$1.loop.revindex0--;
-            _context$1.loop.first = false;
-            _context$1.loop.last = _context$1.loop.revindex === 0;
-            _context$1.item = _sequence[i + 1];
-            _context$1.i = i;
-        }
+    for (; i < _length; i++) {
+      _child[_child.length] = <li className={_context$1.loop.last ? \\"last\\" : \\"\\"}>{this.renderItemContent(_context$1)}</li>;
+      _context$1.loop.index0++;
+      _context$1.loop.index++;
+      _context$1.loop.revindex--;
+      _context$1.loop.revindex0--;
+      _context$1.loop.first = false;
+      _context$1.loop.last = _context$1.loop.revindex === 0;
+      _context$1.item = _sequence[i + 1];
+      _context$1.i = i;
     }
-    return <ul>{_child}</ul>;
+  }
+  return <ul>{_child}</ul>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"ForWithBlockAndKey\\";
+  _template.displayName = \\"ForWithBlockAndKey\\";
 }
 
 export default function ForWithBlockAndKey(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -358,56 +358,56 @@ import { title, createSubContext } from \\"melody-runtime\\";
 export const _template = {};
 
 _template.renderTitle = function (_context) {
-    return _context.loop.index0;
-    return title(_context.item.name);
-    return _context.loop.index;
+  return _context.loop.index0;
+  return title(_context.item.name);
+  return _context.loop.index;
 };
 
 _template.render = function (_context) {
-    let _child, _child$2;
+  let _child, _child$2;
 
-    _child = <h1>{title(_context.title)}</h1>;
+  _child = <h1>{title(_context.title)}</h1>;
 
-    let _child$3 = new Array();
+  let _child$3 = new Array();
 
-    {
-        let _sequence = _context.items,
-            _index = 0,
-            _length = _sequence.length,
-            _context$1 = createSubContext(_context, {
-            item: _sequence[0],
-            loop: {
-                index: 1,
-                index0: 0,
-                length: _length,
-                revindex: _length,
-                revindex0: _length - 1,
-                first: true,
-                last: 1 === _length
-            }
-        });
+  {
+    let _sequence = _context.items,
+        _index = 0,
+        _length = _sequence.length,
+        _context$1 = createSubContext(_context, {
+      item: _sequence[0],
+      loop: {
+        index: 1,
+        index0: 0,
+        length: _length,
+        revindex: _length,
+        revindex0: _length - 1,
+        first: true,
+        last: 1 === _length
+      }
+    });
 
-        for (; _index < _length; _index++) {
-            _child$3[_child$3.length] = <li className={_context$1.loop.last ? \\"last\\" : \\"\\"}>{this.renderTitle(_context$1)}</li>;
-            _context$1.loop.index0++;
-            _context$1.loop.index++;
-            _context$1.loop.revindex--;
-            _context$1.loop.revindex0--;
-            _context$1.loop.first = false;
-            _context$1.loop.last = _context$1.loop.revindex === 0;
-            _context$1.item = _sequence[_index + 1];
-        }
+    for (; _index < _length; _index++) {
+      _child$3[_child$3.length] = <li className={_context$1.loop.last ? \\"last\\" : \\"\\"}>{this.renderTitle(_context$1)}</li>;
+      _context$1.loop.index0++;
+      _context$1.loop.index++;
+      _context$1.loop.revindex--;
+      _context$1.loop.revindex0--;
+      _context$1.loop.first = false;
+      _context$1.loop.last = _context$1.loop.revindex === 0;
+      _context$1.item = _sequence[_index + 1];
     }
-    _child$2 = <ul>{_child$3}</ul>;
-    return <div>{_child}{_child$2}</div>;
+  }
+  _child$2 = <ul>{_child$3}</ul>;
+  return <div>{_child}{_child$2}</div>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"ForWithBlock\\";
+  _template.displayName = \\"ForWithBlock\\";
 }
 
 export default function ForWithBlock(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -419,27 +419,27 @@ import { range as range$1 } from \\"lodash\\";
 export const _template = {};
 
 _template.render = function (_context) {
-    let _child = new Array();
+  let _child = new Array();
 
-    {
-        let _sequence = range$1(1, _context.category + 1),
-            _index = 0,
-            _length = _sequence.length,
-            foo = _sequence[0];
+  {
+    let _sequence = range$1(1, _context.category + 1),
+        _index = 0,
+        _length = _sequence.length,
+        foo = _sequence[0];
 
-        for (; _index < _length; _index++, foo = _sequence[_index]) {
-            _child[_child.length] = <span key={foo} className={\\"qtp-item__star icon-ic icon-icn_star--white \\" + foo}>{_include()}</span>;
-        }
+    for (; _index < _length; _index++, foo = _sequence[_index]) {
+      _child[_child.length] = <span key={foo} className={\\"qtp-item__star icon-ic icon-icn_star--white \\" + foo}>{_include()}</span>;
     }
-    return <div>{_child}</div>;
+  }
+  return <div>{_child}</div>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"ForWithIncludeOnly\\";
+  _template.displayName = \\"ForWithIncludeOnly\\";
 }
 
 export default function ForWithIncludeOnly(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -452,45 +452,45 @@ import { range as range$1 } from \\"lodash\\";
 export const _template = {};
 
 _template.render = function (_context) {
-    let _child = new Array();
+  let _child = new Array();
 
-    {
-        let _sequence = range$1(1, _context.category + 1),
-            _index = 0,
-            _length = _sequence.length,
-            _context$1 = createSubContext(_context, {
-            foo: _sequence[0],
-            loop: {
-                index: 1,
-                index0: 0,
-                length: _length,
-                revindex: _length,
-                revindex0: _length - 1,
-                first: true,
-                last: 1 === _length
-            }
-        });
+  {
+    let _sequence = range$1(1, _context.category + 1),
+        _index = 0,
+        _length = _sequence.length,
+        _context$1 = createSubContext(_context, {
+      foo: _sequence[0],
+      loop: {
+        index: 1,
+        index0: 0,
+        length: _length,
+        revindex: _length,
+        revindex0: _length - 1,
+        first: true,
+        last: 1 === _length
+      }
+    });
 
-        for (; _index < _length; _index++) {
-            _child[_child.length] = <span key={_context$1.foo} className={\\"qtp-item__star icon-ic icon-icn_star--white \\" + _context$1.foo}>{_include(_context$1)}</span>;
-            _context$1.loop.index0++;
-            _context$1.loop.index++;
-            _context$1.loop.revindex--;
-            _context$1.loop.revindex0--;
-            _context$1.loop.first = false;
-            _context$1.loop.last = _context$1.loop.revindex === 0;
-            _context$1.foo = _sequence[_index + 1];
-        }
+    for (; _index < _length; _index++) {
+      _child[_child.length] = <span key={_context$1.foo} className={\\"qtp-item__star icon-ic icon-icn_star--white \\" + _context$1.foo}>{_include(_context$1)}</span>;
+      _context$1.loop.index0++;
+      _context$1.loop.index++;
+      _context$1.loop.revindex--;
+      _context$1.loop.revindex0--;
+      _context$1.loop.first = false;
+      _context$1.loop.last = _context$1.loop.revindex === 0;
+      _context$1.foo = _sequence[_index + 1];
     }
-    return <div>{_child}</div>;
+  }
+  return <div>{_child}</div>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"ForWithInclude\\";
+  _template.displayName = \\"ForWithInclude\\";
 }
 
 export default function ForWithInclude(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -500,7 +500,7 @@ exports[`Compiler should correctly transform itemElement.template 1`] = `
 export const _template = {};
 
 _template.render = function (_context) {
-    return <section className=\\"item-list p-gutter-0 bg-trv-maincolor-04-lightest\\"><h1 className=\\"visually-hidden\\">Deals</h1><ol className=\\"item-order\\"><li className=\\"item-order__list-item\\"><article className=\\"item bg-white clearfix\\" itemScope itemType=\\"http://schema.org/Hotel\\"><div className=\\"item__image-area\\"><div className=\\"item__image-wrapper pos-relative\\"><span className=\\"item__image-placeholder hide-text trv-maincolor-04-very-light icon-icn_pictures_fill_light\\">No image for this deal.</span><button className=\\"icon-icn_heart_dark_outlined icon-ic item__favourite-btn\\">Add the <em>Lorem Ipsum dolor sit amet</em> to my favorites list</button></div></div><div className=\\"item__flex-column\\"><div className=\\"item__details\\"><h2 className=\\"item__name item__name--5-star mt-0 item__slideout-toggle\\" itemProp=\\"name\\"><span className=\\"item__name__copytext td-underline--hover\\">Lorem Ipsum dolor sit amet</span></h2><div className=\\"item__location ov-hidden item__slideout-toggle\\"><em className=\\"item__mini-icon fl-leading hide-text border-radius trv-maincolor-01\\">Next to location:</em><p className=\\"details__paragraph td-underline--hover\\"><span className=\\"item__distance\\"><span>Amsterdam,</span><em className=\\"fs-normal fw-bold\\">1.2km</em> to City centre </span></p></div><div className=\\"item__review item__slideout-toggle\\"><em className=\\"item__mini-icon fl-leading hide-text border-radius  icon-icn_smilie2_light \\">“Good”</em><p className=\\"details__paragraph td-underline--hover\\" itemScope itemType=\\"http://schema.org/AggregateRating\\"><em className=\\"item__rating-number fs-normal fw-bold\\" itemProp=\\"ratingValue\\">76 / 100</em> - <span className=\\"review__extended-text\\">hotel rating</span><span className=\\"review__count\\" itemProp=\\"reviewCount\\"><span className=\\"whs-nowrap\\">(754 reviews)</span></span></p></div></div><section className=\\"item__deal-other\\"><h4 className=\\"visually-hidden\\">Other deals</h4><ul><li className=\\"deal-other__offer\\"><button className=\\"btn--reset  font-trv-maincolor-04-light td-underline--hover\\"><strong className=\\"deals__price\\">156€</strong> booking.com</button></li></ul><button className=\\"deal-other__more btn--reset font-trv-maincolor-01 item__slideout-toggle td-underline--hover\\">View more deals: 17</button></section><section className=\\"item__deal-best\\"><div className=\\"item__deal-best-link block ov-hidden font-dark\\"><h4 className=\\"item__deal-best-headline m-0 fw-normal ta-center\\">Best of 17 websites</h4><div className=\\"item__best-details\\" itemProp=\\"priceRange\\"><div><p className=\\"pt-0 font-small font-trv-maincolor-04-lighter cur-disabled--hover\\">Change date to see available deals.</p></div></div><button className=\\"btn btn--icon \\" /></div></section></div><div className=\\"item__slideout slideout--inactive ov-hidden\\"><section><h4 className=\\"h4 visuallyhidden\\">Detailed information for this deal</h4><nav className=\\"item__slideout-nav clearfix\\"><h5 className=\\"h5 visuallyhidden\\">Navigation for detailed information</h5><p className=\\"item__slideout-close p-0 fl-trailing hide-text icon-icn__ip-close\\">Close</p></nav><div className=\\"gutter-box\\"><h5 className=\\"h5 ta-center\\">Slideout contents here</h5><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error et eveniet hic numquam quisquam vel vitae!
+  return <section className=\\"item-list p-gutter-0 bg-trv-maincolor-04-lightest\\"><h1 className=\\"visually-hidden\\">Deals</h1><ol className=\\"item-order\\"><li className=\\"item-order__list-item\\"><article className=\\"item bg-white clearfix\\" itemScope itemType=\\"http://schema.org/Hotel\\"><div className=\\"item__image-area\\"><div className=\\"item__image-wrapper pos-relative\\"><span className=\\"item__image-placeholder hide-text trv-maincolor-04-very-light icon-icn_pictures_fill_light\\">No image for this deal.</span><button className=\\"icon-icn_heart_dark_outlined icon-ic item__favourite-btn\\">Add the <em>Lorem Ipsum dolor sit amet</em> to my favorites list</button></div></div><div className=\\"item__flex-column\\"><div className=\\"item__details\\"><h2 className=\\"item__name item__name--5-star mt-0 item__slideout-toggle\\" itemProp=\\"name\\"><span className=\\"item__name__copytext td-underline--hover\\">Lorem Ipsum dolor sit amet</span></h2><div className=\\"item__location ov-hidden item__slideout-toggle\\"><em className=\\"item__mini-icon fl-leading hide-text border-radius trv-maincolor-01\\">Next to location:</em><p className=\\"details__paragraph td-underline--hover\\"><span className=\\"item__distance\\"><span>Amsterdam,</span><em className=\\"fs-normal fw-bold\\">1.2km</em> to City centre </span></p></div><div className=\\"item__review item__slideout-toggle\\"><em className=\\"item__mini-icon fl-leading hide-text border-radius  icon-icn_smilie2_light \\">“Good”</em><p className=\\"details__paragraph td-underline--hover\\" itemScope itemType=\\"http://schema.org/AggregateRating\\"><em className=\\"item__rating-number fs-normal fw-bold\\" itemProp=\\"ratingValue\\">76 / 100</em> - <span className=\\"review__extended-text\\">hotel rating</span><span className=\\"review__count\\" itemProp=\\"reviewCount\\"><span className=\\"whs-nowrap\\">(754 reviews)</span></span></p></div></div><section className=\\"item__deal-other\\"><h4 className=\\"visually-hidden\\">Other deals</h4><ul><li className=\\"deal-other__offer\\"><button className=\\"btn--reset  font-trv-maincolor-04-light td-underline--hover\\"><strong className=\\"deals__price\\">156€</strong> booking.com</button></li></ul><button className=\\"deal-other__more btn--reset font-trv-maincolor-01 item__slideout-toggle td-underline--hover\\">View more deals: 17</button></section><section className=\\"item__deal-best\\"><div className=\\"item__deal-best-link block ov-hidden font-dark\\"><h4 className=\\"item__deal-best-headline m-0 fw-normal ta-center\\">Best of 17 websites</h4><div className=\\"item__best-details\\" itemProp=\\"priceRange\\"><div><p className=\\"pt-0 font-small font-trv-maincolor-04-lighter cur-disabled--hover\\">Change date to see available deals.</p></div></div><button className=\\"btn btn--icon \\" /></div></section></div><div className=\\"item__slideout slideout--inactive ov-hidden\\"><section><h4 className=\\"h4 visuallyhidden\\">Detailed information for this deal</h4><nav className=\\"item__slideout-nav clearfix\\"><h5 className=\\"h5 visuallyhidden\\">Navigation for detailed information</h5><p className=\\"item__slideout-close p-0 fl-trailing hide-text icon-icn__ip-close\\">Close</p></nav><div className=\\"gutter-box\\"><h5 className=\\"h5 ta-center\\">Slideout contents here</h5><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error et eveniet hic numquam quisquam vel vitae!
                                 Atque consectetur consequatur, dignissimos dolor eius harum officiis pariatur qui quia reprehenderit sit
                                 ullam veritatis! Amet error exercitationem ipsam quibusdam ullam! Aperiam aspernatur aut harum hic impedit
                                 sequi sint tenetur ullam velit, vitae voluptatibus.</p></div></section></div></article></li><li className=\\"item-order__list-item\\"><article className=\\"item bg-white clearfix\\" itemScope itemType=\\"http://schema.org/Hotel\\"><div className=\\"item__image-area\\"><div className=\\"item__image-wrapper pos-relative\\"><span className=\\"item__image-placeholder hide-text trv-maincolor-04-very-light icon-icn_pictures_fill_light\\">No image for this deal.</span><button className=\\"icon-icn_heart_dark_outlined icon-ic item__favourite-btn\\">Add the <em>Lorem Ipsum dolor sit amet</em> to my favorites list</button></div></div><div className=\\"item__flex-column\\"><div className=\\"item__details\\"><h2 className=\\"item__name item__name--3-star mt-0 item__slideout-toggle\\" itemProp=\\"name\\"><span className=\\"item__name__copytext td-underline--hover\\">Lorem Ipsum dolor sit amet</span></h2><div className=\\"item__location ov-hidden item__slideout-toggle\\"><em className=\\"item__mini-icon fl-leading hide-text border-radius trv-maincolor-01\\">Next to location:</em><p className=\\"details__paragraph td-underline--hover\\"><span className=\\"item__distance\\"><span>Amsterdam,</span><em className=\\"fs-normal fw-bold\\">0.9km</em> to London Heathrow Airport </span></p></div><div className=\\"item__review item__slideout-toggle\\"><em className=\\"item__mini-icon fl-leading hide-text border-radius  icon-icn_smilie2_light \\">“Good”</em><p className=\\"details__paragraph td-underline--hover\\" itemScope itemType=\\"http://schema.org/AggregateRating\\"><em className=\\"item__rating-number fs-normal fw-bold\\" itemProp=\\"ratingValue\\">76 / 100</em> - <span className=\\"review__extended-text\\">hotel rating</span><span className=\\"review__count\\" itemProp=\\"reviewCount\\"><span className=\\"whs-nowrap\\">(754 reviews)</span></span></p></div></div><section className=\\"item__deal-other\\"><h4 className=\\"visually-hidden\\">Other deals</h4><ul><li className=\\"deal-other__offer\\"><button className=\\"btn--reset  font-trv-maincolor-04-light td-underline--hover\\"><strong className=\\"deals__price\\">156€</strong> booking.com</button></li></ul><button className=\\"deal-other__more btn--reset font-trv-maincolor-01 item__slideout-toggle td-underline--hover\\">View more deals: 17</button></section><section className=\\"item__deal-best\\"><div className=\\"item__deal-best-link block ov-hidden font-dark\\"><h4 className=\\"item__deal-best-headline m-0 fw-normal ta-center\\">Best of 17 websites</h4><div className=\\"item__best-details\\" itemProp=\\"priceRange\\"><div><p className=\\"pt-0 font-small font-trv-maincolor-04-lighter cur-disabled--hover\\">Change date to see available deals.</p></div></div><button className=\\"btn btn--icon \\" /></div></section></div><div className=\\"item__slideout slideout--inactive ov-hidden\\"><section><h4 className=\\"h4 visuallyhidden\\">Detailed information for this deal</h4><nav className=\\"item__slideout-nav clearfix\\"><h5 className=\\"h5 visuallyhidden\\">Navigation for detailed information</h5><p className=\\"item__slideout-close p-0 fl-trailing hide-text icon-icn__ip-close\\">Close</p></nav><div className=\\"gutter-box\\"><h5 className=\\"h5 ta-center\\">Slideout contents here</h5><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error et eveniet hic numquam quisquam vel vitae!
@@ -519,11 +519,11 @@ _template.render = function (_context) {
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"ItemElement\\";
+  _template.displayName = \\"ItemElement\\";
 }
 
 export default function ItemElement(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -534,29 +534,29 @@ import { input as input_field } from \\"forms.html\\";
 import * as foo from \\"forms.html\\";
 export const _template = {};
 export function input(name, value, type, size, ...varargs) {
-    return <input type={type != null && type !== '' ? type : \\"text\\"} name={name} value={value} size={size != null && size !== '' ? size : 20} {...varargs} />;
+  return <input type={type != null && type !== '' ? type : \\"text\\"} name={name} value={value} size={size != null && size !== '' ? size : 20} {...varargs} />;
 }
 
 _template.renderTest = function (_context) {
-    const forms = {
-        input
-    };
-    return <div>{foo.bar(\\"test\\")}{forms.input(\\"foo\\", \\"bar\\", \\"baz\\", 42)}{input_field(\\"foo\\")}</div>;
+  const forms = {
+    input
+  };
+  return <div>{foo.bar(\\"test\\")}{forms.input(\\"foo\\", \\"bar\\", \\"baz\\", 42)}{input_field(\\"foo\\")}</div>;
 };
 
 _template.render = function (_context) {
-    const forms = {
-        input
-    };
-    return <div>{foo.bar(\\"test\\")}{forms.input(\\"foo\\", \\"bar\\", \\"baz\\", 42)}{input_field(\\"foo\\")}{this.renderTest(_context)}</div>;
+  const forms = {
+    input
+  };
+  return <div>{foo.bar(\\"test\\")}{forms.input(\\"foo\\", \\"bar\\", \\"baz\\", 42)}{input_field(\\"foo\\")}{this.renderTest(_context)}</div>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"Macros\\";
+  _template.displayName = \\"Macros\\";
 }
 
 export default function Macros(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -568,15 +568,15 @@ import Component from \\"./component\\";
 export const _template = {};
 
 _template.render = function (_context) {
-    return <div><Component key={\\"bar\\"} /><Footwig key={\\"bar\\"} /><Footwig foo={\\"bar\\"} key={\\"bar\\"} /><_context.Foo key={_context.bar} /><_context.Foo foo={\\"bar\\"} key={\\"bar\\"} /></div>;
+  return <div><Component key={\\"bar\\"} /><Footwig key={\\"bar\\"} /><Footwig foo={\\"bar\\"} key={\\"bar\\"} /><_context.Foo key={_context.bar} /><_context.Foo foo={\\"bar\\"} key={\\"bar\\"} /></div>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"Mount\\";
+  _template.displayName = \\"Mount\\";
 }
 
 export default function Mount(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -589,143 +589,143 @@ import { merge } from \\"melody-runtime\\";
 export const _template = {};
 
 _template.render = function (_context) {
-    let tEB_SAME_WINDOW_CLICKOUT, ironItem1p1, bClickoutClientside, sBtnModifiers, flagModifiers, dataVariables;
-    tEB_SAME_WINDOW_CLICKOUT = false;
-    ironItem1p1 = true;
-    bClickoutClientside = false;
-    sBtnModifiers = \\"\\";
+  let tEB_SAME_WINDOW_CLICKOUT, ironItem1p1, bClickoutClientside, sBtnModifiers, flagModifiers, dataVariables;
+  tEB_SAME_WINDOW_CLICKOUT = false;
+  ironItem1p1 = true;
+  bClickoutClientside = false;
+  sBtnModifiers = \\"\\";
 
-    let _child;
+  let _child;
 
-    let _child$1, _child$3, _child$4, _child$5, _child$22;
+  let _child$1, _child$3, _child$4, _child$5, _child$22;
 
-    if (!ironItem1p1) {
-        if (typeof _context.rateCount !== \\"undefined\\") {
-            _child$1 = <h4 className=\\"item__deal-best-headline m-0 fw-normal ta-center\\">ie_bestdeal</h4>;
-        }
+  if (!ironItem1p1) {
+    if (typeof _context.rateCount !== \\"undefined\\") {
+      _child$1 = <h4 className=\\"item__deal-best-headline m-0 fw-normal ta-center\\">ie_bestdeal</h4>;
+    }
+  }
+
+  if (_context.bestPriceDeal) {
+    flagModifiers = \\"trv-maincolor-03 font-bright cur-pointer--hover\\";
+
+    if (ironItem1p1) {
+      flagModifiers = \\"font-bright cur-pointer--hover\\";
     }
 
-    if (_context.bestPriceDeal) {
-        flagModifiers = \\"trv-maincolor-03 font-bright cur-pointer--hover\\";
+    if (_context.isTopDeal) {
+      dataVariables = {
+        \\"data-topdeal-percentage\\": _context.topDealPercentage,
+        \\"data-topdeal-price\\": _context.bestPriceDeal.price,
+        \\"data-topdeal-compare-price\\": _context.topDealComparePrice,
+        \\"data-topdeal-criterion\\": _context.topDealCriterion,
+        \\"data-topdeal-criterion-id\\": _context.topDealCriterionId,
+        \\"data-topdeal-category\\": _context.category,
+        \\"data-topdeal-path-name\\": _context.pathName,
+        \\"data-topdeal-overall-liking\\": _context.overallLiking
+      };
+      flagModifiers = flagModifiers + \\" top_deals js_top_deals \\" + _context.topDealCriterion;
+      dataVariables = merge(dataVariables, {
+        \\"data-topdeal-log\\": \\"1\\"
+      });
+      _child$3 = _include({
+        \\"styleModifier\\": flagModifiers,
+        \\"dataVariables\\": dataVariables,
+        \\"text\\": \\"ie_topdeal\\"
+      });
+    } else {
+      if (_context.iSaving >= 20) {
+        _child$4 = _include({
+          \\"styleModifier\\": flagModifiers,
+          \\"dataVariables\\": dataVariables,
+          \\"text\\": \\"-\\" + _context.saving + \\"%\\"
+        });
+      }
+    }
+  }
 
-        if (ironItem1p1) {
-            flagModifiers = \\"font-bright cur-pointer--hover\\";
-        }
+  let _child$6;
 
-        if (_context.isTopDeal) {
-            dataVariables = {
-                \\"data-topdeal-percentage\\": _context.topDealPercentage,
-                \\"data-topdeal-price\\": _context.bestPriceDeal.price,
-                \\"data-topdeal-compare-price\\": _context.topDealComparePrice,
-                \\"data-topdeal-criterion\\": _context.topDealCriterion,
-                \\"data-topdeal-criterion-id\\": _context.topDealCriterionId,
-                \\"data-topdeal-category\\": _context.category,
-                \\"data-topdeal-path-name\\": _context.pathName,
-                \\"data-topdeal-overall-liking\\": _context.overallLiking
-            };
-            flagModifiers = flagModifiers + \\" top_deals js_top_deals \\" + _context.topDealCriterion;
-            dataVariables = merge(dataVariables, {
-                \\"data-topdeal-log\\": \\"1\\"
-            });
-            _child$3 = _include({
-                \\"styleModifier\\": flagModifiers,
-                \\"dataVariables\\": dataVariables,
-                \\"text\\": \\"ie_topdeal\\"
-            });
-        } else {
-            if (_context.iSaving >= 20) {
-                _child$4 = _include({
-                    \\"styleModifier\\": flagModifiers,
-                    \\"dataVariables\\": dataVariables,
-                    \\"text\\": \\"-\\" + _context.saving + \\"%\\"
-                });
-            }
-        }
+  let _child$7, _child$10, _child$11, _child$12, _child$14, _child$15, _child$17, _child$20;
+
+  if (false) {
+    let _child$8, _child$9;
+
+    if (_context.bestPriceDeal.groupId == 80 && _context.bestPriceDeal.useLocalizedHotelWebsiteLogo) {
+      _child$8 = \\"book_hotel_website_test\\";
+    } else {
+      _child$9 = _context.bestPriceDeal.sName;
     }
 
-    let _child$6;
+    _child$7 = <em className=\\"item__deal-best-ota block fs-normal cur-pointer--hover\\">{_child$8}{_child$9}</em>;
+  }
 
-    let _child$7, _child$10, _child$11, _child$12, _child$14, _child$15, _child$17, _child$20;
+  if (_context.bestPriceDeal) {
+    if (_context.maxPriceDeal) {
+      _child$10 = <meta itemProp=\\"maxPrice\\" content={_context.maxPriceDeal.displayPrice} />;
+      _child$11 = <meta itemProp=\\"minPrice\\" content={_context.bestPriceDeal.displayPrice} />;
+      _child$12 = <s className={\\"item__price-striked block cur-pointer--hover\\" + (!_context.isBigFontSiteInBestPrice ? \\" long_digit\\" : \\"\\")}>{_context.maxPriceDeal.price}</s>;
+    } else {
+      _child$14 = <meta itemProp=\\"price\\" content={_context.bestPriceDeal.displayPrice} />;
+    }
+
+    _child$15 = <strong className={\\"item__best-price block cur-pointer--hover price\\" + (_context.maxPriceDeal ? \\"_min\\" : \\" single\\") + (!_context.isBigFontSiteInBestPrice ? \\" long_digit\\" : \\"\\")}>{_context.bestPriceDeal.price}</strong>;
 
     if (false) {
-        let _child$8, _child$9;
+      let _child$18, _child$19;
 
-        if (_context.bestPriceDeal.groupId == 80 && _context.bestPriceDeal.useLocalizedHotelWebsiteLogo) {
-            _child$8 = \\"book_hotel_website_test\\";
-        } else {
-            _child$9 = _context.bestPriceDeal.sName;
-        }
+      if (_context.oBestPriceDeal.iGroupId == 80 && _context.oBestPriceDeal.bUseLocalizedHotelWebsiteLogo) {
+        _child$18 = \\"book_hotel_website_test\\";
+      } else {
+        _child$19 = _context.oBestPriceDeal.sName;
+      }
 
-        _child$7 = <em className=\\"item__deal-best-ota block fs-normal cur-pointer--hover\\">{_child$8}{_child$9}</em>;
+      _child$17 = <em className=\\"item__deal-best-ota block fs-normal cur-pointer--hover\\">{_child$18}{_child$19}</em>;
     }
 
-    if (_context.bestPriceDeal) {
-        if (_context.maxPriceDeal) {
-            _child$10 = <meta itemProp=\\"maxPrice\\" content={_context.maxPriceDeal.displayPrice} />;
-            _child$11 = <meta itemProp=\\"minPrice\\" content={_context.bestPriceDeal.displayPrice} />;
-            _child$12 = <s className={\\"item__price-striked block cur-pointer--hover\\" + (!_context.isBigFontSiteInBestPrice ? \\" long_digit\\" : \\"\\")}>{_context.maxPriceDeal.price}</s>;
-        } else {
-            _child$14 = <meta itemProp=\\"price\\" content={_context.bestPriceDeal.displayPrice} />;
-        }
-
-        _child$15 = <strong className={\\"item__best-price block cur-pointer--hover price\\" + (_context.maxPriceDeal ? \\"_min\\" : \\" single\\") + (!_context.isBigFontSiteInBestPrice ? \\" long_digit\\" : \\"\\")}>{_context.bestPriceDeal.price}</strong>;
-
-        if (false) {
-            let _child$18, _child$19;
-
-            if (_context.oBestPriceDeal.iGroupId == 80 && _context.oBestPriceDeal.bUseLocalizedHotelWebsiteLogo) {
-                _child$18 = \\"book_hotel_website_test\\";
-            } else {
-                _child$19 = _context.oBestPriceDeal.sName;
-            }
-
-            _child$17 = <em className=\\"item__deal-best-ota block fs-normal cur-pointer--hover\\">{_child$18}{_child$19}</em>;
-        }
-
-        if (true) {
-            sBtnModifiers = \\"btn--deal fl-trailing\\";
-        }
-
-        if (false) {
-            sBtnModifiers = sBtnModifiers + \\" alt\\";
-        }
-    } else if (_context.state == 1) {
-        _child$20 = <p className=\\"font-trv-maincolor-04-lighter cur-disabled--hover\\">unavailable_deal</p>;
-
-        if (true) {
-            sBtnModifiers = \\"btn--icon btn--deal btn--disabled fl-trailing trv-maincolor-04-very-light\\";
-        }
-    } else {
-        if (true) {
-            sBtnModifiers = \\"btn--icon btn--deal btn--disabled fl-trailing trv-maincolor-04-very-light\\";
-        }
+    if (true) {
+      sBtnModifiers = \\"btn--deal fl-trailing\\";
     }
 
-    _child$6 = <div>{_child$7}{_child$10}{_child$11}{_child$12}{_child$14}{_child$15}{_child$17}{_child$20}</div>;
-    _child$5 = <div className=\\"item__best-details\\">{_child$6}</div>;
-    _child$22 = _include$1({
-        \\"styleModifier\\": sBtnModifiers,
-        \\"text\\": \\"deals_forward_new\\"
-    });
-    _child = <div {..._context.bestPriceDeal ? {
-        onclick: \\"\\",
-        \\"data-link\\": _context.bestPriceDeal.clickoutLinkUrl,
-        \\"data-co_li_lo\\": bClickoutClientside ? \\"1\\" : \\"\\",
-        \\"data-partner\\": _context.bestPriceDeal.groupId,
-        \\"data-item\\": _context.id,
-        \\"data-teb\\": _context.bestPriceDeal.expressBookingAvailable && tEB_SAME_WINDOW_CLICKOUT ? \\"1\\" : \\"\\",
-        \\"data-alternative\\": _context.isAlternativeHotel ? \\"1\\" : \\"0\\",
-        \\"data-dbid\\": _context.bestPriceDeal.debuggingId != null && _context.bestPriceDeal.debuggingId !== '' ? _context.bestPriceDeal.debuggingId : \\"\\"
-    } : []} className={\\"item__deal-best-link ov-hidden font-dark js_item_bestprice\\\\n                \\" + (!_context.isItemAvailable ? \\"no_availability\\" : !_context.bestPriceDeal ? \\"incomplete\\" : \\"\\") + \\"\\\\n                \\" + (_context.bestPriceDeal ? \\"js_cClickoutLink\\" : \\"\\") + \\"\\\\n                \\" + (_context.saving >= 20 ? \\"reduced\\" : \\"\\")} itemProp=\\"priceSpecification\\" itemScope itemType=\\"http://schema.org/PriceSpecification\\">{_child$1}{_child$3}{_child$4}{_child$5}{_child$22}</div>;
-    return <section className=\\"item__deal-best\\" itemProp=\\"makesOffer\\" itemScope itemType=\\"http://schema.org/Offer\\">{_child}</section>;
+    if (false) {
+      sBtnModifiers = sBtnModifiers + \\" alt\\";
+    }
+  } else if (_context.state == 1) {
+    _child$20 = <p className=\\"font-trv-maincolor-04-lighter cur-disabled--hover\\">unavailable_deal</p>;
+
+    if (true) {
+      sBtnModifiers = \\"btn--icon btn--deal btn--disabled fl-trailing trv-maincolor-04-very-light\\";
+    }
+  } else {
+    if (true) {
+      sBtnModifiers = \\"btn--icon btn--deal btn--disabled fl-trailing trv-maincolor-04-very-light\\";
+    }
+  }
+
+  _child$6 = <div>{_child$7}{_child$10}{_child$11}{_child$12}{_child$14}{_child$15}{_child$17}{_child$20}</div>;
+  _child$5 = <div className=\\"item__best-details\\">{_child$6}</div>;
+  _child$22 = _include$1({
+    \\"styleModifier\\": sBtnModifiers,
+    \\"text\\": \\"deals_forward_new\\"
+  });
+  _child = <div {..._context.bestPriceDeal ? {
+    onclick: \\"\\",
+    \\"data-link\\": _context.bestPriceDeal.clickoutLinkUrl,
+    \\"data-co_li_lo\\": bClickoutClientside ? \\"1\\" : \\"\\",
+    \\"data-partner\\": _context.bestPriceDeal.groupId,
+    \\"data-item\\": _context.id,
+    \\"data-teb\\": _context.bestPriceDeal.expressBookingAvailable && tEB_SAME_WINDOW_CLICKOUT ? \\"1\\" : \\"\\",
+    \\"data-alternative\\": _context.isAlternativeHotel ? \\"1\\" : \\"0\\",
+    \\"data-dbid\\": _context.bestPriceDeal.debuggingId != null && _context.bestPriceDeal.debuggingId !== '' ? _context.bestPriceDeal.debuggingId : \\"\\"
+  } : []} className={\\"item__deal-best-link ov-hidden font-dark js_item_bestprice\\\\n                \\" + (!_context.isItemAvailable ? \\"no_availability\\" : !_context.bestPriceDeal ? \\"incomplete\\" : \\"\\") + \\"\\\\n                \\" + (_context.bestPriceDeal ? \\"js_cClickoutLink\\" : \\"\\") + \\"\\\\n                \\" + (_context.saving >= 20 ? \\"reduced\\" : \\"\\")} itemProp=\\"priceSpecification\\" itemScope itemType=\\"http://schema.org/PriceSpecification\\">{_child$1}{_child$3}{_child$4}{_child$5}{_child$22}</div>;
+  return <section className=\\"item__deal-best\\" itemProp=\\"makesOffer\\" itemScope itemType=\\"http://schema.org/Offer\\">{_child}</section>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"MultiInclude\\";
+  _template.displayName = \\"MultiInclude\\";
 }
 
 export default function MultiInclude(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -735,29 +735,29 @@ exports[`Compiler should correctly transform raw.template 1`] = `
 export const _template = {};
 
 _template.render = function (_context) {
-    let vars;
+  let vars;
 
-    let _child, _child$1;
+  let _child, _child$1;
 
-    vars = {
-        \\"foo\\": \\"<span>foo</span>\\",
-        \\"bar\\": <span dangerouslySetInnerHTML={{
-            __html: \\"<span>bar</span>\\"
-        }} />
-    };
-    _child = <span dangerouslySetInnerHTML={{
-        __html: vars.foo
-    }} />;
-    _child$1 = vars.bar;
-    return <div>{_child}{_child$1}</div>;
+  vars = {
+    \\"foo\\": \\"<span>foo</span>\\",
+    \\"bar\\": <span dangerouslySetInnerHTML={{
+      __html: \\"<span>bar</span>\\"
+    }} />
+  };
+  _child = <span dangerouslySetInnerHTML={{
+    __html: vars.foo
+  }} />;
+  _child$1 = vars.bar;
+  return <div>{_child}{_child$1}</div>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"Raw\\";
+  _template.displayName = \\"Raw\\";
 }
 
 export default function Raw(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -767,15 +767,15 @@ exports[`Compiler should correctly transform ref.template 1`] = `
 export const _template = {};
 
 _template.render = function (_context) {
-    return <div ref=\\"foo\\"><span className=\\"bar\\" ref=\\"span\\">udisuabcd</span><i className=\\"icon-heart\\" ref=\\"heart-icon\\" /><input type=\\"text\\" ref=\\"text\\" /><span ref=\\"test\\" {..._context.foo} /><span ref=\\"test2\\" {..._context.foo}>test</span></div>;
+  return <div ref=\\"foo\\"><span className=\\"bar\\" ref=\\"span\\">udisuabcd</span><i className=\\"icon-heart\\" ref=\\"heart-icon\\" /><input type=\\"text\\" ref=\\"text\\" /><span ref=\\"test\\" {..._context.foo} /><span ref=\\"test2\\" {..._context.foo}>test</span></div>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"Ref\\";
+  _template.displayName = \\"Ref\\";
 }
 
 export default function Ref(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -785,16 +785,16 @@ exports[`Compiler should correctly transform spaceless.template 1`] = `
 export const _template = {};
 
 _template.render = function (_context) {
-    return <div className=\\"qtp-item__text\\" data-test={\\"Speceless testing:\\" + _context.formattedIncentive + \\"foo\\"}>Receive {_context.formattedIncentive} cash back for testing this hotel.
+  return <div className=\\"qtp-item__text\\" data-test={\\"Speceless testing:\\" + _context.formattedIncentive + \\"foo\\"}>Receive {_context.formattedIncentive} cash back for testing this hotel.
     Or just <span>be</span> happy!</div>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"Spaceless\\";
+  _template.displayName = \\"Spaceless\\";
 }
 
 export default function Spaceless(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;
@@ -805,50 +805,50 @@ import { styles, classes } from \\"melody-runtime\\";
 export const _template = {};
 
 _template.render = function (_context) {
-    return <div style={styles({
-        foo: _context.bar
-    })}>Lorem Ipsum</div>;
-    return <div style={styles({
-        foo: _context.bar
-    } != null && {
-        foo: _context.bar
-    } !== '' ? {
-        foo: _context.bar
-    } : \\"\\")}>Lorem Ipsum</div>;
-    return <div style={styles({
-        foo: _context.bar
-    } != null && {
-        foo: _context.bar
-    } !== '' ? {
-        foo: _context.bar
-    } : {})}>Lorem Ipsum</div>;
-    return <div style={styles({
-        border: _context.borderVal,
-        top: _context.topVal,
-        left: _context.leftVal
-    })}>Lorem Ipsum</div>;
-    return <div className={classes({
-        base: \\"foo\\",
-        \\"foo--active\\": _context.active,
-        \\"foo--disabled\\": _context.disabled
-    })} style={styles({
-        \\"border\\": _context.border,
-        \\"top\\": _context.top,
-        \\"left\\": _context.left
-    })}>Lorem Ipsum</div>;
-    return <div style={styles({
-        \\"color\\": _context.color,
-        [\\"border-\\" + _context.borderSide]: _context.border,
-        [_context.position]: _context.positionValue
-    })}>Lorem Ipsum</div>;
+  return <div style={styles({
+    foo: _context.bar
+  })}>Lorem Ipsum</div>;
+  return <div style={styles({
+    foo: _context.bar
+  } != null && {
+    foo: _context.bar
+  } !== '' ? {
+    foo: _context.bar
+  } : \\"\\")}>Lorem Ipsum</div>;
+  return <div style={styles({
+    foo: _context.bar
+  } != null && {
+    foo: _context.bar
+  } !== '' ? {
+    foo: _context.bar
+  } : {})}>Lorem Ipsum</div>;
+  return <div style={styles({
+    border: _context.borderVal,
+    top: _context.topVal,
+    left: _context.leftVal
+  })}>Lorem Ipsum</div>;
+  return <div className={classes({
+    base: \\"foo\\",
+    \\"foo--active\\": _context.active,
+    \\"foo--disabled\\": _context.disabled
+  })} style={styles({
+    \\"border\\": _context.border,
+    \\"top\\": _context.top,
+    \\"left\\": _context.left
+  })}>Lorem Ipsum</div>;
+  return <div style={styles({
+    \\"color\\": _context.color,
+    [\\"border-\\" + _context.borderSide]: _context.border,
+    [_context.position]: _context.positionValue
+  })}>Lorem Ipsum</div>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"Styles\\";
+  _template.displayName = \\"Styles\\";
 }
 
 export default function Styles(props) {
-    return _template.render(props);
+  return _template.render(props);
 }
 "
 `;

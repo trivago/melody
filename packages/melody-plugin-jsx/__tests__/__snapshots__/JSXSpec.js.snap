@@ -4,23 +4,23 @@ exports[`JSX should hoist attributes that will get mutated 1`] = `
 "export const _template = {};
 
 _template.render = function (_context) {
-    let foo;
-    foo = \\"bar\\";
+  let foo;
+  foo = \\"bar\\";
 
-    let _prop = foo,
-        _child;
+  let _prop = foo,
+      _child;
 
-    foo = \\"qux\\";
-    _child = <p className={foo} title={foo}>Hello World</p>;
-    return <div className={_prop}>{_child}</div>;
+  foo = \\"qux\\";
+  _child = <p className={foo} title={foo}>Hello World</p>;
+  return <div className={_prop}>{_child}</div>;
 };
 
 if (process.env.NODE_ENV !== \\"production\\") {
-    _template.displayName = \\"Test\\";
+  _template.displayName = \\"Test\\";
 }
 
 export default function Test(props) {
-    return _template.render(props);
+  return _template.render(props);
 }"
 `;
 

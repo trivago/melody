@@ -39,7 +39,7 @@ afterAll(async () => {
     });
 });
 
-describe('melody-loader intergration tests', async () => {
+describe('melody-loader intergration tests', () => {
     test('transforms melody template to js', async () => {
         const compiler = await createCompiler({
             context: resolve(__dirname, '../__fixtures__/simple'),

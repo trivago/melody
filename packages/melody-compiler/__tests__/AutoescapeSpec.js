@@ -25,34 +25,7 @@ describe('autoescape', function() {
 Everything will be automatically escaped in this block using the {{ strategy }} strategy.
 {% endautoescape %}`
             );
-            expect(node.expressions[0]).toMatchObject({
-                type: 'AutoescapeBlock',
-                escapeType: 'html',
-                expressions: [
-                    {
-                        type: 'PrintTextStatement',
-                        value: {
-                            type: 'StringLiteral',
-                            value:
-                                '\nEverything will be automatically escaped in this block using the ',
-                        },
-                    },
-                    {
-                        type: 'PrintExpressionStatement',
-                        value: {
-                            type: 'Identifier',
-                            name: 'strategy',
-                        },
-                    },
-                    {
-                        type: 'PrintTextStatement',
-                        value: {
-                            type: 'StringLiteral',
-                            value: ' strategy.\n',
-                        },
-                    },
-                ],
-            });
+            expect(node.expressions[0]).toMatchSnapshot();
         });
     });
 });

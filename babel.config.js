@@ -1,5 +1,4 @@
 module.exports = function(api) {
-    debugger;
     api && api.cache(true);
 
     const presets = [

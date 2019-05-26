@@ -30,11 +30,11 @@ Object.defineProperty(exports, \\"__esModule\\", {
   value: true
 });
 exports._template = undefined;
-exports.default = Test;
+exports[\\"default\\"] = Test;
 
 var _melodyIdom = require(\\"melody-idom\\");
 
-const _template = exports._template = {};
+var _template = exports._template = {};
 
 _template.render = function (_context) {
   (0, _melodyIdom.elementOpen)(\\"div\\", null, null);
@@ -58,11 +58,11 @@ Object.defineProperty(exports, \\"__esModule\\", {
   value: true
 });
 exports._template = undefined;
-exports.default = Test;
+exports[\\"default\\"] = Test;
 
 var _melodyIdom = require(\\"melody-idom\\");
 
-const _template = exports._template = {};
+var _template = exports._template = {};
 
 _template.render = function (_context) {
   (0, _melodyIdom.elementOpen)(\\"div\\", null, null);

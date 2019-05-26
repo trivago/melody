@@ -2,7 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import babel from 'rollup-plugin-babel';
 import json from 'rollup-plugin-json';
-import { uglify } from 'rollup-plugin-uglify';
+import { terser } from 'rollup-plugin-terser';
+
+const babelConfig = require('./babel.config');
 
 // reads package.json of packages (melody-*) in packages directory
 const pkg = fs.readFileSync(path.join(process.cwd(), './package.json'));
@@ -21,11 +23,9 @@ const config = {
     plugins: [
         json(),
         babel({
+            runtimeHelpers: true,
             exclude: 'node_modules/**',
-            plugins: [
-                '@babel/plugin-external-helpers',
-                '@babel/plugin-transform-flow-strip-types'
-            ],
+            ...babelConfig()
         }),
     ],
     external: [
@@ -45,17 +45,13 @@ const esmModuleOutput = function() {
 };
 
 // Let's skip ES Modules in production environment
-if (pkgJSON['jsnext:main'] && process.env.NODE_ENV !== 'production') {
+if (pkgJSON['jsnext:main'] && process.env.NODE_ENV !== 'release') {
     config.output.push(esmModuleOutput());
 }
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'release') {
     config.plugins.push(
-        uglify({
-            mangle: {
-                toplevel: true,
-            },
-        })
+        terser()
     );
 }
 

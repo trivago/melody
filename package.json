@@ -107,11 +107,11 @@
         },
         {
             "path": "./packages/melody-hoc/lib/index.js",
-            "maxSize": "1.73 kB"
+            "maxSize": "1.6 kB"
         },
         {
             "path": "./packages/melody-redux/lib/index.js",
-            "maxSize": "1.35 kB"
+            "maxSize": "1.25 kB"
         },
         {
             "path": "./packages/melody-streams/lib/index.js",

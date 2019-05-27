@@ -104,19 +104,19 @@
         },
         {
             "path": "./packages/melody-idom/lib/index.js",
-            "maxSize": "4.67 kB"
+            "maxSize": "5.40 kB"
         },
         {
             "path": "./packages/melody-hoc/lib/index.js",
-            "maxSize": "1.73 kB"
+            "maxSize": "1.20 kB"
         },
         {
             "path": "./packages/melody-redux/lib/index.js",
-            "maxSize": "1.35 kB"
+            "maxSize": "1 kB"
         },
         {
             "path": "./packages/melody-streams/lib/index.js",
-            "maxSize": "1.53 kB"
+            "maxSize": "1.30 kB"
         }
     ],
     "husky": {

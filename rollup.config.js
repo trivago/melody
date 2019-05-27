@@ -50,7 +50,11 @@ if (pkgJSON['jsnext:main'] && process.env.NODE_ENV !== 'release') {
 }
 
 if (process.env.NODE_ENV === 'release') {
-    config.plugins.push(terser());
+    config.plugins.push(terser({
+        mangle: {
+            toplevel: true,
+        },
+    }));
 }
 
 export default config;

@@ -22,21 +22,17 @@ import * as path from 'path';
 jest.mock('find-babel-config', () => ({
     sync: jest.fn().mockImplementation(path => ({
         config: {
-            env: {
-                test: {
-                    presets: [
-                        [
-                            'env',
-                            {
-                                targets: {
-                                    node: '6',
-                                },
-                            },
-                        ],
-                    ],
-                    plugins: ['transform-inline-environment-variables'],
-                },
-            },
+            presets: [
+                [
+                    '@babel/preset-env',
+                    {
+                        targets: {
+                            node: '6',
+                        },
+                    },
+                ],
+            ],
+            plugins: ['transform-inline-environment-variables'],
         },
     })),
 }));
@@ -74,17 +70,17 @@ describe('Custom transformer', () => {
         ];
 
         const babel = {
-                    presets: [
-                        [
-                            'env',
-                            {
-                                targets: {
-                                    node: '6',
-                                },
-                            },
-                        ],
-                    ],
-                    plugins: ['transform-inline-environment-variables'],
+            presets: [
+                [
+                    '@babel/preset-env',
+                    {
+                        targets: {
+                            node: '6',
+                        },
+                    },
+                ],
+            ],
+            plugins: ['transform-inline-environment-variables'],
         };
 
         test('test.twig', { plugins, babel });

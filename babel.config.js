@@ -8,7 +8,6 @@ const config = {
                     loose: true,
                 },
             ],
-            '@babel/preset-react',
         ],
         plugins: [],
     },
@@ -21,14 +20,12 @@ const config = {
                     loose: true,
                 },
             ],
-            '@babel/preset-react',
         ],
         plugins: [],
     },
     test: {
         presets: [
             '@babel/preset-env',
-            '@babel/preset-react',
         ],
         plugins: [
             [
@@ -50,6 +47,7 @@ module.exports = function(api) {
     } else {
         return {
             presets: [
+                '@babel/preset-react',
                 ...envConfig.presets
             ],
             plugins: [

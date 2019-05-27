@@ -1,18 +1,29 @@
 const config = {
     release: {
-        presets: [],
-        plugins: [
-            'lodash',
-            '@babel/plugin-transform-flow-strip-types',
-            'transform-inline-environment-variables',
-        ]
+        presets: [
+            [
+                '@babel/preset-env',
+                {
+                    modules: false,
+                    loose: true,
+                },
+            ],
+            '@babel/preset-react',
+        ],
+        plugins: [],
     },
     development: {
-        presets: [],
-        plugins: [
-            'lodash',
-            '@babel/plugin-transform-flow-strip-types',
-        ]
+        presets: [
+            [
+                '@babel/preset-env',
+                {
+                    modules: false,
+                    loose: true,
+                },
+            ],
+            '@babel/preset-react',
+        ],
+        plugins: [],
     },
     test: {
         presets: [
@@ -20,25 +31,32 @@ const config = {
             '@babel/preset-react',
         ],
         plugins: [
-            'lodash',
-            '@babel/plugin-transform-flow-strip-types',
-            '@babel/plugin-proposal-object-rest-spread',
-            ['@babel/plugin-transform-runtime',
+            [
+                '@babel/plugin-transform-runtime',
                 {
-                    regenerator: true
-                }
-            ]
-        ]
-    }
-}
+                    regenerator: true,
+                },
+            ],
+        ],
+    },
+};
 
 module.exports = function(api) {
     api && api.cache(true);
     const envConfig = config[process.env.NODE_ENV];
 
     if (!envConfig) {
-        throw new Error('Error: Babel config not found.')
+        throw new Error('Error: Babel config not found.');
     } else {
-        return envConfig;
+        return {
+            presets: [
+                ...envConfig.presets
+            ],
+            plugins: [
+                'lodash',
+                '@babel/plugin-transform-flow-strip-types',
+                ...envConfig.plugins
+            ]
+        };
     }
 };

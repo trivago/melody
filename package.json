@@ -33,7 +33,6 @@
         "@babel/cli": "7.4.4",
         "@babel/core": "7.4.5",
         "@babel/generator": "7.4.4",
-        "@babel/plugin-proposal-object-rest-spread": "7.4.4",
         "@babel/plugin-transform-flow-strip-types": "7.4.4",
         "@babel/plugin-transform-runtime": "7.4.4",
         "@babel/polyfill": "7.4.4",
@@ -100,23 +99,23 @@
     "bundlesize": [
         {
             "path": "./packages/melody-component/lib/index.js",
-            "maxSize": "1.10 kB"
+            "maxSize": "1.16 kB"
         },
         {
             "path": "./packages/melody-idom/lib/index.js",
-            "maxSize": "5.40 kB"
+            "maxSize": "5.6 kB"
         },
         {
             "path": "./packages/melody-hoc/lib/index.js",
-            "maxSize": "1.20 kB"
+            "maxSize": "1.73 kB"
         },
         {
             "path": "./packages/melody-redux/lib/index.js",
-            "maxSize": "1 kB"
+            "maxSize": "1.35 kB"
         },
         {
             "path": "./packages/melody-streams/lib/index.js",
-            "maxSize": "1.30 kB"
+            "maxSize": "1.57 kB"
         }
     ],
     "husky": {

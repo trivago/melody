@@ -9,7 +9,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@babel/core": "*",
+    "@babel/core": "7.4.5",
     "find-babel-config": "^1.2.0",
     "melody-compiler": "link:../melody-compiler",
     "melody-extension-core": "link:../melody-extension-core"

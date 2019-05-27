@@ -10,6 +10,6 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@babel/types":"*"
+    "@babel/types":"7.4.4"
   }
 }

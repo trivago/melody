@@ -10,9 +10,9 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@babel/generator": "*",
-    "@babel/template": "*",
-    "@babel/types":"*",
+    "@babel/generator": "7.4.4",
+    "@babel/template": "7.4.4",
+    "@babel/types": "7.4.4",
     "lodash": "^4.12.0",
     "melody-code-frame": "link:../melody-code-frame",
     "random-seed": "^0.3.0"

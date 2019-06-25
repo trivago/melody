@@ -75,7 +75,7 @@ _embed$1.renderHello = function (_context) {
 _embed$1.renderTest = function (_context) {};
 
 _template.renderHello = function (_context) {
-    return <div className={\\"test-\\" + _context.foo + \\" bar\\"}>{_embed$3.render(createSubContext(_context, {
+    return <div className={\`test-\${_context.foo} bar\`}>{_embed$3.render(createSubContext(_context, {
             foo: \\"bar\\"
         }))}</div>;
 };
@@ -428,7 +428,7 @@ _template.render = function (_context) {
             foo = _sequence[0];
 
         for (; _index < _length; _index++, foo = _sequence[_index]) {
-            _child[_child.length] = <span key={foo} className={\\"qtp-item__star icon-ic icon-icn_star--white \\" + foo}>{_include()}</span>;
+            _child[_child.length] = <span key={foo} className={\`qtp-item__star icon-ic icon-icn_star--white \${foo}\`}>{_include()}</span>;
         }
     }
     return <div>{_child}</div>;
@@ -472,7 +472,7 @@ _template.render = function (_context) {
         });
 
         for (; _index < _length; _index++) {
-            _child[_child.length] = <span key={_context$1.foo} className={\\"qtp-item__star icon-ic icon-icn_star--white \\" + _context$1.foo}>{_include(_context$1)}</span>;
+            _child[_child.length] = <span key={_context$1.foo} className={\`qtp-item__star icon-ic icon-icn_star--white \${_context$1.foo}\`}>{_include(_context$1)}</span>;
             _context$1.loop.index0++;
             _context$1.loop.index++;
             _context$1.loop.revindex--;
@@ -623,7 +623,7 @@ _template.render = function (_context) {
                 \\"data-topdeal-path-name\\": _context.pathName,
                 \\"data-topdeal-overall-liking\\": _context.overallLiking
             };
-            flagModifiers = flagModifiers + \\" top_deals js_top_deals \\" + _context.topDealCriterion;
+            flagModifiers = \`\${flagModifiers} top_deals js_top_deals \${_context.topDealCriterion}\`;
             dataVariables = merge(dataVariables, {
                 \\"data-topdeal-log\\": \\"1\\"
             });
@@ -637,7 +637,7 @@ _template.render = function (_context) {
                 _child$4 = _include({
                     \\"styleModifier\\": flagModifiers,
                     \\"dataVariables\\": dataVariables,
-                    \\"text\\": \\"-\\" + _context.saving + \\"%\\"
+                    \\"text\\": \`-\${_context.saving}%\`
                 });
             }
         }
@@ -663,12 +663,12 @@ _template.render = function (_context) {
         if (_context.maxPriceDeal) {
             _child$10 = <meta itemProp=\\"maxPrice\\" content={_context.maxPriceDeal.displayPrice} />;
             _child$11 = <meta itemProp=\\"minPrice\\" content={_context.bestPriceDeal.displayPrice} />;
-            _child$12 = <s className={\\"item__price-striked block cur-pointer--hover\\" + (!_context.isBigFontSiteInBestPrice ? \\" long_digit\\" : \\"\\")}>{_context.maxPriceDeal.price}</s>;
+            _child$12 = <s className={\`item__price-striked block cur-pointer--hover\${!_context.isBigFontSiteInBestPrice ? \\" long_digit\\" : \\"\\"}\`}>{_context.maxPriceDeal.price}</s>;
         } else {
             _child$14 = <meta itemProp=\\"price\\" content={_context.bestPriceDeal.displayPrice} />;
         }
 
-        _child$15 = <strong className={\\"item__best-price block cur-pointer--hover price\\" + (_context.maxPriceDeal ? \\"_min\\" : \\" single\\") + (!_context.isBigFontSiteInBestPrice ? \\" long_digit\\" : \\"\\")}>{_context.bestPriceDeal.price}</strong>;
+        _child$15 = <strong className={\`item__best-price block cur-pointer--hover price\${_context.maxPriceDeal ? \\"_min\\" : \\" single\\"}\${!_context.isBigFontSiteInBestPrice ? \\" long_digit\\" : \\"\\"}\`}>{_context.bestPriceDeal.price}</strong>;
 
         if (false) {
             let _child$18, _child$19;
@@ -687,7 +687,7 @@ _template.render = function (_context) {
         }
 
         if (false) {
-            sBtnModifiers = sBtnModifiers + \\" alt\\";
+            sBtnModifiers = \`\${sBtnModifiers} alt\`;
         }
     } else if (_context.state == 1) {
         _child$20 = <p className=\\"font-trv-maincolor-04-lighter cur-disabled--hover\\">unavailable_deal</p>;
@@ -716,7 +716,10 @@ _template.render = function (_context) {
         \\"data-teb\\": _context.bestPriceDeal.expressBookingAvailable && tEB_SAME_WINDOW_CLICKOUT ? \\"1\\" : \\"\\",
         \\"data-alternative\\": _context.isAlternativeHotel ? \\"1\\" : \\"0\\",
         \\"data-dbid\\": _context.bestPriceDeal.debuggingId != null && _context.bestPriceDeal.debuggingId !== '' ? _context.bestPriceDeal.debuggingId : \\"\\"
-    } : []} className={\\"item__deal-best-link ov-hidden font-dark js_item_bestprice\\\\n                \\" + (!_context.isItemAvailable ? \\"no_availability\\" : !_context.bestPriceDeal ? \\"incomplete\\" : \\"\\") + \\"\\\\n                \\" + (_context.bestPriceDeal ? \\"js_cClickoutLink\\" : \\"\\") + \\"\\\\n                \\" + (_context.saving >= 20 ? \\"reduced\\" : \\"\\")} itemProp=\\"priceSpecification\\" itemScope itemType=\\"http://schema.org/PriceSpecification\\">{_child$1}{_child$3}{_child$4}{_child$5}{_child$22}</div>;
+    } : []} className={\`item__deal-best-link ov-hidden font-dark js_item_bestprice
+                \${!_context.isItemAvailable ? \\"no_availability\\" : !_context.bestPriceDeal ? \\"incomplete\\" : \\"\\"}
+                \${_context.bestPriceDeal ? \\"js_cClickoutLink\\" : \\"\\"}
+                \${_context.saving >= 20 ? \\"reduced\\" : \\"\\"}\`} itemProp=\\"priceSpecification\\" itemScope itemType=\\"http://schema.org/PriceSpecification\\">{_child$1}{_child$3}{_child$4}{_child$5}{_child$22}</div>;
     return <section className=\\"item__deal-best\\" itemProp=\\"makesOffer\\" itemScope itemType=\\"http://schema.org/Offer\\">{_child}</section>;
 };
 
@@ -785,7 +788,7 @@ exports[`Compiler should correctly transform spaceless.template 1`] = `
 export const _template = {};
 
 _template.render = function (_context) {
-    return <div className=\\"qtp-item__text\\" data-test={\\"Speceless testing:\\" + _context.formattedIncentive + \\"foo\\"}>Receive {_context.formattedIncentive} cash back for testing this hotel.
+    return <div className=\\"qtp-item__text\\" data-test={\`Speceless testing:\${_context.formattedIncentive}foo\`}>Receive {_context.formattedIncentive} cash back for testing this hotel.
     Or just <span>be</span> happy!</div>;
 };
 
@@ -838,7 +841,7 @@ _template.render = function (_context) {
     })}>Lorem Ipsum</div>;
     return <div style={styles({
         \\"color\\": _context.color,
-        [\\"border-\\" + _context.borderSide]: _context.border,
+        [\`border-\${_context.borderSide}\`]: _context.border,
         [_context.position]: _context.positionValue
     })}>Lorem Ipsum</div>;
 };

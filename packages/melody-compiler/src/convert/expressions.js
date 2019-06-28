@@ -91,12 +91,6 @@ export default {
                     )
                 );
             }
-            // path.replaceWithJS({
-            //     type: 'BinaryExpression',
-            //     operator: '+',
-            //     left: node.left,
-            //     right: node.right,
-            // });
         },
     },
     BinaryPowerExpression: {

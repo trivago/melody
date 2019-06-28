@@ -184,12 +184,12 @@ _template.render = function (_context) {
 
     for (; _index < _length; _index++, item = _sequence[_index]) {
       let className;
-      className = \`li-\${_context.id}\`;
+      className = \`li-\${ _context.id }\`;
 
       let _prop = className,
           _child$1;
 
-      className = \`span-\${_context.id}\`;
+      className = \`span-\${ _context.id }\`;
       _child$1 = <span className={className}>{item.label}</span>;
       _child[_child.length] = <li key={item.id} className={_prop}>{_child$1}</li>;
     }

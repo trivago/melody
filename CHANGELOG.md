@@ -1,6 +1,8 @@
 ## master
 
-### Bugfixes
+## 1.2.0
+
+### Bug fixes
 - Fix melody-stream not rerendering in some cases [#112](https://github.com/trivago/melody/pull/112)
 - Warn about usage of non-breaking space [#107](https://github.com/trivago/melody/pull/107)
 - Fixed bindings of dispatchCustomEvent in `melody-streams` [#117](https://github.com/trivago/melody/pull/117)

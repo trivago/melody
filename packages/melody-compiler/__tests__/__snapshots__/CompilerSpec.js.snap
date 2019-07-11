@@ -2108,6 +2108,34 @@ export default function Spaceless(props) {
 "
 `;
 
+exports[`Compiler should correctly transform static to dynamic attrs.template 1`] = `
+"
+import { elementVoid, elementOpen, elementClose } from \\"melody-idom\\";
+export const _template = {};
+const _statics = [\\"class\\", \\"foo\\"];
+
+_template.render = function (_context) {
+    elementOpen(\\"div\\", null, null);
+
+    if (_context.foo) {
+        elementVoid(\\"div\\", \\"7*U2;JR\\", _statics);
+    } else {
+        elementVoid(\\"div\\", null, null, \\"class\\", \\"foo \\" + (_context.bar ? \\"bar\\" : \\"\\"));
+    }
+
+    elementClose(\\"div\\");
+};
+
+if (process.env.NODE_ENV !== \\"production\\") {
+    _template.displayName = \\"StaticToDynamicAttrs\\";
+}
+
+export default function StaticToDynamicAttrs(props) {
+    return _template.render(props);
+}
+"
+`;
+
 exports[`Compiler should correctly transform styles.template 1`] = `
 "
 import { text, elementOpen, elementClose, elementOpenStart, elementOpenEnd, attr } from \\"melody-idom\\";

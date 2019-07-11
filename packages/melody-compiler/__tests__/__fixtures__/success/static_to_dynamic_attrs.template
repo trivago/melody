@@ -1,0 +1,9 @@
+<div>
+    {% if foo %}
+        <div class="foo"></div>
+    {% else %}
+        <div class="foo {{ bar ? 'bar' }}"></div>
+    {% endif %}
+</div>
+
+

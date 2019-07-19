@@ -1,4 +1,5 @@
 ## master
+- Do not log warning for component first emission in `melody-streams` in production [#128](https://github.com/trivago/melody/pull/128)
 
 ## 1.2.0
 

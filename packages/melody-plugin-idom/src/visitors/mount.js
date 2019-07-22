@@ -108,8 +108,24 @@ export default {
                 }
 
                 if (isAsync) {
+                    /* webpackPrefetch: true */
                     const source = path.node.source;
 
+                    source.leadingComments = [
+                        {
+                            type: 'CommentBlock',
+                            value: ` ${[
+                                path.get('key').is('StringLiteral')
+                                    ? `webpackChunkName: "${
+                                          args[args.length - 1].value
+                                      }"`
+                                    : '',
+                                'webpackPrefetch: true',
+                            ]
+                                .filter(Boolean)
+                                .join(', ')} `,
+                        },
+                    ];
                     const argument = [
                         t.objectProperty(
                             t.identifier('promisedComponent'),

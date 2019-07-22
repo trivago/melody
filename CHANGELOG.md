@@ -1,6 +1,5 @@
 ## master
 - Do not log warning for component first emission in `melody-streams` in production [#128](https://github.com/trivago/melody/pull/128)
-- Remove prefetch for async components [#130](https://github.com/trivago/melody/pull/130)
 
 ## 1.2.0
 

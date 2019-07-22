@@ -1,6 +1,10 @@
 ## master
+
+## 1.2.1
+
+### Bug fixes
 - Do not log warning for component first emission in `melody-streams` in production [#128](https://github.com/trivago/melody/pull/128)
-- Removes prefetch for asynchronously mounted components [#129](https://github.com/trivago/melody/issues/129)
+- Removes webpack `prefetch` for asynchronously mounted components [#129](https://github.com/trivago/melody/issues/129)
 
 ## 1.2.0
 

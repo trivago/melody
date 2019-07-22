@@ -188,7 +188,7 @@ _embed$1.renderHello = function (_context) {
 _embed$1.renderTest = function (_context) {};
 
 _template.renderHello = function (_context) {
-    elementOpen(\\"div\\", null, null, \\"class\\", \\"test-\\" + _context.foo + \\" bar\\");
+    elementOpen(\\"div\\", null, null, \\"class\\", \`test-\${ _context.foo } bar\`);
 
     _embed$3.render(createSubContext(_context, {
         foo: \\"bar\\"
@@ -239,7 +239,12 @@ _template.render = function (_context) {
   text(range(_context.a, _context.b));
   text(_context.a + _context.b);
   text(_context.a - _context.b);
-  text(_context.a + _context.b);
+  text(\`\${ _context.a }\${ _context.b }\`);
+  text(\`\${ _context.a }\${ _context.b }\${ _context.c }\`);
+  text(\`a\${ _context.b }\`);
+  text(\`\${ _context.a }b\`);
+  text(\\"ab\\");
+  text(\\"abc\\");
   text(_context.a * _context.b);
   text(_context.a / _context.b);
   text(_context.a % _context.b);
@@ -620,7 +625,7 @@ _template.render = function (_context) {
         foo = _sequence[0];
 
     for (; _index < _length; _index++, foo = _sequence[_index]) {
-      elementOpen(\\"span\\", \\"\\" + foo, null, \\"class\\", \\"qtp-item__star icon-ic icon-icn_star--white \\" + foo);
+      elementOpen(\\"span\\", \\"\\" + foo, null, \\"class\\", \`qtp-item__star icon-ic icon-icn_star--white \${ foo }\`);
 
       _include();
 
@@ -666,7 +671,7 @@ _template.render = function (_context) {
     });
 
     for (; _index < _length; _index++) {
-      elementOpen(\\"span\\", \\"\\" + _context$1.foo, null, \\"class\\", \\"qtp-item__star icon-ic icon-icn_star--white \\" + _context$1.foo);
+      elementOpen(\\"span\\", \\"\\" + _context$1.foo, null, \\"class\\", \`qtp-item__star icon-ic icon-icn_star--white \${ _context$1.foo }\`);
 
       _include(_context$1);
 
@@ -1650,8 +1655,8 @@ _template.render = function (_context) {
       foo: \\"bar\\"
     }
   });
-  component(AsyncComponent, \\"\\" + (\\"bar-\\" + _context.part), {
-    promisedComponent: () => import( /* webpackPrefetch: true */\\"./parts/\\" + _context.part + \\".twig\\"),
+  component(AsyncComponent, \\"\\" + \`bar-\${ _context.part }\`, {
+    promisedComponent: () => import( /* webpackPrefetch: true */\`./parts/\${ _context.part }.twig\`),
     delayLoadingAnimation: 1000,
     whileLoading: () => {
       text(\\" Loading... \\");
@@ -1666,7 +1671,7 @@ _template.render = function (_context) {
     }
   });
   component(AsyncComponent, \\"bar\\", {
-    promisedComponent: () => import( /* webpackChunkName: \\"bar\\", webpackPrefetch: true */\\"./parts/\\" + _context.part + \\".twig\\"),
+    promisedComponent: () => import( /* webpackChunkName: \\"bar\\", webpackPrefetch: true */\`./parts/\${ _context.part }.twig\`),
     delayLoadingAnimation: 1000,
     whileLoading: () => {
       text(\\" Loading... \\");
@@ -1677,7 +1682,7 @@ _template.render = function (_context) {
     }
   });
   component(AsyncComponent, \\"bar\\", {
-    promisedComponent: () => import( /* webpackChunkName: \\"bar\\", webpackPrefetch: true */\\"./parts/\\" + _context.part + \\".twig\\"),
+    promisedComponent: () => import( /* webpackChunkName: \\"bar\\", webpackPrefetch: true */\`./parts/\${ _context.part }.twig\`),
     delayLoadingAnimation: 1000,
     whileLoading: () => {
       elementOpen(\\"strong\\", null, null);
@@ -1725,7 +1730,10 @@ _template.render = function (_context) {
     bClickoutClientside = false;
     sBtnModifiers = \\"\\";
     elementOpen(\\"section\\", \\"f-%v2ak\\", _statics$9, \\"itemscope\\", true);
-    elementOpenStart(\\"div\\", \\"K$/#=(h\\", _statics$8, \\"class\\", \\"item__deal-best-link ov-hidden font-dark js_item_bestprice\\\\n                \\" + (!_context.isItemAvailable ? \\"no_availability\\" : !_context.bestPriceDeal ? \\"incomplete\\" : \\"\\") + \\"\\\\n                \\" + (_context.bestPriceDeal ? \\"js_cClickoutLink\\" : \\"\\") + \\"\\\\n                \\" + (_context.saving >= 20 ? \\"reduced\\" : \\"\\"), \\"itemscope\\", true);
+    elementOpenStart(\\"div\\", \\"K$/#=(h\\", _statics$8, \\"class\\", \`item__deal-best-link ov-hidden font-dark js_item_bestprice
+                \${ !_context.isItemAvailable ? \\"no_availability\\" : !_context.bestPriceDeal ? \\"incomplete\\" : \\"\\" }
+                \${ _context.bestPriceDeal ? \\"js_cClickoutLink\\" : \\"\\" }
+                \${ _context.saving >= 20 ? \\"reduced\\" : \\"\\" }\`, \\"itemscope\\", true);
 
     for (let _i = 0, _a = process.env.NODE_ENV === \\"production\\" || Array.isArray((_context.bestPriceDeal ? attrs({
         onclick: \\"\\",
@@ -1788,7 +1796,7 @@ _template.render = function (_context) {
                 \\"data-topdeal-path-name\\": _context.pathName,
                 \\"data-topdeal-overall-liking\\": _context.overallLiking
             };
-            flagModifiers = flagModifiers + \\" top_deals js_top_deals \\" + _context.topDealCriterion;
+            flagModifiers = \`\${ flagModifiers } top_deals js_top_deals \${ _context.topDealCriterion }\`;
             dataVariables = merge(dataVariables, {
                 \\"data-topdeal-log\\": \\"1\\"
             });
@@ -1803,7 +1811,7 @@ _template.render = function (_context) {
                 _include({
                     \\"styleModifier\\": flagModifiers,
                     \\"dataVariables\\": dataVariables,
-                    \\"text\\": \\"-\\" + _context.saving + \\"%\\"
+                    \\"text\\": \`-\${ _context.saving }%\`
                 });
             }
         }
@@ -1828,14 +1836,14 @@ _template.render = function (_context) {
         if (_context.maxPriceDeal) {
             elementVoid(\\"meta\\", \\"ECmr>3o\\", _statics$2, \\"content\\", _context.maxPriceDeal.displayPrice);
             elementVoid(\\"meta\\", \\"e_NpGiT\\", _statics$3, \\"content\\", _context.bestPriceDeal.displayPrice);
-            elementOpen(\\"s\\", null, null, \\"class\\", \\"item__price-striked block cur-pointer--hover\\" + (!_context.isBigFontSiteInBestPrice ? \\" long_digit\\" : \\"\\"));
+            elementOpen(\\"s\\", null, null, \\"class\\", \`item__price-striked block cur-pointer--hover\${ !_context.isBigFontSiteInBestPrice ? \\" long_digit\\" : \\"\\" }\`);
             text(_context.maxPriceDeal.price);
             elementClose(\\"s\\");
         } else {
             elementVoid(\\"meta\\", \\"1ntl?'O\\", _statics$4, \\"content\\", _context.bestPriceDeal.displayPrice);
         }
 
-        elementOpen(\\"strong\\", null, null, \\"class\\", \\"item__best-price block cur-pointer--hover price\\" + (_context.maxPriceDeal ? \\"_min\\" : \\" single\\") + (!_context.isBigFontSiteInBestPrice ? \\" long_digit\\" : \\"\\"));
+        elementOpen(\\"strong\\", null, null, \\"class\\", \`item__best-price block cur-pointer--hover price\${ _context.maxPriceDeal ? \\"_min\\" : \\" single\\" }\${ !_context.isBigFontSiteInBestPrice ? \\" long_digit\\" : \\"\\" }\`);
         text(_context.bestPriceDeal.price);
         elementClose(\\"strong\\");
 
@@ -1856,7 +1864,7 @@ _template.render = function (_context) {
         }
 
         if (false) {
-            sBtnModifiers = sBtnModifiers + \\" alt\\";
+            sBtnModifiers = \`\${ sBtnModifiers } alt\`;
         }
     } else if (_context.state == 1) {
         elementOpen(\\"p\\", \\"$J_dRYB\\", _statics$6);
@@ -2087,7 +2095,7 @@ export const _template = {};
 const _statics = [\\"class\\", \\"qtp-item__text\\"];
 
 _template.render = function (_context) {
-    elementOpen(\\"div\\", \\"S9hzS{)\\", _statics, \\"data-test\\", \\"Speceless testing:\\" + _context.formattedIncentive + \\"foo\\");
+    elementOpen(\\"div\\", \\"S9hzS{)\\", _statics, \\"data-test\\", \`Speceless testing:\${ _context.formattedIncentive }foo\`);
     text(\\"Receive \\");
     text(_context.formattedIncentive);
     text(\\" cash back for testing this hotel.\\\\n    Or just \\");
@@ -2219,7 +2227,7 @@ _template.render = function (_context) {
     elementClose(\\"div\\");
     elementOpen(\\"div\\", null, null, \\"style\\", styles({
         \\"color\\": _context.color,
-        [\\"border-\\" + _context.borderSide]: _context.border,
+        [\`border-\${ _context.borderSide }\`]: _context.border,
         [_context.position]: _context.positionValue
     }));
     text(\\"Lorem Ipsum\\");
@@ -2369,7 +2377,7 @@ exports[`Compiler should fail transforming wrong include.template 1`] = `
   3 | </div>
   4 | 
 
-The Include Statement expected a StringLiteral but got a BinaryExpression.
+The Include Statement expected a StringLiteral but got a TemplateLiteral.
 Includes only support static strings as argument.
 
 To include a template asynchronously you can use the \\"mount async\\" statement:
@@ -2483,7 +2491,7 @@ export const _template = {};
 _template.render = function (_context) {
     text({
         a: \\"foo\\",
-        [\\"b\\" + _context.a]: \\"bar\\",
+        [\`b\${ _context.a }\`]: \\"bar\\",
         2: 4,
         [_context.a]: _context.foo
     });
@@ -2540,7 +2548,7 @@ export const _template = {};
 const _statics = [\\"class\\", \\"foo\\"];
 
 _template.render = function (_context) {
-  elementOpenStart(\\"div\\", \\"\\" + (_context._i + _context._len), _statics);
+  elementOpenStart(\\"div\\", \\"\\" + \`\${ _context._i }\${ _context._len }\`, _statics);
 
   for (let _i$1 = 0, _a = process.env.NODE_ENV === \\"production\\" || Array.isArray(_context.dataAttributes) ? _context.dataAttributes : (() => {
     throw new Error(\\"Dynamic attributes have to be an array, found \\" + typeof _context.dataAttributes + \\" instead\\");

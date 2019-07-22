@@ -41,12 +41,56 @@ export default {
     BinaryConcatExpression: {
         exit(path) {
             const node = path.node;
-            path.replaceWithJS({
-                type: 'BinaryExpression',
-                operator: '+',
-                left: node.left,
-                right: node.right,
-            });
+            if (t.isStringLiteral(node.left)) {
+                if (t.isStringLiteral(node.right)) {
+                    path.replaceWithJS(
+                        t.stringLiteral(node.left.value + node.right.value)
+                    );
+                } else {
+                    path.replaceWithJS(
+                        t.templateLiteral(
+                            [t.templateElement({cooked: node.left.value, raw: node.left.value}), t.templateElement({cooked: '', raw: ''})],
+                            [node.right]
+                        )
+                    );
+                }
+            } else if (t.isTemplateLiteral(node.left)) {
+                if (t.isStringLiteral(node.right)) {
+                    // we need to append the new value to the last quasi
+                    // to keep things predictable and pure we start by cloning the existing structure
+                    const quasis = node.left.quasis.map(quasi => t.templateElement({ cooked: quasi.value.cooked, raw: quasi.value.raw }));
+                    const last = quasis[quasis.length - 1];
+                    last.value.cooked += node.right.value;
+                    last.value.raw += node.right.value;
+                    path.replaceWithJS(
+                        t.templateLiteral(
+                            quasis,
+                            node.left.expressions
+                        )
+                    );
+                } else {
+                    path.replaceWithJS(
+                        t.templateLiteral(
+                            [...node.left.quasis, t.templateElement({cooked: '', raw: ''})],
+                            [...node.left.expressions, node.right]
+                        )
+                    );
+                }
+            } else if (t.isStringLiteral(node.right)) {
+                path.replaceWithJS(
+                    t.templateLiteral(
+                        [t.templateElement({cooked: '', raw: ''}), t.templateElement({cooked: node.right.value, raw: node.right.value})],
+                        [node.left]
+                    )
+                );
+            } else {
+                path.replaceWithJS(
+                    t.templateLiteral(
+                        [t.templateElement({cooked: '', raw: ''}), t.templateElement({cooked: '', raw: ''}), t.templateElement({cooked: '', raw: ''})],
+                        [node.left, node.right]
+                    )
+                );
+            }
         },
     },
     BinaryPowerExpression: {

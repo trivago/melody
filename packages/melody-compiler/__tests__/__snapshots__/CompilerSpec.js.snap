@@ -1605,7 +1605,7 @@ _template.render = function (_context) {
     foo: \\"bar\\"
   });
   component(AsyncComponent, \\"bar\\", {
-    promisedComponent: () => import( /* webpackChunkName: \\"bar\\", webpackPrefetch: true */\\"foo.twig\\"),
+    promisedComponent: () => import( /* webpackChunkName: \\"bar\\" */\\"foo.twig\\"),
     delayLoadingAnimation: 0,
     whileLoading: () => {
       text(\\" Loading... \\");
@@ -1620,7 +1620,7 @@ _template.render = function (_context) {
     }
   });
   component(AsyncComponent, \\"bar\\", {
-    promisedComponent: () => import( /* webpackChunkName: \\"bar\\", webpackPrefetch: true */\\"foo.twig\\"),
+    promisedComponent: () => import( /* webpackChunkName: \\"bar\\" */\\"foo.twig\\"),
     delayLoadingAnimation: 500,
     whileLoading: () => {
       text(\\" Loading... \\");
@@ -1635,7 +1635,7 @@ _template.render = function (_context) {
     }
   });
   component(AsyncComponent, \\"bar\\", {
-    promisedComponent: () => import( /* webpackChunkName: \\"bar\\", webpackPrefetch: true */\\"foo.twig\\"),
+    promisedComponent: () => import( /* webpackChunkName: \\"bar\\" */\\"foo.twig\\"),
     delayLoadingAnimation: 1000,
     whileLoading: () => {
       text(\\" Loading... \\");
@@ -1651,7 +1651,7 @@ _template.render = function (_context) {
     }
   });
   component(AsyncComponent, \\"\\" + (\\"bar-\\" + _context.part), {
-    promisedComponent: () => import( /* webpackPrefetch: true */\\"./parts/\\" + _context.part + \\".twig\\"),
+    promisedComponent: () => import( /*  */\\"./parts/\\" + _context.part + \\".twig\\"),
     delayLoadingAnimation: 1000,
     whileLoading: () => {
       text(\\" Loading... \\");
@@ -1666,7 +1666,7 @@ _template.render = function (_context) {
     }
   });
   component(AsyncComponent, \\"bar\\", {
-    promisedComponent: () => import( /* webpackChunkName: \\"bar\\", webpackPrefetch: true */\\"./parts/\\" + _context.part + \\".twig\\"),
+    promisedComponent: () => import( /* webpackChunkName: \\"bar\\" */\\"./parts/\\" + _context.part + \\".twig\\"),
     delayLoadingAnimation: 1000,
     whileLoading: () => {
       text(\\" Loading... \\");
@@ -1677,7 +1677,7 @@ _template.render = function (_context) {
     }
   });
   component(AsyncComponent, \\"bar\\", {
-    promisedComponent: () => import( /* webpackChunkName: \\"bar\\", webpackPrefetch: true */\\"./parts/\\" + _context.part + \\".twig\\"),
+    promisedComponent: () => import( /* webpackChunkName: \\"bar\\" */\\"./parts/\\" + _context.part + \\".twig\\"),
     delayLoadingAnimation: 1000,
     whileLoading: () => {
       elementOpen(\\"strong\\", null, null);

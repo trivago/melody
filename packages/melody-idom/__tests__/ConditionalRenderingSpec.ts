@@ -105,6 +105,35 @@ describe('conditional rendering', () => {
         });
     });
 
+    describe('with static attributes', () => {
+        const _statics = ["class", "foo"];
+        function render(_context) {
+            elementOpen("div", null, null);
+
+             if (_context.condition) {
+                elementVoid("div", "7*U2;JR", _statics);
+            } else {
+                elementVoid("div", null, null, "class", "foo " + (_context.bar ? "bar" : ""));
+            }
+
+             elementClose("div");
+        }
+
+         it('should apply static attributes when recycling an element', () => {
+            patch(container, () => render({ condition: false, bar: true }));
+            expect(container.innerHTML).toMatchSnapshot();
+            patch(container, () => render({ condition: true, bar: true }));
+            expect(container.innerHTML).toMatchSnapshot();
+        });
+
+         it('should remove static attributes when recycling an element', () => {
+            patch(container, () => render({ condition: true, bar: true }));
+            expect(container.innerHTML).toMatchSnapshot();
+            patch(container, () => render({ condition: false, bar: true }));
+            expect(container.innerHTML).toMatchSnapshot();
+        });
+    });
+
     describe('nodes', () => {
         function render(condition) {
             elementOpen('div', null, null, 'id', 'outer');

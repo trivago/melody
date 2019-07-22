@@ -65,11 +65,14 @@ Object.assign(Component.prototype, {
                 updates: this.updates,
                 subscribe: obs => this.subscriptions.push(obs.subscribe()),
             });
-            const warningSubscription = warningTimer.subscribe();
+            const warningSubscription = process.env.NODE_ENV !== 'production'
+                ? warningTimer.subscribe()
+                : null;
             const s = t.pipe(distinctUntilChanged(shallowEqual)).subscribe(
                 state => {
-                    if (!warningSubscription.closed)
+                    if (warningSubscription && !warningSubscription.closed) {
                         warningSubscription.unsubscribe();
+                    }
                     this.state = state;
                     enqueueComponent(this);
                 },

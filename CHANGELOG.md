@@ -1,11 +1,16 @@
 ## master
+- Do not log warning for component first emission in `melody-streams` in production [#128](https://github.com/trivago/melody/pull/128)
+- Remove prefetch for async components [#130](https://github.com/trivago/melody/pull/130)
+- Fixed `~` operator must convert value to string [#123](https://github.com/trivago/melody/pull/123)
 
-### Bugfixes
+## 1.2.0
+
+### Bug fixes
 - Fix melody-stream not rerendering in some cases [#112](https://github.com/trivago/melody/pull/112)
 - Warn about usage of non-breaking space [#107](https://github.com/trivago/melody/pull/107)
 - Fixed bindings of dispatchCustomEvent in `melody-streams` [#117](https://github.com/trivago/melody/pull/117)
 - Fixed `combineRefs` unsubscription in `melody-streams` [#120](https://github.com/trivago/melody/pull/120)
-- Fixed `~` operator must convert value to string [#123](https://github.com/trivago/melody/pull/123)
+- Melody sometimes removes classes from an element / element recycling without attributes [#118](https://github.com/trivago/melody/pull/118/files)
 
 ### Chore & Maintenance
 - Removes `Chai` and `Sinon` support, Migrates tests to use `Jest`'s matchers. [#103](https://github.com/trivago/melody/pull/103)

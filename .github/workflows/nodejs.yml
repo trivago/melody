@@ -4,13 +4,10 @@ on: [push,pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [6.x, 8.x, 10.x]
-
     steps:
     - uses: actions/checkout@v1
     - name: Use Node.js ${{ matrix.node-version }}
@@ -21,5 +18,23 @@ jobs:
       run: |
         yarn
         yarn run test
-      env:
-        CI: true
+  lint:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          node-version: 8.x
+      - name: Check for eslint
+        run: |
+          yarn run lint
+  bundlesize:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          node-version: 8.x
+      - name: Check for assets size
+        run: |
+          yarn run bundlesize

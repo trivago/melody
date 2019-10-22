@@ -51,7 +51,7 @@ action "release:publish" {
 
 action "release:push tag" {
   needs = ["release:publish"]
-  uses = "trivago/melody/actions/cli@github-actions"
+  uses = "trivago/melody/actions/cli"
   args = "git push https://$GITHUB_TOKEN@github.com/trivago/melody.git github-actions --follow-tags"
   secrets = ["GITHUB_TOKEN"]
 }

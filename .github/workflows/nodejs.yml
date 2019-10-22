@@ -3,7 +3,7 @@ name: Node CI
 on: [push,pull_request]
 
 jobs:
-  build:
+  ci:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -14,27 +14,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: yarn install, build, and test
-      run: |
-        yarn
-        yarn run test
-  lint:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-        with:
-          node-version: 8.x
-      - name: Check for eslint
-        run: |
-          yarn run lint
-  bundlesize:
-    needs: lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-        with:
-          node-version: 8.x
-      - name: Check for assets size
-        run: |
-          yarn run bundlesize
+    - name: yarn install and build
+      run: yarn
+    - name: lint
+      run: yarn run lint
+    - name: test
+      run: yarn run test
+    - name: bundlesize
+      run: yarn run bundlesize

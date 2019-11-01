@@ -278,6 +278,21 @@ Object {
 }
 `;
 
+exports[`Parser when parsing Twig comments should match a comment 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "TwigComment",
+      "value": Object {
+        "type": "StringLiteral",
+        "value": "{# This is a comment #}",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
 exports[`Parser when parsing array expressions should allow trailing commas 1`] = `
 Object {
   "expressions": Array [

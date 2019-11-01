@@ -141,6 +141,15 @@ export default class Parser {
                 case Types.ELEMENT_START:
                     p.add(this.matchElement());
                     break;
+                case Types.COMMENT:
+                    p.add(
+                        createNode(
+                            n.TwigComment,
+                            token,
+                            createNode(n.StringLiteral, token, token.text)
+                        )
+                    );
+                    break;
             }
         }
         return p;

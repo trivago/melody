@@ -46,12 +46,13 @@ const UNARY = Symbol(),
     TAG = Symbol(),
     TEST = Symbol();
 export default class Parser {
-    constructor(tokenStream) {
+    constructor(tokenStream, options = { ignoreComments: true }) {
         this.tokens = tokenStream;
         this[UNARY] = {};
         this[BINARY] = {};
         this[TAG] = {};
         this[TEST] = {};
+        this.options = options;
     }
 
     addUnaryOperator(op: UnaryOperator) {
@@ -142,13 +143,15 @@ export default class Parser {
                     p.add(this.matchElement());
                     break;
                 case Types.COMMENT:
-                    p.add(
-                        createNode(
-                            n.TwigComment,
-                            token,
-                            createNode(n.StringLiteral, token, token.text)
-                        )
-                    );
+                    if (!this.options.ignoreComments) {
+                        p.add(
+                            createNode(
+                                n.TwigComment,
+                                token,
+                                createNode(n.StringLiteral, token, token.text)
+                            )
+                        );
+                    }
                     break;
             }
         }

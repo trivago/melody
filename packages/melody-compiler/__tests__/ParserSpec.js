@@ -169,7 +169,9 @@ describe('Parser', function() {
 
     function createParserWithOptions(code, options) {
         const lexer = new Lexer(new CharStream(code));
-        return new Parser(new TokenStream(lexer, options));
+        return new Parser(new TokenStream(lexer, options), {
+            ignoreComments: options.ignoreComments,
+        });
     }
 
     describe('when parsing Twig comments', function() {

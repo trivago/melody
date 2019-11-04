@@ -367,3 +367,12 @@ export class TwigComment extends Node {
 }
 type(TwigComment, 'TwigComment');
 visitor(TwigComment, 'value');
+
+export class HtmlComment extends Node {
+    constructor(text: StringLiteral) {
+        super();
+        this.value = text;
+    }
+}
+type(HtmlComment, 'HtmlComment');
+visitor(HtmlComment, 'value');

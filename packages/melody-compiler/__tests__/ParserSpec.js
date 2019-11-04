@@ -408,6 +408,16 @@ describe('Parser', function() {
             const node = parse`<input type="checkbox" checked>`;
             expect(node).toMatchSnapshot();
         });
+
+        it('should match HTML comments', function() {
+            const parser = createParserWithOptions('<span><!--//--></span>', {
+                ignoreWhitespace: false,
+                ignoreComments: false,
+                ignoreHtmlComments: false,
+            });
+            const node = parser.parse();
+            expect(node).toMatchSnapshot();
+        });
     });
 });
 

@@ -1,5 +1,7 @@
 ## master
 
+## 1.3.0
+
 ### Features
 
 -   `[melody-types]`, `[melody-parser]` Add option to preserve Twig comments in the AST (`ignoreTwigComments`)

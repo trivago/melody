@@ -166,6 +166,7 @@ export default class Parser {
                             )
                         );
                     }
+                    break;
             }
         }
         return p;

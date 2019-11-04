@@ -75,11 +75,6 @@ Actions are located in [actions](/actions) directory in the project root level.
 #### <a id="toc-cli"></a>CLI
 CLI action exposes the debian environment with node:latest version. Find more [here](cli/README.md)
 
-#### <a id="toc-verdaccio-e2e"></a>Verdaccio action as E2E toolkit
-[Verdaccio](https://verdaccio.org) is a lightweight private npm proxy registry built in Node.js and use as E2E toolkit. We push every package to verdaccio before pushing it to npm registry.
-
-Find more about [Verdaccio](https://verdaccio.org) and [Verdaccio action](verdaccio/README.md).
-
 ## <a id="toc-references"></a>References
 ---  
 

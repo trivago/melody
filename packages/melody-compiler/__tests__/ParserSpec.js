@@ -177,7 +177,6 @@ describe('Parser', function() {
     describe('when parsing Twig comments', function() {
         it('should match a comment', function() {
             const parser = createParserWithOptions('{# This is a comment #}', {
-                ignoreWhitespace: false,
                 ignoreComments: false,
                 ignoreHtmlComments: false,
             });
@@ -411,9 +410,16 @@ describe('Parser', function() {
 
         it('should match HTML comments', function() {
             const parser = createParserWithOptions('<span><!--//--></span>', {
-                ignoreWhitespace: false,
                 ignoreComments: false,
                 ignoreHtmlComments: false,
+            });
+            const node = parser.parse();
+            expect(node).toMatchSnapshot();
+        });
+
+        it('should match character entities', function() {
+            const parser = createParserWithOptions('<span>&#8206;</span>', {
+                decodeEntites: false,
             });
             const node = parser.parse();
             expect(node).toMatchSnapshot();

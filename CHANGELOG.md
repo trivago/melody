@@ -2,8 +2,9 @@
 
 ### Features
 
--   `[melody-types]`, `[melody-parser]` The parser offers the option to preserve Twig comments in the AST (`ignoreTwigComments`)
--   `[melody-types]`, `[melody-parser]` The parser offers the option to preserve HTML comments in the AST (`ignoreHtmlComments`)
+-   `[melody-types]`, `[melody-parser]` Add option to preserve Twig comments in the AST (`ignoreTwigComments`)
+-   `[melody-types]`, `[melody-parser]` Add option to preserve HTML comments in the AST (`ignoreHtmlComments`)
+-   `[melody-parser]` Add option to decode character entities (`decodeEntities`, defaults to `true`)
 
 ## 1.2.1
 

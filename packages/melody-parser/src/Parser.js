@@ -48,7 +48,11 @@ const UNARY = Symbol(),
 export default class Parser {
     constructor(
         tokenStream,
-        options = { ignoreComments: true, ignoreHtmlComments: true }
+        options = {
+            ignoreComments: true,
+            ignoreHtmlComments: true,
+            decodeEntites: true,
+        }
     ) {
         this.tokens = tokenStream;
         this[UNARY] = {};
@@ -137,7 +141,9 @@ export default class Parser {
                             createNode(
                                 n.StringLiteral,
                                 token,
-                                he.decode(token.text)
+                                this.options.decodeEntites
+                                    ? he.decode(token.text)
+                                    : token.text
                             )
                         )
                     );

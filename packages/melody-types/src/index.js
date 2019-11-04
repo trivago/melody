@@ -358,3 +358,12 @@ export class Attribute extends Node {
 }
 type(Attribute, 'Attribute');
 visitor(Attribute, 'name', 'value');
+
+export class TwigComment extends Node {
+    constructor(text: StringLiteral) {
+        super();
+        this.value = text;
+    }
+}
+type(TwigComment, 'TwigComment');
+visitor(TwigComment, 'value');

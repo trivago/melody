@@ -167,6 +167,25 @@ describe('Parser', function() {
         });
     });
 
+    function createParserWithOptions(code, options) {
+        const lexer = new Lexer(new CharStream(code));
+        return new Parser(new TokenStream(lexer, options), {
+            ignoreComments: options.ignoreComments,
+        });
+    }
+
+    describe('when parsing Twig comments', function() {
+        it('should match a comment', function() {
+            const parser = createParserWithOptions('{# This is a comment #}', {
+                ignoreWhitespace: false,
+                ignoreComments: false,
+                ignoreHtmlComments: false,
+            });
+            const node = parser.parse();
+            expect(node).toMatchSnapshot();
+        });
+    });
+
     describe('when parsing strings', function() {
         it('should match a string', function() {
             const node = parse`{{ "foo" }}`;
@@ -277,7 +296,7 @@ describe('Parser', function() {
                     expr = new n.BinaryExpression(
                         token.text,
                         expr,
-                        new n.Identifier(test.text),
+                        new n.Identifier(test.text)
                     );
                     if (not) {
                         expr = new n.UnaryExpression('not', expr);
@@ -294,8 +313,8 @@ describe('Parser', function() {
         it('should match tags', function() {
             const p = getParser(
                 getLexer(
-                    '{% if foo %}hello {{ adjective }} world{% else %}hello universe{% endif %}',
-                ),
+                    '{% if foo %}hello {{ adjective }} world{% else %}hello universe{% endif %}'
+                )
             );
             p.addTag({
                 name: 'if',
@@ -322,7 +341,7 @@ describe('Parser', function() {
                     return new n.ConditionalExpression(
                         test,
                         consequent,
-                        alternate,
+                        alternate
                     );
                 },
             });

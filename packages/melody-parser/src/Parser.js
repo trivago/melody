@@ -46,7 +46,10 @@ const UNARY = Symbol(),
     TAG = Symbol(),
     TEST = Symbol();
 export default class Parser {
-    constructor(tokenStream, options = { ignoreComments: true }) {
+    constructor(
+        tokenStream,
+        options = { ignoreComments: true, ignoreHtmlComments: true }
+    ) {
         this.tokens = tokenStream;
         this[UNARY] = {};
         this[BINARY] = {};
@@ -147,6 +150,17 @@ export default class Parser {
                         p.add(
                             createNode(
                                 n.TwigComment,
+                                token,
+                                createNode(n.StringLiteral, token, token.text)
+                            )
+                        );
+                    }
+                    break;
+                case Types.HTML_COMMENT:
+                    if (!this.options.ignoreHtmlComments) {
+                        p.add(
+                            createNode(
+                                n.HtmlComment,
                                 token,
                                 createNode(n.StringLiteral, token, token.text)
                             )

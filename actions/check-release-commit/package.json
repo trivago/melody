@@ -1,0 +1,10 @@
+{
+    "private": true,
+    "name": "check-release-commit",
+    "version": "0.0.1",
+    "license": "MIT",
+    "dependencies": {
+        "@actions/core": "^1.2.0",
+        "@actions/exec": "^1.0.1"
+    }
+}

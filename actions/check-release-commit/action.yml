@@ -1,0 +1,12 @@
+# action.yml
+name: Check release commit
+
+description: 'check melody release commit'
+
+outputs:
+  result:
+    descriptions: 1 or 0
+
+runs:
+  using: 'node12'
+  main: 'main.js'

@@ -65,7 +65,7 @@ jobs:
         
       - name: push melody tags to github
         if: steps.is_release_commit.outputs.result == 1
-        run: git push https://${{ secrets.GITHUB_TOKEN }}@github.com/trivago/melody.git HEAD:master --follow-tags
+        run: git push https://${{ secrets.MELODY_GITHUB_TOKEN }}@github.com/trivago/melody.git HEAD:master --follow-tags
       
       - name: publish melody to npmjs.org
         if: steps.is_release_commit.outputs.result == 1

@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`conditional rendering with static attributes should apply static attributes when recycling an element 1`] = `"<div><div class=\\"foo bar\\"></div></div>"`;
+
+exports[`conditional rendering with static attributes should apply static attributes when recycling an element 2`] = `"<div><div class=\\"foo\\"></div></div>"`;
+
+exports[`conditional rendering with static attributes should remove static attributes when recycling an element 1`] = `"<div><div class=\\"foo\\"></div></div>"`;
+
+exports[`conditional rendering with static attributes should remove static attributes when recycling an element 2`] = `"<div><div class=\\"foo bar\\"></div></div>"`;
+

@@ -46,12 +46,20 @@ const UNARY = Symbol(),
     TAG = Symbol(),
     TEST = Symbol();
 export default class Parser {
-    constructor(tokenStream) {
+    constructor(
+        tokenStream,
+        options = {
+            ignoreComments: true,
+            ignoreHtmlComments: true,
+            decodeEntites: true,
+        }
+    ) {
         this.tokens = tokenStream;
         this[UNARY] = {};
         this[BINARY] = {};
         this[TAG] = {};
         this[TEST] = {};
+        this.options = options;
     }
 
     addUnaryOperator(op: UnaryOperator) {
@@ -133,13 +141,37 @@ export default class Parser {
                             createNode(
                                 n.StringLiteral,
                                 token,
-                                he.decode(token.text)
+                                this.options.decodeEntites
+                                    ? he.decode(token.text)
+                                    : token.text
                             )
                         )
                     );
                     break;
                 case Types.ELEMENT_START:
                     p.add(this.matchElement());
+                    break;
+                case Types.COMMENT:
+                    if (!this.options.ignoreComments) {
+                        p.add(
+                            createNode(
+                                n.TwigComment,
+                                token,
+                                createNode(n.StringLiteral, token, token.text)
+                            )
+                        );
+                    }
+                    break;
+                case Types.HTML_COMMENT:
+                    if (!this.options.ignoreHtmlComments) {
+                        p.add(
+                            createNode(
+                                n.HtmlComment,
+                                token,
+                                createNode(n.StringLiteral, token, token.text)
+                            )
+                        );
+                    }
                     break;
             }
         }

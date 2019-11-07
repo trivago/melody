@@ -108,7 +108,6 @@ export default {
                 }
 
                 if (isAsync) {
-                    /* webpackPrefetch: true */
                     const source = path.node.source;
 
                     source.leadingComments = [
@@ -120,7 +119,6 @@ export default {
                                           args[args.length - 1].value
                                       }"`
                                     : '',
-                                'webpackPrefetch: true',
                             ]
                                 .filter(Boolean)
                                 .join(', ')} `,

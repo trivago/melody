@@ -12,6 +12,29 @@ exports[`Parser when parsing HTML should fail when parsing an opening expression
   1 | <div {{"
 `;
 
+exports[`Parser when parsing HTML should match HTML comments 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [],
+      "children": Array [
+        Object {
+          "type": "HtmlComment",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "<!--//-->",
+          },
+        },
+      ],
+      "name": "span",
+      "selfClosing": false,
+      "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
 exports[`Parser when parsing HTML should match a simple element 1`] = `
 Object {
   "expressions": Array [
@@ -116,6 +139,29 @@ Object {
         },
       ],
       "name": "div",
+      "selfClosing": false,
+      "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing HTML should match character entities 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [],
+      "children": Array [
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "&#8206;",
+          },
+        },
+      ],
+      "name": "span",
       "selfClosing": false,
       "type": "Element",
     },
@@ -272,6 +318,21 @@ Object {
       "name": "input",
       "selfClosing": true,
       "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing Twig comments should match a comment 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "TwigComment",
+      "value": Object {
+        "type": "StringLiteral",
+        "value": "{# This is a comment #}",
+      },
     },
   ],
   "type": "SequenceExpression",

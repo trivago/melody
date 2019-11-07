@@ -225,6 +225,7 @@ var matches = function(
         // which means we can hook onto it freely
         if (!data.key) {
             data.key = key;
+            data.staticsApplied = false;
             // but we'll need to update the parent element
             const parentKeys = currentParent && getData(currentParent).keyMap;
             if (parentKeys) {

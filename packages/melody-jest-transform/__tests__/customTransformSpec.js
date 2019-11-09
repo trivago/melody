@@ -25,14 +25,9 @@ jest.mock('find-babel-config', () => ({
             presets: [
                 [
                     '@babel/preset-env',
-                    {
-                        targets: {
-                            node: '6',
-                        },
-                    },
                 ],
             ],
-            plugins: ['transform-inline-environment-variables'],
+            // plugins: [],
         },
     })),
 }));
@@ -73,11 +68,6 @@ describe('Custom transformer', () => {
             presets: [
                 [
                     '@babel/preset-env',
-                    {
-                        targets: {
-                            node: '6',
-                        },
-                    },
                 ],
             ],
             plugins: ['transform-inline-environment-variables'],

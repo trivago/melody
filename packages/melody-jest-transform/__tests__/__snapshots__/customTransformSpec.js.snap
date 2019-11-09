@@ -29,12 +29,12 @@ exports[`Custom transformer should work with custom babelConfig and melody-plugi
 Object.defineProperty(exports, \\"__esModule\\", {
   value: true
 });
-exports.default = Test;
+exports[\\"default\\"] = Test;
 exports._template = void 0;
 
 var _melodyIdom = require(\\"melody-idom\\");
 
-const _template = {};
+var _template = {};
 exports._template = _template;
 
 _template.render = function (_context) {
@@ -58,12 +58,12 @@ exports[`Custom transformer should work with default babelconfig and melody-plug
 Object.defineProperty(exports, \\"__esModule\\", {
   value: true
 });
-exports.default = Test;
+exports[\\"default\\"] = Test;
 exports._template = void 0;
 
 var _melodyIdom = require(\\"melody-idom\\");
 
-const _template = {};
+var _template = {};
 exports._template = _template;
 
 _template.render = function (_context) {
@@ -72,7 +72,7 @@ _template.render = function (_context) {
   (0, _melodyIdom.elementClose)(\\"div\\");
 };
 
-if (\\"test\\" !== \\"production\\") {
+if (process.env.NODE_ENV !== \\"production\\") {
   _template.displayName = \\"Test\\";
 }
 

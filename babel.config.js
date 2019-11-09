@@ -2,11 +2,7 @@ const config = {
     release: {
         presets: [
             [
-                '@babel/preset-env',
-                {
-                    modules: false,
-                    loose: true,
-                },
+                '@babel/preset-env'
             ],
         ],
         plugins: [],
@@ -14,11 +10,7 @@ const config = {
     development: {
         presets: [
             [
-                '@babel/preset-env',
-                {
-                    modules: false,
-                    loose: true,
-                },
+                '@babel/preset-env'
             ],
         ],
         plugins: [],

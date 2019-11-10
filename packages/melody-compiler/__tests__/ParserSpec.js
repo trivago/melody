@@ -178,8 +178,21 @@ describe('Parser', function() {
         it('should match a comment', function() {
             const parser = createParserWithOptions('{# This is a comment #}', {
                 ignoreComments: false,
-                ignoreHtmlComments: false,
             });
+            const node = parser.parse();
+            expect(node).toMatchSnapshot();
+        });
+
+        it('should preserve whitespace between comments', function() {
+            const parser = createParserWithOptions(
+                `{# First comment #}
+            
+            {# Second comment #}`,
+                {
+                    ignoreComments: false,
+                    ignoreWhitespace: false,
+                }
+            );
             const node = parser.parse();
             expect(node).toMatchSnapshot();
         });

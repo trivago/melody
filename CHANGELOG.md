@@ -1,5 +1,11 @@
 ## master
 
+## 1.3.1
+
+### Features
+
+-   `[melody-parser]` Tokenizer optionally preserves whitespace (e.g., around Twig comments)
+
 ## 1.3.0
 
 ### Features

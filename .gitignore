@@ -5,6 +5,7 @@ node_modules
 .vscode
 .history
 *-debug.log
+yarn-error.log
 /build
 /.nyc_output
 /coverage.lcov

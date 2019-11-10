@@ -3,7 +3,7 @@
   "version": "1.3.0",
   "description": "",
   "main": "./lib/index.js",
-  "jsnext:main": "./lib/index.esm.js",
+  "module": "./lib/index.esm.js",
   "scripts": {
     "build": "mkdir lib; SUPPORT_CJS=true rollup -c ../../rollup.config.js -i src/index.js"
   },

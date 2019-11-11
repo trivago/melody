@@ -168,7 +168,7 @@ function getAllTokens(lexer, options) {
         ) {
             tokens[tokens.length] = token;
         }
-        acceptWhitespaceControl = true;
+        acceptWhitespaceControl = options.ignoreWhitespace;
         if (token.type === ERROR) {
             return tokens;
         }

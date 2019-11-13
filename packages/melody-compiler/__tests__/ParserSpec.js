@@ -169,9 +169,7 @@ describe('Parser', function() {
 
     function createParserWithOptions(code, options) {
         const lexer = new Lexer(new CharStream(code));
-        return new Parser(new TokenStream(lexer, options), {
-            ignoreComments: options.ignoreComments,
-        });
+        return new Parser(new TokenStream(lexer, options), options);
     }
 
     describe('when parsing Twig comments', function() {
@@ -190,7 +188,7 @@ describe('Parser', function() {
             {# Second comment #}`,
                 {
                     ignoreComments: false,
-                    ignoreWhitespace: false,
+                    applyWhitespaceTrimming: false,
                 }
             );
             const node = parser.parse();
@@ -430,10 +428,21 @@ describe('Parser', function() {
             expect(node).toMatchSnapshot();
         });
 
-        it('should match character entities', function() {
+        it('should respect the decodeEntities option', function() {
             const parser = createParserWithOptions('<span>&#8206;</span>', {
                 decodeEntites: false,
             });
+            const node = parser.parse();
+            expect(node).toMatchSnapshot();
+        });
+
+        it('should respect applyWhitespaceTrimming setting', function() {
+            const parser = createParserWithOptions(
+                '<span title="Testing: {{- noWhitespaceTest -}} foo">Test</span>',
+                {
+                    applyWhitespaceTrimming: false,
+                }
+            );
             const node = parser.parse();
             expect(node).toMatchSnapshot();
         });

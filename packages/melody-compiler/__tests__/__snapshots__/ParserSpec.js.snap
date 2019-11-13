@@ -147,29 +147,6 @@ Object {
 }
 `;
 
-exports[`Parser when parsing HTML should match character entities 1`] = `
-Object {
-  "expressions": Array [
-    Object {
-      "attributes": Array [],
-      "children": Array [
-        Object {
-          "type": "PrintTextStatement",
-          "value": Object {
-            "type": "StringLiteral",
-            "value": "&#8206;",
-          },
-        },
-      ],
-      "name": "span",
-      "selfClosing": false,
-      "type": "Element",
-    },
-  ],
-  "type": "SequenceExpression",
-}
-`;
-
 exports[`Parser when parsing HTML should match expression arguments 1`] = `
 Object {
   "expressions": Array [
@@ -317,6 +294,80 @@ Object {
       "children": Array [],
       "name": "input",
       "selfClosing": true,
+      "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing HTML should respect applyWhitespaceTrimming setting 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "name": Object {
+            "name": "title",
+            "type": "Identifier",
+          },
+          "type": "Attribute",
+          "value": Object {
+            "left": Object {
+              "left": Object {
+                "type": "StringLiteral",
+                "value": "Testing: ",
+              },
+              "operator": "~",
+              "right": Object {
+                "name": "noWhitespaceTest",
+                "type": "Identifier",
+              },
+              "type": "BinaryConcatExpression",
+            },
+            "operator": "~",
+            "right": Object {
+              "type": "StringLiteral",
+              "value": " foo",
+            },
+            "type": "BinaryConcatExpression",
+          },
+        },
+      ],
+      "children": Array [
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "Test",
+          },
+        },
+      ],
+      "name": "span",
+      "selfClosing": false,
+      "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing HTML should respect the decodeEntities option 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [],
+      "children": Array [
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "&#8206;",
+          },
+        },
+      ],
+      "name": "span",
+      "selfClosing": false,
       "type": "Element",
     },
   ],

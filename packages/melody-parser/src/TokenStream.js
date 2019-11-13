@@ -35,13 +35,19 @@ const TOKENS = Symbol(),
     LENGTH = Symbol();
 
 export default class TokenStream {
-    constructor(
-        lexer,
-        options = { ignoreComments: true, ignoreWhitespace: true }
-    ) {
+    constructor(lexer, options) {
         this.input = lexer;
         this.index = 0;
-        this.options = options;
+        options = Object.assign(
+            {},
+            {
+                ignoreComments: true,
+                ignoreHtmlComments: true,
+                ignoreWhitespace: true,
+                applyWhitespaceTrimming: true,
+            },
+            options
+        );
         this[TOKENS] = getAllTokens(lexer, options);
         this[LENGTH] = this[TOKENS].length;
 
@@ -168,7 +174,7 @@ function getAllTokens(lexer, options) {
         ) {
             tokens[tokens.length] = token;
         }
-        acceptWhitespaceControl = options.ignoreWhitespace;
+        acceptWhitespaceControl = options.applyWhitespaceTrimming;
         if (token.type === ERROR) {
             return tokens;
         }

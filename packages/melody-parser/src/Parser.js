@@ -46,20 +46,21 @@ const UNARY = Symbol(),
     TAG = Symbol(),
     TEST = Symbol();
 export default class Parser {
-    constructor(
-        tokenStream,
-        options = {
-            ignoreComments: true,
-            ignoreHtmlComments: true,
-            decodeEntites: true,
-        }
-    ) {
+    constructor(tokenStream, options) {
         this.tokens = tokenStream;
         this[UNARY] = {};
         this[BINARY] = {};
         this[TAG] = {};
         this[TEST] = {};
-        this.options = options;
+        this.options = Object.assign(
+            {},
+            {
+                ignoreComments: true,
+                ignoreHtmlComments: true,
+                decodeEntites: true,
+            },
+            options
+        );
     }
 
     addUnaryOperator(op: UnaryOperator) {

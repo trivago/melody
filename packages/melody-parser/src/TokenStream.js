@@ -38,7 +38,7 @@ export default class TokenStream {
     constructor(lexer, options) {
         this.input = lexer;
         this.index = 0;
-        options = Object.assign(
+        const mergedOptions = Object.assign(
             {},
             {
                 ignoreComments: true,
@@ -48,7 +48,7 @@ export default class TokenStream {
             },
             options
         );
-        this[TOKENS] = getAllTokens(lexer, options);
+        this[TOKENS] = getAllTokens(lexer, mergedOptions);
         this[LENGTH] = this[TOKENS].length;
 
         if (

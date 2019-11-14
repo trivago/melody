@@ -70,6 +70,8 @@ Object {
           },
           "type": "Attribute",
           "value": Object {
+            "exprEndAfter": true,
+            "exprStartBefore": true,
             "name": "id",
             "type": "Identifier",
           },
@@ -111,6 +113,8 @@ Object {
             },
             "operator": "~",
             "right": Object {
+              "exprEndAfter": true,
+              "exprStartBefore": true,
               "name": "bar",
               "type": "Identifier",
             },
@@ -124,6 +128,8 @@ Object {
           },
           "type": "Attribute",
           "value": Object {
+            "exprEndAfter": true,
+            "exprStartBefore": true,
             "name": "id",
             "type": "Identifier",
           },
@@ -153,6 +159,8 @@ Object {
     Object {
       "attributes": Array [
         Object {
+          "exprEndAfter": true,
+          "exprStartBefore": true,
           "name": "attributes",
           "type": "Identifier",
         },
@@ -185,6 +193,8 @@ Object {
             },
             "operator": "~",
             "right": Object {
+              "exprEndAfter": true,
+              "exprStartBefore": true,
               "name": "bar",
               "type": "Identifier",
             },
@@ -198,6 +208,8 @@ Object {
           },
           "type": "Attribute",
           "value": Object {
+            "exprEndAfter": true,
+            "exprStartBefore": true,
             "name": "id",
             "type": "Identifier",
           },
@@ -320,7 +332,11 @@ Object {
               },
               "operator": "~",
               "right": Object {
+                "exprEndAfter": true,
+                "exprStartBefore": true,
                 "name": "noWhitespaceTest",
+                "trimLeft": true,
+                "trimRight": true,
                 "type": "Identifier",
               },
               "type": "BinaryConcatExpression",
@@ -437,6 +453,8 @@ Object {
             "type": "Identifier",
           },
         ],
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "type": "ArrayExpression",
       },
     },
@@ -452,6 +470,8 @@ Object {
       "type": "PrintExpressionStatement",
       "value": Object {
         "computed": true,
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "object": Object {
           "name": "hello",
           "type": "Identifier",
@@ -492,6 +512,8 @@ Object {
       "type": "PrintExpressionStatement",
       "value": Object {
         "computed": true,
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "object": Object {
           "name": "hello",
           "type": "Identifier",
@@ -515,6 +537,8 @@ Object {
       "type": "PrintExpressionStatement",
       "value": Object {
         "computed": true,
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "object": Object {
           "name": "hello",
           "type": "Identifier",
@@ -538,6 +562,8 @@ Object {
       "type": "PrintExpressionStatement",
       "value": Object {
         "computed": true,
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "object": Object {
           "name": "hello",
           "type": "Identifier",
@@ -561,6 +587,7 @@ Object {
       "type": "PrintExpressionStatement",
       "value": Object {
         "alternate": Object {
+          "exprEndAfter": true,
           "name": "bar",
           "type": "Identifier",
         },
@@ -568,6 +595,7 @@ Object {
           "name": "foo",
           "type": "Identifier",
         },
+        "exprStartBefore": true,
         "test": Object {
           "name": "test",
           "type": "Identifier",
@@ -587,6 +615,7 @@ Object {
       "type": "PrintExpressionStatement",
       "value": Object {
         "alternate": Object {
+          "exprEndAfter": true,
           "type": "StringLiteral",
           "value": "",
         },
@@ -594,6 +623,7 @@ Object {
           "name": "foo",
           "type": "Identifier",
         },
+        "exprStartBefore": true,
         "test": Object {
           "name": "test",
           "type": "Identifier",
@@ -613,10 +643,12 @@ Object {
       "type": "PrintExpressionStatement",
       "value": Object {
         "alternate": Object {
+          "exprEndAfter": true,
           "name": "bar",
           "type": "Identifier",
         },
         "consequent": null,
+        "exprStartBefore": true,
         "test": Object {
           "name": "test",
           "type": "Identifier",
@@ -637,9 +669,11 @@ Object {
       "value": Object {
         "alternate": null,
         "consequent": Object {
+          "exprEndAfter": true,
           "name": "foo",
           "type": "Identifier",
         },
+        "exprStartBefore": true,
         "test": Object {
           "name": "test",
           "type": "Identifier",
@@ -658,6 +692,8 @@ Object {
     Object {
       "type": "PrintExpressionStatement",
       "value": Object {
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "name": "hello",
         "type": "Identifier",
       },
@@ -674,6 +710,7 @@ Object {
       "type": "PrintExpressionStatement",
       "value": Object {
         "alternate": Object {
+          "exprEndAfter": true,
           "type": "BooleanLiteral",
           "value": true,
         },
@@ -681,6 +718,7 @@ Object {
           "type": "BooleanLiteral",
           "value": false,
         },
+        "exprStartBefore": true,
         "test": Object {
           "arguments": Array [
             Object {
@@ -713,6 +751,8 @@ Object {
       "type": "PrintExpressionStatement",
       "value": Object {
         "computed": true,
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "object": Object {
           "name": "foo",
           "type": "Identifier",
@@ -745,6 +785,8 @@ Object {
             "value": 3,
           },
         ],
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "name": Object {
           "name": "slice",
           "type": "Identifier",
@@ -768,6 +810,8 @@ Object {
       "type": "PrintExpressionStatement",
       "value": Object {
         "arguments": Array [],
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "name": Object {
           "name": "foo",
           "type": "Identifier",
@@ -791,6 +835,8 @@ Object {
       "type": "PrintExpressionStatement",
       "value": Object {
         "arguments": Array [],
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "name": Object {
           "name": "raw",
           "type": "Identifier",
@@ -835,6 +881,8 @@ Object {
           "name": "hello",
           "type": "Identifier",
         },
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "type": "CallExpression",
       },
     },
@@ -905,6 +953,8 @@ Object {
           "name": "hello",
           "type": "Identifier",
         },
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "type": "CallExpression",
       },
     },
@@ -936,6 +986,8 @@ Object {
           "name": "hello",
           "type": "Identifier",
         },
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "type": "CallExpression",
       },
     },
@@ -950,6 +1002,8 @@ Object {
     Object {
       "type": "PrintExpressionStatement",
       "value": Object {
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "properties": Array [
           Object {
             "computed": false,
@@ -1022,12 +1076,15 @@ Object {
     Object {
       "type": "PrintExpressionStatement",
       "value": Object {
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "left": Object {
           "name": "foo",
           "type": "Identifier",
         },
         "operator": "in",
         "right": Object {
+          "exprEndAfter": true,
           "name": "bar",
           "type": "Identifier",
         },
@@ -1046,17 +1103,21 @@ Object {
       "type": "PrintExpressionStatement",
       "value": Object {
         "argument": Object {
+          "exprEndAfter": true,
           "left": Object {
             "name": "foo",
             "type": "Identifier",
           },
           "operator": "in",
           "right": Object {
+            "exprEndAfter": true,
             "name": "bar",
             "type": "Identifier",
           },
           "type": "BinaryExpression",
         },
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "operator": "not",
         "type": "UnaryExpression",
       },
@@ -1084,6 +1145,8 @@ Object {
           },
           "type": "BinaryExpression",
         },
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "operator": "not",
         "type": "UnaryExpression",
       },
@@ -1100,9 +1163,12 @@ Object {
       "type": "PrintExpressionStatement",
       "value": Object {
         "argument": Object {
+          "exprEndAfter": true,
           "name": "foo",
           "type": "Identifier",
         },
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "operator": "not",
         "type": "UnaryExpression",
       },
@@ -1122,6 +1188,8 @@ Object {
           "type": "NumericLiteral",
           "value": 5,
         },
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "start": Object {
           "type": "NumericLiteral",
           "value": 3,
@@ -1145,6 +1213,8 @@ Object {
       "type": "PrintExpressionStatement",
       "value": Object {
         "end": null,
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "start": Object {
           "type": "NumericLiteral",
           "value": 2,
@@ -1171,6 +1241,8 @@ Object {
           "type": "NumericLiteral",
           "value": 2,
         },
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "start": null,
         "target": Object {
           "name": "foo",
@@ -1194,6 +1266,8 @@ Object {
           "type": "NumericLiteral",
           "value": 5,
         },
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "start": Object {
           "type": "NumericLiteral",
           "value": 3,
@@ -1236,6 +1310,8 @@ Object {
           },
           "type": "MemberExpression",
         },
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "start": Object {
           "computed": false,
           "object": Object {
@@ -1266,6 +1342,8 @@ Object {
     Object {
       "type": "PrintExpressionStatement",
       "value": Object {
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "left": Object {
           "left": Object {
             "type": "StringLiteral",
@@ -1297,6 +1375,8 @@ Object {
     Object {
       "type": "PrintExpressionStatement",
       "value": Object {
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "type": "StringLiteral",
         "value": "foo",
       },
@@ -1312,6 +1392,8 @@ Object {
     Object {
       "type": "PrintExpressionStatement",
       "value": Object {
+        "exprEndAfter": true,
+        "exprStartBefore": true,
         "left": Object {
           "type": "StringLiteral",
           "value": "foo ",
@@ -1401,6 +1483,8 @@ Object {
           Object {
             "type": "PrintExpressionStatement",
             "value": Object {
+              "exprEndAfter": true,
+              "exprStartBefore": true,
               "name": "adjective",
               "type": "Identifier",
             },

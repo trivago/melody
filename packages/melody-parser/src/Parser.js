@@ -335,10 +335,21 @@ export default class Parser {
     }
 
     matchExpression(precedence = 0) {
-        let expr = this.getPrimary(),
-            tokens = this.tokens,
-            token,
-            op;
+        const tokens = this.tokens;
+        let token,
+            op,
+            trimLeft = false,
+            exprStartBefore = false;
+
+        // Check for {{- (trim preceding whitespace)
+        if (tokens.la(-1).type === Types.EXPRESSION_START) {
+            exprStartBefore = true;
+            if (tokens.la(-1).text.endsWith('-')) {
+                trimLeft = true;
+            }
+        }
+
+        let expr = this.getPrimary();
         while (
             (token = tokens.la(0)) &&
             token.type !== Types.EOF &&
@@ -359,7 +370,24 @@ export default class Parser {
             token = tokens.la(0);
         }
 
-        return precedence === 0 ? this.matchConditionalExpression(expr) : expr;
+        const result =
+            precedence === 0 ? this.matchConditionalExpression(expr) : expr;
+
+        // Check for -}} (trim following whitespace)
+        if (token.type === Types.EXPRESSION_END) {
+            result.exprEndAfter = true;
+            if (token.text.startsWith('-')) {
+                result.trimRight = true;
+            }
+        }
+        if (trimLeft) {
+            result.trimLeft = trimLeft;
+        }
+        if (exprStartBefore) {
+            result.exprStartBefore = exprStartBefore;
+        }
+
+        return result;
     }
 
     getPrimary() {

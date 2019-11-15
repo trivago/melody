@@ -338,15 +338,14 @@ export default class Parser {
         const tokens = this.tokens;
         let token,
             op,
-            trimLeft = false,
-            exprStartBefore = false;
+            trimLeft = false;
 
         // Check for {{- (trim preceding whitespace)
-        if (tokens.la(-1).type === Types.EXPRESSION_START) {
-            exprStartBefore = true;
-            if (tokens.la(-1).text.endsWith('-')) {
-                trimLeft = true;
-            }
+        if (
+            tokens.la(-1).type === Types.EXPRESSION_START &&
+            tokens.la(-1).text.endsWith('-')
+        ) {
+            trimLeft = true;
         }
 
         let expr = this.getPrimary();
@@ -374,17 +373,11 @@ export default class Parser {
             precedence === 0 ? this.matchConditionalExpression(expr) : expr;
 
         // Check for -}} (trim following whitespace)
-        if (token.type === Types.EXPRESSION_END) {
-            result.exprEndAfter = true;
-            if (token.text.startsWith('-')) {
-                result.trimRight = true;
-            }
+        if (token.type === Types.EXPRESSION_END && token.text.startsWith('-')) {
+            result.trimRight = true;
         }
         if (trimLeft) {
             result.trimLeft = trimLeft;
-        }
-        if (exprStartBefore) {
-            result.exprStartBefore = exprStartBefore;
         }
 
         return result;

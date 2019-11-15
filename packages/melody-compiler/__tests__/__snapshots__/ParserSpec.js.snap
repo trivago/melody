@@ -105,6 +105,7 @@ Object {
           },
           "type": "Attribute",
           "value": Object {
+            "isMelodyGenerated": true,
             "left": Object {
               "type": "StringLiteral",
               "value": "foo ",
@@ -202,6 +203,7 @@ Object {
           },
           "type": "Attribute",
           "value": Object {
+            "isMelodyGenerated": true,
             "left": Object {
               "type": "StringLiteral",
               "value": "foo ",

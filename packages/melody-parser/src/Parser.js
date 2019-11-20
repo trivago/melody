@@ -46,20 +46,21 @@ const UNARY = Symbol(),
     TAG = Symbol(),
     TEST = Symbol();
 export default class Parser {
-    constructor(
-        tokenStream,
-        options = {
-            ignoreComments: true,
-            ignoreHtmlComments: true,
-            decodeEntites: true,
-        }
-    ) {
+    constructor(tokenStream, options) {
         this.tokens = tokenStream;
         this[UNARY] = {};
         this[BINARY] = {};
         this[TAG] = {};
         this[TEST] = {};
-        this.options = options;
+        this.options = Object.assign(
+            {},
+            {
+                ignoreComments: true,
+                ignoreHtmlComments: true,
+                decodeEntites: true,
+            },
+            options
+        );
     }
 
     addUnaryOperator(op: UnaryOperator) {
@@ -334,10 +335,20 @@ export default class Parser {
     }
 
     matchExpression(precedence = 0) {
-        let expr = this.getPrimary(),
-            tokens = this.tokens,
-            token,
-            op;
+        const tokens = this.tokens;
+        let token,
+            op,
+            trimLeft = false;
+
+        // Check for {{- (trim preceding whitespace)
+        if (
+            tokens.la(-1).type === Types.EXPRESSION_START &&
+            tokens.la(-1).text.endsWith('-')
+        ) {
+            trimLeft = true;
+        }
+
+        let expr = this.getPrimary();
         while (
             (token = tokens.la(0)) &&
             token.type !== Types.EOF &&
@@ -358,7 +369,18 @@ export default class Parser {
             token = tokens.la(0);
         }
 
-        return precedence === 0 ? this.matchConditionalExpression(expr) : expr;
+        const result =
+            precedence === 0 ? this.matchConditionalExpression(expr) : expr;
+
+        // Check for -}} (trim following whitespace)
+        if (token.type === Types.EXPRESSION_END && token.text.startsWith('-')) {
+            result.trimRight = true;
+        }
+        if (trimLeft) {
+            result.trimLeft = trimLeft;
+        }
+
+        return result;
     }
 
     getPrimary() {

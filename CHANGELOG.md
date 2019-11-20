@@ -4,7 +4,8 @@
 
 ### Features
 
--   `[melody-parser]` Tokenizer optionally preserves whitespace (e.g., around Twig comments)
+-   `[melody-parser]` Tokenizer preserves whitespace (e.g., around Twig comments) when option `applyWhitespaceTrimming` is set to `false`
+-   `[melody-parser]` Expressions can have the `trimLeft` and `trimRight` flag to account for `{{-` and `-}}`, respectively.
 
 ## 1.3.0
 

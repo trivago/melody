@@ -209,6 +209,7 @@ visitor(BinaryExpression, 'left', 'right');
 export class BinaryConcatExpression extends BinaryExpression {
     constructor(left: Node, right: Node) {
         super('~', left, right);
+        this.wasImplicitConcatenation = false;
     }
 }
 type(BinaryConcatExpression, 'BinaryConcatExpression');

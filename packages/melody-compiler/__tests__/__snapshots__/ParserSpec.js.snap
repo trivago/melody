@@ -105,7 +105,6 @@ Object {
           },
           "type": "Attribute",
           "value": Object {
-            "isMelodyGenerated": true,
             "left": Object {
               "type": "StringLiteral",
               "value": "foo ",
@@ -116,6 +115,7 @@ Object {
               "type": "Identifier",
             },
             "type": "BinaryConcatExpression",
+            "wasImplicitConcatenation": true,
           },
         },
         Object {
@@ -203,7 +203,6 @@ Object {
           },
           "type": "Attribute",
           "value": Object {
-            "isMelodyGenerated": true,
             "left": Object {
               "type": "StringLiteral",
               "value": "foo ",
@@ -214,6 +213,7 @@ Object {
               "type": "Identifier",
             },
             "type": "BinaryConcatExpression",
+            "wasImplicitConcatenation": true,
           },
         },
         Object {
@@ -927,6 +927,7 @@ Object {
                 "type": "Identifier",
               },
               "type": "BinaryConcatExpression",
+              "wasImplicitConcatenation": false,
             },
             "type": "ObjectProperty",
             "value": Object {
@@ -1228,6 +1229,7 @@ Object {
             "type": "Identifier",
           },
           "type": "BinaryConcatExpression",
+          "wasImplicitConcatenation": false,
         },
         "operator": "~",
         "right": Object {
@@ -1235,6 +1237,7 @@ Object {
           "value": " ",
         },
         "type": "BinaryConcatExpression",
+        "wasImplicitConcatenation": false,
       },
     },
   ],
@@ -1273,6 +1276,7 @@ Object {
           "type": "Identifier",
         },
         "type": "BinaryConcatExpression",
+        "wasImplicitConcatenation": false,
       },
     },
   ],

@@ -115,6 +115,7 @@ Object {
               "type": "Identifier",
             },
             "type": "BinaryConcatExpression",
+            "wasImplicitConcatenation": true,
           },
         },
         Object {
@@ -189,6 +190,7 @@ Object {
               "type": "Identifier",
             },
             "type": "BinaryConcatExpression",
+            "wasImplicitConcatenation": true,
           },
         },
         Object {
@@ -978,6 +980,7 @@ Object {
                 "type": "Identifier",
               },
               "type": "BinaryConcatExpression",
+              "wasImplicitConcatenation": true,
             },
             "type": "ObjectProperty",
             "value": Object {
@@ -1279,6 +1282,7 @@ Object {
             "type": "Identifier",
           },
           "type": "BinaryConcatExpression",
+          "wasImplicitConcatenation": false,
         },
         "operator": "~",
         "right": Object {
@@ -1286,6 +1290,7 @@ Object {
           "value": " ",
         },
         "type": "BinaryConcatExpression",
+        "wasImplicitConcatenation": true,
       },
     },
   ],
@@ -1324,6 +1329,7 @@ Object {
           "type": "Identifier",
         },
         "type": "BinaryConcatExpression",
+        "wasImplicitConcatenation": true,
       },
     },
   ],

@@ -115,6 +115,7 @@ Object {
               "type": "Identifier",
             },
             "type": "BinaryConcatExpression",
+            "wasImplicitConcatenation": true,
           },
         },
         Object {
@@ -139,29 +140,6 @@ Object {
         },
       ],
       "name": "div",
-      "selfClosing": false,
-      "type": "Element",
-    },
-  ],
-  "type": "SequenceExpression",
-}
-`;
-
-exports[`Parser when parsing HTML should match character entities 1`] = `
-Object {
-  "expressions": Array [
-    Object {
-      "attributes": Array [],
-      "children": Array [
-        Object {
-          "type": "PrintTextStatement",
-          "value": Object {
-            "type": "StringLiteral",
-            "value": "&#8206;",
-          },
-        },
-      ],
-      "name": "span",
       "selfClosing": false,
       "type": "Element",
     },
@@ -212,6 +190,7 @@ Object {
               "type": "Identifier",
             },
             "type": "BinaryConcatExpression",
+            "wasImplicitConcatenation": true,
           },
         },
         Object {
@@ -324,6 +303,82 @@ Object {
 }
 `;
 
+exports[`Parser when parsing HTML should respect applyWhitespaceTrimming setting 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "name": Object {
+            "name": "title",
+            "type": "Identifier",
+          },
+          "type": "Attribute",
+          "value": Object {
+            "left": Object {
+              "left": Object {
+                "type": "StringLiteral",
+                "value": "Testing: ",
+              },
+              "operator": "~",
+              "right": Object {
+                "name": "noWhitespaceTest",
+                "trimLeft": true,
+                "trimRight": true,
+                "type": "Identifier",
+              },
+              "type": "BinaryConcatExpression",
+            },
+            "operator": "~",
+            "right": Object {
+              "type": "StringLiteral",
+              "value": " foo",
+            },
+            "type": "BinaryConcatExpression",
+          },
+        },
+      ],
+      "children": Array [
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "Test",
+          },
+        },
+      ],
+      "name": "span",
+      "selfClosing": false,
+      "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing HTML should respect the decodeEntities option 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [],
+      "children": Array [
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "&#8206;",
+          },
+        },
+      ],
+      "name": "span",
+      "selfClosing": false,
+      "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
 exports[`Parser when parsing Twig comments should match a comment 1`] = `
 Object {
   "expressions": Array [
@@ -332,6 +387,37 @@ Object {
       "value": Object {
         "type": "StringLiteral",
         "value": "{# This is a comment #}",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing Twig comments should preserve whitespace between comments 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "TwigComment",
+      "value": Object {
+        "type": "StringLiteral",
+        "value": "{# First comment #}",
+      },
+    },
+    Object {
+      "type": "PrintTextStatement",
+      "value": Object {
+        "type": "StringLiteral",
+        "value": "
+            
+            ",
+      },
+    },
+    Object {
+      "type": "TwigComment",
+      "value": Object {
+        "type": "StringLiteral",
+        "value": "{# Second comment #}",
       },
     },
   ],
@@ -894,6 +980,7 @@ Object {
                 "type": "Identifier",
               },
               "type": "BinaryConcatExpression",
+              "wasImplicitConcatenation": true,
             },
             "type": "ObjectProperty",
             "value": Object {
@@ -1195,6 +1282,7 @@ Object {
             "type": "Identifier",
           },
           "type": "BinaryConcatExpression",
+          "wasImplicitConcatenation": false,
         },
         "operator": "~",
         "right": Object {
@@ -1202,6 +1290,7 @@ Object {
           "value": " ",
         },
         "type": "BinaryConcatExpression",
+        "wasImplicitConcatenation": true,
       },
     },
   ],
@@ -1240,6 +1329,7 @@ Object {
           "type": "Identifier",
         },
         "type": "BinaryConcatExpression",
+        "wasImplicitConcatenation": true,
       },
     },
   ],

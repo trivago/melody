@@ -488,6 +488,10 @@ export default class Parser {
             copyEnd(expr, expr.right);
         }
 
+        if (nodes.length > 1) {
+            expr.wasImplicitConcatenation = true;
+        }
+
         return expr;
     }
 

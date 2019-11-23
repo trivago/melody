@@ -328,6 +328,7 @@ Object {
                 "type": "Identifier",
               },
               "type": "BinaryConcatExpression",
+              "wasImplicitConcatenation": false,
             },
             "operator": "~",
             "right": Object {
@@ -335,6 +336,7 @@ Object {
               "value": " foo",
             },
             "type": "BinaryConcatExpression",
+            "wasImplicitConcatenation": true,
           },
         },
       ],

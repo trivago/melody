@@ -1,5 +1,7 @@
 ## master
 
+-   Fix peer dependency mismatch in melody packages [#143](https://github.com/trivago/melody/pull/143)
+
 ## 1.4.0
 
 ### Features
@@ -7,7 +9,7 @@
 -   `[melody-parser]` Tokenizer preserves whitespace (e.g., around Twig comments) when option `applyWhitespaceTrimming` is set to `false`
 -   `[melody-parser]` The parser now marks string concatenations that were implicit (interpolation) as `wasImplicitConcatenation`
 -   `[melody-parser]` Expressions can have the `trimLeft` and `trimRight` flag to account for `{{-` and `-}}`, respectively.
--   Fix peer dependency mismatch in melody packages [#143](https://github.com/trivago/melody/pull/143)
+
 ## 1.3.0
 
 ### Features

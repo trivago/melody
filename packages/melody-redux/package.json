@@ -13,6 +13,6 @@
     "melody-component": "link:../melody-component"
   },
   "peerDependencies": {
-    "melody-idom": "^1.1.0"
+    "melody-idom":  "link:../melody-idom"
   }
 }

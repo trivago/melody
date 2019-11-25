@@ -17,7 +17,7 @@
     "melody-runtime": "link:../melody-runtime"
   },
   "peerDependencies": {
-    "melody-idom": "1.1.0"
+    "melody-idom":  "link:../melody-idom"
   },
   "devDependencies": {
     "melody-plugin-idom": "link:../melody-plugin-idom"

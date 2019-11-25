@@ -21,7 +21,6 @@
         "lint": "eslint ./packages/*/src",
         "prepare": "yarn build:release",
         "prettier": "prettier --write \"./packages/melody-*/src/**/*.[tj]s\"",
-        "update-peers": "./bin/updatePeerDependencies.js",
         "release": "./bin/release.sh",
         "release-ci": "./bin/ci-release.sh",
         "test": "TZ=Europe/London jest --coverage",

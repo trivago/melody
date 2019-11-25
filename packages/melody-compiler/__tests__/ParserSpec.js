@@ -430,7 +430,7 @@ describe('Parser', function() {
 
         it('should respect the decodeEntities option', function() {
             const parser = createParserWithOptions('<span>&#8206;</span>', {
-                decodeEntites: false,
+                decodeEntities: false,
             });
             const node = parser.parse();
             expect(node).toMatchSnapshot();

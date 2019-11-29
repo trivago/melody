@@ -35,6 +35,47 @@ Object {
 }
 `;
 
+exports[`Parser when parsing HTML should match HTML comments mixed with other text 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [],
+      "children": Array [
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "
+            First some text
+            
+            ",
+          },
+        },
+        Object {
+          "type": "HtmlComment",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "<!-- Then a comment-->",
+          },
+        },
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "
+            ",
+          },
+        },
+      ],
+      "name": "span",
+      "selfClosing": false,
+      "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
 exports[`Parser when parsing HTML should match a simple element 1`] = `
 Object {
   "expressions": Array [

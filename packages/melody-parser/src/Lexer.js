@@ -573,7 +573,12 @@ export default class Lexer {
                     break;
                 }
             } else if (c === '<') {
-                if (input.la(1) === '/' || isAlpha(input.lac(1))) {
+                const nextChar = input.la(1);
+                if (
+                    nextChar === '/' || // closing tag
+                    nextChar === '!' || // HTML comment
+                    isAlpha(input.lac(1)) // opening tag
+                ) {
                     break;
                 } else if (input.la(1) === '{') {
                     const c2 = input.la(1);

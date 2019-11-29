@@ -428,6 +428,20 @@ describe('Parser', function() {
             expect(node).toMatchSnapshot();
         });
 
+        it('should match HTML comments mixed with other text', function() {
+            const markup = `<span>
+            First some text
+            
+            <!-- Then a comment-->
+            </span>`;
+            const parser = createParserWithOptions(markup, {
+                ignoreComments: false,
+                ignoreHtmlComments: false,
+            });
+            const node = parser.parse();
+            expect(node).toMatchSnapshot();
+        });
+
         it('should respect the decodeEntities option', function() {
             const parser = createParserWithOptions('<span>&#8206;</span>', {
                 decodeEntities: false,

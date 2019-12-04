@@ -1,6 +1,6 @@
 {
   "name": "melody-redux",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "",
   "main": "./lib/index.js",
   "module": "./lib/index.esm.js",
@@ -13,6 +13,6 @@
     "melody-component": "link:../melody-component"
   },
   "peerDependencies": {
-    "melody-idom": "^1.1.0"
+    "melody-idom":  "link:../melody-idom"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "melody-plugin-skip-if",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "",
   "main": "./lib/index.js",
   "module": "./lib/index.esm.js",
@@ -13,6 +13,6 @@
     "@babel/types":"7.4.4"
   },
   "peerDependencies": {
-    "melody-types": "^1.1.0"
+    "melody-types": "link:../melody-types"
   }
 }

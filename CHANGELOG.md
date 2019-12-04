@@ -1,7 +1,5 @@
 ## master
 
--   Fix peer dependency mismatch in melody packages [#143](https://github.com/trivago/melody/pull/143)
-
 ## 1.4.0
 
 ### Features

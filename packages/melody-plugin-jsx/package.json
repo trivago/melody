@@ -13,7 +13,7 @@
     "babel-types": "^6.8.1"
   },
   "peerDependencies": {
-    "melody-traverse": "link:../melody-traverse",
-    "melody-types": "link:../melody-types"
+    "melody-traverse": "^1.1.0",
+    "melody-types": "^1.1.0"
   }
 }

@@ -14,7 +14,7 @@
     "melody-component": "link:../melody-component"
   },
   "peerDependencies": {
-    "melody-idom": "link:../melody-idom"
+    "melody-idom": "1.1.0"
   },
   "devDependencies": {
     "melody-idom": "link:../melody-idom"

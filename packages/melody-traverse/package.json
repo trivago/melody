@@ -10,6 +10,6 @@
   "author": "",
   "license": "Apache-2.0",
   "peerDependencies": {
-    "melody-types": "link:../melody-types"
+    "melody-types": "^1.1.0"
   }
 }

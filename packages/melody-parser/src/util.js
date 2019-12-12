@@ -61,3 +61,11 @@ export function createNode(Type, token, ...args) {
 export function startNode(Type, token, ...args) {
     return setStartFromToken(new Type(...args), token);
 }
+
+export function hasTagStartTokenTrimLeft(token) {
+    return token.text.endsWith('-');
+}
+
+export function hasTagEndTokenTrimRight(token) {
+    return token.text.startsWith('-');
+}

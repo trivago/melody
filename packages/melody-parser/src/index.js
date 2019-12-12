@@ -26,6 +26,8 @@ import {
     copyEnd,
     copyLoc,
     createNode,
+    hasTagStartTokenTrimLeft,
+    hasTagEndTokenTrimRight,
 } from './util';
 
 function parse(code, options, ...extensions) {
@@ -66,5 +68,7 @@ export {
     copyEnd,
     copyLoc,
     createNode,
+    hasTagStartTokenTrimLeft,
+    hasTagEndTokenTrimRight,
     Types,
 };

@@ -21,9 +21,9 @@ describe('autoescape', function() {
     describe('when parsing', function() {
         it('should be parsed', function() {
             const node = parse(
-                `{% autoescape 'html' %}
+                `{% autoescape 'html' -%}
 Everything will be automatically escaped in this block using the {{ strategy }} strategy.
-{% endautoescape %}`
+{%- endautoescape %}`
             );
             expect(node.expressions[0]).toMatchObject({
                 type: 'AutoescapeBlock',
@@ -34,7 +34,7 @@ Everything will be automatically escaped in this block using the {{ strategy }} 
                         value: {
                             type: 'StringLiteral',
                             value:
-                                '\nEverything will be automatically escaped in this block using the ',
+                                'Everything will be automatically escaped in this block using the ',
                         },
                     },
                     {
@@ -48,10 +48,12 @@ Everything will be automatically escaped in this block using the {{ strategy }} 
                         type: 'PrintTextStatement',
                         value: {
                             type: 'StringLiteral',
-                            value: ' strategy.\n',
+                            value: ' strategy.',
                         },
                     },
                 ],
+                openingTrimRight: true,
+                closingTrimLeft: true,
             });
         });
     });

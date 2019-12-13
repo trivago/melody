@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`embed should parse embracing embed statement 1`] = `
+Object {
+  "argument": null,
+  "blocks": Array [
+    Object {
+      "body": Array [
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "
+            ",
+          },
+        },
+        Object {
+          "type": "PrintExpressionStatement",
+          "value": Object {
+            "name": "message",
+            "type": "Identifier",
+          },
+        },
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "
+        ",
+          },
+        },
+      ],
+      "closingTrimLeft": false,
+      "name": Object {
+        "name": "hello",
+        "type": "Identifier",
+      },
+      "openingTrimRight": false,
+      "trimLeft": false,
+      "trimRight": false,
+      "type": "BlockStatement",
+    },
+  ],
+  "closingTrimLeft": true,
+  "contextFree": false,
+  "ignoreMissing": false,
+  "openingTrimRight": true,
+  "trimLeft": false,
+  "trimRight": false,
+  "type": "EmbedStatement",
+}
+`;

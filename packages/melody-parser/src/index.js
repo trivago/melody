@@ -28,6 +28,7 @@ import {
     createNode,
     hasTagStartTokenTrimLeft,
     hasTagEndTokenTrimRight,
+    isMelodyExtension,
 } from './util';
 
 function parse(code, options, ...extensions) {
@@ -35,9 +36,19 @@ function parse(code, options, ...extensions) {
 }
 
 function createExtendedParser(code, options, ...extensions) {
-    const lexer = createExtendedLexer(code, ...extensions);
-    const parser = new Parser(new TokenStream(lexer, options), options);
-    for (const ext of extensions) {
+    let passedOptions = options;
+    const passedExtensions = extensions;
+    if (isMelodyExtension(options)) {
+        // Variant without options parameter: createExtendedParser(code, ...extensions)
+        passedOptions = undefined;
+        passedExtensions.unshift(options);
+    }
+    const lexer = createExtendedLexer(code, ...passedExtensions);
+    const parser = new Parser(
+        new TokenStream(lexer, passedOptions),
+        passedOptions
+    );
+    for (const ext of passedExtensions) {
         parser.applyExtension(ext);
     }
     return parser;

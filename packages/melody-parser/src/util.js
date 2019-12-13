@@ -69,3 +69,16 @@ export function hasTagStartTokenTrimLeft(token) {
 export function hasTagEndTokenTrimRight(token) {
     return token.text.startsWith('-');
 }
+
+export function isMelodyExtension(obj) {
+    return (
+        obj &&
+        (Array.isArray(obj.binaryOperators) ||
+            typeof obj.filterMap === 'object' ||
+            typeof obj.functionMap === 'object' ||
+            Array.isArray(obj.tags) ||
+            Array.isArray(obj.tests) ||
+            Array.isArray(obj.unaryOperators) ||
+            Array.isArray(obj.visitors))
+    );
+}

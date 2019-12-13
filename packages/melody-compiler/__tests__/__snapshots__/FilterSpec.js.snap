@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`filter should parse a filter block 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "type": "PrintTextStatement",
+      "value": Object {
+        "type": "StringLiteral",
+        "value": "
+            This text becomes uppercase
+        ",
+      },
+    },
+  ],
+  "closingTrimLeft": true,
+  "filterExpression": Object {
+    "arguments": Array [],
+    "name": Object {
+      "name": "upper",
+      "type": "Identifier",
+    },
+    "target": Object {
+      "name": "filter",
+      "type": "Identifier",
+    },
+    "type": "FilterExpression",
+  },
+  "openingTrimRight": true,
+  "trimLeft": false,
+  "trimRight": false,
+  "type": "FilterBlockStatement",
+}
+`;

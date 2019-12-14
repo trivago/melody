@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`macro should parse a macro block 1`] = `
+Object {
+  "arguments": Array [
+    Object {
+      "name": "name",
+      "type": "Identifier",
+    },
+    Object {
+      "name": "value",
+      "type": "Identifier",
+    },
+    Object {
+      "name": "type",
+      "type": "Identifier",
+    },
+    Object {
+      "name": "size",
+      "type": "Identifier",
+    },
+  ],
+  "body": Object {
+    "expressions": Array [
+      Object {
+        "type": "PrintTextStatement",
+        "value": Object {
+          "type": "StringLiteral",
+          "value": "
+            Print something intelligent
+        ",
+        },
+      },
+    ],
+    "type": "SequenceExpression",
+  },
+  "name": Object {
+    "name": "whitespaceRemoval",
+    "type": "Identifier",
+  },
+  "trimLeft": false,
+  "trimLeftEndmacro": true,
+  "trimRight": false,
+  "trimRightMacro": true,
+  "type": "MacroDeclarationStatement",
+}
+`;

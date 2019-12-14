@@ -19,6 +19,8 @@ import {
     setStartFromToken,
     setEndFromToken,
     createNode,
+    hasTagStartTokenTrimLeft,
+    hasTagEndTokenTrimRight,
 } from 'melody-parser';
 import { MacroDeclarationStatement } from './../types';
 
@@ -47,11 +49,18 @@ export const MacroParser = {
         }
         tokens.expect(Types.RPAREN);
 
+        const openingTagEndToken = tokens.la(0);
+        let closingTagStartToken;
+
         const body = parser.parse((tokenText, token, tokens) => {
-            return !!(
+            const result = !!(
                 token.type === Types.TAG_START &&
                 tokens.nextIf(Types.SYMBOL, 'endmacro')
             );
+            if (result) {
+                closingTagStartToken = token;
+            }
+            return result;
         });
 
         if (tokens.test(Types.SYMBOL)) {
@@ -76,6 +85,13 @@ export const MacroParser = {
         setEndFromToken(
             macroDeclarationStatement,
             tokens.expect(Types.TAG_END)
+        );
+
+        macroDeclarationStatement.trimRightMacro = hasTagEndTokenTrimRight(
+            openingTagEndToken
+        );
+        macroDeclarationStatement.trimLeftEndmacro = hasTagStartTokenTrimLeft(
+            closingTagStartToken
         );
 
         return macroDeclarationStatement;

@@ -1,0 +1,145 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`if should parse if-elseif-elseif-endif 1`] = `
+Object {
+  "alternate": Object {
+    "alternate": Object {
+      "alternate": Array [
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "
+            Other
+        ",
+          },
+        },
+      ],
+      "consequent": Array [
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "
+            Bird
+        ",
+          },
+        },
+      ],
+      "test": Object {
+        "name": "bird",
+        "type": "Identifier",
+      },
+      "trimLeft": true,
+      "trimRightIf": true,
+      "type": "IfStatement",
+    },
+    "consequent": Array [
+      Object {
+        "type": "PrintTextStatement",
+        "value": Object {
+          "type": "StringLiteral",
+          "value": "
+            Cat
+        ",
+        },
+      },
+    ],
+    "test": Object {
+      "name": "cat",
+      "type": "Identifier",
+    },
+    "trimLeft": true,
+    "trimRightIf": true,
+    "type": "IfStatement",
+  },
+  "consequent": Array [
+    Object {
+      "type": "PrintTextStatement",
+      "value": Object {
+        "type": "StringLiteral",
+        "value": "
+            Dog
+        ",
+      },
+    },
+  ],
+  "test": Object {
+    "name": "dog",
+    "type": "Identifier",
+  },
+  "trimLeft": false,
+  "trimLeftElse": true,
+  "trimLeftEndif": true,
+  "trimRight": true,
+  "trimRightElse": false,
+  "trimRightIf": true,
+  "type": "IfStatement",
+}
+`;
+
+exports[`if should parse simple if-else-endif 1`] = `
+Object {
+  "alternate": Array [
+    Object {
+      "type": "PrintTextStatement",
+      "value": Object {
+        "type": "StringLiteral",
+        "value": "
+            Bar
+        ",
+      },
+    },
+  ],
+  "consequent": Array [
+    Object {
+      "type": "PrintTextStatement",
+      "value": Object {
+        "type": "StringLiteral",
+        "value": "
+            Foo
+        ",
+      },
+    },
+  ],
+  "test": Object {
+    "name": "foo",
+    "type": "Identifier",
+  },
+  "trimLeft": false,
+  "trimLeftElse": true,
+  "trimLeftEndif": false,
+  "trimRight": false,
+  "trimRightElse": true,
+  "trimRightIf": false,
+  "type": "IfStatement",
+}
+`;
+
+exports[`if should parse simple if-endif 1`] = `
+Object {
+  "alternate": null,
+  "consequent": Array [
+    Object {
+      "type": "PrintTextStatement",
+      "value": Object {
+        "type": "StringLiteral",
+        "value": "
+                Dog
+            ",
+      },
+    },
+  ],
+  "test": Object {
+    "name": "test",
+    "type": "Identifier",
+  },
+  "trimLeft": false,
+  "trimLeftElse": false,
+  "trimLeftEndif": true,
+  "trimRight": false,
+  "trimRightElse": false,
+  "trimRightIf": true,
+  "type": "IfStatement",
+}
+`;

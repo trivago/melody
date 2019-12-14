@@ -19,6 +19,8 @@ import {
     setStartFromToken,
     setEndFromToken,
     createNode,
+    hasTagStartTokenTrimLeft,
+    hasTagEndTokenTrimRight,
 } from 'melody-parser';
 import { ForStatement } from './../types';
 
@@ -60,16 +62,23 @@ export const ForParser = {
 
         tokens.expect(Types.TAG_END);
 
+        const openingTagEndToken = tokens.la(-1);
+        let elseTagStartToken, elseTagEndToken;
+
         forStatement.body = parser.parse((tokenText, token, tokens) => {
-            return (
+            const result =
                 token.type === Types.TAG_START &&
                 (tokens.test(Types.SYMBOL, 'else') ||
-                    tokens.test(Types.SYMBOL, 'endfor'))
-            );
+                    tokens.test(Types.SYMBOL, 'endfor'));
+            if (result && tokens.test(Types.SYMBOL, 'else')) {
+                elseTagStartToken = token;
+            }
+            return result;
         });
 
         if (tokens.nextIf(Types.SYMBOL, 'else')) {
             tokens.expect(Types.TAG_END);
+            elseTagEndToken = tokens.la(-1);
             forStatement.otherwise = parser.parse(
                 (tokenText, token, tokens) => {
                     return (
@@ -79,10 +88,22 @@ export const ForParser = {
                 }
             );
         }
+        const endforTagStartToken = tokens.la(-1);
         tokens.expect(Types.SYMBOL, 'endfor');
 
         setStartFromToken(forStatement, token);
         setEndFromToken(forStatement, tokens.expect(Types.TAG_END));
+
+        forStatement.trimRightFor = hasTagEndTokenTrimRight(openingTagEndToken);
+        forStatement.trimLeftElse = !!(
+            elseTagStartToken && hasTagStartTokenTrimLeft(elseTagStartToken)
+        );
+        forStatement.trimRightElse = !!(
+            elseTagEndToken && hasTagEndTokenTrimRight(elseTagEndToken)
+        );
+        forStatement.trimLeftEndfor = hasTagStartTokenTrimLeft(
+            endforTagStartToken
+        );
 
         return forStatement;
     },

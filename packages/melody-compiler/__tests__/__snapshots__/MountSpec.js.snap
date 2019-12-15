@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mount should parse a mount...async tag 1`] = `
+Object {
+  "argument": Object {
+    "properties": Array [
+      Object {
+        "computed": false,
+        "key": Object {
+          "name": "foo",
+          "type": "Identifier",
+        },
+        "type": "ObjectProperty",
+        "value": Object {
+          "type": "StringLiteral",
+          "value": "bar",
+        },
+      },
+    ],
+    "type": "ObjectExpression",
+  },
+  "async": true,
+  "body": Object {
+    "expressions": Array [
+      Object {
+        "type": "PrintTextStatement",
+        "value": Object {
+          "type": "StringLiteral",
+          "value": "
+            Loading...
+          ",
+        },
+      },
+    ],
+    "type": "SequenceExpression",
+  },
+  "delayBy": 1000,
+  "errorVariableName": Object {
+    "name": "err",
+    "type": "Identifier",
+  },
+  "key": null,
+  "name": null,
+  "otherwise": Object {
+    "expressions": Array [
+      Object {
+        "type": "PrintTextStatement",
+        "value": Object {
+          "type": "StringLiteral",
+          "value": "
+            Failed to load with ",
+        },
+      },
+      Object {
+        "type": "PrintExpressionStatement",
+        "value": Object {
+          "name": "err",
+          "type": "Identifier",
+        },
+      },
+      Object {
+        "type": "PrintTextStatement",
+        "value": Object {
+          "type": "StringLiteral",
+          "value": "
+          ",
+        },
+      },
+    ],
+    "type": "SequenceExpression",
+  },
+  "source": Object {
+    "type": "StringLiteral",
+    "value": "template.twig",
+  },
+  "trimLeft": false,
+  "trimLeftCatch": true,
+  "trimLeftEndmount": true,
+  "trimRight": false,
+  "trimRightCatch": true,
+  "trimRightMount": true,
+  "type": "MountStatement",
+}
+`;
+
+exports[`mount should parse a simple mount tag 1`] = `
+Object {
+  "argument": null,
+  "async": false,
+  "body": null,
+  "delayBy": 0,
+  "errorVariableName": null,
+  "key": Object {
+    "type": "StringLiteral",
+    "value": "bar",
+  },
+  "name": null,
+  "otherwise": null,
+  "source": Object {
+    "type": "StringLiteral",
+    "value": "./component",
+  },
+  "trimLeft": true,
+  "trimLeftCatch": false,
+  "trimLeftEndmount": false,
+  "trimRight": true,
+  "trimRightCatch": false,
+  "trimRightMount": false,
+  "type": "MountStatement",
+}
+`;

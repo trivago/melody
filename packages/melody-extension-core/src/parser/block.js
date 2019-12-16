@@ -75,11 +75,12 @@ export const BlockParser = {
         setStartFromToken(blockStatement, token);
         setEndFromToken(blockStatement, tokens.expect(Types.TAG_END));
 
-        blockStatement.openingTrimRight =
+        blockStatement.trimRightBlock =
             openingTagEndToken && hasTagEndTokenTrimRight(openingTagEndToken);
-        blockStatement.closingTrimLeft =
+        blockStatement.trimLeftEndblock = !!(
             closingTagStartToken &&
-            hasTagStartTokenTrimLeft(closingTagStartToken);
+            hasTagStartTokenTrimLeft(closingTagStartToken)
+        );
 
         return blockStatement;
     },

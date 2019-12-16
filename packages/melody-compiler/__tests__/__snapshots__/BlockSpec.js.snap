@@ -82,14 +82,14 @@ Object {
       },
     },
   ],
-  "closingTrimLeft": true,
   "name": Object {
     "name": "hello",
     "type": "Identifier",
   },
-  "openingTrimRight": true,
   "trimLeft": false,
+  "trimLeftEndblock": true,
   "trimRight": false,
+  "trimRightBlock": true,
   "type": "BlockStatement",
 }
 `;
@@ -103,14 +103,14 @@ Object {
       "type": "Identifier",
     },
   },
-  "closingTrimLeft": undefined,
   "name": Object {
     "name": "bar",
     "type": "Identifier",
   },
-  "openingTrimRight": false,
   "trimLeft": true,
+  "trimLeftEndblock": false,
   "trimRight": false,
+  "trimRightBlock": false,
   "type": "BlockStatement",
 }
 `;

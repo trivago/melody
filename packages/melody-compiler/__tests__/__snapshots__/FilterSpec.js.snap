@@ -13,7 +13,6 @@ Object {
       },
     },
   ],
-  "closingTrimLeft": true,
   "filterExpression": Object {
     "arguments": Array [],
     "name": Object {
@@ -26,9 +25,10 @@ Object {
     },
     "type": "FilterExpression",
   },
-  "openingTrimRight": true,
   "trimLeft": false,
+  "trimLeftEndfilter": true,
   "trimRight": false,
+  "trimRightFilter": true,
   "type": "FilterBlockStatement",
 }
 `;

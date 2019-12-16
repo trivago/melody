@@ -81,10 +81,10 @@ I expected the current string to end with a ${
         }).expressions;
         setEndFromToken(autoescape, tagEndToken);
 
-        autoescape.openingTrimRight = hasTagEndTokenTrimRight(
+        autoescape.trimRightAutoescape = hasTagEndTokenTrimRight(
             openingTagEndToken
         );
-        autoescape.closingTrimLeft = hasTagStartTokenTrimLeft(
+        autoescape.trimLeftEndautoescape = hasTagStartTokenTrimLeft(
             closingTagStartToken
         );
 

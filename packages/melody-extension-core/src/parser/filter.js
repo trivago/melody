@@ -52,10 +52,10 @@ export const FilterParser = {
         setStartFromToken(filterBlockStatement, token);
         setEndFromToken(filterBlockStatement, tokens.expect(Types.TAG_END));
 
-        filterBlockStatement.openingTrimRight = hasTagEndTokenTrimRight(
+        filterBlockStatement.trimRightFilter = hasTagEndTokenTrimRight(
             openingTagEndToken
         );
-        filterBlockStatement.closingTrimLeft =
+        filterBlockStatement.trimLeftEndfilter =
             closingTagStartToken &&
             hasTagStartTokenTrimLeft(closingTagStartToken);
 

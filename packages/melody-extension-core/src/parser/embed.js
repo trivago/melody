@@ -65,10 +65,10 @@ export const EmbedParser = {
         setStartFromToken(embedStatement, token);
         setEndFromToken(embedStatement, tokens.expect(Types.TAG_END));
 
-        embedStatement.openingTrimRight = hasTagEndTokenTrimRight(
+        embedStatement.trimRightEmbed = hasTagEndTokenTrimRight(
             openingTagEndToken
         );
-        embedStatement.closingTrimLeft =
+        embedStatement.trimLeftEndembed =
             closingTagStartToken &&
             hasTagStartTokenTrimLeft(closingTagStartToken);
 

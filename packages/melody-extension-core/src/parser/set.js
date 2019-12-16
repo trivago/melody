@@ -19,6 +19,8 @@ import {
     setStartFromToken,
     setEndFromToken,
     createNode,
+    hasTagStartTokenTrimLeft,
+    hasTagEndTokenTrimRight,
 } from 'melody-parser';
 import { VariableDeclarationStatement, SetStatement } from './../types';
 
@@ -28,6 +30,8 @@ export const SetParser = {
         const tokens = parser.tokens,
             names = [],
             values = [];
+
+        let openingTagEndToken, closingTagStartToken;
 
         do {
             const name = tokens.expect(Types.SYMBOL);
@@ -48,12 +52,17 @@ export const SetParser = {
                 });
             }
             tokens.expect(Types.TAG_END);
+            openingTagEndToken = tokens.la(-1);
 
             values[0] = parser.parse((tokenText, token, tokens) => {
-                return !!(
+                const result = !!(
                     token.type === Types.TAG_START &&
                     tokens.nextIf(Types.SYMBOL, 'endset')
                 );
+                if (result) {
+                    closingTagStartToken = token;
+                }
+                return result;
             }).expressions;
         }
 
@@ -80,6 +89,14 @@ ${names.length} variable names and ${values.length} values.`,
 
         setStartFromToken(setStatement, token);
         setEndFromToken(setStatement, tokens.expect(Types.TAG_END));
+
+        setStatement.trimRightSet = !!(
+            openingTagEndToken && hasTagEndTokenTrimRight(openingTagEndToken)
+        );
+        setStatement.trimLeftEndset = !!(
+            closingTagStartToken &&
+            hasTagStartTokenTrimLeft(closingTagStartToken)
+        );
 
         return setStatement;
     },

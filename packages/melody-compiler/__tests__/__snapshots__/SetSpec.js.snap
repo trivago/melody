@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`set should parse a simple set statement 1`] = `
+Object {
+  "assignments": Array [
+    Object {
+      "name": Object {
+        "name": "foo",
+        "type": "Identifier",
+      },
+      "type": "VariableDeclarationStatement",
+      "value": Object {
+        "type": "NumericLiteral",
+        "value": 0,
+      },
+    },
+  ],
+  "trimLeft": true,
+  "trimLeftEndset": false,
+  "trimRight": true,
+  "trimRightSet": false,
+  "type": "SetStatement",
+}
+`;
+
+exports[`set should parse set...endset 1`] = `
+Object {
+  "assignments": Array [
+    Object {
+      "name": Object {
+        "name": "foo",
+        "type": "Identifier",
+      },
+      "type": "VariableDeclarationStatement",
+      "value": Array [
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "
+            ",
+          },
+        },
+        Object {
+          "attributes": Array [],
+          "children": Array [
+            Object {
+              "type": "PrintTextStatement",
+              "value": Object {
+                "type": "StringLiteral",
+                "value": "Some more text",
+              },
+            },
+          ],
+          "name": "p",
+          "selfClosing": false,
+          "type": "Element",
+        },
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "
+        ",
+          },
+        },
+      ],
+    },
+  ],
+  "trimLeft": false,
+  "trimLeftEndset": true,
+  "trimRight": false,
+  "trimRightSet": true,
+  "type": "SetStatement",
+}
+`;

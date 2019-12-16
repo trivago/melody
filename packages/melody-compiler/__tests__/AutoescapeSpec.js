@@ -26,36 +26,7 @@ Everything will be automatically escaped in this block using the {{ strategy }} 
 {%- endautoescape %}`,
                 extension
             );
-            expect(node.expressions[0]).toMatchObject({
-                type: 'AutoescapeBlock',
-                escapeType: 'html',
-                expressions: [
-                    {
-                        type: 'PrintTextStatement',
-                        value: {
-                            type: 'StringLiteral',
-                            value:
-                                'Everything will be automatically escaped in this block using the ',
-                        },
-                    },
-                    {
-                        type: 'PrintExpressionStatement',
-                        value: {
-                            type: 'Identifier',
-                            name: 'strategy',
-                        },
-                    },
-                    {
-                        type: 'PrintTextStatement',
-                        value: {
-                            type: 'StringLiteral',
-                            value: ' strategy.',
-                        },
-                    },
-                ],
-                openingTrimRight: true,
-                closingTrimLeft: true,
-            });
+            expect(node.expressions[0]).toMatchSnapshot();
         });
     });
 });

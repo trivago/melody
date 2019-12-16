@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`spaceless should parse spaceless...endspaceless 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "type": "PrintTextStatement",
+      "value": Object {
+        "type": "StringLiteral",
+        "value": "
+            Ducks are swimming in the rain
+            ",
+      },
+    },
+  ],
+  "trimLeft": false,
+  "trimLeftEndspaceless": true,
+  "trimRight": false,
+  "trimRightSpaceless": true,
+  "type": "SpacelessBlock",
+}
+`;

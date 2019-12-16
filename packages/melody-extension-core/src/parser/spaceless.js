@@ -13,7 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Types, setStartFromToken, setEndFromToken } from 'melody-parser';
+import {
+    Types,
+    setStartFromToken,
+    setEndFromToken,
+    hasTagStartTokenTrimLeft,
+    hasTagEndTokenTrimRight,
+} from 'melody-parser';
 import { SpacelessBlock } from './../types';
 
 export const SpacelessParser = {
@@ -22,17 +28,29 @@ export const SpacelessParser = {
         const tokens = parser.tokens;
 
         tokens.expect(Types.TAG_END);
+        const openingTagEndToken = tokens.la(-1);
+        let closingTagStartToken;
 
         const body = parser.parse((tokenText, token, tokens) => {
-            return !!(
+            const result = !!(
                 token.type === Types.TAG_START &&
                 tokens.nextIf(Types.SYMBOL, 'endspaceless')
             );
+            closingTagStartToken = token;
+            return result;
         }).expressions;
 
         const spacelessBlock = new SpacelessBlock(body);
         setStartFromToken(spacelessBlock, token);
         setEndFromToken(spacelessBlock, tokens.expect(Types.TAG_END));
+
+        spacelessBlock.trimRightSpaceless = hasTagEndTokenTrimRight(
+            openingTagEndToken
+        );
+        spacelessBlock.trimLeftEndspaceless = !!(
+            closingTagStartToken &&
+            hasTagStartTokenTrimLeft(closingTagStartToken)
+        );
 
         return spacelessBlock;
     },

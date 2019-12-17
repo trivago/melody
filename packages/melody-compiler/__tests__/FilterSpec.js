@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 trivago N.V.
+ * Copyright 2019 trivago N.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +17,15 @@
 import { parse } from 'melody-parser';
 import { extension } from 'melody-extension-core';
 
-describe('autoescape', function() {
-    describe('when parsing', function() {
-        it('should be parsed', function() {
-            const node = parse(
-                `{% autoescape 'html' -%}
-Everything will be automatically escaped in this block using the {{ strategy }} strategy.
-{%- endautoescape %}`,
-                extension
-            );
-            expect(node.expressions[0]).toMatchSnapshot();
-        });
+describe('filter', function() {
+    test('should parse a filter block', function() {
+        const node = parse(
+            `{% filter upper -%}
+            This text becomes uppercase
+        {%- endfilter %}`,
+            { applyWhitespaceTrimming: false },
+            extension
+        );
+        expect(node.expressions[0]).toMatchSnapshot();
     });
 });

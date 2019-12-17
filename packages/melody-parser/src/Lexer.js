@@ -57,6 +57,15 @@ export default class Lexer {
         this[STRING_START] = null;
     }
 
+    applyExtension(ext) {
+        if (ext.unaryOperators) {
+            this.addOperators(...ext.unaryOperators.map(op => op.text));
+        }
+        if (ext.binaryOperators) {
+            this.addOperators(...ext.binaryOperators.map(op => op.text));
+        }
+    }
+
     reset() {
         this.input.reset();
         this[STATE] = [State.TEXT];

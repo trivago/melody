@@ -22,6 +22,7 @@ import {
     LEFT,
     parse,
 } from 'melody-parser';
+import { extension as coreExtensions } from 'melody-extension-core';
 import * as n from 'melody-types';
 
 describe('Parser', function() {
@@ -319,6 +320,31 @@ describe('Parser', function() {
         });
     });
 
+    const ifTag = {
+        name: 'if',
+        parse(parser, token) {
+            let alternate;
+            const tokens = parser.tokens;
+            const test = parser.matchExpression();
+            tokens.expect(Types.TAG_END);
+            const consequent = parser.parse(function(tagName) {
+                return tagName === 'endif' || tagName === 'else';
+            });
+            if (tokens.nextIf(Types.SYMBOL, 'endif')) {
+                tokens.expect(Types.TAG_END);
+                alternate = null;
+            } else if (tokens.nextIf(Types.SYMBOL, 'else')) {
+                tokens.expect(Types.TAG_END);
+                alternate = parser.parse(function(tagName) {
+                    return tagName === 'endif';
+                });
+                tokens.expect(Types.SYMBOL, 'endif');
+                tokens.expect(Types.TAG_END);
+            }
+            return new n.ConditionalExpression(test, consequent, alternate);
+        },
+    };
+
     describe('when parsing tags', function() {
         it('should match tags', function() {
             const p = getParser(
@@ -326,35 +352,7 @@ describe('Parser', function() {
                     '{% if foo %}hello {{ adjective }} world{% else %}hello universe{% endif %}'
                 )
             );
-            p.addTag({
-                name: 'if',
-                parse(parser, token) {
-                    let tokens = parser.tokens,
-                        test = parser.matchExpression(),
-                        consequent,
-                        alternate;
-                    tokens.expect(Types.TAG_END);
-                    consequent = parser.parse(function(tagName) {
-                        return tagName === 'endif' || tagName === 'else';
-                    });
-                    if (tokens.nextIf(Types.SYMBOL, 'endif')) {
-                        tokens.expect(Types.TAG_END);
-                        alternate = null;
-                    } else if (tokens.nextIf(Types.SYMBOL, 'else')) {
-                        tokens.expect(Types.TAG_END);
-                        alternate = parser.parse(function(tagName) {
-                            return tagName === 'endif';
-                        });
-                        tokens.expect(Types.SYMBOL, 'endif');
-                        tokens.expect(Types.TAG_END);
-                    }
-                    return new n.ConditionalExpression(
-                        test,
-                        consequent,
-                        alternate
-                    );
-                },
-            });
+            p.addTag(ifTag);
             const node = p.parse();
             expect(node).toMatchSnapshot();
         });
@@ -363,6 +361,16 @@ describe('Parser', function() {
             expect(function() {
                 parse`{% unknown_tag %}`;
             }).toThrowErrorMatchingSnapshot();
+        });
+
+        it('should preserve whitespace control information', function() {
+            const node = parse(
+                '{%- set count = 0 -%}',
+                { applyWhitespaceTrimming: false },
+                coreExtensions
+            );
+
+            expect(node).toMatchSnapshot();
         });
     });
 

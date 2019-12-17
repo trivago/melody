@@ -14,7 +14,13 @@
  * limitations under the License.
  */
 import { Node } from 'melody-types';
-import { Types, setStartFromToken, setEndFromToken } from 'melody-parser';
+import {
+    Types,
+    setStartFromToken,
+    setEndFromToken,
+    hasTagStartTokenTrimLeft,
+    hasTagEndTokenTrimRight,
+} from 'melody-parser';
 import { filter } from 'lodash';
 import { EmbedStatement } from './../types';
 
@@ -39,19 +45,32 @@ export const EmbedParser = {
         }
 
         tokens.expect(Types.TAG_END);
+        const openingTagEndToken = tokens.la(-1);
+        let closingTagStartToken;
 
         embedStatement.blocks = filter(
             parser.parse((tokenText, token, tokens) => {
-                return !!(
+                const result = !!(
                     token.type === Types.TAG_START &&
                     tokens.nextIf(Types.SYMBOL, 'endembed')
                 );
+                if (result) {
+                    closingTagStartToken = token;
+                }
+                return result;
             }).expressions,
             Node.isBlockStatement
         );
 
         setStartFromToken(embedStatement, token);
         setEndFromToken(embedStatement, tokens.expect(Types.TAG_END));
+
+        embedStatement.trimRightEmbed = hasTagEndTokenTrimRight(
+            openingTagEndToken
+        );
+        embedStatement.trimLeftEndembed =
+            closingTagStartToken &&
+            hasTagStartTokenTrimLeft(closingTagStartToken);
 
         return embedStatement;
     },

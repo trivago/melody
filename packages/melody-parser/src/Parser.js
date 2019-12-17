@@ -63,6 +63,29 @@ export default class Parser {
         );
     }
 
+    applyExtension(ext) {
+        if (ext.tags) {
+            for (const tag of ext.tags) {
+                this.addTag(tag);
+            }
+        }
+        if (ext.unaryOperators) {
+            for (const op of ext.unaryOperators) {
+                this.addUnaryOperator(op);
+            }
+        }
+        if (ext.binaryOperators) {
+            for (const op of ext.binaryOperators) {
+                this.addBinaryOperator(op);
+            }
+        }
+        if (ext.tests) {
+            for (const test of ext.tests) {
+                this.addTest(test);
+            }
+        }
+    }
+
     addUnaryOperator(op: UnaryOperator) {
         this[UNARY][op.text] = op;
         return this;
@@ -324,8 +347,10 @@ export default class Parser {
     }
 
     matchTag() {
-        let tokens = this.tokens,
-            tag = tokens.expect(Types.SYMBOL),
+        const tokens = this.tokens;
+        const tagStartToken = tokens.la(-1);
+
+        const tag = tokens.expect(Types.SYMBOL),
             parser = this[TAG][tag.text];
         if (!parser) {
             tokens.error(
@@ -337,7 +362,12 @@ export default class Parser {
                 tag.length
             );
         }
-        return parser.parse(this, tag);
+
+        const result = parser.parse(this, tag);
+        const tagEndToken = tokens.la(-1);
+        result.trimLeft = tagStartToken.text.endsWith('-');
+        result.trimRight = tagEndToken.text.startsWith('-');
+        return result;
     }
 
     matchExpression(precedence = 0) {

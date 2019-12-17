@@ -26,11 +26,40 @@ import {
     copyEnd,
     copyLoc,
     createNode,
+    hasTagStartTokenTrimLeft,
+    hasTagEndTokenTrimRight,
+    isMelodyExtension,
 } from './util';
 
-function parse(code) {
-    const p = new Parser(new TokenStream(new Lexer(new CharStream(code))));
-    return p.parse();
+function parse(code, options, ...extensions) {
+    return createExtendedParser(code, options, ...extensions).parse();
+}
+
+function createExtendedParser(code, options, ...extensions) {
+    let passedOptions = options;
+    const passedExtensions = extensions;
+    if (isMelodyExtension(options)) {
+        // Variant without options parameter: createExtendedParser(code, ...extensions)
+        passedOptions = undefined;
+        passedExtensions.unshift(options);
+    }
+    const lexer = createExtendedLexer(code, ...passedExtensions);
+    const parser = new Parser(
+        new TokenStream(lexer, passedOptions),
+        passedOptions
+    );
+    for (const ext of passedExtensions) {
+        parser.applyExtension(ext);
+    }
+    return parser;
+}
+
+function createExtendedLexer(code, ...extensions) {
+    const lexer = new Lexer(new CharStream(code));
+    for (const ext of extensions) {
+        lexer.applyExtension(ext);
+    }
+    return lexer;
 }
 
 export {
@@ -42,11 +71,15 @@ export {
     LEFT,
     RIGHT,
     parse,
+    createExtendedLexer,
+    createExtendedParser,
     setStartFromToken,
     setEndFromToken,
     copyStart,
     copyEnd,
     copyLoc,
     createNode,
+    hasTagStartTokenTrimLeft,
+    hasTagEndTokenTrimRight,
     Types,
 };

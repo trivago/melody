@@ -19,6 +19,8 @@ import {
     setStartFromToken,
     setEndFromToken,
     createNode,
+    hasTagStartTokenTrimLeft,
+    hasTagEndTokenTrimRight,
 } from 'melody-parser';
 import { BlockStatement } from './../types';
 
@@ -28,15 +30,19 @@ export const BlockParser = {
         const tokens = parser.tokens,
             nameToken = tokens.expect(Types.SYMBOL);
 
-        let blockStatement;
-        if (tokens.nextIf(Types.TAG_END)) {
+        let blockStatement, openingTagEndToken, closingTagStartToken;
+        if ((openingTagEndToken = tokens.nextIf(Types.TAG_END))) {
             blockStatement = new BlockStatement(
                 createNode(Identifier, nameToken, nameToken.text),
                 parser.parse((tokenText, token, tokens) => {
-                    return !!(
+                    const result = !!(
                         token.type === Types.TAG_START &&
                         tokens.nextIf(Types.SYMBOL, 'endblock')
                     );
+                    if (result) {
+                        closingTagStartToken = token;
+                    }
+                    return result;
                 }).expressions
             );
 
@@ -68,6 +74,13 @@ export const BlockParser = {
 
         setStartFromToken(blockStatement, token);
         setEndFromToken(blockStatement, tokens.expect(Types.TAG_END));
+
+        blockStatement.trimRightBlock =
+            openingTagEndToken && hasTagEndTokenTrimRight(openingTagEndToken);
+        blockStatement.trimLeftEndblock = !!(
+            closingTagStartToken &&
+            hasTagStartTokenTrimLeft(closingTagStartToken)
+        );
 
         return blockStatement;
     },

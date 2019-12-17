@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 trivago N.V.
+ * Copyright 2019 trivago N.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +17,24 @@
 import { parse } from 'melody-parser';
 import { extension } from 'melody-extension-core';
 
-describe('autoescape', function() {
-    describe('when parsing', function() {
-        it('should be parsed', function() {
-            const node = parse(
-                `{% autoescape 'html' -%}
-Everything will be automatically escaped in this block using the {{ strategy }} strategy.
-{%- endautoescape %}`,
-                extension
-            );
-            expect(node.expressions[0]).toMatchSnapshot();
-        });
+describe('set', function() {
+    test('should parse set...endset', function() {
+        const node = parse(
+            `{% set foo -%}
+            <p>Some more text</p>
+        {%- endset %}`,
+            { applyWhitespaceTrimming: false },
+            extension
+        );
+        expect(node.expressions[0]).toMatchSnapshot();
+    });
+
+    test('should parse a simple set statement', function() {
+        const node = parse(
+            `{%- set foo = 0 -%}`,
+            { applyWhitespaceTrimming: false },
+            extension
+        );
+        expect(node.expressions[0]).toMatchSnapshot();
     });
 });

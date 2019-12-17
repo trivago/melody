@@ -19,6 +19,8 @@ import {
     setStartFromToken,
     setEndFromToken,
     createNode,
+    hasTagStartTokenTrimLeft,
+    hasTagEndTokenTrimRight,
 } from 'melody-parser';
 import { FilterBlockStatement } from './../types';
 
@@ -29,11 +31,18 @@ export const FilterParser = {
             ref = createNode(Identifier, token, 'filter'),
             filterExpression = parser.matchFilterExpression(ref);
         tokens.expect(Types.TAG_END);
+        const openingTagEndToken = tokens.la(-1);
+        let closingTagStartToken;
+
         const body = parser.parse((text, token, tokens) => {
-            return (
+            const result =
                 token.type === Types.TAG_START &&
-                tokens.nextIf(Types.SYMBOL, 'endfilter')
-            );
+                tokens.nextIf(Types.SYMBOL, 'endfilter');
+
+            if (result) {
+                closingTagStartToken = token;
+            }
+            return result;
         }).expressions;
 
         const filterBlockStatement = new FilterBlockStatement(
@@ -42,6 +51,14 @@ export const FilterParser = {
         );
         setStartFromToken(filterBlockStatement, token);
         setEndFromToken(filterBlockStatement, tokens.expect(Types.TAG_END));
+
+        filterBlockStatement.trimRightFilter = hasTagEndTokenTrimRight(
+            openingTagEndToken
+        );
+        filterBlockStatement.trimLeftEndfilter =
+            closingTagStartToken &&
+            hasTagStartTokenTrimLeft(closingTagStartToken);
+
         return filterBlockStatement;
     },
 };

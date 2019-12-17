@@ -1,0 +1,258 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`for should parse a for-if-else loop 1`] = `
+Object {
+  "body": Object {
+    "expressions": Array [
+      Object {
+        "type": "PrintTextStatement",
+        "value": Object {
+          "type": "StringLiteral",
+          "value": "
+            ",
+        },
+      },
+      Object {
+        "attributes": Array [],
+        "children": Array [
+          Object {
+            "type": "PrintExpressionStatement",
+            "value": Object {
+              "name": "a",
+              "type": "Identifier",
+            },
+          },
+          Object {
+            "type": "PrintTextStatement",
+            "value": Object {
+              "type": "StringLiteral",
+              "value": " - ",
+            },
+          },
+          Object {
+            "type": "PrintExpressionStatement",
+            "value": Object {
+              "name": "b",
+              "type": "Identifier",
+            },
+          },
+        ],
+        "name": "li",
+        "selfClosing": false,
+        "type": "Element",
+      },
+      Object {
+        "type": "PrintTextStatement",
+        "value": Object {
+          "type": "StringLiteral",
+          "value": "
+        ",
+        },
+      },
+    ],
+    "type": "SequenceExpression",
+  },
+  "condition": Object {
+    "arguments": null,
+    "expression": Object {
+      "name": "b",
+      "type": "Identifier",
+    },
+    "type": "TestEvenExpression",
+  },
+  "keyTarget": Object {
+    "name": "a",
+    "type": "Identifier",
+  },
+  "otherwise": Object {
+    "expressions": Array [
+      Object {
+        "type": "PrintTextStatement",
+        "value": Object {
+          "type": "StringLiteral",
+          "value": "
+            ",
+        },
+      },
+      Object {
+        "attributes": Array [],
+        "children": Array [
+          Object {
+            "type": "PrintTextStatement",
+            "value": Object {
+              "type": "StringLiteral",
+              "value": "No results found",
+            },
+          },
+        ],
+        "name": "li",
+        "selfClosing": false,
+        "type": "Element",
+      },
+      Object {
+        "type": "PrintTextStatement",
+        "value": Object {
+          "type": "StringLiteral",
+          "value": "
+        ",
+        },
+      },
+    ],
+    "type": "SequenceExpression",
+  },
+  "sequence": Object {
+    "arguments": Array [
+      Object {
+        "type": "NumericLiteral",
+        "value": 3,
+      },
+      Object {
+        "computed": false,
+        "object": Object {
+          "name": "c",
+          "type": "Identifier",
+        },
+        "property": Object {
+          "name": "length",
+          "type": "Identifier",
+        },
+        "type": "MemberExpression",
+      },
+    ],
+    "name": Object {
+      "name": "slice",
+      "type": "Identifier",
+    },
+    "target": Object {
+      "name": "c",
+      "type": "Identifier",
+    },
+    "type": "FilterExpression",
+  },
+  "trimLeft": false,
+  "trimLeftElse": true,
+  "trimLeftEndfor": false,
+  "trimRight": false,
+  "trimRightElse": true,
+  "trimRightFor": false,
+  "type": "ForStatement",
+  "valueTarget": Object {
+    "name": "b",
+    "type": "Identifier",
+  },
+}
+`;
+
+exports[`for should parse a normal for loop 1`] = `
+Object {
+  "body": Object {
+    "expressions": Array [
+      Object {
+        "type": "PrintTextStatement",
+        "value": Object {
+          "type": "StringLiteral",
+          "value": "
+            ",
+        },
+      },
+      Object {
+        "attributes": Array [
+          Object {
+            "name": Object {
+              "name": "class",
+              "type": "Identifier",
+            },
+            "type": "Attribute",
+            "value": Object {
+              "alternate": Object {
+                "type": "StringLiteral",
+                "value": "",
+              },
+              "consequent": Object {
+                "type": "StringLiteral",
+                "value": "last",
+              },
+              "test": Object {
+                "computed": false,
+                "object": Object {
+                  "name": "loop",
+                  "type": "Identifier",
+                },
+                "property": Object {
+                  "name": "last",
+                  "type": "Identifier",
+                },
+                "type": "MemberExpression",
+              },
+              "type": "ConditionalExpression",
+            },
+          },
+        ],
+        "children": Array [
+          Object {
+            "type": "PrintTextStatement",
+            "value": Object {
+              "type": "StringLiteral",
+              "value": "
+                ",
+            },
+          },
+          Object {
+            "type": "PrintExpressionStatement",
+            "value": Object {
+              "computed": false,
+              "object": Object {
+                "name": "loop",
+                "type": "Identifier",
+              },
+              "property": Object {
+                "name": "index",
+                "type": "Identifier",
+              },
+              "type": "MemberExpression",
+            },
+          },
+          Object {
+            "type": "PrintTextStatement",
+            "value": Object {
+              "type": "StringLiteral",
+              "value": "
+            ",
+            },
+          },
+        ],
+        "name": "li",
+        "selfClosing": false,
+        "type": "Element",
+      },
+      Object {
+        "type": "PrintTextStatement",
+        "value": Object {
+          "type": "StringLiteral",
+          "value": "
+        ",
+        },
+      },
+    ],
+    "type": "SequenceExpression",
+  },
+  "condition": null,
+  "keyTarget": null,
+  "otherwise": null,
+  "sequence": Object {
+    "name": "items",
+    "type": "Identifier",
+  },
+  "trimLeft": false,
+  "trimLeftElse": false,
+  "trimLeftEndfor": true,
+  "trimRight": false,
+  "trimRightElse": false,
+  "trimRightFor": true,
+  "type": "ForStatement",
+  "valueTarget": Object {
+    "name": "item",
+    "type": "Identifier",
+  },
+}
+`;

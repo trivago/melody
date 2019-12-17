@@ -1470,7 +1470,37 @@ Object {
         "name": "foo",
         "type": "Identifier",
       },
+      "trimLeft": false,
+      "trimRight": false,
       "type": "ConditionalExpression",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing tags should preserve whitespace control information 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "assignments": Array [
+        Object {
+          "name": Object {
+            "name": "count",
+            "type": "Identifier",
+          },
+          "type": "VariableDeclarationStatement",
+          "value": Object {
+            "type": "NumericLiteral",
+            "value": 0,
+          },
+        },
+      ],
+      "trimLeft": true,
+      "trimLeftEndset": false,
+      "trimRight": true,
+      "trimRightSet": false,
+      "type": "SetStatement",
     },
   ],
   "type": "SequenceExpression",

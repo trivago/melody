@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`block should parse embracing block statement 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "type": "PrintTextStatement",
+      "value": Object {
+        "type": "StringLiteral",
+        "value": "
+            ",
+      },
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "name": Object {
+            "name": "key",
+            "type": "Identifier",
+          },
+          "type": "Attribute",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "1",
+          },
+        },
+        Object {
+          "name": Object {
+            "name": "class",
+            "type": "Identifier",
+          },
+          "type": "Attribute",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "test",
+          },
+        },
+      ],
+      "children": Array [
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "
+                ",
+          },
+        },
+        Object {
+          "attributes": Array [],
+          "children": Array [
+            Object {
+              "type": "PrintTextStatement",
+              "value": Object {
+                "type": "StringLiteral",
+                "value": "Hello",
+              },
+            },
+          ],
+          "name": "span",
+          "selfClosing": false,
+          "type": "Element",
+        },
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "
+            ",
+          },
+        },
+      ],
+      "name": "div",
+      "selfClosing": false,
+      "type": "Element",
+    },
+    Object {
+      "type": "PrintTextStatement",
+      "value": Object {
+        "type": "StringLiteral",
+        "value": "
+        ",
+      },
+    },
+  ],
+  "name": Object {
+    "name": "hello",
+    "type": "Identifier",
+  },
+  "trimLeft": false,
+  "trimLeftEndblock": true,
+  "trimRight": false,
+  "trimRightBlock": true,
+  "type": "BlockStatement",
+}
+`;
+
+exports[`block should parse single-line block 1`] = `
+Object {
+  "body": Object {
+    "type": "PrintExpressionStatement",
+    "value": Object {
+      "name": "foo",
+      "type": "Identifier",
+    },
+  },
+  "name": Object {
+    "name": "bar",
+    "type": "Identifier",
+  },
+  "trimLeft": true,
+  "trimLeftEndblock": false,
+  "trimRight": false,
+  "trimRightBlock": false,
+  "type": "BlockStatement",
+}
+`;

@@ -13,7 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Types, setStartFromToken, setEndFromToken } from 'melody-parser';
+import {
+    Types,
+    setStartFromToken,
+    setEndFromToken,
+    hasTagStartTokenTrimLeft,
+    hasTagEndTokenTrimRight,
+} from 'melody-parser';
 import { AutoescapeBlock } from './../types';
 
 export const AutoescapeParser = {
@@ -22,8 +28,11 @@ export const AutoescapeParser = {
         const tokens = parser.tokens;
 
         let escapeType = null,
-            stringStartToken;
+            stringStartToken,
+            openingTagEndToken,
+            closingTagStartToken;
         if (tokens.nextIf(Types.TAG_END)) {
+            openingTagEndToken = tokens.la(-1);
             escapeType = null;
         } else if ((stringStartToken = tokens.nextIf(Types.STRING_START))) {
             escapeType = tokens.expect(Types.STRING).text;
@@ -39,10 +48,13 @@ I expected the current string to end with a ${
                         tokens.lat(0)}.`,
                 });
             }
+            openingTagEndToken = tokens.la(0);
         } else if (tokens.nextIf(Types.FALSE)) {
             escapeType = false;
+            openingTagEndToken = tokens.la(0);
         } else if (tokens.nextIf(Types.TRUE)) {
             escapeType = true;
+            openingTagEndToken = tokens.la(0);
         } else {
             parser.error({
                 title: 'Invalid autoescape type declaration',
@@ -61,12 +73,20 @@ I expected the current string to end with a ${
                 token.type === Types.TAG_START &&
                 tokens.nextIf(Types.SYMBOL, 'endautoescape')
             ) {
+                closingTagStartToken = token;
                 tagEndToken = tokens.expect(Types.TAG_END);
                 return true;
             }
             return false;
         }).expressions;
         setEndFromToken(autoescape, tagEndToken);
+
+        autoescape.trimRightAutoescape = hasTagEndTokenTrimRight(
+            openingTagEndToken
+        );
+        autoescape.trimLeftEndautoescape = hasTagStartTokenTrimLeft(
+            closingTagStartToken
+        );
 
         return autoescape;
     },

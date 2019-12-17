@@ -20,6 +20,8 @@ import {
     setStartFromToken,
     setEndFromToken,
     createNode,
+    hasTagStartTokenTrimLeft,
+    hasTagEndTokenTrimRight,
 } from 'melody-parser';
 
 export const MountParser = {
@@ -83,8 +85,14 @@ export const MountParser = {
             delayBy
         );
 
+        let openingTagEndToken,
+            catchTagStartToken,
+            catchTagEndToken,
+            endmountTagStartToken;
+
         if (async) {
             tokens.expect(Types.TAG_END);
+            openingTagEndToken = tokens.la(-1);
 
             mountStatement.body = parser.parse((tokenText, token, tokens) => {
                 return (
@@ -95,6 +103,7 @@ export const MountParser = {
             });
 
             if (tokens.nextIf(Types.SYMBOL, 'catch')) {
+                catchTagStartToken = tokens.la(-2);
                 const errorVariableName = tokens.expect(Types.SYMBOL);
                 mountStatement.errorVariableName = createNode(
                     Identifier,
@@ -102,6 +111,7 @@ export const MountParser = {
                     errorVariableName.text
                 );
                 tokens.expect(Types.TAG_END);
+                catchTagEndToken = tokens.la(-1);
                 mountStatement.otherwise = parser.parse(
                     (tokenText, token, tokens) => {
                         return (
@@ -112,10 +122,25 @@ export const MountParser = {
                 );
             }
             tokens.expect(Types.SYMBOL, 'endmount');
+            endmountTagStartToken = tokens.la(-2);
         }
 
         setStartFromToken(mountStatement, token);
         setEndFromToken(mountStatement, tokens.expect(Types.TAG_END));
+
+        mountStatement.trimRightMount = !!(
+            openingTagEndToken && hasTagEndTokenTrimRight(openingTagEndToken)
+        );
+        mountStatement.trimLeftCatch = !!(
+            catchTagStartToken && hasTagStartTokenTrimLeft(catchTagStartToken)
+        );
+        mountStatement.trimRightCatch = !!(
+            catchTagEndToken && hasTagEndTokenTrimRight(catchTagEndToken)
+        );
+        mountStatement.trimLeftEndmount = !!(
+            endmountTagStartToken &&
+            hasTagStartTokenTrimLeft(endmountTagStartToken)
+        );
 
         return mountStatement;
     },

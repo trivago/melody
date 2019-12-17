@@ -87,35 +87,11 @@ export function compile(fileName: String, source: String, ...extensions) {
 function parseString(fileName: string, source: string, ...extensions) {
     const lexer = new Lexer(new CharStream(source));
     for (const ext of extensions) {
-        if (ext.unaryOperators) {
-            lexer.addOperators(...ext.unaryOperators.map(op => op.text));
-        }
-        if (ext.binaryOperators) {
-            lexer.addOperators(...ext.binaryOperators.map(op => op.text));
-        }
+        lexer.applyExtension(ext);
     }
     const parser = new Parser(new TokenStream(lexer));
-    for (const extension of extensions) {
-        if (extension.tags) {
-            for (const tag of (extension.tags: Array)) {
-                parser.addTag(tag);
-            }
-        }
-        if (extension.unaryOperators) {
-            for (const op of (extension.unaryOperators: Array)) {
-                parser.addUnaryOperator(op);
-            }
-        }
-        if (extension.binaryOperators) {
-            for (const op of (extension.binaryOperators: Array)) {
-                parser.addBinaryOperator(op);
-            }
-        }
-        if (extension.tests) {
-            for (const test of (extension.tests: Array)) {
-                parser.addTest(test);
-            }
-        }
+    for (const ext of extensions) {
+        parser.applyExtension(ext);
     }
 
     return parser.parse();
@@ -125,13 +101,13 @@ export function toString(jsAst, code) {
     const g = new CodeGenerator(jsAst, {}, code);
     // Babel sanitises strings to not contain complex characters
     // however we need them in order to be able to render complex strings
-    g._generator.StringLiteral = function (node, parent) {
+    g._generator.StringLiteral = function(node, parent) {
         var raw = this.getPossibleRaw(node);
         if (!this.format.minified && raw != null) {
-          this.token(raw);
-          return;
+            this.token(raw);
+            return;
         }
-      
+
         return this.token(JSON.stringify(node.value));
     };
     return g.generate();

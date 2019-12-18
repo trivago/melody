@@ -1,5 +1,16 @@
 ## master
 
+## 1.5.0
+
+### Features
+
+-   `[melody-parser]`: Twig tags get a `trimLeft` flag to signal if they start with `{%-` (`trimLeft === true`) or with `{%` (`trimLeft === false`). Same with `trimRight` (`-%}`).
+-   `[melody-extension-core]`: The individual parsers retain information about Twig tags starting with a dash `-` or not.
+
+### Bug fixes
+
+-   `[melody-parser]`: HTML comments were sometimes swallowed by an adjacent TextStatement node. This was fixed.
+
 ## 1.4.0
 
 ### Features

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`String literal when parsing should preserve backslashes 1`] = `
+Object {
+  "type": "PrintExpressionStatement",
+  "value": Object {
+    "type": "StringLiteral",
+    "value": "zzzbar\\\\baz",
+  },
+}
+`;

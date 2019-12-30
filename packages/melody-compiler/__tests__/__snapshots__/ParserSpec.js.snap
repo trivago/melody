@@ -1507,6 +1507,84 @@ Object {
 }
 `;
 
+exports[`Parser when preserving the original source should cope with HTML elements 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [
+        Object {
+          "name": Object {
+            "name": "class",
+            "type": "Identifier",
+          },
+          "originalSource": "class=\\"shadow",
+          "type": "Attribute",
+          "value": Object {
+            "originalSource": "shadow",
+            "type": "StringLiteral",
+            "value": "shadow",
+          },
+        },
+      ],
+      "children": Array [
+        Object {
+          "originalSource": "
+            This is ",
+          "type": "PrintTextStatement",
+          "value": Object {
+            "originalSource": "
+            This is ",
+            "type": "StringLiteral",
+            "value": "
+            This is ",
+          },
+        },
+        Object {
+          "attributes": Array [],
+          "children": Array [
+            Object {
+              "originalSource": "fine",
+              "type": "PrintTextStatement",
+              "value": Object {
+                "originalSource": "fine",
+                "type": "StringLiteral",
+                "value": "fine",
+              },
+            },
+          ],
+          "name": "span",
+          "originalSource": "<span>fine</span>",
+          "selfClosing": false,
+          "type": "Element",
+        },
+        Object {
+          "originalSource": ".
+            ",
+          "type": "PrintTextStatement",
+          "value": Object {
+            "originalSource": ".
+            ",
+            "type": "StringLiteral",
+            "value": ".
+            ",
+          },
+        },
+      ],
+      "name": "div",
+      "originalSource": "<div class=\\"shadow\\">
+            This is <span>fine</span>.
+            </div>",
+      "selfClosing": false,
+      "type": "Element",
+    },
+  ],
+  "originalSource": "<div class=\\"shadow\\">
+            This is <span>fine</span>.
+            </div>",
+  "type": "SequenceExpression",
+}
+`;
+
 exports[`Parser when preserving the original source should cope with a Twig comment 1`] = `
 Object {
   "expressions": Array [

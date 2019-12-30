@@ -521,6 +521,14 @@ describe('Parser', function() {
             const node = parse(source, { source });
             expect(node).toMatchSnapshot();
         });
+
+        it('should cope with HTML elements', function() {
+            const source = `<div class="shadow">
+            This is <span>fine</span>.
+            </div>`;
+            const node = parse(source, { source });
+            expect(node).toMatchSnapshot();
+        });
     });
 });
 

@@ -240,7 +240,7 @@ export default class Parser {
      */
     matchElement() {
         let tokens = this.tokens,
-            elementStartToken = tokens.la(0),
+            elementStartToken = tokens.la(-1),
             elementName,
             element;
         if (!(elementName = tokens.nextIf(Types.SYMBOL))) {
@@ -290,6 +290,7 @@ export default class Parser {
             }
         }
         setEndFromToken(element, tokens.la(-1));
+        copySource(element, this.source);
         return element;
     }
 

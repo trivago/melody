@@ -64,17 +64,6 @@ export function copyLoc(node, { loc: { start, end } }) {
     return node;
 }
 
-export function createNodeWithSource(Type, token, source, ...args) {
-    const node = createNode(Type, token, ...args);
-    if (source && node.loc.start && node.loc.end) {
-        node.originalSource = source.substring(
-            node.loc.start.index,
-            node.loc.end.index
-        );
-    }
-    return node;
-}
-
 export function createNode(Type, token, ...args) {
     return setEndFromToken(setStartFromToken(new Type(...args), token), token);
 }

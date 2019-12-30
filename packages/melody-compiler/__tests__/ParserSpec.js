@@ -489,6 +489,33 @@ describe('Parser', function() {
             expect(node).toMatchSnapshot();
         });
 
+        it('should cope with a call expression', function() {
+            const source = '{{ lower("ABCD") }}';
+            const node = parse(source, { source });
+            expect(node).toMatchSnapshot();
+        });
+
+        it('should cope with a Twig comment', function() {
+            const source = '{# The soup today was delicious #}';
+            const node = parse(source, { source, ignoreComments: false });
+            expect(node).toMatchSnapshot();
+        });
+
+        it('should cope with an HTML comment', function() {
+            const source = '<!-- The pasta today was delicious -->';
+            const node = parse(source, { source, ignoreHtmlComments: false });
+            expect(node).toMatchSnapshot();
+        });
+
+        it('should cope with simple text', function() {
+            const source = `This will be the story 
+            of young Huckleberry Finn 
+            who lived on the banks of 
+            the Mississippi`;
+            const node = parse(source, { source });
+            expect(node).toMatchSnapshot();
+        });
+
         it('should cope with a tertiary expression', function() {
             const source = '{{ a | default(null) ? false : true }}';
             const node = parse(source, { source });

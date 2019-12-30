@@ -1507,6 +1507,52 @@ Object {
 }
 `;
 
+exports[`Parser when preserving the original source should cope with a Twig comment 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "originalSource": "{# The soup today was delicious #}",
+      "type": "TwigComment",
+      "value": Object {
+        "originalSource": "{# The soup today was delicious #}",
+        "type": "StringLiteral",
+        "value": "{# The soup today was delicious #}",
+      },
+    },
+  ],
+  "originalSource": "{# The soup today was delicious #}",
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when preserving the original source should cope with a call expression 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "originalSource": "{{ lower(\\"ABCD\\") }}",
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "arguments": Array [
+          Object {
+            "originalSource": "\\"ABCD\\"",
+            "type": "StringLiteral",
+            "value": "ABCD",
+          },
+        ],
+        "callee": Object {
+          "name": "lower",
+          "type": "Identifier",
+        },
+        "originalSource": "lower(\\"ABCD\\")",
+        "type": "CallExpression",
+      },
+    },
+  ],
+  "originalSource": "{{ lower(\\"ABCD\\") }}",
+  "type": "SequenceExpression",
+}
+`;
+
 exports[`Parser when preserving the original source should cope with a string interpolation 1`] = `
 Object {
   "expressions": Array [
@@ -1592,7 +1638,6 @@ Object {
           ],
           "name": Object {
             "name": "default",
-            "originalSource": "default",
             "type": "Identifier",
           },
           "originalSource": "a | default(null",
@@ -1612,6 +1657,24 @@ Object {
 }
 `;
 
+exports[`Parser when preserving the original source should cope with an HTML comment 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "originalSource": "<!-- The pasta today was delicious -->",
+      "type": "HtmlComment",
+      "value": Object {
+        "originalSource": "<!-- The pasta today was delicious -->",
+        "type": "StringLiteral",
+        "value": "<!-- The pasta today was delicious -->",
+      },
+    },
+  ],
+  "originalSource": "<!-- The pasta today was delicious -->",
+  "type": "SequenceExpression",
+}
+`;
+
 exports[`Parser when preserving the original source should cope with an identifier 1`] = `
 Object {
   "expressions": Array [
@@ -1626,6 +1689,36 @@ Object {
     },
   ],
   "originalSource": "{{ hello }}",
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when preserving the original source should cope with simple text 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "originalSource": "This will be the story 
+            of young Huckleberry Finn 
+            who lived on the banks of 
+            the Mississippi",
+      "type": "PrintTextStatement",
+      "value": Object {
+        "originalSource": "This will be the story 
+            of young Huckleberry Finn 
+            who lived on the banks of 
+            the Mississippi",
+        "type": "StringLiteral",
+        "value": "This will be the story 
+            of young Huckleberry Finn 
+            who lived on the banks of 
+            the Mississippi",
+      },
+    },
+  ],
+  "originalSource": "This will be the story 
+            of young Huckleberry Finn 
+            who lived on the banks of 
+            the Mississippi",
   "type": "SequenceExpression",
 }
 `;

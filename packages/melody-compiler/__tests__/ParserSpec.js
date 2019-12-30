@@ -469,6 +469,32 @@ describe('Parser', function() {
             expect(node).toMatchSnapshot();
         });
     });
+
+    describe('when preserving the original source', function() {
+        it('should cope with an identifier', function() {
+            const source = '{{ hello }}';
+            const node = parse(source, { source });
+            expect(node).toMatchSnapshot();
+        });
+
+        it('should cope with a string literal', function() {
+            const source = '{{ "hello" }}';
+            const node = parse(source, { source });
+            expect(node).toMatchSnapshot();
+        });
+
+        it('should cope with a string interpolation', function() {
+            const source = '{{ "Calling #{name} next" }}';
+            const node = parse(source, { source });
+            expect(node).toMatchSnapshot();
+        });
+
+        it('should cope with a tertiary expression', function() {
+            const source = '{{ a | default(null) ? false : true }}';
+            const node = parse(source, { source });
+            expect(node).toMatchSnapshot();
+        });
+    });
 });
 
 function getParser(lexer) {

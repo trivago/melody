@@ -22,7 +22,9 @@ import {
     copyStart,
     copyEnd,
     copyLoc,
+    copySource,
     createNode,
+    createNodeWithSource,
 } from './util';
 import { voidElements } from './elementInfo';
 import * as he from 'he';
@@ -52,6 +54,11 @@ export default class Parser {
         this[BINARY] = {};
         this[TAG] = {};
         this[TEST] = {};
+        this.source = null;
+        if (options && options.source) {
+            this.source = options.source;
+            options.source = undefined;
+        }
         this.options = Object.assign(
             {},
             {
@@ -136,13 +143,17 @@ export default class Parser {
             switch (token.type) {
                 case Types.EXPRESSION_START: {
                     const expression = this.matchExpression();
-                    p.add(
-                        copyLoc(
-                            new n.PrintExpressionStatement(expression),
-                            expression
-                        )
+                    const statement = new n.PrintExpressionStatement(
+                        expression
                     );
-                    setEndFromToken(p, tokens.expect(Types.EXPRESSION_END));
+                    const endToken = tokens.expect(Types.EXPRESSION_END);
+                    setStartFromToken(statement, token);
+                    setEndFromToken(statement, endToken);
+                    copySource(statement, this.source);
+
+                    setEndFromToken(p, endToken);
+                    p.add(statement);
+
                     break;
                 }
                 case Types.TAG_START:
@@ -150,21 +161,29 @@ export default class Parser {
                     break;
                 case Types.TEXT:
                     p.add(
-                        createNode(
+                        createNodeWithSource(
                             n.PrintTextStatement,
                             token,
-                            createNode(n.StringLiteral, token, token.text)
+                            this.source,
+                            createNodeWithSource(
+                                n.StringLiteral,
+                                token,
+                                this.source,
+                                token.text
+                            )
                         )
                     );
                     break;
                 case Types.ENTITY:
                     p.add(
-                        createNode(
+                        createNodeWithSource(
                             n.PrintTextStatement,
                             token,
-                            createNode(
+                            this.source,
+                            createNodeWithSource(
                                 n.StringLiteral,
                                 token,
+                                this.source,
                                 this.options.decodeEntities
                                     ? he.decode(token.text)
                                     : token.text
@@ -178,10 +197,16 @@ export default class Parser {
                 case Types.COMMENT:
                     if (!this.options.ignoreComments) {
                         p.add(
-                            createNode(
+                            createNodeWithSource(
                                 n.TwigComment,
                                 token,
-                                createNode(n.StringLiteral, token, token.text)
+                                this.source,
+                                createNodeWithSource(
+                                    n.StringLiteral,
+                                    token,
+                                    this.source,
+                                    token.text
+                                )
                             )
                         );
                     }
@@ -189,16 +214,23 @@ export default class Parser {
                 case Types.HTML_COMMENT:
                     if (!this.options.ignoreHtmlComments) {
                         p.add(
-                            createNode(
+                            createNodeWithSource(
                                 n.HtmlComment,
                                 token,
-                                createNode(n.StringLiteral, token, token.text)
+                                this.source,
+                                createNodeWithSource(
+                                    n.StringLiteral,
+                                    token,
+                                    this.source,
+                                    token.text
+                                )
                             )
                         );
                     }
                     break;
             }
         }
+        copySource(p, this.source);
         return p;
     }
 
@@ -284,9 +316,10 @@ export default class Parser {
                             canBeString &&
                             (token = tokens.nextIf(Types.STRING))
                         ) {
-                            nodes[nodes.length] = createNode(
+                            nodes[nodes.length] = createNodeWithSource(
                                 n.StringLiteral,
                                 token,
+                                this.source,
                                 token.text
                             );
                             canBeString = false;
@@ -302,7 +335,14 @@ export default class Parser {
                     }
                     tokens.expect(Types.STRING_END);
                     if (!nodes.length) {
-                        nodes.push(createNode(n.StringLiteral, start, ''));
+                        nodes.push(
+                            createNodeWithSource(
+                                n.StringLiteral,
+                                start,
+                                this.source,
+                                ''
+                            )
+                        );
                     }
 
                     let expr = nodes[0];
@@ -312,6 +352,7 @@ export default class Parser {
                         expr.loc.start.line = line;
                         expr.loc.start.column = column;
                         copyEnd(expr, expr.right);
+                        copySource(expr, this.source);
                     }
                     // Distinguish between BinaryConcatExpression generated by
                     // this Parser (implicit before parsing), and those that the
@@ -322,10 +363,14 @@ export default class Parser {
                     const attr = new n.Attribute(keyNode, expr);
                     copyStart(attr, keyNode);
                     copyEnd(attr, expr);
+                    copySource(attr, this.source);
                     element.attributes.push(attr);
                 } else {
                     element.attributes.push(
-                        copyLoc(new n.Attribute(keyNode), keyNode)
+                        copySource(
+                            copyLoc(new n.Attribute(keyNode), keyNode),
+                            this.source
+                        )
                     );
                 }
             } else if (tokens.nextIf(Types.EXPRESSION_START)) {
@@ -402,6 +447,7 @@ export default class Parser {
                 );
                 expr = op.createNode(token, expr, expr1);
             }
+            copySource(expr, this.source);
             token = tokens.la(0);
         }
 
@@ -426,7 +472,9 @@ export default class Parser {
             const op = this[UNARY][token.text];
             tokens.next(); // consume operator
             const expr = this.matchExpression(op.precedence);
-            return this.matchPostfixExpression(op.createNode(token, expr));
+            return this.matchPostfixExpression(
+                copySource(op.createNode(token, expr), this.source)
+            );
         } else if (tokens.test(Types.LPAREN)) {
             tokens.next(); // consume '('
             const expr = this.matchExpression();
@@ -443,32 +491,57 @@ export default class Parser {
             node;
         switch (token.type) {
             case Types.NULL:
-                node = createNode(n.NullLiteral, tokens.next());
+                node = createNodeWithSource(
+                    n.NullLiteral,
+                    tokens.next(),
+                    this.source
+                );
                 break;
             case Types.FALSE:
-                node = createNode(n.BooleanLiteral, tokens.next(), false);
+                node = createNodeWithSource(
+                    n.BooleanLiteral,
+                    tokens.next(),
+                    this.source,
+                    false
+                );
                 break;
             case Types.TRUE:
-                node = createNode(n.BooleanLiteral, tokens.next(), true);
+                node = createNodeWithSource(
+                    n.BooleanLiteral,
+                    tokens.next(),
+                    this.source,
+                    true
+                );
                 break;
             case Types.SYMBOL:
                 tokens.next();
                 if (tokens.test(Types.LPAREN)) {
                     // SYMBOL '(' arguments* ')'
                     node = new n.CallExpression(
-                        createNode(n.Identifier, token, token.text),
+                        createNodeWithSource(
+                            n.Identifier,
+                            token,
+                            this.source,
+                            token.text
+                        ),
                         this.matchArguments()
                     );
                     copyStart(node, node.callee);
                     setEndFromToken(node, tokens.la(-1)); // ')'
                 } else {
-                    node = createNode(n.Identifier, token, token.text);
+                    node = createNodeWithSource(
+                        n.Identifier,
+                        token,
+                        this.source,
+                        token.text
+                    );
                 }
                 break;
             case Types.NUMBER:
-                node = createNode(
+                node = createNodeWithSource(
                     n.NumericLiteral,
                     token,
+                    this.source,
                     Number(tokens.next())
                 );
                 break;
@@ -499,18 +572,17 @@ export default class Parser {
     }
 
     matchStringExpression() {
-        let tokens = this.tokens,
+        let canBeString = true,
+            token;
+        const tokens = this.tokens,
             nodes = [],
-            canBeString = true,
-            token,
-            stringStart,
-            stringEnd;
-        stringStart = tokens.expect(Types.STRING_START);
+            stringStart = tokens.expect(Types.STRING_START);
         while (!tokens.test(Types.STRING_END)) {
             if (canBeString && (token = tokens.nextIf(Types.STRING))) {
-                nodes[nodes.length] = createNode(
+                nodes[nodes.length] = createNodeWithSource(
                     n.StringLiteral,
                     token,
+                    this.source,
                     token.text
                 );
                 canBeString = false;
@@ -522,12 +594,15 @@ export default class Parser {
                 break;
             }
         }
-        stringEnd = tokens.expect(Types.STRING_END);
+        const stringEnd = tokens.expect(Types.STRING_END);
 
         if (!nodes.length) {
-            return setEndFromToken(
-                createNode(n.StringLiteral, stringStart, ''),
-                stringEnd
+            return copySource(
+                setEndFromToken(
+                    createNode(n.StringLiteral, stringStart, ''),
+                    stringEnd
+                ),
+                this.source
             );
         }
 
@@ -543,6 +618,10 @@ export default class Parser {
         if (nodes.length > 1) {
             expr.wasImplicitConcatenation = true;
         }
+
+        setStartFromToken(expr, stringStart);
+        setEndFromToken(expr, stringEnd);
+        copySource(expr, this.source);
 
         return expr;
     }
@@ -572,6 +651,7 @@ export default class Parser {
             );
             condition.loc.start = { line, column };
             copyEnd(condition, alternate || consequent);
+            copySource(condition, this.source);
         }
         return condition;
     }
@@ -611,9 +691,19 @@ export default class Parser {
                     computed = true;
                 }
             } else if ((token = tokens.nextIf(Types.SYMBOL))) {
-                key = createNode(n.Identifier, token, token.text);
+                key = createNodeWithSource(
+                    n.Identifier,
+                    token,
+                    this.source,
+                    token.text
+                );
             } else if ((token = tokens.nextIf(Types.NUMBER))) {
-                key = createNode(n.NumericLiteral, token, Number(token.text));
+                key = createNodeWithSource(
+                    n.NumericLiteral,
+                    token,
+                    this.source,
+                    Number(token.text)
+                );
             } else if (tokens.test(Types.LPAREN)) {
                 key = this.matchExpression();
                 computed = true;
@@ -631,6 +721,7 @@ export default class Parser {
             const prop = new n.ObjectProperty(key, value, computed);
             copyStart(prop, key);
             copyEnd(prop, value);
+            copySource(prop, this.source);
             obj.properties.push(prop);
             if (!tokens.test(Types.RBRACKET)) {
                 tokens.expect(Types.COMMA);
@@ -669,11 +760,17 @@ export default class Parser {
                 computed = false,
                 property;
             if (token.type === Types.SYMBOL) {
-                property = createNode(n.Identifier, token, token.text);
+                property = createNodeWithSource(
+                    n.Identifier,
+                    token,
+                    this.source,
+                    token.text
+                );
             } else if (token.type === Types.NUMBER) {
-                property = createNode(
+                property = createNodeWithSource(
                     n.NumericLiteral,
                     token,
+                    this.source,
                     Number(token.text)
                 );
                 computed = true;
@@ -691,6 +788,7 @@ export default class Parser {
             const memberExpr = new n.MemberExpression(node, property, computed);
             copyStart(memberExpr, node);
             copyEnd(memberExpr, property);
+            copySource(memberExpr, this.source);
             if (tokens.test(Types.LPAREN)) {
                 const callExpr = new n.CallExpression(
                     memberExpr,
@@ -740,7 +838,12 @@ export default class Parser {
             target = node;
         while (!tokens.test(Types.EOF)) {
             let token = tokens.expect(Types.SYMBOL),
-                name = createNode(n.Identifier, token, token.text),
+                name = createNodeWithSource(
+                    n.Identifier,
+                    token,
+                    this.source,
+                    token.text
+                ),
                 args;
             if (tokens.test(Types.LPAREN)) {
                 args = this.matchArguments();
@@ -757,6 +860,7 @@ export default class Parser {
             } else {
                 copyEnd(newTarget, target);
             }
+            copySource(newTarget, this.source);
             target = newTarget;
 
             if (!tokens.test(Types.PIPE) || tokens.test(Types.EOF)) {
@@ -781,10 +885,16 @@ export default class Parser {
                 tokens.next();
                 const value = this.matchExpression();
                 const arg = new n.NamedArgumentExpression(
-                    createNode(n.Identifier, name, name.text),
+                    createNodeWithSource(
+                        n.Identifier,
+                        name,
+                        this.source,
+                        name.text
+                    ),
                     value
                 );
                 copyEnd(arg, value);
+                copySource(arg, this.source);
                 args.push(arg);
             } else {
                 args.push(this.matchExpression());

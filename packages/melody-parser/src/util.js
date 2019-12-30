@@ -44,6 +44,16 @@ export function copyEnd(node, end) {
     return node;
 }
 
+export function copySource(node, entireSource) {
+    if (entireSource && node.loc.start && node.loc.end) {
+        node.originalSource = entireSource.substring(
+            node.loc.start.index,
+            node.loc.end.index
+        );
+    }
+    return node;
+}
+
 export function copyLoc(node, { loc: { start, end } }) {
     node.loc.start.line = start.line;
     node.loc.start.column = start.column;
@@ -51,6 +61,17 @@ export function copyLoc(node, { loc: { start, end } }) {
     node.loc.end.line = end.line;
     node.loc.end.column = end.column;
     node.loc.end.index = end.index;
+    return node;
+}
+
+export function createNodeWithSource(Type, token, source, ...args) {
+    const node = createNode(Type, token, ...args);
+    if (source && node.loc.start && node.loc.end) {
+        node.originalSource = source.substring(
+            node.loc.start.index,
+            node.loc.end.index
+        );
+    }
     return node;
 }
 

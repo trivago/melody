@@ -1631,6 +1631,91 @@ Object {
 }
 `;
 
+exports[`Parser when preserving the original source should cope with a complex call expression 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "originalSource": "{{ hello({ test: \\"bar\\", foo: test}, [1, 2, 3, test]) }}",
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "arguments": Array [
+          Object {
+            "originalSource": "{ test: \\"bar\\", foo: test}",
+            "properties": Array [
+              Object {
+                "computed": false,
+                "key": Object {
+                  "name": "test",
+                  "originalSource": "test",
+                  "type": "Identifier",
+                },
+                "originalSource": "test: \\"bar\\"",
+                "type": "ObjectProperty",
+                "value": Object {
+                  "originalSource": "\\"bar\\"",
+                  "type": "StringLiteral",
+                  "value": "bar",
+                },
+              },
+              Object {
+                "computed": false,
+                "key": Object {
+                  "name": "foo",
+                  "originalSource": "foo",
+                  "type": "Identifier",
+                },
+                "originalSource": "foo: test",
+                "type": "ObjectProperty",
+                "value": Object {
+                  "name": "test",
+                  "originalSource": "test",
+                  "type": "Identifier",
+                },
+              },
+            ],
+            "type": "ObjectExpression",
+          },
+          Object {
+            "elements": Array [
+              Object {
+                "originalSource": "1",
+                "type": "NumericLiteral",
+                "value": 1,
+              },
+              Object {
+                "originalSource": "2",
+                "type": "NumericLiteral",
+                "value": 2,
+              },
+              Object {
+                "originalSource": "3",
+                "type": "NumericLiteral",
+                "value": 3,
+              },
+              Object {
+                "name": "test",
+                "originalSource": "test",
+                "type": "Identifier",
+              },
+            ],
+            "originalSource": "[1, 2, 3, test]",
+            "type": "ArrayExpression",
+          },
+        ],
+        "callee": Object {
+          "name": "hello",
+          "type": "Identifier",
+        },
+        "originalSource": "hello({ test: \\"bar\\", foo: test}, [1, 2, 3, test])",
+        "type": "CallExpression",
+      },
+    },
+  ],
+  "originalSource": "{{ hello({ test: \\"bar\\", foo: test}, [1, 2, 3, test]) }}",
+  "type": "SequenceExpression",
+}
+`;
+
 exports[`Parser when preserving the original source should cope with a string interpolation 1`] = `
 Object {
   "expressions": Array [

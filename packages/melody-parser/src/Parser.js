@@ -670,6 +670,7 @@ export default class Parser {
             }
         }
         setEndFromToken(array, tokens.expect(Types.RBRACE));
+        copySource(array, this.source);
         return array;
     }
 
@@ -722,6 +723,7 @@ export default class Parser {
             }
         }
         setEndFromToken(obj, tokens.expect(Types.RBRACKET));
+        copySource(obj, this.source);
         return obj;
     }
 

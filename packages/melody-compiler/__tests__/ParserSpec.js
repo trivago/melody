@@ -495,6 +495,13 @@ describe('Parser', function() {
             expect(node).toMatchSnapshot();
         });
 
+        it('should cope with a complex call expression', function() {
+            const source =
+                '{{ hello({ test: "bar", foo: test}, [1, 2, 3, test]) }}';
+            const node = parse(source, { source });
+            expect(node).toMatchSnapshot();
+        });
+
         it('should cope with a Twig comment', function() {
             const source = '{# The soup today was delicious #}';
             const node = parse(source, { source, ignoreComments: false });

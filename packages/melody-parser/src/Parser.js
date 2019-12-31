@@ -158,7 +158,7 @@ export default class Parser {
                 case Types.TAG_START:
                     p.add(this.matchTag());
                     break;
-                case Types.TEXT:
+                case Types.TEXT: {
                     const textStringLiteral = createNode(
                         n.StringLiteral,
                         token,
@@ -173,7 +173,8 @@ export default class Parser {
                     copySource(textTextStatement, this.source);
                     p.add(textTextStatement);
                     break;
-                case Types.ENTITY:
+                }
+                case Types.ENTITY: {
                     const entityStringLiteral = createNode(
                         n.StringLiteral,
                         token,
@@ -190,6 +191,7 @@ export default class Parser {
                     copySource(entityTextStatement, this.source);
                     p.add(entityTextStatement);
                     break;
+                }
                 case Types.ELEMENT_START:
                     p.add(this.matchElement());
                     break;
@@ -408,9 +410,9 @@ export default class Parser {
         result.trimLeft = tagStartToken.text.endsWith('-');
         result.trimRight = tagEndToken.text.startsWith('-');
 
-        // setStartFromToken(result, tagStartToken);
-        // setEndFromToken(result, tagEndToken);
-        // copySource(result, this.source);
+        setStartFromToken(result, tagStartToken);
+        setEndFromToken(result, tagEndToken);
+        copySource(result, this.source);
 
         return result;
     }
@@ -608,8 +610,8 @@ export default class Parser {
     }
 
     matchConditionalExpression(test: Node) {
-        let tokens = this.tokens,
-            condition = test,
+        const tokens = this.tokens;
+        let condition = test,
             consequent,
             alternate;
         while (tokens.nextIf(Types.QUESTION_MARK)) {

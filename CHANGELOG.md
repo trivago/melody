@@ -1,5 +1,9 @@
 ## master
 
+### Features
+
+-   `[melody-parser]`: Add the option to preserve the original source code per AST node
+
 ## 1.5.0
 
 ### Features

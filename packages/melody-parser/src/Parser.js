@@ -407,6 +407,11 @@ export default class Parser {
         const tagEndToken = tokens.la(-1);
         result.trimLeft = tagStartToken.text.endsWith('-');
         result.trimRight = tagEndToken.text.startsWith('-');
+
+        // setStartFromToken(result, tagStartToken);
+        // setEndFromToken(result, tagEndToken);
+        // copySource(result, this.source);
+
         return result;
     }
 

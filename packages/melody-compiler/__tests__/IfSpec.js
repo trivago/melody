@@ -58,4 +58,14 @@ describe('if', function() {
         );
         expect(node.expressions[0]).toMatchSnapshot();
     });
+
+    // test('should preserve the original source when desired', function() {
+    //     const source = `{% if foo %}
+    //         Foo
+    //     {%- else -%}
+    //         Bar
+    //     {% endif %}`;
+    //     const node = parse(source, { source }, extension);
+    //     expect(node.expressions[0].originalSource).toEqual(source);
+    // });
 });

@@ -241,14 +241,14 @@ export default class Parser {
      *              | matchExpression
      */
     matchElement() {
-        let tokens = this.tokens,
-            elementStartToken = tokens.la(-1),
-            elementName,
-            element;
+        const tokens = this.tokens,
+            tagNameToken = tokens.la(0),
+            tagStartToken = tokens.la(-1);
+        let elementName;
         if (!(elementName = tokens.nextIf(Types.SYMBOL))) {
             this.error({
                 title: 'Expected element start',
-                pos: elementStartToken.pos,
+                pos: tagNameToken.pos,
                 advice:
                     tokens.lat(0) === Types.SLASH
                         ? `Unexpected closing "${
@@ -258,8 +258,8 @@ export default class Parser {
             });
         }
 
-        element = new n.Element(elementName.text);
-        setStartFromToken(element, elementStartToken);
+        const element = new n.Element(elementName.text);
+        setStartFromToken(element, tagNameToken);
 
         this.matchAttributes(element, tokens);
 
@@ -293,6 +293,15 @@ export default class Parser {
         }
         setEndFromToken(element, tokens.la(-1));
         copySource(element, this.source);
+        // Manually copy source because messing with element.loc
+        // causes problems with error reporting
+        if (this.source) {
+            element.originalSource = this.source.substring(
+                tagStartToken.pos.index,
+                element.loc.end.index
+            );
+        }
+
         return element;
     }
 

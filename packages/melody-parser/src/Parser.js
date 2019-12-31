@@ -293,9 +293,9 @@ export default class Parser {
         }
         setEndFromToken(element, tokens.la(-1));
         copySource(element, this.source);
-        // Manually copy source because messing with element.loc
-        // causes problems with error reporting
         if (this.source) {
+            // Manually copy source because messing with element.loc
+            // causes problems with error reporting in tests
             element.originalSource = this.source.substring(
                 tagStartToken.pos.index,
                 element.loc.end.index
@@ -419,9 +419,15 @@ export default class Parser {
         result.trimLeft = tagStartToken.text.endsWith('-');
         result.trimRight = tagEndToken.text.startsWith('-');
 
-        setStartFromToken(result, tagStartToken);
-        setEndFromToken(result, tagEndToken);
-        copySource(result, this.source);
+        if (this.source) {
+            // Manually copy original source because using
+            // setStartFromToken() and setEndFromToken()
+            // somehow messes up error reporting in tests
+            result.originalSource = this.source.substring(
+                tagStartToken.pos.index,
+                tagEndToken.end
+            );
+        }
 
         return result;
     }

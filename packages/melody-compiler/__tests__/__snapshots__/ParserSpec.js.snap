@@ -1856,6 +1856,65 @@ Object {
 }
 `;
 
+exports[`Parser when preserving the original source should cope with binary expressions 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "originalSource": "{{ foo in bar }}",
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "left": Object {
+          "name": "foo",
+          "originalSource": "foo",
+          "type": "Identifier",
+        },
+        "operator": "in",
+        "originalSource": "{{ foo in bar }}",
+        "right": Object {
+          "name": "bar",
+          "originalSource": "bar",
+          "type": "Identifier",
+        },
+        "type": "BinaryExpression",
+      },
+    },
+  ],
+  "originalSource": "{{ foo in bar }}",
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when preserving the original source should cope with self-parsing binary operators 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "originalSource": "{{ foo is not defined }}",
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "argument": Object {
+          "left": Object {
+            "name": "foo",
+            "originalSource": "foo",
+            "type": "Identifier",
+          },
+          "operator": "is",
+          "right": Object {
+            "name": "defined",
+            "type": "Identifier",
+          },
+          "type": "BinaryExpression",
+        },
+        "operator": "not",
+        "originalSource": "{{ foo is not defined }}",
+        "type": "UnaryExpression",
+      },
+    },
+  ],
+  "originalSource": "{{ foo is not defined }}",
+  "type": "SequenceExpression",
+}
+`;
+
 exports[`Parser when preserving the original source should cope with simple text 1`] = `
 Object {
   "expressions": Array [
@@ -1882,6 +1941,29 @@ Object {
             of young Huckleberry Finn 
             who lived on the banks of 
             the Mississippi",
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when preserving the original source should cope with unary expressions 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "originalSource": "{{ not foo }}",
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "argument": Object {
+          "name": "foo",
+          "originalSource": "foo",
+          "type": "Identifier",
+        },
+        "operator": "not",
+        "originalSource": "{{ not foo }}",
+        "type": "UnaryExpression",
+      },
+    },
+  ],
+  "originalSource": "{{ not foo }}",
   "type": "SequenceExpression",
 }
 `;

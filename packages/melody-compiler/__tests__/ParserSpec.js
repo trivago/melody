@@ -489,6 +489,78 @@ describe('Parser', function() {
             expect(node).toMatchSnapshot();
         });
 
+        it('should cope with unary expressions', function() {
+            const source = '{{ not foo }}';
+            const l = getLexer(source);
+            l.addOperators('not');
+            const p = getParser(l, { source });
+            p.addUnaryOperator({
+                text: 'not',
+                precendence: 500,
+                createNode(token, expr) {
+                    return new n.UnaryExpression(token.text, expr);
+                },
+            });
+            const node = p.parse();
+            expect(node).toMatchSnapshot();
+        });
+
+        it('should cope with binary expressions', function() {
+            const source = '{{ foo in bar }}';
+            const l = getLexer(source);
+            l.addOperators('in');
+            const p = getParser(l, { source });
+            p.addBinaryOperator({
+                text: 'in',
+                precedence: 400,
+                associativity: LEFT,
+                createNode(token, lhs, rhs) {
+                    return new n.BinaryExpression(token.text, lhs, rhs);
+                },
+            });
+            const node = p.parse();
+            expect(node).toMatchSnapshot();
+        });
+
+        it('should cope with self-parsing binary operators', function() {
+            const source = '{{ foo is not defined }}';
+            const l = getLexer(source);
+            l.addOperators('not', 'is');
+            const p = getParser(l, { source });
+            p.addUnaryOperator({
+                text: 'not',
+                precedence: 200,
+                createNode(token, expr) {
+                    return new n.UnaryExpression(token.text, expr);
+                },
+            });
+            p.addBinaryOperator({
+                text: 'is',
+                precedence: 400,
+                associativity: LEFT,
+                parse(parser, token, expr) {
+                    let tokens = parser.tokens,
+                        not,
+                        test;
+                    if (tokens.test(Types.OPERATOR, 'not')) {
+                        not = tokens.next();
+                    }
+                    test = tokens.expect(Types.SYMBOL);
+                    expr = new n.BinaryExpression(
+                        token.text,
+                        expr,
+                        new n.Identifier(test.text)
+                    );
+                    if (not) {
+                        expr = new n.UnaryExpression('not', expr);
+                    }
+                    return expr;
+                },
+            });
+            const node = p.parse();
+            expect(node).toMatchSnapshot();
+        });
+
         it('should cope with a call expression', function() {
             const source = '{{ lower("ABCD") }}';
             const node = parse(source, { source });
@@ -539,8 +611,8 @@ describe('Parser', function() {
     });
 });
 
-function getParser(lexer) {
-    return new Parser(new TokenStream(lexer));
+function getParser(lexer, options) {
+    return new Parser(new TokenStream(lexer), options);
 }
 
 function getLexer(code) {

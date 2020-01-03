@@ -166,10 +166,10 @@ export default class Parser {
                             createNode(
                                 n.StringLiteral,
                                 token,
-                                this.options.decodeEntities ||
+                                !this.options.decodeEntities ||
                                     this.options.preserveSourceLiterally
-                                    ? he.decode(token.text)
-                                    : token.text
+                                    ? token.text
+                                    : he.decode(token.text)
                             )
                         )
                     );

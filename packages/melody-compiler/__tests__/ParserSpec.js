@@ -458,6 +458,14 @@ describe('Parser', function() {
             expect(node).toMatchSnapshot();
         });
 
+        it('should respect the preserveSourceLiterally option', function() {
+            const parser = createParserWithOptions('<span>&#8206;</span>', {
+                preserveSourceLiterally: true,
+            });
+            const node = parser.parse();
+            expect(node).toMatchSnapshot();
+        });
+
         it('should respect applyWhitespaceTrimming setting', function() {
             const parser = createParserWithOptions(
                 '<span title="Testing: {{- noWhitespaceTest -}} foo">Test</span>',

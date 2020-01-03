@@ -1,5 +1,9 @@
 ## master
 
+### Features
+
+-   `[melody-parser]`: Introduce option `preserveSourceLiterally`
+
 ## 1.5.0
 
 ### Features

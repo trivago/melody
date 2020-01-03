@@ -130,7 +130,9 @@ describe('Lexer', () => {
 
         it('should parse an expression that is a string and contains escaping', () => {
             var lexer = new Lexer(
-                    new CharStream("hello {{ 'test\\'n this' }}world")
+                    new CharStream(
+                        "hello {{ 'test\\'n this \\'n other' }}world"
+                    )
                 ),
                 token = lexer.next();
             expect(token.type).toEqual(Types.TEXT);
@@ -145,7 +147,7 @@ describe('Lexer', () => {
             token = lexer.next();
             expect(token.type).toEqual(Types.STRING_START);
             token = lexer.next();
-            expect(token.text).toEqual("test'n this");
+            expect(token.text).toEqual("test'n this 'n other");
             expect(token.type).toEqual(Types.STRING);
             token = lexer.next();
             expect(token.type).toEqual(Types.STRING_END);

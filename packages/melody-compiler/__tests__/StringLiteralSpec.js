@@ -17,10 +17,19 @@
 import { parse } from 'melody-parser';
 
 describe('String literal', function() {
-    describe('when parsing', function() {
-        it('should preserve backslashes', function() {
+    describe('when parsed', function() {
+        test('should preserve backslashes', function() {
             const node = parse(`{{ 'zzz\\bar\\baz' }}`);
             expect(node.expressions[0]).toMatchSnapshot();
+        });
+
+        test('should respect "preserveSourceLiterally"', function() {
+            const string = `zzz\\'b"ar`;
+            const input = `{{ '${string}' }}`;
+            const node = parse(input, {
+                preserveSourceLiterally: true,
+            });
+            expect(node.expressions[0].value.value).toEqual(string);
         });
     });
 });

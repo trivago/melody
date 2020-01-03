@@ -172,7 +172,7 @@ _template.render = function (_context) {
             }} /></li><li>{temp(strtotime(\\"+1 day\\", \\"2018-03-01\\"))(\\"Y-m-d\\")}</li><li>{_context.elephant != null && _context.elephant !== '' ? _context.elephant : \\"elephant\\"}</li><li>{escape(\\"<div>HTML</div>\\")}</li><li>{first(myArray)}</li><li>{format(\\"I like %s, it is %s\\", \\"Twig\\", \\"nice\\")}</li><li>{[1, 2, 3].join(\\"|\\")}</li><li><span dangerouslySetInnerHTML={{
                 __html: JSON.stringify(myData)
             }} /></li><li>{keys(myData)}</li><li>{last(myArray)}</li><li>{myArray.length}</li><li>{\\"Lower\\".toLowerCase()}</li><li>{merge(myArray, [\\"Yes\\"]).length}</li><li><span dangerouslySetInnerHTML={{
-                __html: nl2br(\\"nThis is a new line\\\\\\\\nAnd this\\")
+                __html: nl2br(\\"\\\\\\\\nThis is a new line\\\\\\\\nAnd this\\")
             }} /></li><li>{number_format(9800.333, 2, \\".\\", \\",\\")}</li><li>{replace(\\"I like fish\\", {
                 \\"fish\\": \\"meat\\"
             })}</li><li>{reverse(myArray)}</li><li>{round(42.55)}</li><li>{\\"12345\\".slice(1, 3)}</li><li>{myArray.sort()}</li><li>{\\"one, two, three, four, five\\".split(\\",\\", 3)}</li><li>{striptags(\\"<div>HTML</div>\\")}</li><li>{title(\\"Huzzah for twig!\\")}</li><li>{trim(\\"  I like Twig.  \\")}</li><li>{\\"Upper\\".toUpperCase()}</li><li>{url_encode(\\"path-seg*ment\\")}</li></ul>;

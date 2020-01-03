@@ -526,7 +526,7 @@ export default class Lexer {
             }
         }
         var result = this.createToken(TokenTypes.STRING, pos);
-        // Replace backslashes before escaped quotes
+        // Replace double backslash before escaped quotes
         if (!this.options.preserveSourceLiterally) {
             result.text = result.text.replace(
                 new RegExp('(\\\\)(' + start + ')', 'g'),
@@ -557,7 +557,7 @@ export default class Lexer {
             }
         }
         var result = this.createToken(TokenTypes.STRING, pos);
-        // Replace backslashes before escaped quotes
+        // Replace double backslash before escaped quotes
         if (!this.options.preserveSourceLiterally) {
             result.text = result.text.replace(
                 new RegExp('(\\\\)(' + start + ')', 'g'),

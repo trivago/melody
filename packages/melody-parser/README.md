@@ -18,7 +18,6 @@ const abstractSyntaxTree = parse(code, {
     ignoreComments: false,
     ignoreHtmlComments: false,
     decodeEntities: true,
-    source: code,
 });
 ```
 
@@ -32,7 +31,6 @@ const abstractSyntaxTree = parse(
     code,
     {
         decodeEntities: true,
-        source: code,
     },
     coreExtension,
     customExtension
@@ -61,7 +59,3 @@ If set to `true`, HTML comments will not be part of the resulting abstract synta
 ### decodeEntities
 
 Character references/entities like `&#8206;` will be decoded if this is set to `true` (default). Otherwise, the string will be taken over verbatim to the AST.
-
-### source
-
-This signals to the parser that it should perform _original source code preservation at the AST node level_. This means that "most" AST nodes have an `originalSource` property which holds the code this node represents, in its original formatting. This can be useful for automated code formatters.

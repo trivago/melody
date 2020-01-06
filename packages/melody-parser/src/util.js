@@ -44,14 +44,11 @@ export function copyEnd(node, end) {
     return node;
 }
 
-export function copySource(node, entireSource) {
+export function getNodeSource(node, entireSource) {
     if (entireSource && node.loc.start && node.loc.end) {
-        node.originalSource = entireSource.substring(
-            node.loc.start.index,
-            node.loc.end.index
-        );
+        return entireSource.substring(node.loc.start.index, node.loc.end.index);
     }
-    return node;
+    return '';
 }
 
 export function copyLoc(node, { loc: { start, end } }) {

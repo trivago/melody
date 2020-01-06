@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { parse } from 'melody-parser';
+import { parse, getNodeSource } from 'melody-parser';
 import { extension } from 'melody-extension-core';
 
 describe('if', function() {
@@ -59,13 +59,16 @@ describe('if', function() {
         expect(node.expressions[0]).toMatchSnapshot();
     });
 
-    test('should preserve the original source when desired', function() {
-        const source = `{% if foo %}
-            Foo
-        {%- else -%}
-            Bar
-        {% endif %}`;
-        const node = parse(source, { source }, extension);
-        expect(node.expressions[0].originalSource).toEqual(source);
+    test('should be able to reproduce the original source', function() {
+        const ifStatementSource = `{% if foo %}
+        Foo
+    {%- else -%}
+        Bar
+    {% endif %}`;
+        const source = `The winner is: ${ifStatementSource}`;
+        const node = parse(source, extension);
+        expect(getNodeSource(node.expressions[1], source)).toEqual(
+            ifStatementSource
+        );
     });
 });

@@ -375,6 +375,47 @@ describe('Parser', function() {
     });
 
     describe('when parsing HTML', function() {
+        it('should parse an HTML 5 doctype declaration', function() {
+            const node = parse('<!DOCTYPE html>', {
+                ignoreDeclarations: false,
+            });
+            expect(node).toMatchSnapshot();
+        });
+
+        it('should parse an HTML 5 doctype declaration with whitespace after !', function() {
+            const node = parse('<!   DOCTYPE html>', {
+                ignoreDeclarations: false,
+            });
+            expect(node).toMatchSnapshot();
+        });
+
+        it('should parse an HTML 4 doctype declaration', function() {
+            const node = parse(
+                '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">',
+                {
+                    ignoreDeclarations: false,
+                }
+            );
+            expect(node).toMatchSnapshot();
+        });
+
+        it('should parse a doctype declaration containing an expression', function() {
+            const node = parse('<!DOCTYPE {{ theDocType }}>', {
+                ignoreDeclarations: false,
+            });
+            expect(node).toMatchSnapshot();
+        });
+
+        it('should throw a controlled error on an interrupted doctype declaration', function() {
+            try {
+                parse('<!DOCTYPE ', {
+                    ignoreDeclarations: false,
+                });
+            } catch (err) {
+                expect(err).toMatchSnapshot();
+            }
+        });
+
         it('should match a simple element', function() {
             const node = parse`<div>test</div>`;
             expect(node).toMatchSnapshot();

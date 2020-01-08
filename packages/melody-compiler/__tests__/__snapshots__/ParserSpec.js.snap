@@ -344,6 +344,93 @@ Object {
 }
 `;
 
+exports[`Parser when parsing HTML should parse a doctype declaration containing an expression 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "declarationType": "DOCTYPE",
+      "parts": Array [
+        Object {
+          "type": "PrintExpressionStatement",
+          "value": Object {
+            "name": "theDocType",
+            "type": "Identifier",
+          },
+        },
+      ],
+      "type": "Declaration",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing HTML should parse an HTML 4 doctype declaration 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "declarationType": "DOCTYPE",
+      "parts": Array [
+        Object {
+          "name": "HTML",
+          "type": "Identifier",
+        },
+        Object {
+          "name": "PUBLIC",
+          "type": "Identifier",
+        },
+        Object {
+          "type": "StringLiteral",
+          "value": "-//W3C//DTD HTML 4.01//EN",
+        },
+        Object {
+          "type": "StringLiteral",
+          "value": "http://www.w3.org/TR/html4/strict.dtd",
+        },
+      ],
+      "type": "Declaration",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing HTML should parse an HTML 5 doctype declaration 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "declarationType": "DOCTYPE",
+      "parts": Array [
+        Object {
+          "name": "html",
+          "type": "Identifier",
+        },
+      ],
+      "type": "Declaration",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
+exports[`Parser when parsing HTML should parse an HTML 5 doctype declaration with whitespace after ! 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "declarationType": "DOCTYPE",
+      "parts": Array [
+        Object {
+          "name": "html",
+          "type": "Identifier",
+        },
+      ],
+      "type": "Declaration",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
 exports[`Parser when parsing HTML should respect applyWhitespaceTrimming setting 1`] = `
 Object {
   "expressions": Array [
@@ -420,6 +507,13 @@ Object {
   ],
   "type": "SequenceExpression",
 }
+`;
+
+exports[`Parser when parsing HTML should throw a controlled error on an interrupted doctype declaration 1`] = `
+[Error: ERROR: Expected string, symbol, or expression
+  1 | <!DOCTYPE 
+
+Only strings or symbols can be part of a declaration]
 `;
 
 exports[`Parser when parsing Twig comments should match a comment 1`] = `

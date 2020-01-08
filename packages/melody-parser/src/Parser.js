@@ -57,6 +57,7 @@ export default class Parser {
             {
                 ignoreComments: true,
                 ignoreHtmlComments: true,
+                ignoreDeclarations: true,
                 decodeEntities: true,
             },
             options
@@ -175,6 +176,13 @@ export default class Parser {
                 case Types.ELEMENT_START:
                     p.add(this.matchElement());
                     break;
+                case Types.DECLARATION_START: {
+                    const declarationNode = this.matchDeclaration();
+                    if (!this.options.ignoreDeclarations) {
+                        p.add(declarationNode);
+                    }
+                    break;
+                }
                 case Types.COMMENT:
                     if (!this.options.ignoreComments) {
                         p.add(
@@ -200,6 +208,65 @@ export default class Parser {
             }
         }
         return p;
+    }
+
+    /**
+     * e.g., <!DOCTYPE html>
+     */
+    matchDeclaration() {
+        const tokens = this.tokens,
+            declarationStartToken = tokens.la(-1);
+        let declarationType = null,
+            currentToken = null;
+
+        if (!(declarationType = tokens.nextIf(Types.SYMBOL))) {
+            this.error({
+                title: 'Expected declaration start',
+                pos: declarationStartToken.pos,
+                advice:
+                    "After '<!', an unquoted symbol like DOCTYPE is expected",
+            });
+        }
+
+        const declaration = new n.Declaration(declarationType.text);
+        while ((currentToken = tokens.next())) {
+            if (currentToken.type === Types.SYMBOL) {
+                const symbol = createNode(
+                    n.Identifier,
+                    currentToken,
+                    currentToken.text
+                );
+                declaration.parts.push(symbol);
+            } else if (currentToken.type === Types.STRING_START) {
+                const stringToken = tokens.expect(Types.STRING);
+                declaration.parts.push(
+                    createNode(n.StringLiteral, stringToken, stringToken.text)
+                );
+                tokens.expect(Types.STRING_END);
+            } else if (currentToken.type === Types.EXPRESSION_START) {
+                const expression = this.matchExpression();
+                declaration.parts.push(
+                    copyLoc(
+                        new n.PrintExpressionStatement(expression),
+                        expression
+                    )
+                );
+                tokens.expect(Types.EXPRESSION_END);
+            } else if (currentToken.type === Types.ELEMENT_END) {
+                break;
+            } else {
+                this.error({
+                    title: 'Expected string, symbol, or expression',
+                    pos: currentToken.pos,
+                    advice:
+                        'Only strings or symbols can be part of a declaration',
+                });
+            }
+        }
+        setStartFromToken(declaration, declarationStartToken);
+        setEndFromToken(declaration, currentToken);
+
+        return declaration;
     }
 
     /**

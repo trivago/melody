@@ -1,5 +1,7 @@
 ## master
 
+-   `[melody-parser]`: Add parsing of declarations like `<!DOCTYPE html>`, along with new Parser option `ignoreDeclarations`.
+
 ## 1.5.0
 
 ### Features

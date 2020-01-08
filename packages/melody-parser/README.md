@@ -37,6 +37,10 @@ If set to `true`, Twig comments will not be part of the resulting abstract synta
 
 If set to `true`, HTML comments will not be part of the resulting abstract syntax tree (AST). Defaults to `true`.
 
+### ignoreDeclarations (`true`)
+
+Declarations like `<!DOCTYPE html>` are not added to the parse tree if set to `true`.
+
 ### decodeEntities
 
 Character references/entities like `&#8206;` will be decoded if this is set to `true` (default). Otherwise, the string will be taken over verbatim to the AST.

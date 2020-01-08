@@ -25,6 +25,7 @@ const State = {
     STRING_DOUBLE: 'STRING_DOUBLE',
     ELEMENT: 'ELEMENT',
     ATTRIBUTE_VALUE: 'ATTRIBUTE_VALUE',
+    DECLARATION: 'DECLARATION',
 };
 
 const STATE = Symbol(),
@@ -189,6 +190,17 @@ export default class Lexer {
                             input.next();
                         }
                         return this.createToken(TokenTypes.HTML_COMMENT, pos);
+                    } else if (
+                        input.la(1) === '!' &&
+                        (isAlpha(input.lac(2)) || isWhitespace(input.la(2)))
+                    ) {
+                        input.next();
+                        input.next();
+                        this.pushState(State.DECLARATION);
+                        return this.createToken(
+                            TokenTypes.DECLARATION_START,
+                            pos
+                        );
                     } else {
                         return this.matchText(pos);
                     }
@@ -267,6 +279,21 @@ export default class Lexer {
                     return this.createToken(TokenTypes.STRING_END, pos);
                 } else {
                     return this.matchAttributeValue(pos);
+                }
+            } else if (this.state === State.DECLARATION) {
+                switch (c) {
+                    case '>':
+                        input.next();
+                        this.popState();
+                        return this.createToken(TokenTypes.ELEMENT_END, pos);
+                    case '"':
+                        input.next();
+                        this.pushState(State.STRING_DOUBLE);
+                        return this.createToken(TokenTypes.STRING_START, pos);
+                    case '{':
+                        return this.matchExpressionToken(pos);
+                    default:
+                        return this.matchSymbol(pos);
                 }
             } else {
                 return this.error(`Invalid state ${this.state}`, pos);

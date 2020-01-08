@@ -2365,7 +2365,7 @@ exports[`Compiler should fail transforming wrong include.template 1`] = `
 "Dynamic includes are not supported
   1 | <div>
 > 2 |   {% include \\"./path/#{template}\\" %}
-    |   ^
+    |      ^
   3 | </div>
   4 | 
 

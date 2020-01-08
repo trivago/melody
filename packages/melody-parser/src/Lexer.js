@@ -529,8 +529,8 @@ export default class Lexer {
         // Replace double backslash before escaped quotes
         if (!this.options.preserveSourceLiterally) {
             result.text = result.text.replace(
-                new RegExp('(\\\\)(' + start + ')', 'g'),
-                '$2'
+                new RegExp('(?:\\\\)(' + start + ')', 'g'),
+                '$1'
             );
         }
         return result;
@@ -560,8 +560,8 @@ export default class Lexer {
         // Replace double backslash before escaped quotes
         if (!this.options.preserveSourceLiterally) {
             result.text = result.text.replace(
-                new RegExp('(\\\\)(' + start + ')', 'g'),
-                '$2'
+                new RegExp('(?:\\\\)(' + start + ')', 'g'),
+                '$1'
             );
         }
         return result;

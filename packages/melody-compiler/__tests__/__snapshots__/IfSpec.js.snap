@@ -64,6 +64,11 @@ Object {
       },
     },
   ],
+  "tagNameLoc": Object {
+    "column": 3,
+    "index": 3,
+    "line": 1,
+  },
   "test": Object {
     "name": "dog",
     "type": "Identifier",
@@ -102,6 +107,11 @@ Object {
       },
     },
   ],
+  "tagNameLoc": Object {
+    "column": 3,
+    "index": 3,
+    "line": 1,
+  },
   "test": Object {
     "name": "foo",
     "type": "Identifier",
@@ -130,6 +140,11 @@ Object {
       },
     },
   ],
+  "tagNameLoc": Object {
+    "column": 3,
+    "index": 3,
+    "line": 1,
+  },
   "test": Object {
     "name": "test",
     "type": "Identifier",

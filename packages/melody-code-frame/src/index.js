@@ -32,7 +32,7 @@ export default function({ rawLines, lineNumber, colNumber, length }) {
                 return;
             }
 
-            if (colNumber) {
+            if (typeof colNumber === 'number') {
                 params.line += `\n${params.before}${repeat(' ', params.width)}${
                     params.after
                 }${repeat(' ', colNumber)}${repeat('^', length)}`;

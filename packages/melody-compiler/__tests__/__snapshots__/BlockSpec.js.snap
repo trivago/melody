@@ -56,6 +56,11 @@ Object {
               },
             },
           ],
+          "elementNameLoc": Object {
+            "column": 17,
+            "index": 75,
+            "line": 3,
+          },
           "name": "span",
           "selfClosing": false,
           "type": "Element",
@@ -69,6 +74,11 @@ Object {
           },
         },
       ],
+      "elementNameLoc": Object {
+        "column": 13,
+        "index": 32,
+        "line": 2,
+      },
       "name": "div",
       "selfClosing": false,
       "type": "Element",
@@ -85,6 +95,11 @@ Object {
   "name": Object {
     "name": "hello",
     "type": "Identifier",
+  },
+  "tagNameLoc": Object {
+    "column": 3,
+    "index": 3,
+    "line": 1,
   },
   "trimLeft": false,
   "trimLeftEndblock": true,
@@ -106,6 +121,11 @@ Object {
   "name": Object {
     "name": "bar",
     "type": "Identifier",
+  },
+  "tagNameLoc": Object {
+    "column": 4,
+    "index": 4,
+    "line": 1,
   },
   "trimLeft": true,
   "trimLeftEndblock": false,

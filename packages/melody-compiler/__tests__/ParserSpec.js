@@ -21,6 +21,7 @@ import {
     Lexer,
     LEFT,
     parse,
+    getNodeSource,
 } from 'melody-parser';
 import { extension as coreExtensions } from 'melody-extension-core';
 import * as n from 'melody-types';
@@ -224,13 +225,7 @@ describe('Parser', function() {
             const l = getLexer('{{ not foo }}');
             l.addOperators('not');
             const p = getParser(l);
-            p.addUnaryOperator({
-                text: 'not',
-                precendence: 500,
-                createNode(token, expr) {
-                    return new n.UnaryExpression(token.text, expr);
-                },
-            });
+            addNotOperator(p, 500);
             const node = p.parse();
             expect(node).toMatchSnapshot();
         });
@@ -239,21 +234,8 @@ describe('Parser', function() {
             const l = getLexer('{{ foo in bar}}');
             l.addOperators('not', 'in');
             const p = getParser(l);
-            p.addUnaryOperator({
-                text: 'not',
-                precedence: 500,
-                createNode(token, expr) {
-                    return new n.UnaryExpression(token.text, expr);
-                },
-            });
-            p.addBinaryOperator({
-                text: 'in',
-                precedence: 400,
-                associativity: LEFT,
-                createNode(token, lhs, rhs) {
-                    return new n.BinaryExpression(token.text, lhs, rhs);
-                },
-            });
+            addNotOperator(p, 500);
+            addInOperator(p);
             const node = p.parse();
             expect(node).toMatchSnapshot();
         });
@@ -262,21 +244,8 @@ describe('Parser', function() {
             const l = getLexer('{{ not foo in bar}}');
             l.addOperators('not', 'in');
             const p = getParser(l);
-            p.addUnaryOperator({
-                text: 'not',
-                precedence: 200,
-                createNode(token, expr) {
-                    return new n.UnaryExpression(token.text, expr);
-                },
-            });
-            p.addBinaryOperator({
-                text: 'in',
-                precedence: 400,
-                associativity: LEFT,
-                createNode(token, lhs, rhs) {
-                    return new n.BinaryExpression(token.text, lhs, rhs);
-                },
-            });
+            addNotOperator(p, 200);
+            addInOperator(p);
             const node = p.parse();
             expect(node).toMatchSnapshot();
         });
@@ -285,36 +254,8 @@ describe('Parser', function() {
             const l = getLexer('{{ foo is not defined}}');
             l.addOperators('not', 'is');
             const p = getParser(l);
-            p.addUnaryOperator({
-                text: 'not',
-                precedence: 200,
-                createNode(token, expr) {
-                    return new n.UnaryExpression(token.text, expr);
-                },
-            });
-            p.addBinaryOperator({
-                text: 'is',
-                precedence: 400,
-                associativity: LEFT,
-                parse(parser, token, expr) {
-                    let tokens = parser.tokens,
-                        not,
-                        test;
-                    if (tokens.test(Types.OPERATOR, 'not')) {
-                        not = tokens.next();
-                    }
-                    test = tokens.expect(Types.SYMBOL);
-                    expr = new n.BinaryExpression(
-                        token.text,
-                        expr,
-                        new n.Identifier(test.text)
-                    );
-                    if (not) {
-                        expr = new n.UnaryExpression('not', expr);
-                    }
-                    return expr;
-                },
-            });
+            addNotOperator(p, 200);
+            addIsOperator(p);
             const node = p.parse();
             expect(node).toMatchSnapshot();
         });
@@ -510,10 +451,208 @@ describe('Parser', function() {
             expect(node).toMatchSnapshot();
         });
     });
+
+    const addNotOperator = (parser, precedence = 500) => {
+        parser.addUnaryOperator({
+            text: 'not',
+            precedence,
+            createNode(token, expr) {
+                return new n.UnaryExpression(token.text, expr);
+            },
+        });
+    };
+
+    const addInOperator = parser => {
+        parser.addBinaryOperator({
+            text: 'in',
+            precedence: 400,
+            associativity: LEFT,
+            createNode(token, lhs, rhs) {
+                return new n.BinaryExpression(token.text, lhs, rhs);
+            },
+        });
+    };
+
+    const addIsOperator = parser => {
+        parser.addBinaryOperator({
+            text: 'is',
+            precedence: 400,
+            associativity: LEFT,
+            parse(parser, token, expr) {
+                let tokens = parser.tokens,
+                    not,
+                    test;
+                if (tokens.test(Types.OPERATOR, 'not')) {
+                    not = tokens.next();
+                }
+                test = tokens.expect(Types.SYMBOL);
+                expr = new n.BinaryExpression(
+                    token.text,
+                    expr,
+                    new n.Identifier(test.text)
+                );
+                if (not) {
+                    expr = new n.UnaryExpression('not', expr);
+                }
+                return expr;
+            },
+        });
+    };
+
+    describe('when reproducing the original source', function() {
+        it('should reproduce the source of an identifier', function() {
+            const source = '{{ hello }}';
+            const sequenceExpr = parse(source);
+            const printExprStatement = sequenceExpr.expressions[0];
+            const identifier = printExprStatement.value;
+            expect(getNodeSource(sequenceExpr, source)).toEqual(source);
+            expect(getNodeSource(printExprStatement, source)).toEqual(source);
+            expect(getNodeSource(identifier, source)).toEqual('hello');
+        });
+
+        it('should reproduce the source of a string literal', function() {
+            const exprSource = '{{ "hello" }}';
+            const source = `Before${exprSource}after`;
+            const sequenceExpr = parse(source);
+            const printExprStatement = sequenceExpr.expressions[1];
+            const stringLiteral = printExprStatement.value;
+            expect(getNodeSource(sequenceExpr, source)).toEqual(source);
+            expect(getNodeSource(printExprStatement, source)).toEqual(
+                exprSource
+            );
+            expect(getNodeSource(stringLiteral, source)).toEqual('"hello"');
+        });
+
+        it('should reproduce the source of a string interpolation', function() {
+            const stringLiteral = '"Calling #{name} next"';
+            const source = `Before{{ ${stringLiteral} }}After`;
+            const sequenceExpr = parse(source);
+            const concatExpression = sequenceExpr.expressions[1].value;
+            expect(getNodeSource(concatExpression, source)).toEqual(
+                stringLiteral
+            );
+        });
+
+        it('should reproduce the source of unary expressions', function() {
+            const exprSource = '{{ not foo }}';
+            const source = `${exprSource}After`;
+            const l = getLexer(source);
+            l.addOperators('not');
+            const p = getParser(l);
+            addNotOperator(p);
+            const sequenceExpr = p.parse();
+            const unaryExpression = sequenceExpr.expressions[0].value;
+            expect(getNodeSource(sequenceExpr, source)).toEqual(source);
+            expect(getNodeSource(unaryExpression, source)).toEqual('not foo');
+        });
+
+        it('should reproduce the source of binary expressions', function() {
+            const exprSource = 'foo in bar';
+            const source = `<span>Is it true? </span>{{ ${exprSource} }}---`;
+            const l = getLexer(source);
+            l.addOperators('in');
+            const p = getParser(l);
+            addInOperator(p);
+            const sequenceExpr = p.parse();
+            const binaryExpression = sequenceExpr.expressions[1].value;
+            expect(getNodeSource(sequenceExpr, source)).toEqual(source);
+            expect(getNodeSource(binaryExpression, source)).toEqual(exprSource);
+        });
+
+        it('should reproduce the source of a conditional expression', function() {
+            const exprSource = 'hasResults ? resultCount : 0';
+            const source = `Before {{ ${exprSource} }}after`;
+            const sequenceExpr = parse(source);
+            const conditionalExpression = sequenceExpr.expressions[1].value;
+            expect(getNodeSource(conditionalExpression, source)).toEqual(
+                exprSource
+            );
+        });
+
+        it('should reproduce the source of self-parsing binary operators', function() {
+            const exprSource = 'foo is not defined';
+            const source = `Before {{ ${exprSource} }} after`;
+            const lexer = getLexer(source);
+            lexer.addOperators('not', 'is');
+            const p = getParser(lexer);
+            addNotOperator(p);
+            addIsOperator(p);
+            const node = p.parse();
+            const expression = node.expressions[1].value;
+            expect(getNodeSource(expression, source)).toEqual(exprSource);
+        });
+
+        const testExpressionSourceReproduction = exprSource => {
+            const source = `Before {{ ${exprSource} }} after`;
+            const node = parse(source);
+            const expression = node.expressions[1].value;
+            expect(getNodeSource(expression, source)).toEqual(exprSource);
+        };
+
+        it('should reproduce the source of a call expression', function() {
+            testExpressionSourceReproduction('lower("ABCD")');
+        });
+
+        it('should reproduce the source of a complex call expression', function() {
+            testExpressionSourceReproduction(
+                'hello({ test: "bar", foo: test}, [1, 2, 3, test])'
+            );
+        });
+
+        it('should reproduce the source of a Twig comment', function() {
+            const commentSource = '{# The soup today was delicious #}';
+            const source = `Before ${commentSource} after`;
+            const node = parse(source, { ignoreComments: false });
+            const comment = node.expressions[1];
+            expect(getNodeSource(comment, source)).toEqual(commentSource);
+        });
+
+        it('should reproduce the source of an HTML comment', function() {
+            const commentSource = '<!-- The pasta today was delicious -->';
+            const source = `Before ${commentSource} after`;
+            const node = parse(source, { ignoreHtmlComments: false });
+            const comment = node.expressions[1];
+            expect(getNodeSource(comment, source)).toEqual(commentSource);
+        });
+
+        it('should reproduce the source of simple text', function() {
+            const textSource = `This will be the story 
+            of young Huckleberry Finn 
+            who lived on the banks of 
+            the Mississippi`;
+            const source = `<img src="none">${textSource}<span>The end</span>`;
+            const node = parse(source);
+            const textStatement = node.expressions[1];
+            expect(getNodeSource(textStatement, source)).toEqual(textSource);
+        });
+
+        it('should reproduce the source of a filter expression', function() {
+            const filterSource = 'a | default(null) ? false : true';
+            const source = `{{ ${filterSource} }}`;
+            const node = parse(source);
+            const conditionalExpression = node.expressions[0].value;
+            expect(getNodeSource(conditionalExpression, source)).toEqual(
+                filterSource
+            );
+            expect(getNodeSource(conditionalExpression.test, source)).toEqual(
+                'a | default(null)'
+            );
+        });
+
+        it('should reproduce the source of HTML elements', function() {
+            const divSource = `<div class="shadow">
+            This is <span>fine</span>.
+            </div>`;
+            const source = `Before ${divSource} after`;
+            const node = parse(source);
+            const htmlElement = node.expressions[1];
+            expect(getNodeSource(htmlElement, source)).toEqual(divSource);
+        });
+    });
 });
 
-function getParser(lexer) {
-    return new Parser(new TokenStream(lexer));
+function getParser(lexer, options) {
+    return new Parser(new TokenStream(lexer), options);
 }
 
 function getLexer(code) {

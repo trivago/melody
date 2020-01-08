@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { parse } from 'melody-parser';
+import { parse, getNodeSource } from 'melody-parser';
 import { extension } from 'melody-extension-core';
 
 describe('set', function() {
@@ -36,5 +36,12 @@ describe('set', function() {
             extension
         );
         expect(node.expressions[0]).toMatchSnapshot();
+    });
+
+    test('should be able to reproduce the original source', function() {
+        const setSource = '{% set foo = 0 %}';
+        const source = `abc${setSource}def`;
+        const node = parse(source, extension);
+        expect(getNodeSource(node.expressions[1], source)).toEqual(setSource);
     });
 });

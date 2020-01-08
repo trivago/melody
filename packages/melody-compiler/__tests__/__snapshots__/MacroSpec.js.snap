@@ -38,6 +38,11 @@ Object {
     "name": "whitespaceRemoval",
     "type": "Identifier",
   },
+  "tagNameLoc": Object {
+    "column": 3,
+    "index": 3,
+    "line": 1,
+  },
   "trimLeft": false,
   "trimLeftEndmacro": true,
   "trimRight": false,

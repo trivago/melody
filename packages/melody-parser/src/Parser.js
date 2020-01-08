@@ -19,6 +19,7 @@ import { LEFT, RIGHT } from './Associativity';
 import {
     setStartFromToken,
     setEndFromToken,
+    setMarkFromToken,
     copyStart,
     copyEnd,
     copyLoc,
@@ -137,42 +138,50 @@ export default class Parser {
             switch (token.type) {
                 case Types.EXPRESSION_START: {
                     const expression = this.matchExpression();
-                    p.add(
-                        copyLoc(
-                            new n.PrintExpressionStatement(expression),
-                            expression
-                        )
+                    const statement = new n.PrintExpressionStatement(
+                        expression
                     );
-                    setEndFromToken(p, tokens.expect(Types.EXPRESSION_END));
+                    const endToken = tokens.expect(Types.EXPRESSION_END);
+                    setStartFromToken(statement, token);
+                    setEndFromToken(statement, endToken);
+                    setEndFromToken(p, endToken);
+                    p.add(statement);
+
                     break;
                 }
                 case Types.TAG_START:
                     p.add(this.matchTag());
                     break;
-                case Types.TEXT:
-                    p.add(
-                        createNode(
-                            n.PrintTextStatement,
-                            token,
-                            createNode(n.StringLiteral, token, token.text)
-                        )
+                case Types.TEXT: {
+                    const textStringLiteral = createNode(
+                        n.StringLiteral,
+                        token,
+                        token.text
                     );
-                    break;
-                case Types.ENTITY:
-                    p.add(
-                        createNode(
-                            n.PrintTextStatement,
-                            token,
-                            createNode(
-                                n.StringLiteral,
-                                token,
-                                this.options.decodeEntities
-                                    ? he.decode(token.text)
-                                    : token.text
-                            )
-                        )
+                    const textTextStatement = createNode(
+                        n.PrintTextStatement,
+                        token,
+                        textStringLiteral
                     );
+                    p.add(textTextStatement);
                     break;
+                }
+                case Types.ENTITY: {
+                    const entityStringLiteral = createNode(
+                        n.StringLiteral,
+                        token,
+                        this.options.decodeEntities
+                            ? he.decode(token.text)
+                            : token.text
+                    );
+                    const entityTextStatement = createNode(
+                        n.PrintTextStatement,
+                        token,
+                        entityStringLiteral
+                    );
+                    p.add(entityTextStatement);
+                    break;
+                }
                 case Types.ELEMENT_START:
                     p.add(this.matchElement());
                     break;
@@ -185,24 +194,32 @@ export default class Parser {
                 }
                 case Types.COMMENT:
                     if (!this.options.ignoreComments) {
-                        p.add(
-                            createNode(
-                                n.TwigComment,
-                                token,
-                                createNode(n.StringLiteral, token, token.text)
-                            )
+                        const stringLiteral = createNode(
+                            n.StringLiteral,
+                            token,
+                            token.text
                         );
+                        const twigComment = createNode(
+                            n.TwigComment,
+                            token,
+                            stringLiteral
+                        );
+                        p.add(twigComment);
                     }
                     break;
                 case Types.HTML_COMMENT:
                     if (!this.options.ignoreHtmlComments) {
-                        p.add(
-                            createNode(
-                                n.HtmlComment,
-                                token,
-                                createNode(n.StringLiteral, token, token.text)
-                            )
+                        const stringLiteral = createNode(
+                            n.StringLiteral,
+                            token,
+                            token.text
                         );
+                        const htmlComment = createNode(
+                            n.HtmlComment,
+                            token,
+                            stringLiteral
+                        );
+                        p.add(htmlComment);
                     }
                     break;
             }
@@ -275,14 +292,14 @@ export default class Parser {
      *              | matchExpression
      */
     matchElement() {
-        let tokens = this.tokens,
-            elementStartToken = tokens.la(0),
-            elementName,
-            element;
+        const tokens = this.tokens,
+            elementNameToken = tokens.la(0),
+            tagStartToken = tokens.la(-1);
+        let elementName;
         if (!(elementName = tokens.nextIf(Types.SYMBOL))) {
             this.error({
                 title: 'Expected element start',
-                pos: elementStartToken.pos,
+                pos: elementNameToken.pos,
                 advice:
                     tokens.lat(0) === Types.SLASH
                         ? `Unexpected closing "${
@@ -292,8 +309,7 @@ export default class Parser {
             });
         }
 
-        element = new n.Element(elementName.text);
-        setStartFromToken(element, elementStartToken);
+        const element = new n.Element(elementName.text);
 
         this.matchAttributes(element, tokens);
 
@@ -325,7 +341,11 @@ export default class Parser {
                 }).expressions;
             }
         }
+
+        setStartFromToken(element, tagStartToken);
         setEndFromToken(element, tokens.la(-1));
+        setMarkFromToken(element, 'elementNameLoc', elementNameToken);
+
         return element;
     }
 
@@ -369,7 +389,8 @@ export default class Parser {
                     }
                     tokens.expect(Types.STRING_END);
                     if (!nodes.length) {
-                        nodes.push(createNode(n.StringLiteral, start, ''));
+                        const node = createNode(n.StringLiteral, start, '');
+                        nodes.push(node);
                     }
 
                     let expr = nodes[0];
@@ -415,7 +436,8 @@ export default class Parser {
 
     matchTag() {
         const tokens = this.tokens;
-        const tagStartToken = tokens.la(-1);
+        const tagStartToken = tokens.la(-1),
+            tagNameToken = tokens.la(0);
 
         const tag = tokens.expect(Types.SYMBOL),
             parser = this[TAG][tag.text];
@@ -434,11 +456,17 @@ export default class Parser {
         const tagEndToken = tokens.la(-1);
         result.trimLeft = tagStartToken.text.endsWith('-');
         result.trimRight = tagEndToken.text.startsWith('-');
+
+        setStartFromToken(result, tagStartToken);
+        setEndFromToken(result, tagEndToken);
+        setMarkFromToken(result, 'tagNameLoc', tagNameToken);
+
         return result;
     }
 
     matchExpression(precedence = 0) {
-        const tokens = this.tokens;
+        const tokens = this.tokens,
+            exprStartToken = tokens.la(0);
         let token,
             op,
             trimLeft = false;
@@ -472,6 +500,9 @@ export default class Parser {
             token = tokens.la(0);
         }
 
+        if (precedence === 0) {
+            setEndFromToken(expr, tokens.la(-1));
+        }
         const result =
             precedence === 0 ? this.matchConditionalExpression(expr) : expr;
 
@@ -482,6 +513,10 @@ export default class Parser {
         if (trimLeft) {
             result.trimLeft = trimLeft;
         }
+
+        const exprEndToken = tokens.la(-1);
+        setStartFromToken(result, exprStartToken);
+        setEndFromToken(result, exprEndToken);
 
         return result;
     }
@@ -566,13 +601,11 @@ export default class Parser {
     }
 
     matchStringExpression() {
-        let tokens = this.tokens,
+        let canBeString = true,
+            token;
+        const tokens = this.tokens,
             nodes = [],
-            canBeString = true,
-            token,
-            stringStart,
-            stringEnd;
-        stringStart = tokens.expect(Types.STRING_START);
+            stringStart = tokens.expect(Types.STRING_START);
         while (!tokens.test(Types.STRING_END)) {
             if (canBeString && (token = tokens.nextIf(Types.STRING))) {
                 nodes[nodes.length] = createNode(
@@ -589,7 +622,7 @@ export default class Parser {
                 break;
             }
         }
-        stringEnd = tokens.expect(Types.STRING_END);
+        const stringEnd = tokens.expect(Types.STRING_END);
 
         if (!nodes.length) {
             return setEndFromToken(
@@ -611,12 +644,15 @@ export default class Parser {
             expr.wasImplicitConcatenation = true;
         }
 
+        setStartFromToken(expr, stringStart);
+        setEndFromToken(expr, stringEnd);
+
         return expr;
     }
 
     matchConditionalExpression(test: Node) {
-        let tokens = this.tokens,
-            condition = test,
+        const tokens = this.tokens;
+        let condition = test,
             consequent,
             alternate;
         while (tokens.nextIf(Types.QUESTION_MARK)) {

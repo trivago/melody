@@ -23,6 +23,15 @@ export function setEndFromToken(node, { pos: { line, column }, end }) {
     return node;
 }
 
+export function setMarkFromToken(
+    node,
+    propertyName,
+    { pos: { index, line, column } }
+) {
+    node[propertyName] = { line, column, index };
+    return node;
+}
+
 export function copyStart(
     node,
     {
@@ -42,6 +51,13 @@ export function copyEnd(node, end) {
     node.loc.end.column = end.loc.end.column;
     node.loc.end.index = end.loc.end.index;
     return node;
+}
+
+export function getNodeSource(node, entireSource) {
+    if (entireSource && node.loc.start && node.loc.end) {
+        return entireSource.substring(node.loc.start.index, node.loc.end.index);
+    }
+    return '';
 }
 
 export function copyLoc(node, { loc: { start, end } }) {

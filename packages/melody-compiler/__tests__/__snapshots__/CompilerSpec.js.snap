@@ -2295,6 +2295,7 @@ export default function Svg(props) {
 exports[`Compiler should fail transforming empty async mount.template 1`] = `
 "Asynchronously mounted components must have a placeholder
 > 1 | {% mount async './parts/#{ part }.twig' as 'bar' with {foo: 'bar'} delay placeholder by 1s %}
+    |    ^^^^^^^^^^^
   2 | {% endmount %}
   3 | 
 
@@ -2414,6 +2415,7 @@ exports[`Compiler should transform templates with warnings mount without as.temp
     Array [
       "mount is missing a key.
 > 1 | {% mount './component' %}
+    |    ^^^^^
   2 | {% mount 'foo.twig' with { foo: 'bar' } %}
   3 | {% mount Foo %}
   4 | {% mount Foo with { foo: 'bar' } %}
@@ -2424,6 +2426,7 @@ When mounting a component please make sure to always specify a key, i.e. \`{% mo
       "mount is missing a key.
   1 | {% mount './component' %}
 > 2 | {% mount 'foo.twig' with { foo: 'bar' } %}
+    |    ^^^^^
   3 | {% mount Foo %}
   4 | {% mount Foo with { foo: 'bar' } %}
 
@@ -2434,6 +2437,7 @@ When mounting a component please make sure to always specify a key, i.e. \`{% mo
   1 | {% mount './component' %}
   2 | {% mount 'foo.twig' with { foo: 'bar' } %}
 > 3 | {% mount Foo %}
+    |    ^^^^^
   4 | {% mount Foo with { foo: 'bar' } %}
 
 When mounting a component please make sure to always specify a key, i.e. \`{% mount './component' as 'comp' %}",
@@ -2443,6 +2447,7 @@ When mounting a component please make sure to always specify a key, i.e. \`{% mo
   2 | {% mount 'foo.twig' with { foo: 'bar' } %}
   3 | {% mount Foo %}
 > 4 | {% mount Foo with { foo: 'bar' } %}
+    |    ^^^^^
 
 When mounting a component please make sure to always specify a key, i.e. \`{% mount './component' as 'comp' %}",
     ],

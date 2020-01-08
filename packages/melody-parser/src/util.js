@@ -23,6 +23,15 @@ export function setEndFromToken(node, { pos: { line, column }, end }) {
     return node;
 }
 
+export function setMarkFromToken(
+    node,
+    propertyName,
+    { pos: { index, line, column } }
+) {
+    node[propertyName] = { line, column, index };
+    return node;
+}
+
 export function copyStart(
     node,
     {

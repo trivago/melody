@@ -34,6 +34,11 @@ Object {
         "name": "hello",
         "type": "Identifier",
       },
+      "tagNameLoc": Object {
+        "column": 11,
+        "index": 35,
+        "line": 2,
+      },
       "trimLeft": false,
       "trimLeftEndblock": false,
       "trimRight": false,
@@ -43,6 +48,11 @@ Object {
   ],
   "contextFree": false,
   "ignoreMissing": false,
+  "tagNameLoc": Object {
+    "column": 3,
+    "index": 3,
+    "line": 1,
+  },
   "trimLeft": false,
   "trimLeftEndembed": true,
   "trimRight": false,

@@ -26,6 +26,11 @@ Object {
       },
     },
   ],
+  "tagNameLoc": Object {
+    "column": 3,
+    "index": 3,
+    "line": 1,
+  },
   "trimLeft": false,
   "trimLeftEndautoescape": true,
   "trimRight": false,

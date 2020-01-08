@@ -19,6 +19,7 @@ import { LEFT, RIGHT } from './Associativity';
 import {
     setStartFromToken,
     setEndFromToken,
+    setMarkFromToken,
     copyStart,
     copyEnd,
     copyLoc,
@@ -225,13 +226,13 @@ export default class Parser {
      */
     matchElement() {
         const tokens = this.tokens,
-            tagNameToken = tokens.la(0),
+            elementNameToken = tokens.la(0),
             tagStartToken = tokens.la(-1);
         let elementName;
         if (!(elementName = tokens.nextIf(Types.SYMBOL))) {
             this.error({
                 title: 'Expected element start',
-                pos: tagNameToken.pos,
+                pos: elementNameToken.pos,
                 advice:
                     tokens.lat(0) === Types.SLASH
                         ? `Unexpected closing "${
@@ -242,7 +243,6 @@ export default class Parser {
         }
 
         const element = new n.Element(elementName.text);
-        setStartFromToken(element, tagNameToken);
 
         this.matchAttributes(element, tokens);
 
@@ -277,6 +277,7 @@ export default class Parser {
 
         setStartFromToken(element, tagStartToken);
         setEndFromToken(element, tokens.la(-1));
+        setMarkFromToken(element, 'elementNameLoc', elementNameToken);
 
         return element;
     }
@@ -368,7 +369,8 @@ export default class Parser {
 
     matchTag() {
         const tokens = this.tokens;
-        const tagStartToken = tokens.la(-1);
+        const tagStartToken = tokens.la(-1),
+            tagNameToken = tokens.la(0);
 
         const tag = tokens.expect(Types.SYMBOL),
             parser = this[TAG][tag.text];
@@ -390,6 +392,7 @@ export default class Parser {
 
         setStartFromToken(result, tagStartToken);
         setEndFromToken(result, tagEndToken);
+        setMarkFromToken(result, 'tagNameLoc', tagNameToken);
 
         return result;
     }

@@ -1,6 +1,12 @@
 ## master
 
+### Features
+
 -   `[melody-parser]`: Add parsing of declarations like `<!DOCTYPE html>`, along with new Parser option `ignoreDeclarations`.
+
+### Bug fixes
+
+-   `[melody-parser]`: Add previously missing `trimLeft` and `trimRight` properties to `PrintExpressionStatement` nodes
 
 ## 1.5.0
 

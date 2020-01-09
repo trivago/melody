@@ -145,6 +145,8 @@ export default class Parser {
                     setStartFromToken(statement, token);
                     setEndFromToken(statement, endToken);
                     setEndFromToken(p, endToken);
+                    statement.trimLeft = !!expression.trimLeft;
+                    statement.trimRight = !!expression.trimRight;
                     p.add(statement);
 
                     break;

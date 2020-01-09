@@ -450,6 +450,13 @@ describe('Parser', function() {
             const node = parser.parse();
             expect(node).toMatchSnapshot();
         });
+
+        it('should put trimming information on a PrintExpressionStatement node', function() {
+            const node = parse(`{{- foo -}}`);
+            const expression = node.expressions[0];
+            expect(expression.trimLeft).toBe(true);
+            expect(expression.trimRight).toBe(true);
+        });
     });
 
     const addNotOperator = (parser, precedence = 500) => {

@@ -52,6 +52,8 @@ Object {
         },
       },
       Object {
+        "trimLeft": false,
+        "trimRight": false,
         "type": "PrintExpressionStatement",
         "value": Object {
           "name": "err",

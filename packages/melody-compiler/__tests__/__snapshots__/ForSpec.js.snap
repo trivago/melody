@@ -16,6 +16,8 @@ Object {
         "attributes": Array [],
         "children": Array [
           Object {
+            "trimLeft": false,
+            "trimRight": false,
             "type": "PrintExpressionStatement",
             "value": Object {
               "name": "a",
@@ -30,6 +32,8 @@ Object {
             },
           },
           Object {
+            "trimLeft": false,
+            "trimRight": false,
             "type": "PrintExpressionStatement",
             "value": Object {
               "name": "b",
@@ -213,6 +217,8 @@ Object {
             },
           },
           Object {
+            "trimLeft": false,
+            "trimRight": false,
             "type": "PrintExpressionStatement",
             "value": Object {
               "computed": false,

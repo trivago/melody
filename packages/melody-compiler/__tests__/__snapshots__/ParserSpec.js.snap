@@ -631,6 +631,8 @@ exports[`Parser when parsing array expressions should allow trailing commas 1`] 
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "elements": Array [
@@ -655,6 +657,8 @@ exports[`Parser when parsing array expressions should match a complex array acce
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "computed": true,
@@ -695,6 +699,8 @@ exports[`Parser when parsing array expressions should match a string array acces
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "computed": true,
@@ -718,6 +724,8 @@ exports[`Parser when parsing array expressions should match an array access 1`] 
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "computed": true,
@@ -741,6 +749,8 @@ exports[`Parser when parsing array expressions should match an indexed array acc
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "computed": true,
@@ -764,6 +774,8 @@ exports[`Parser when parsing conditional expressions should match a simple condi
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "alternate": Object {
@@ -790,6 +802,8 @@ exports[`Parser when parsing conditional expressions should match a simple condi
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "alternate": Object {
@@ -816,6 +830,8 @@ exports[`Parser when parsing conditional expressions should match an if-otherwis
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "alternate": Object {
@@ -839,6 +855,8 @@ exports[`Parser when parsing conditional expressions should match an if-then exp
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "alternate": null,
@@ -862,6 +880,8 @@ exports[`Parser when parsing expressions should match an identifier 1`] = `
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "name": "hello",
@@ -877,6 +897,8 @@ exports[`Parser when parsing expressions should match null, true and false liter
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "alternate": Object {
@@ -916,6 +938,8 @@ exports[`Parser when parsing expressions should match numeric subscript expressi
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "computed": true,
@@ -939,6 +963,8 @@ exports[`Parser when parsing filter expressions should match a filter with argum
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "arguments": Array [
@@ -971,6 +997,8 @@ exports[`Parser when parsing filter expressions should match a simple filter 1`]
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "arguments": Array [],
@@ -994,6 +1022,8 @@ exports[`Parser when parsing filter expressions should match multiple filters 1`
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "arguments": Array [],
@@ -1034,6 +1064,8 @@ exports[`Parser when parsing function call expressions should match a function c
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "arguments": Array [],
@@ -1053,6 +1085,8 @@ exports[`Parser when parsing function call expressions should match a function c
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "arguments": Array [
@@ -1123,6 +1157,8 @@ exports[`Parser when parsing function call expressions should match a function c
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "arguments": Array [
@@ -1154,6 +1190,8 @@ exports[`Parser when parsing map expressions should parse map expressions 1`] = 
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "properties": Array [
@@ -1227,6 +1265,8 @@ exports[`Parser when parsing operators should match binary operators 1`] = `
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "left": Object {
@@ -1250,6 +1290,8 @@ exports[`Parser when parsing operators should match mixed operators 1`] = `
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "argument": Object {
@@ -1277,6 +1319,8 @@ exports[`Parser when parsing operators should match self-parsing binary operator
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "argument": Object {
@@ -1304,6 +1348,8 @@ exports[`Parser when parsing operators should match unary operators 1`] = `
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "argument": Object {
@@ -1323,6 +1369,8 @@ exports[`Parser when parsing slice expressions should match a full-slice express
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "end": Object {
@@ -1349,6 +1397,8 @@ exports[`Parser when parsing slice expressions should match a post-slice express
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "end": null,
@@ -1372,6 +1422,8 @@ exports[`Parser when parsing slice expressions should match a pre-slice expressi
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "end": Object {
@@ -1395,6 +1447,8 @@ exports[`Parser when parsing slice expressions should match a slice expression o
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "end": Object {
@@ -1429,6 +1483,8 @@ exports[`Parser when parsing slice expressions should match a slice expression w
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "end": Object {
@@ -1471,6 +1527,8 @@ exports[`Parser when parsing strings should match a complex string concat 1`] = 
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "left": Object {
@@ -1504,6 +1562,8 @@ exports[`Parser when parsing strings should match a string 1`] = `
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "type": "StringLiteral",
@@ -1519,6 +1579,8 @@ exports[`Parser when parsing strings should match an interpolated string 1`] = `
 Object {
   "expressions": Array [
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "left": Object {
@@ -1614,6 +1676,8 @@ Object {
             },
           },
           Object {
+            "trimLeft": false,
+            "trimRight": false,
             "type": "PrintExpressionStatement",
             "value": Object {
               "name": "adjective",

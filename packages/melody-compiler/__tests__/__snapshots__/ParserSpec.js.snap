@@ -1223,6 +1223,29 @@ Object {
 }
 `;
 
+exports[`Parser when parsing operators should handle the .. operator 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "type": "PrintExpressionStatement",
+      "value": Object {
+        "left": Object {
+          "type": "NumericLiteral",
+          "value": 1,
+        },
+        "operator": "..",
+        "right": Object {
+          "type": "NumericLiteral",
+          "value": 5,
+        },
+        "type": "BinaryRangeExpression",
+      },
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
 exports[`Parser when parsing operators should match binary operators 1`] = `
 Object {
   "expressions": Array [

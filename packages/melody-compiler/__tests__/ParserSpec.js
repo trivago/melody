@@ -259,6 +259,12 @@ describe('Parser', function() {
             const node = p.parse();
             expect(node).toMatchSnapshot();
         });
+
+        it('should handle the .. operator', function() {
+            const node = parse('{{ 1..5 }}', coreExtensions);
+            const expression = node.expressions[0].value;
+            expect(expression.type).toEqual('BinaryRangeExpression');
+        });
     });
 
     const ifTag = {

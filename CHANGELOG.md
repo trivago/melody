@@ -1,6 +1,7 @@
 ## master
 
 -   `[melody-parser]`: Add parsing of declarations like `<!DOCTYPE html>`, along with new Parser option `ignoreDeclarations`.
+-   `[melody-parser]`: Fix bug where `1..5` results in a `MemberExpression` instead of a `BinaryRangeExpression`
 
 ## 1.5.0
 

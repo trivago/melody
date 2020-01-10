@@ -587,7 +587,7 @@ export default class Lexer {
             }
             input.next();
         }
-        if (input.la(0) === '.') {
+        if (input.la(0) === '.' && isDigit(input.lac(1))) {
             input.next();
             while ((c = input.lac(0)) !== EOF) {
                 if (!isDigit(c)) {

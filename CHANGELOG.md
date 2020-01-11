@@ -2,6 +2,12 @@
 
 ### Features
 
+### Bug fixes
+
+## 1.6.0
+
+### Features
+
 -   `[melody-parser]`: Introduce option `preserveSourceLiterally`
 -   `[melody-parser]`: Add parsing of declarations like `<!DOCTYPE html>`, along with new Parser option `ignoreDeclarations`.
 

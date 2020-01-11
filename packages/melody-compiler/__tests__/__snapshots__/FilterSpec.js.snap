@@ -25,6 +25,11 @@ Object {
     },
     "type": "FilterExpression",
   },
+  "tagNameLoc": Object {
+    "column": 3,
+    "index": 3,
+    "line": 1,
+  },
   "trimLeft": false,
   "trimLeftEndfilter": true,
   "trimRight": false,

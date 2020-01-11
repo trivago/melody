@@ -12,6 +12,8 @@ Object {
       },
     },
     Object {
+      "trimLeft": false,
+      "trimRight": false,
       "type": "PrintExpressionStatement",
       "value": Object {
         "name": "strategy",
@@ -26,6 +28,11 @@ Object {
       },
     },
   ],
+  "tagNameLoc": Object {
+    "column": 3,
+    "index": 3,
+    "line": 1,
+  },
   "trimLeft": false,
   "trimLeftEndautoescape": true,
   "trimRight": false,

@@ -83,7 +83,7 @@ export default {
                     const message = 'mount is missing a key.';
                     const advice =
                         "When mounting a component please make sure to always specify a key, i.e. `{% mount './component' as 'comp' %}";
-                    const location = path.node.loc.start;
+                    const location = path.node.tagNameLoc;
                     path.state.warn(message, location, advice, 5);
                 }
                 if (path.node.key) {
@@ -143,14 +143,14 @@ export default {
                         // message, pos, advice, length = 1
                         this.error(
                             `Asynchronously mounted components must have a placeholder`,
-                            path.node.loc.start,
+                            path.node.tagNameLoc,
                             `When using an async component you must provide a placeholder that can be rendered while your component is being loaded.
 Example:
 {% mount async 'my-component' as 'mycomp' %}
 This is the placeholder content that will be shown to your users while the async component is being loaded.`,
-                            path.node.loc.start.line === path.node.loc.end.line
+                            path.node.tagNameLoc.line === path.node.loc.end.line
                                 ? path.node.loc.end.column -
-                                      path.node.loc.start.column
+                                      path.node.tagNameLoc.column
                                 : 'mount async'.length
                         );
                     }

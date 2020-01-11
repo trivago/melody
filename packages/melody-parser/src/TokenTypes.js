@@ -21,6 +21,7 @@ export const INTERPOLATION_START = 'interpolationStart';
 export const INTERPOLATION_END = 'interpolationEnd';
 export const STRING_START = 'stringStart';
 export const STRING_END = 'stringEnd';
+export const DECLARATION_START = 'declarationStart';
 export const COMMENT = 'comment';
 export const WHITESPACE = 'whitespace';
 export const HTML_COMMENT = 'htmlComment';

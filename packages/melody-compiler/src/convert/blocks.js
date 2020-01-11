@@ -250,7 +250,7 @@ export default {
             if (sourceType !== 'StringLiteral') {
                 this.error(
                     'Dynamic includes are not supported',
-                    path.node.loc.start,
+                    path.node.tagNameLoc,
                     `The Include Statement expected a StringLiteral but got a ${sourceType}.
 Includes only support static strings as argument.
 

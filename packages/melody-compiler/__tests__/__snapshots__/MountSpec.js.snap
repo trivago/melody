@@ -52,6 +52,8 @@ Object {
         },
       },
       Object {
+        "trimLeft": false,
+        "trimRight": false,
         "type": "PrintExpressionStatement",
         "value": Object {
           "name": "err",
@@ -72,6 +74,11 @@ Object {
   "source": Object {
     "type": "StringLiteral",
     "value": "template.twig",
+  },
+  "tagNameLoc": Object {
+    "column": 3,
+    "index": 3,
+    "line": 1,
   },
   "trimLeft": false,
   "trimLeftCatch": true,
@@ -99,6 +106,11 @@ Object {
   "source": Object {
     "type": "StringLiteral",
     "value": "./component",
+  },
+  "tagNameLoc": Object {
+    "column": 4,
+    "index": 4,
+    "line": 1,
   },
   "trimLeft": true,
   "trimLeftCatch": false,

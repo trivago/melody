@@ -93,7 +93,7 @@ export default {
                             if (elementName.indexOf('-') === -1) {
                                 this.error(
                                     'skip if defined can only be used inside of a custom element',
-                                    el.node.loc.start,
+                                    el.node.elementNameLoc,
                                     `Custom Element must contain a "-" within their name but "${elementName}" does not seem to contain one.
 More information about custom elements can be found here: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements`,
                                     elementName.length

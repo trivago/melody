@@ -13,6 +13,11 @@ Object {
       },
     },
   ],
+  "tagNameLoc": Object {
+    "column": 3,
+    "index": 3,
+    "line": 1,
+  },
   "trimLeft": false,
   "trimLeftEndspaceless": true,
   "trimRight": false,

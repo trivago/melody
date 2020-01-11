@@ -377,3 +377,13 @@ export class HtmlComment extends Node {
 }
 type(HtmlComment, 'HtmlComment');
 visitor(HtmlComment, 'value');
+
+export class Declaration extends Node {
+    constructor(declarationType: String) {
+        super();
+        this.declarationType = declarationType;
+        this.parts = [];
+    }
+}
+type(Declaration, 'Declaration');
+visitor(Declaration, 'parts');

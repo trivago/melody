@@ -16,6 +16,8 @@ Object {
         "attributes": Array [],
         "children": Array [
           Object {
+            "trimLeft": false,
+            "trimRight": false,
             "type": "PrintExpressionStatement",
             "value": Object {
               "name": "a",
@@ -30,6 +32,8 @@ Object {
             },
           },
           Object {
+            "trimLeft": false,
+            "trimRight": false,
             "type": "PrintExpressionStatement",
             "value": Object {
               "name": "b",
@@ -37,6 +41,11 @@ Object {
             },
           },
         ],
+        "elementNameLoc": Object {
+          "column": 13,
+          "index": 66,
+          "line": 2,
+        },
         "name": "li",
         "selfClosing": false,
         "type": "Element",
@@ -85,6 +94,11 @@ Object {
             },
           },
         ],
+        "elementNameLoc": Object {
+          "column": 13,
+          "index": 126,
+          "line": 4,
+        },
         "name": "li",
         "selfClosing": false,
         "type": "Element",
@@ -128,6 +142,11 @@ Object {
       "type": "Identifier",
     },
     "type": "FilterExpression",
+  },
+  "tagNameLoc": Object {
+    "column": 3,
+    "index": 3,
+    "line": 1,
   },
   "trimLeft": false,
   "trimLeftElse": true,
@@ -198,6 +217,8 @@ Object {
             },
           },
           Object {
+            "trimLeft": false,
+            "trimRight": false,
             "type": "PrintExpressionStatement",
             "value": Object {
               "computed": false,
@@ -221,6 +242,11 @@ Object {
             },
           },
         ],
+        "elementNameLoc": Object {
+          "column": 13,
+          "index": 38,
+          "line": 2,
+        },
         "name": "li",
         "selfClosing": false,
         "type": "Element",
@@ -242,6 +268,11 @@ Object {
   "sequence": Object {
     "name": "items",
     "type": "Identifier",
+  },
+  "tagNameLoc": Object {
+    "column": 3,
+    "index": 3,
+    "line": 1,
   },
   "trimLeft": false,
   "trimLeftElse": false,

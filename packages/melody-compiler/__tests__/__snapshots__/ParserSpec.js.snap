@@ -574,6 +574,34 @@ Object {
 }
 `;
 
+exports[`Parser when parsing HTML should respect the preserveSourceLiterally option 1`] = `
+Object {
+  "expressions": Array [
+    Object {
+      "attributes": Array [],
+      "children": Array [
+        Object {
+          "type": "PrintTextStatement",
+          "value": Object {
+            "type": "StringLiteral",
+            "value": "&#8206;",
+          },
+        },
+      ],
+      "elementNameLoc": Object {
+        "column": 1,
+        "index": 1,
+        "line": 1,
+      },
+      "name": "span",
+      "selfClosing": false,
+      "type": "Element",
+    },
+  ],
+  "type": "SequenceExpression",
+}
+`;
+
 exports[`Parser when parsing HTML should throw a controlled error on an interrupted doctype declaration 1`] = `
 [Error: ERROR: Expected string, symbol, or expression
   1 | <!DOCTYPE 

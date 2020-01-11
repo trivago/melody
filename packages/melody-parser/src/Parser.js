@@ -60,6 +60,7 @@ export default class Parser {
                 ignoreHtmlComments: true,
                 ignoreDeclarations: true,
                 decodeEntities: true,
+                preserveSourceLiterally: false,
             },
             options
         );
@@ -172,9 +173,10 @@ export default class Parser {
                     const entityStringLiteral = createNode(
                         n.StringLiteral,
                         token,
-                        this.options.decodeEntities
-                            ? he.decode(token.text)
-                            : token.text
+                        !this.options.decodeEntities ||
+                            this.options.preserveSourceLiterally
+                            ? token.text
+                            : he.decode(token.text)
                     );
                     const entityTextStatement = createNode(
                         n.PrintTextStatement,

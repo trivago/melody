@@ -51,11 +51,15 @@ const CHAR_TO_TOKEN = {
 };
 
 export default class Lexer {
-    constructor(input) {
+    constructor(input, { preserveSourceLiterally = false } = {}) {
         this.input = input;
         this[STATE] = [State.TEXT];
         this[OPERATORS] = [];
         this[STRING_START] = null;
+        this.options = {
+            preserveSourceLiterally:
+                preserveSourceLiterally === true ? true : false,
+        };
     }
 
     applyExtension(ext) {
@@ -549,7 +553,13 @@ export default class Lexer {
             }
         }
         var result = this.createToken(TokenTypes.STRING, pos);
-        result.text = result.text.replace('\\', '');
+        // Replace double backslash before escaped quotes
+        if (!this.options.preserveSourceLiterally) {
+            result.text = result.text.replace(
+                new RegExp('(?:\\\\)(' + start + ')', 'g'),
+                '$1'
+            );
+        }
         return result;
     }
 
@@ -574,7 +584,13 @@ export default class Lexer {
             }
         }
         var result = this.createToken(TokenTypes.STRING, pos);
-        result.text = result.text.replace('\\', '');
+        // Replace double backslash before escaped quotes
+        if (!this.options.preserveSourceLiterally) {
+            result.text = result.text.replace(
+                new RegExp('(?:\\\\)(' + start + ')', 'g'),
+                '$1'
+            );
+        }
         return result;
     }
 

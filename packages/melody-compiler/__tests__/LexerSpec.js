@@ -128,9 +128,11 @@ describe('Lexer', () => {
             expect(token.type).toEqual(Types.TEXT);
         });
 
-        it('should parse an expression that is a string and contains escaping', () => {
+        it('should parse an expression that is a string and contains escaped quotes', () => {
             var lexer = new Lexer(
-                    new CharStream("hello {{ 'test\\'n this' }}world")
+                    new CharStream(
+                        "hello {{ 'test\\'n this \\'n other' }}world"
+                    )
                 ),
                 token = lexer.next();
             expect(token.type).toEqual(Types.TEXT);
@@ -145,7 +147,7 @@ describe('Lexer', () => {
             token = lexer.next();
             expect(token.type).toEqual(Types.STRING_START);
             token = lexer.next();
-            expect(token.text).toEqual("test'n this");
+            expect(token.text).toEqual("test'n this 'n other");
             expect(token.type).toEqual(Types.STRING);
             token = lexer.next();
             expect(token.type).toEqual(Types.STRING_END);
@@ -157,6 +159,18 @@ describe('Lexer', () => {
             token = lexer.next();
             expect(token.text).toEqual('world');
             expect(token.type).toEqual(Types.TEXT);
+        });
+
+        it('should parse a string expression with a newline escape sequence', () => {
+            var lexer = new Lexer(
+                    new CharStream("{{ 'Line one\\nline two' }}")
+                ),
+                token = lexer.next();
+            token = lexer.next(); // WHITESPACE
+            token = lexer.next(); // STRING_START
+            token = lexer.next();
+            expect(token.text).toEqual('Line one\\nline two');
+            expect(token.type).toEqual(Types.STRING);
         });
 
         it('should parse an expression that is a integer', () => {

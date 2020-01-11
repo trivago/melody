@@ -44,7 +44,7 @@ function createExtendedParser(code, options, ...extensions) {
         passedOptions = undefined;
         passedExtensions.unshift(options);
     }
-    const lexer = createExtendedLexer(code, ...passedExtensions);
+    const lexer = createExtendedLexer(code, options, ...passedExtensions);
     const parser = new Parser(
         new TokenStream(lexer, passedOptions),
         passedOptions
@@ -55,9 +55,16 @@ function createExtendedParser(code, options, ...extensions) {
     return parser;
 }
 
-function createExtendedLexer(code, ...extensions) {
-    const lexer = new Lexer(new CharStream(code));
-    for (const ext of extensions) {
+function createExtendedLexer(code, options, ...extensions) {
+    let passedOptions = options;
+    const passedExtensions = extensions;
+    if (isMelodyExtension(options)) {
+        // Variant without options parameter: createExtendedLexer(code, ...extensions)
+        passedOptions = undefined;
+        passedExtensions.unshift(options);
+    }
+    const lexer = new Lexer(new CharStream(code), passedOptions);
+    for (const ext of passedExtensions) {
         lexer.applyExtension(ext);
     }
     return lexer;

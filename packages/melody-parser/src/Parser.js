@@ -168,13 +168,15 @@ export default class Parser {
                     );
                     p.add(textTextStatement);
                     break;
+                }
                 case Types.ENTITY: {
                     const entityStringLiteral = createNode(
                         n.StringLiteral,
                         token,
-                        this.options.decodeEntities
-                            ? he.decode(token.text)
-                            : token.text
+                        !this.options.decodeEntities ||
+                            this.options.preserveSourceLiterally
+                            ? token.text
+                            : he.decode(token.text)
                     );
                     const entityTextStatement = createNode(
                         n.PrintTextStatement,

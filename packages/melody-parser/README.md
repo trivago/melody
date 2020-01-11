@@ -4,7 +4,9 @@ This parser is an extensible parser for the Twig template language. It takes sou
 
 ## Usage
 
-```
+The easiest way to use this parser is the `parse` function. Simply pass it a string of Twig or Melody code:
+
+```javascript
 const { parse } = require('melody-parser');
 
 const code = '{% spaceless %} This is some Twig code {% endspaceless %}';

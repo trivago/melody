@@ -29,7 +29,18 @@ export const GenericTagParser = {
             if (currentToken.type === Types.TAG_END) {
                 break;
             } else {
-                twigTag.parts.push(parser.matchExpression());
+                try {
+                    twigTag.parts.push(parser.matchExpression());
+                } catch (e) {
+                    if (e.errorType === 'UNEXPECTED_TOKEN') {
+                        twigTag.parts.push(
+                            new n.GenericToken(e.tokenType, e.tokenText)
+                        );
+                        tokens.next();
+                    } else {
+                        throw e;
+                    }
+                }
             }
         }
         setStartFromToken(twigTag, tagStartToken);

@@ -335,6 +335,32 @@ describe('Parser', function() {
             expect(tagNode).toMatchSnapshot();
         });
 
+        it('should parse a Craft CMS "header" tag', function() {
+            const node = parse(
+                '{% header "Cache-Control: max-age=" ~ (expiry.timestamp - now.timestamp) %}',
+                {
+                    allowUnknownTags: true,
+                },
+                coreExtensions
+            );
+
+            const tagNode = node.expressions[0];
+            expect(tagNode).toMatchSnapshot();
+        });
+
+        it('should parse a Craft CMS "paginate" tag', function() {
+            const node = parse(
+                "{% paginate craft.entries.section('blog').limit(10) as pageInfo, pageEntries %}",
+                {
+                    allowUnknownTags: true,
+                },
+                coreExtensions
+            );
+
+            const tagNode = node.expressions[0];
+            expect(tagNode).toMatchSnapshot();
+        });
+
         it('should preserve whitespace control information', function() {
             const node = parse(
                 '{%- set count = 0 -%}',

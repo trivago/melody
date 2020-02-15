@@ -436,8 +436,14 @@ export default class Parser {
         }
     }
 
-    error(options) {
-        this.tokens.error(options.title, options.pos, options.advice);
+    error(options, metadata = {}) {
+        this.tokens.error(
+            options.title,
+            options.pos,
+            options.advice,
+            1,
+            metadata
+        );
     }
 
     matchTag() {
@@ -594,15 +600,22 @@ export default class Parser {
                 } else if (token.type === Types.LBRACKET) {
                     node = this.matchMap();
                 } else {
-                    this.error({
-                        title:
-                            'Unexpected token "' +
-                            token.type +
-                            '" of value "' +
-                            token.text +
-                            '"',
-                        pos: token.pos,
-                    });
+                    this.error(
+                        {
+                            title:
+                                'Unexpected token "' +
+                                token.type +
+                                '" of value "' +
+                                token.text +
+                                '"',
+                            pos: token.pos,
+                        },
+                        {
+                            errorType: 'UNEXPECTED_TOKEN',
+                            tokenText: token.text,
+                            tokenType: token.type,
+                        }
+                    );
                 }
                 break;
         }

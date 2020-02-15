@@ -396,3 +396,12 @@ export class GenericTwigTag extends Node {
     }
 }
 type(GenericTwigTag, 'GenericTwigTag');
+
+export class GenericToken extends Node {
+    constructor(tokenType: String, tokenText: String) {
+        super();
+        this.tokenType = tokenType;
+        this.tokenText = tokenText;
+    }
+}
+type(GenericToken, 'GenericToken');

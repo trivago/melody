@@ -1740,6 +1740,34 @@ Object {
 }
 `;
 
+exports[`Parser when parsing tags should parse expressions in unknown tags 1`] = `
+Object {
+  "parts": Array [
+    Object {
+      "left": Object {
+        "name": "a",
+        "type": "Identifier",
+      },
+      "operator": "+",
+      "right": Object {
+        "name": "b",
+        "type": "Identifier",
+      },
+      "type": "BinaryAddExpression",
+    },
+  ],
+  "tagName": "exit",
+  "tagNameLoc": Object {
+    "column": 3,
+    "index": 3,
+    "line": 1,
+  },
+  "trimLeft": false,
+  "trimRight": false,
+  "type": "GenericTwigTag",
+}
+`;
+
 exports[`Parser when parsing tags should preserve whitespace control information 1`] = `
 Object {
   "expressions": Array [

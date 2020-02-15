@@ -25,6 +25,7 @@ import {
     copyLoc,
     createNode,
 } from './util';
+import { GenericTagParser } from './GenericTagParser';
 import { voidElements } from './elementInfo';
 import * as he from 'he';
 
@@ -61,6 +62,7 @@ export default class Parser {
                 ignoreDeclarations: true,
                 decodeEntities: true,
                 preserveSourceLiterally: false,
+                allowUnknownTags: false,
             },
             options
         );
@@ -443,17 +445,21 @@ export default class Parser {
         const tagStartToken = tokens.la(-1),
             tagNameToken = tokens.la(0);
 
-        const tag = tokens.expect(Types.SYMBOL),
-            parser = this[TAG][tag.text];
+        const tag = tokens.expect(Types.SYMBOL);
+        let parser = this[TAG][tag.text];
         if (!parser) {
-            tokens.error(
-                `Unknown tag "${tag.text}"`,
-                tag.pos,
-                `Expected a known tag such as\n- ${Object.getOwnPropertyNames(
-                    this[TAG]
-                ).join('\n- ')}`,
-                tag.length
-            );
+            if (this.options.allowUnknownTags) {
+                parser = GenericTagParser;
+            } else {
+                tokens.error(
+                    `Unknown tag "${tag.text}"`,
+                    tag.pos,
+                    `Expected a known tag such as\n- ${Object.getOwnPropertyNames(
+                        this[TAG]
+                    ).join('\n- ')}`,
+                    tag.length
+                );
+            }
         }
 
         const result = parser.parse(this, tag);

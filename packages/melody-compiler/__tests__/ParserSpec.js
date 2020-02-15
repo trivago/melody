@@ -310,6 +310,31 @@ describe('Parser', function() {
             }).toThrowErrorMatchingSnapshot();
         });
 
+        it('should handle unknown tags when requested', function() {
+            const node = parse('{% exit 404 %}', {
+                allowUnknownTags: true,
+            });
+
+            const tagNode = node.expressions[0];
+            expect(tagNode.type).toBe('GenericTwigTag');
+            expect(tagNode.parts.length).toBe(1);
+            expect(tagNode.parts[0].type).toBe('NumericLiteral');
+            expect(tagNode.parts[0].value).toBe(404);
+        });
+
+        it('should parse expressions in unknown tags', function() {
+            const node = parse(
+                '{% exit a + b %}',
+                {
+                    allowUnknownTags: true,
+                },
+                coreExtensions
+            );
+
+            const tagNode = node.expressions[0];
+            expect(tagNode).toMatchSnapshot();
+        });
+
         it('should preserve whitespace control information', function() {
             const node = parse(
                 '{%- set count = 0 -%}',

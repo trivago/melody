@@ -393,6 +393,7 @@ export class GenericTwigTag extends Node {
         super();
         this.tagName = tagName;
         this.parts = [];
+        this.sections = [];
     }
 }
 type(GenericTwigTag, 'GenericTwigTag');

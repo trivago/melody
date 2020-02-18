@@ -26,6 +26,7 @@ import {
     createNode,
 } from './util';
 import { GenericTagParser } from './GenericTagParser';
+import { createMultiTagParser } from './GenericMultiTagParser';
 import { voidElements } from './elementInfo';
 import * as he from 'he';
 
@@ -63,6 +64,7 @@ export default class Parser {
                 decodeEntities: true,
                 preserveSourceLiterally: false,
                 allowUnknownTags: false,
+                multiTags: {}, // e.g. { "nav": ["endnav"], "switch": ["case", "default", "endswitch"]}
             },
             options
         );
@@ -446,16 +448,28 @@ export default class Parser {
         );
     }
 
+    getGenericParserFor(tagName) {
+        if (this.options.multiTags[tagName]) {
+            return createMultiTagParser(
+                tagName,
+                this.options.multiTags[tagName]
+            );
+        } else {
+            return GenericTagParser;
+        }
+    }
+
     matchTag() {
         const tokens = this.tokens;
-        const tagStartToken = tokens.la(-1),
-            tagNameToken = tokens.la(0);
+        const tagStartToken = tokens.la(-1);
 
         const tag = tokens.expect(Types.SYMBOL);
         let parser = this[TAG][tag.text];
+        let isUsingGenericParser = false;
         if (!parser) {
             if (this.options.allowUnknownTags) {
-                parser = GenericTagParser;
+                parser = this.getGenericParserFor(tag.text);
+                isUsingGenericParser = true;
             } else {
                 tokens.error(
                     `Unknown tag "${tag.text}"`,
@@ -470,12 +484,14 @@ export default class Parser {
 
         const result = parser.parse(this, tag);
         const tagEndToken = tokens.la(-1);
-        result.trimLeft = tagStartToken.text.endsWith('-');
-        result.trimRight = tagEndToken.text.startsWith('-');
+        if (!isUsingGenericParser) {
+            result.trimLeft = tagStartToken.text.endsWith('-');
+            result.trimRight = tagEndToken.text.startsWith('-');
+        }
 
         setStartFromToken(result, tagStartToken);
         setEndFromToken(result, tagEndToken);
-        setMarkFromToken(result, 'tagNameLoc', tagNameToken);
+        setMarkFromToken(result, 'tagNameLoc', tag);
 
         return result;
     }

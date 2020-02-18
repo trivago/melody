@@ -1740,7 +1740,7 @@ Object {
 }
 `;
 
-exports[`Parser when parsing tags should parse a Craft CMS "header" tag 1`] = `
+exports[`Parser when parsing tags should parse an unknown "header" tag 1`] = `
 Object {
   "parts": Array [
     Object {
@@ -1781,6 +1781,7 @@ Object {
       "wasImplicitConcatenation": false,
     },
   ],
+  "sections": Array [],
   "tagName": "header",
   "tagNameLoc": Object {
     "column": 3,
@@ -1793,7 +1794,7 @@ Object {
 }
 `;
 
-exports[`Parser when parsing tags should parse a Craft CMS "paginate" tag 1`] = `
+exports[`Parser when parsing tags should parse an unknown "paginate" tag 1`] = `
 Object {
   "parts": Array [
     Object {
@@ -1815,16 +1816,8 @@ Object {
           "callee": Object {
             "computed": false,
             "object": Object {
-              "computed": false,
-              "object": Object {
-                "name": "craft",
-                "type": "Identifier",
-              },
-              "property": Object {
-                "name": "entries",
-                "type": "Identifier",
-              },
-              "type": "MemberExpression",
+              "name": "entries",
+              "type": "Identifier",
             },
             "property": Object {
               "name": "section",
@@ -1860,6 +1853,7 @@ Object {
       "type": "Identifier",
     },
   ],
+  "sections": Array [],
   "tagName": "paginate",
   "tagNameLoc": Object {
     "column": 3,
@@ -1888,6 +1882,7 @@ Object {
       "type": "BinaryAddExpression",
     },
   ],
+  "sections": Array [],
   "tagName": "exit",
   "tagNameLoc": Object {
     "column": 3,

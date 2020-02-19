@@ -68,6 +68,10 @@ export default class Parser {
             },
             options
         );
+        // If there are custom multi tags, then we allow all custom tags
+        if (Object.keys(this.options.multiTags).length > 0) {
+            this.options.allowUnknownTags = true;
+        }
     }
 
     applyExtension(ext) {

@@ -322,6 +322,20 @@ describe('Parser', function() {
             expect(tagNode.parts[0].value).toBe(404);
         });
 
+        it('should record the correct boundaries for unknown tags', function() {
+            const source = '{% exit 404 %}';
+            const node = parse(source, {
+                allowUnknownTags: true,
+            });
+
+            const tagNode = node.expressions[0];
+            const reproducedSource = source.substr(
+                tagNode.loc.start.index,
+                tagNode.loc.end.index
+            );
+            expect(reproducedSource).toEqual(source);
+        });
+
         it('should parse expressions in unknown tags', function() {
             const node = parse(
                 '{% exit a + b %}',

@@ -13,12 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-    setStartFromToken,
-    setEndFromToken,
-    hasTagStartTokenTrimLeft,
-    hasTagEndTokenTrimRight,
-} from './util';
+import { hasTagStartTokenTrimLeft, hasTagEndTokenTrimRight } from './util';
 import * as Types from './TokenTypes';
 import * as n from 'melody-types';
 
@@ -48,8 +43,7 @@ export const GenericTagParser = {
                 }
             }
         }
-        setStartFromToken(twigTag, tagStartToken);
-        setEndFromToken(twigTag, currentToken);
+        tokens.expect(Types.TAG_END);
 
         twigTag.trimLeft = hasTagStartTokenTrimLeft(tagStartToken);
         twigTag.trimRight = hasTagEndTokenTrimRight(currentToken);

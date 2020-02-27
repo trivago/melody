@@ -2,6 +2,8 @@
 
 ### Features
 
+-   `[melody-parser]`: Introduce option `allowUnknownTags`, along with the `GenericTwigTag` node type
+
 ### Bug fixes
 
 ## 1.6.0

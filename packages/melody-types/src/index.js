@@ -387,3 +387,22 @@ export class Declaration extends Node {
 }
 type(Declaration, 'Declaration');
 visitor(Declaration, 'parts');
+
+export class GenericTwigTag extends Node {
+    constructor(tagName: String) {
+        super();
+        this.tagName = tagName;
+        this.parts = [];
+        this.sections = [];
+    }
+}
+type(GenericTwigTag, 'GenericTwigTag');
+
+export class GenericToken extends Node {
+    constructor(tokenType: String, tokenText: String) {
+        super();
+        this.tokenType = tokenType;
+        this.tokenText = tokenText;
+    }
+}
+type(GenericToken, 'GenericToken');

@@ -310,6 +310,131 @@ describe('Parser', function() {
             }).toThrowErrorMatchingSnapshot();
         });
 
+        it('should handle unknown tags when requested', function() {
+            const node = parse('{% exit 404 %}', {
+                allowUnknownTags: true,
+            });
+
+            const tagNode = node.expressions[0];
+            expect(tagNode.type).toBe('GenericTwigTag');
+            expect(tagNode.parts.length).toBe(1);
+            expect(tagNode.parts[0].type).toBe('NumericLiteral');
+            expect(tagNode.parts[0].value).toBe(404);
+        });
+
+        it('should record the correct boundaries for unknown tags', function() {
+            const source = '{% exit 404 %}';
+            const node = parse(source, {
+                allowUnknownTags: true,
+            });
+
+            const tagNode = node.expressions[0];
+            const reproducedSource = source.substr(
+                tagNode.loc.start.index,
+                tagNode.loc.end.index
+            );
+            expect(reproducedSource).toEqual(source);
+        });
+
+        it('should parse expressions in unknown tags', function() {
+            const node = parse(
+                '{% exit a + b %}',
+                {
+                    allowUnknownTags: true,
+                },
+                coreExtensions
+            );
+
+            const tagNode = node.expressions[0];
+            expect(tagNode).toMatchSnapshot();
+        });
+
+        it('should parse an unknown "header" tag', function() {
+            const node = parse(
+                '{% header "Cache-Control: max-age=" ~ (expiry.timestamp - now.timestamp) %}',
+                {
+                    allowUnknownTags: true,
+                },
+                coreExtensions
+            );
+
+            const tagNode = node.expressions[0];
+            expect(tagNode).toMatchSnapshot();
+        });
+
+        it('should parse an unknown "paginate" tag', function() {
+            const node = parse(
+                "{% paginate entries.section('blog').limit(10) as pageInfo, pageEntries %}",
+                {
+                    allowUnknownTags: true,
+                },
+                coreExtensions
+            );
+
+            const tagNode = node.expressions[0];
+            expect(tagNode).toMatchSnapshot();
+        });
+
+        it('should parse an unknown "nav" tag', function() {
+            const node = parse(
+                `{%- nav items as item %}
+                <li>{{ item.name }}</li>
+                {% endnav -%}`,
+                {
+                    allowUnknownTags: true,
+                    multiTags: { nav: ['endnav'] },
+                },
+                coreExtensions
+            );
+
+            const tagNode = node.expressions[0];
+            expect(tagNode.trimLeft).toBe(true);
+            expect(tagNode.trimRight).toBe(false);
+            expect(tagNode.sections.length).toBe(2);
+            expect(tagNode.sections[0].type).toBe('SequenceExpression');
+
+            const endnavTag = tagNode.sections[1];
+            expect(endnavTag.tagName).toBe('endnav');
+            expect(endnavTag.type).toBe('GenericTwigTag');
+            expect(endnavTag.trimLeft).toBe(false);
+            expect(endnavTag.trimRight).toBe(true);
+        });
+
+        it('should parse an unknown tag with multiple sub-tags', function() {
+            const node = parse(
+                `{% myIf someCondition %}
+                    Output A
+                {%- myElseIf conditionB %}
+                    Output B
+                {% myElseIf conditionC %}
+                    Output C
+                {% myElse %}
+                    Default
+                {% myEndif %}`,
+                {
+                    allowUnknownTags: true,
+                    multiTags: { myIf: ['myElseIf', 'myElse', 'myEndif'] },
+                },
+                coreExtensions
+            );
+
+            const tagNode = node.expressions[0];
+            expect(tagNode.tagName).toBe('myIf');
+            const sections = tagNode.sections;
+            expect(sections[0].type).toBe('SequenceExpression');
+            expect(sections[1].type).toBe('GenericTwigTag');
+            expect(sections[1].tagName).toBe('myElseIf');
+            expect(sections[2].type).toBe('SequenceExpression');
+            expect(sections[3].type).toBe('GenericTwigTag');
+            expect(sections[3].tagName).toBe('myElseIf');
+            expect(sections[4].type).toBe('SequenceExpression');
+            expect(sections[5].type).toBe('GenericTwigTag');
+            expect(sections[5].tagName).toBe('myElse');
+            expect(sections[6].type).toBe('SequenceExpression');
+            expect(sections[7].type).toBe('GenericTwigTag');
+            expect(sections[7].tagName).toBe('myEndif');
+        });
+
         it('should preserve whitespace control information', function() {
             const node = parse(
                 '{%- set count = 0 -%}',

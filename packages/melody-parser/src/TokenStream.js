@@ -112,7 +112,7 @@ export default class TokenStream {
         );
     }
 
-    error(message, pos, advice, length = 1) {
+    error(message, pos, advice, length = 1, metadata = {}) {
         let errorMessage = `ERROR: ${message}\n`;
         errorMessage += codeFrame({
             rawLines: this.input.source,
@@ -128,7 +128,9 @@ export default class TokenStream {
         if (advice) {
             errorMessage += '\n\n' + advice;
         }
-        throw new Error(errorMessage);
+        const result = new Error(errorMessage);
+        Object.assign(result, metadata);
+        throw result;
     }
 }
 

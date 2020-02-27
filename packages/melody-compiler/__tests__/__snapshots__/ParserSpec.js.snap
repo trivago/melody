@@ -1740,6 +1740,161 @@ Object {
 }
 `;
 
+exports[`Parser when parsing tags should parse an unknown "header" tag 1`] = `
+Object {
+  "parts": Array [
+    Object {
+      "left": Object {
+        "type": "StringLiteral",
+        "value": "Cache-Control: max-age=",
+      },
+      "operator": "~",
+      "right": Object {
+        "left": Object {
+          "computed": false,
+          "object": Object {
+            "name": "expiry",
+            "type": "Identifier",
+          },
+          "property": Object {
+            "name": "timestamp",
+            "type": "Identifier",
+          },
+          "type": "MemberExpression",
+        },
+        "operator": "-",
+        "right": Object {
+          "computed": false,
+          "object": Object {
+            "name": "now",
+            "type": "Identifier",
+          },
+          "property": Object {
+            "name": "timestamp",
+            "type": "Identifier",
+          },
+          "type": "MemberExpression",
+        },
+        "type": "BinarySubExpression",
+      },
+      "type": "BinaryConcatExpression",
+      "wasImplicitConcatenation": false,
+    },
+  ],
+  "sections": Array [],
+  "tagName": "header",
+  "tagNameLoc": Object {
+    "column": 3,
+    "index": 3,
+    "line": 1,
+  },
+  "trimLeft": false,
+  "trimRight": false,
+  "type": "GenericTwigTag",
+}
+`;
+
+exports[`Parser when parsing tags should parse an unknown "paginate" tag 1`] = `
+Object {
+  "parts": Array [
+    Object {
+      "arguments": Array [
+        Object {
+          "type": "NumericLiteral",
+          "value": 10,
+        },
+      ],
+      "callee": Object {
+        "computed": false,
+        "object": Object {
+          "arguments": Array [
+            Object {
+              "type": "StringLiteral",
+              "value": "blog",
+            },
+          ],
+          "callee": Object {
+            "computed": false,
+            "object": Object {
+              "name": "entries",
+              "type": "Identifier",
+            },
+            "property": Object {
+              "name": "section",
+              "type": "Identifier",
+            },
+            "type": "MemberExpression",
+          },
+          "type": "CallExpression",
+        },
+        "property": Object {
+          "name": "limit",
+          "type": "Identifier",
+        },
+        "type": "MemberExpression",
+      },
+      "type": "CallExpression",
+    },
+    Object {
+      "name": "as",
+      "type": "Identifier",
+    },
+    Object {
+      "name": "pageInfo",
+      "type": "Identifier",
+    },
+    Object {
+      "tokenText": ",",
+      "tokenType": ",",
+      "type": "GenericToken",
+    },
+    Object {
+      "name": "pageEntries",
+      "type": "Identifier",
+    },
+  ],
+  "sections": Array [],
+  "tagName": "paginate",
+  "tagNameLoc": Object {
+    "column": 3,
+    "index": 3,
+    "line": 1,
+  },
+  "trimLeft": false,
+  "trimRight": false,
+  "type": "GenericTwigTag",
+}
+`;
+
+exports[`Parser when parsing tags should parse expressions in unknown tags 1`] = `
+Object {
+  "parts": Array [
+    Object {
+      "left": Object {
+        "name": "a",
+        "type": "Identifier",
+      },
+      "operator": "+",
+      "right": Object {
+        "name": "b",
+        "type": "Identifier",
+      },
+      "type": "BinaryAddExpression",
+    },
+  ],
+  "sections": Array [],
+  "tagName": "exit",
+  "tagNameLoc": Object {
+    "column": 3,
+    "index": 3,
+    "line": 1,
+  },
+  "trimLeft": false,
+  "trimRight": false,
+  "type": "GenericTwigTag",
+}
+`;
+
 exports[`Parser when parsing tags should preserve whitespace control information 1`] = `
 Object {
   "expressions": Array [

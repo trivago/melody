@@ -2,9 +2,14 @@
 
 ### Features
 
--   `[melody-parser]`: Introduce option `allowUnknownTags`, along with the `GenericTwigTag` node type
-
 ### Bug fixes
+
+## 1.7.0
+
+### Features
+
+-   `[melody-parser]`: Introduce generic Twig tag parsing, configured by the new options `allowUnknownTags` and `multiTags`
+-   `[melody-types]`: Introduce the `GenericTwigTag` and `GenericToken` node types to support generic Twig tag parsing
 
 ## 1.6.0
 

@@ -1,6 +1,6 @@
 {
   "name": "neutrino-preset-melody",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Neutrino preset for building melody web applications",
   "main": "index.js",
   "author": "Efe Gürkan YALAMAN <efe-gurkan.yalaman@trivago.com>",

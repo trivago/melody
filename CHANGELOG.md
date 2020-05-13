@@ -4,6 +4,12 @@
 
 ### Bug fixes
 
+## 1.7.1
+
+### Bug fixes
+
+-   `[melody-idom]`: Allow consecutive updates in test environment.
+
 ## 1.7.0
 
 ### Features

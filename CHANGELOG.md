@@ -10,6 +10,11 @@
 
 -   `[melody-idom]`: Allow consecutive updates in test environment.
 
+## 1.7.1
+
+### Chore & Maintenance
+-    Minor formatting fix in README.md
+
 ## 1.7.0
 
 ### Features

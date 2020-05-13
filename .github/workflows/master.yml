@@ -31,42 +31,42 @@ jobs:
       - name: bundlesize
         run: yarn run bundlesize
 
-  release:
-    needs: build_test_lint 
-    name: Publish Melody
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      
-      - name: Check for melody release commit
-        id: 'is_release_commit'
-        uses: trivago/melody/actions/check-release-commit@master
-      
-      - uses: actions/setup-node@v1
-        if: steps.is_release_commit.outputs.result == 1
-        with:
-          node-version: '8.x'
-      
-      - name: yarn install and build
-        if: steps.is_release_commit.outputs.result == 1
-        run: yarn
-        
-      - name: setup git
-        if: steps.is_release_commit.outputs.result == 1
-        run: git checkout -b preparing-melody-for-npm-publish && git config --global user.email "melody-bot@trivago.com" && git config --global user.name "melody-bot"
-
-      - name: add npm token
-        if: steps.is_release_commit.outputs.result == 1
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
-      
-      - name: bump melody version
-        if: steps.is_release_commit.outputs.result == 1
-        run: yarn lerna version $(git log -1 --pretty=format:%s) --no-push  --yes --force-publish=*
-        
-      - name: push melody tags to github
-        if: steps.is_release_commit.outputs.result == 1
-        run: git push https://${{ secrets.MELODY_GITHUB_TOKEN }}@github.com/trivago/melody.git HEAD:master --follow-tags
-      
-      - name: publish melody to npmjs.org
-        if: steps.is_release_commit.outputs.result == 1
-        run: yarn lerna publish from-git --force-publish=* --yes --registry https://registry.npmjs.org
+#  release:
+#    needs: build_test_lint
+#    name: Publish Melody
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v1
+#
+#      - name: Check for melody release commit
+#        id: 'is_release_commit'
+#        uses: trivago/melody/actions/check-release-commit@master
+#
+#      - uses: actions/setup-node@v1
+#        if: steps.is_release_commit.outputs.result == 1
+#        with:
+#          node-version: '8.x'
+#
+#      - name: yarn install and build
+#        if: steps.is_release_commit.outputs.result == 1
+#        run: yarn
+#
+#      - name: setup git
+#        if: steps.is_release_commit.outputs.result == 1
+#        run: git checkout -b preparing-melody-for-npm-publish && git config --global user.email "melody-bot@trivago.com" && git config --global user.name "melody-bot"
+#
+#      - name: add npm token
+#        if: steps.is_release_commit.outputs.result == 1
+#        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
+#
+#      - name: bump melody version
+#        if: steps.is_release_commit.outputs.result == 1
+#        run: yarn lerna version $(git log -1 --pretty=format:%s) --no-push  --yes --force-publish=*
+#
+#      - name: push melody tags to github
+#        if: steps.is_release_commit.outputs.result == 1
+#        run: git push https://${{ secrets.MELODY_GITHUB_TOKEN }}@github.com/trivago/melody.git HEAD:master --follow-tags
+#
+#      - name: publish melody to npmjs.org
+#        if: steps.is_release_commit.outputs.result == 1
+#        run: yarn lerna publish from-git --force-publish=* --yes --registry https://registry.npmjs.org

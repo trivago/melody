@@ -4,6 +4,12 @@
 
 ### Bug fixes
 
+## 1.7.3
+
+### Bug fixes
+
+-   `[melody-idom]`: Reverts #160 Allow consecutive updates in test environment.
+
 ## 1.7.2
 
 ### Bug fixes

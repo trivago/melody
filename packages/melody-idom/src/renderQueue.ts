@@ -373,10 +373,7 @@ export function enqueueComponent(component: RenderableComponent): void {
     }
 
     addToQueue(component);
-    /* istanbul ignore else */
-    if (process.env.NODE_ENV === 'test') {
-        return;
-    }
+
     tick(flush);
 }
 

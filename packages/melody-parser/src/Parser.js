@@ -536,11 +536,13 @@ export default class Parser {
             token = tokens.la(0);
         }
 
+        var result = expr;
         if (precedence === 0) {
             setEndFromToken(expr, tokens.la(-1));
+            result = this.matchConditionalExpression(expr);
+            // Update the local token variable because the stream pointer already advanced.
+            token = tokens.la(0);
         }
-        const result =
-            precedence === 0 ? this.matchConditionalExpression(expr) : expr;
 
         // Check for -}} (trim following whitespace)
         if (token.type === Types.EXPRESSION_END && token.text.startsWith('-')) {

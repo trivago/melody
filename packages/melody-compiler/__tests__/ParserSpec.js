@@ -596,6 +596,17 @@ describe('Parser', function() {
             expect(expression.trimLeft).toBe(true);
             expect(expression.trimRight).toBe(true);
         });
+
+        it('should put trimming information on a conditional expression', function () {
+            const node = parse(
+                `{{- ratingValue == 10 ? ratingValue : ratingValue -}}`,
+                coreExtensions
+            )
+
+            const tagNode = node.expressions[0]
+            expect(tagNode.trimLeft).toBe(true)
+            expect(tagNode.trimRight).toBe(true)
+        })
     });
 
     const addNotOperator = (parser, precedence = 500) => {

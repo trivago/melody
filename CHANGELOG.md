@@ -4,7 +4,7 @@
 
 ### Bug fixes
 
-## 1.7.4
+## 1.7.5
 
 ### Bug fixes
 

@@ -4,6 +4,12 @@
 
 ### Bug fixes
 
+## 1.7.4
+
+### Bug fixes
+
+-   `[melody-parser]`: Retains whitespace trimming information also for conditional expressions (which was previously not the case)
+
 ## 1.7.3
 
 ### Bug fixes
@@ -19,7 +25,8 @@
 ## 1.7.1
 
 ### Chore & Maintenance
--    Minor formatting fix in README.md
+
+-   Minor formatting fix in README.md
 
 ## 1.7.0
 

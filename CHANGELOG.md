@@ -8,7 +8,7 @@
 
 ### Bug fixes
 
--   `[melody-parser]`: Retains whitespace trimming information also for conditional expressions (which was previously not the case)
+-   `[melody-parser]`: Retains whitespace trimming (`-}}`) information also for conditional expressions (which was previously not the case)
 
 ## 1.7.3
 

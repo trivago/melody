@@ -1,6 +1,6 @@
 {
   "name": "melody-loader",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "description": "",
   "main": "./lib/index.js",
   "jsnext:main": "./lib/index.esm.js",

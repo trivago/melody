@@ -1,6 +1,6 @@
 {
     "name": "melody-plugin-load-functions",
-    "version": "1.7.3",
+    "version": "1.7.5",
     "description": "",
     "main": "./lib/index.js",
     "jsnext:main": "./lib/index.esm.js",

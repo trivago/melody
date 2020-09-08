@@ -55,7 +55,9 @@ Object.assign(Component.prototype, {
         if (this.subscriptions.length === 0) {
             const t = this.getTransform({
                 dispatchCustomEvent: (eventName, detail, options = {}) => {
+                    const defaultOptions = { bubbles: true };
                     const event = new CustomEvent(eventName, {
+                        ...defaultOptions,
                         ...options,
                         detail,
                     });

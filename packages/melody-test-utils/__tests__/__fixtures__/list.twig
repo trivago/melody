@@ -1,0 +1,8 @@
+<div>
+    <ul>
+        {% for item in items %}
+            {% mount './item' as item.id with item %}
+        {% endfor %}
+    </ul>
+    {% mount './child' as 'child' with {} %}
+</div>

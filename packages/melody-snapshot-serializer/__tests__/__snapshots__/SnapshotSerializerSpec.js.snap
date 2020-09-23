@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot serializer should print shallow components 1`] = `"<TestComponent />"`;
+
+exports[`Snapshot serializer should print shallow components with props 1`] = `
+"<TestComponent
+  test=1
+foo=\\"bar\\"
+baz={\\"hello\\":\\"world\\"}
+/>"
+`;

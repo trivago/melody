@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 trivago N.V.
+ * Copyright 2019 trivago N.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
-export { createComponent } from './component';
-export { render } from './render';
-export { createState } from './operators/createState';
-export { attachEvent } from './operators/attachEvent';
-export { attachEventWithElement } from './operators/attachEventWithElement';
-export { withElement } from './operators/withElement';
-export { combine } from './operators/combine';
-export { combineRefs } from './operators/combineRefs';
+import { attachEvent } from './attachEvent';
+import { withElement } from './withElement';
+import { combineRefs } from './combineRefs';
+import { of } from 'rxjs';
+
+export const attachEventWithElement = (...events) => {
+    const eventsAndElement = [
+        attachEvent(...events),
+        withElement(el => of(el), null),
+    ];
+    const refHandler = combineRefs(
+        ...eventsAndElement.map(([handler]) => handler)
+    );
+    const streams = eventsAndElement.map(([_, stream]) => stream);
+    return [refHandler, ...streams];
+};

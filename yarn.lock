@@ -7364,6 +7364,13 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
+lru-cache@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-6.0.0.tgz#6d6fe6570ebd96aaf90fcad1dafa3b2566db3a94"
+  integrity sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
+  dependencies:
+    yallist "^4.0.0"
+
 macos-release@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/macos-release/-/macos-release-2.1.0.tgz#c87935891fbeb0dba7537913fc66f469fee9d662"
@@ -7461,88 +7468,117 @@ media-typer@0.3.0:
   integrity sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
 
 "melody-code-frame@link:packages/melody-code-frame":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
+  dependencies:
+    lodash "^4.15.0"
 
 "melody-compiler@link:packages/melody-compiler":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
+  dependencies:
+    babel-generator "^6.10.0"
+    babel-template "^6.8.0"
+    babel-types "^6.8.1"
+    lodash "^4.12.0"
+    melody-code-frame "link:packages/melody-code-frame"
+    random-seed "^0.3.0"
 
 "melody-component@link:packages/melody-component":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
 
 "melody-devtools@link:packages/melody-devtools":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
 
 "melody-extension-core@link:packages/melody-extension-core":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
+  dependencies:
+    babel-template "^6.8.0"
+    babel-types "^6.8.1"
+    lodash "^4.12.0"
+    shortid "^2.2.6"
 
 "melody-hoc@link:packages/melody-hoc":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
+  dependencies:
+    lodash "^4.15.0"
+    melody-component "link:packages/melody-component"
 
 "melody-hooks@link:packages/melody-hooks":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
 
 "melody-idom@link:packages/melody-idom":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
+  dependencies:
+    lodash "^4.12.0"
 
 "melody-jest-transform@link:packages/melody-jest-transform":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
+  dependencies:
+    babel-core "^6.18.0"
+    find-babel-config "^1.0.1"
+    melody-compiler "link:packages/melody-compiler"
+    melody-extension-core "link:packages/melody-extension-core"
 
 "melody-loader@link:packages/melody-loader":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
+  dependencies:
+    loader-utils "^1.1.0"
+    lodash "^4.12.0"
+    melody-compiler "link:packages/melody-compiler"
+    melody-extension-core "link:packages/melody-extension-core"
+    melody-runtime "link:packages/melody-runtime"
 
 "melody-parser@link:packages/melody-parser":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
+  dependencies:
+    he "^1.1.0"
+    lodash "^4.12.0"
+    melody-code-frame "link:packages/melody-code-frame"
 
 "melody-plugin-idom@link:packages/melody-plugin-idom":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
+  dependencies:
+    babel-types "^6.8.1"
 
 "melody-plugin-jsx@link:packages/melody-plugin-jsx":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
+  dependencies:
+    babel-types "^6.8.1"
 
 "melody-plugin-load-functions@link:packages/melody-plugin-load-functions":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
+  dependencies:
+    babel-types "^6.8.1"
 
 "melody-plugin-skip-if@link:packages/melody-plugin-skip-if":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
+  dependencies:
+    babel-types "^6.8.1"
 
 "melody-redux@link:packages/melody-redux":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
+  dependencies:
+    melody-component "link:packages/melody-component"
 
 "melody-runtime@link:packages/melody-runtime":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
+  dependencies:
+    lodash "^4.12.0"
 
 "melody-streams@link:packages/melody-streams":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
 
 "melody-traverse@link:packages/melody-traverse":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
 
 "melody-types@link:packages/melody-types":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
+  dependencies:
+    babel-types "^6.8.1"
 
 "melody-util@link:packages/melody-util":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
+  dependencies:
+    melody-component "link:packages/melody-component"
 
 mem@^1.1.0:
   version "1.1.0"
@@ -8083,8 +8119,16 @@ neutrino-middleware-style-loader@^6.2.1:
     style-loader "^0.18.2"
 
 "neutrino-preset-melody@link:packages/neutrino-preset-melody":
-  version "0.0.0"
-  uid ""
+  version "1.7.5"
+  dependencies:
+    babel-plugin-transform-class-properties "^6.24.1"
+    babel-plugin-transform-es2015-classes "^6.24.1"
+    babel-plugin-transform-object-rest-spread "^6.23.0"
+    deepmerge "^1.5.0"
+    melody-loader "link:packages/melody-loader"
+    neutrino-middleware-compile-loader "^6.1.4"
+    neutrino-middleware-loader-merge "^6.1.4"
+    neutrino-preset-web "^6.1.4"
 
 neutrino-preset-web@^6.1.4:
   version "6.2.1"
@@ -10428,6 +10472,13 @@ semver-compare@^1.0.0:
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.6.0.tgz#7e74256fbaa49c75aa7c7a205cc22799cac80004"
   integrity sha512-RS9R6R35NYgQn++fkDWaOmqGoj4Ek9gGs+DPxNUZKuwE183xjJroKvyo1IzVFeXvUrvmALy6FWD5xrdJT25gMg==
 
+semver@^7.5.2:
+  version "7.5.2"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.2.tgz#5b851e66d1be07c1cdaf37dfc856f543325a2beb"
+  integrity sha512-SoftuTROv/cRjCze/scjGyiDtcUyxw1rgYQSZY7XTmtR5hX+dm76iDbTH8TkLPHCQmlbQVSSbNZCPM2hb0knnQ==
+  dependencies:
+    lru-cache "^6.0.0"
+
 semver@~5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
@@ -12008,6 +12059,11 @@ yallist@^3.0.0, yallist@^3.0.2:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-3.0.3.tgz#b4b049e314be545e3ce802236d6cd22cd91c3de9"
   integrity sha512-S+Zk8DEWE6oKpV+vI3qWkaK+jSbIK86pCwe2IF/xwIpQ8jEuxpw9NyaGjmp9+BoJv5FV2piqCDcoCtStppiq2A==
+
+yallist@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
+  integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
 yargs-parser@^11.1.1:
   version "11.1.1"

@@ -1,5 +1,9 @@
 # [**Melody**](https://melody.js.org/)
 
+> [!CAUTION]
+> This repository has been archived as of February 2026.  
+> If you wish to update or extend this project, please create a fork.
+
 ![Melody Logo](https://melody.js.org/melody-logo-banner.jpg 'Melody Logo')
 
 Melody is a UI library for building JavaScript applications.

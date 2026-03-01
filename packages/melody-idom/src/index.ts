@@ -27,6 +27,7 @@ export {
     skipNode,
     mount,
     component,
+    setCurrentComponent,
     enqueueComponent,
     RenderableComponent,
     CallableComponent,
